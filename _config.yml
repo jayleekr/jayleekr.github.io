@@ -11,18 +11,15 @@ url: "https://jayleekr.github.io/"
 owner:
   name:           Jay Lee
   avatar:         avatar.jpg
-  bio:            "M.S in COMP SCI
-Ph.D cand in V2X Comm' Systems
-Full Stack Embedded SW Developer
-Hoop lover"
+  bio:            "Developer/Hooper/Writer"
   email:          jabang3@gmail.com
   # Social networking links used in footer. Update and remove as you like.
   twitter:        
-  facebook:       
-  github:         
+  facebook:   "https://www.facebook.com/jayjaykr"
+  github:      "https://github.com/jayleekr"
   stackexchange:  
   linkedin:       
-  instagram:      
+  instagram:      "https://www.instagram/jaylee.kr"
   flickr:         
   tumblr:         
   # google plus id, include the '+', eg +mmistakes
