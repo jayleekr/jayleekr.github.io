@@ -1,6 +1,6 @@
 title:            Jay Lee's 괴발개발 블로그
-description:      나도 내가 무슨말을 하고 있는지 
-disqus_shortname: 
+description:      나도 내가 무슨말을 하고 있는지 모름
+disqus_shortname:
 reading_time:     true
 words_per_minute: 200
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
@@ -10,33 +10,33 @@ url: "https://jayleekr.github.io/"
 # Owner/author information
 owner:
   name:           Jay Lee
-  avatar:         avatar.jpg
-  bio:            "Developer/Hooper/Writer"
+  avatar:         sleeping.jpg
+  bio:            "Developer\ Hooper\ Writer"
   email:          jabang3@gmail.com
   # Social networking links used in footer. Update and remove as you like.
-  twitter:        
+  twitter:
   facebook:   jayjaykr
   github:      jayleekr
-  stackexchange:  
-  linkedin:       
+  stackexchange:
+  linkedin:
   instagram:      jaylee.kr
-  flickr:         
-  tumblr:         
+  flickr:
+  tumblr:
   # google plus id, include the '+', eg +mmistakes
   google_plus:
 
 # Background image to be tiled on all pages
-background: 
+background:
 
 # Analytics and webmaster tools stuff goes here
-google_analytics:   
-google_verify:      
+google_analytics:
+google_verify:
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:         
+bing_verify:
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Asia/Seoul
-future:      false  # publish future dated posts --  true, false (default) 
+future:      false  # publish future dated posts --  true, false (default)
 highlighter: rouge
 markdown:    kramdown
 plugins:
@@ -62,9 +62,9 @@ kramdown:
   toc_levels: 1..6
   enable_coderay: false
 
-include: 
+include:
   - .htaccess
-exclude: 
+exclude:
   - "*.less"
   - "*.sublime-project"
   - "*.sublime-workspace"

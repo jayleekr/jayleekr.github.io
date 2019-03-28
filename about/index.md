@@ -7,8 +7,8 @@ comments: Ang-kimotti
 modified: 2019-03-27
 ---
 
-호기심이 많고 궁금한 건 그냥 못 넘기는 괴발자\
-코트에서 몸싸움을 즐기는 파워포워드
+호기심이 많고 궁금한 건 그냥 못 넘기는 괴발자</br>
+농구 코트에서 몸싸움을 즐기는 파워포워드
 
 ##  Brief
 * Born and raised in 1988. 88올림픽 년도에 태어남. 그래서 키도 188 몸무게도 88kg 인가
@@ -21,7 +21,7 @@ modified: 2019-03-27
 * Platform
 > Windows, Linux(Debian, Ubuntu, Raspbian)
 * Language
-> Advance : C#(WPF), C++\
+> Advance : C#(WPF), C++</br>
 Intermeidate : C, Python, Makefile, GLSL, Bash Shell Script, Html, Javascript
 * Framework
 > .Net Framework, DriectShow
