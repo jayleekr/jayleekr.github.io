@@ -1,12 +1,13 @@
 title:            Jay Lee's 괴발개발 블로그
 subtitle:         Tech Blog
 description:      Jay Lee's Diary
-disqus_shortname:
+disqus_shortname: jayleekr
 reading_time:     true
 words_per_minute: 200
 # Your site's domain goes here (eg: https://mmistakes.github.io, http://yourdomain.com, etc)
 # When testing locally leave blank or use http://localhost:4000
 url: "https://jayleekr.github.io/"
+cover:          universe.jpg
 
 # Owner/author information
 owner:
@@ -14,7 +15,6 @@ owner:
   avatar:         sleeping.jpg
   bio:            "Developer<br/>Hooper<br/>Writer"
   email:          jabang3@gmail.com
-  cover:          universe.jpg
 
   # Social networking links used in footer. Update and remove as you like.
   twitter:
