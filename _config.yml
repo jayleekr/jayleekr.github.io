@@ -14,6 +14,8 @@ owner:
   avatar:         sleeping.jpg
   bio:            "Developer<br/>Hooper<br/>Writer"
   email:          jabang3@gmail.com
+  cover:          universe.jpg
+
   # Social networking links used in footer. Update and remove as you like.
   twitter:
   facebook:   jayjaykr
@@ -27,7 +29,7 @@ owner:
   google_plus:
 
 # Background image to be tiled on all pages
-background:   universe.jpg   
+background:
 
 # Analytics and webmaster tools stuff goes here
 google_analytics:
