@@ -1,67 +1,38 @@
 ---
-layout : default
-comments: true
+layout: default
+# The page layout
+# v2.0
+# https://github.com/cotes2020/jekyll-theme-chirpy
+# © 2017-2019 Cotes Chung
+# MIT License
 ---
 
-
-
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
-<head>
-{% include head.html %}
-</head>
-
-<body id="page" {% if page.image.feature %}class="feature"{% endif %}>
-
-{% include browser-upgrade.html %}
-{% include navigation.html %}
-
-{% if page.image.feature %}
-<div class="entry-header">
-  {% if page.image.credit %}<div class="image-credit">Image source: <a href="{{ page.image.creditlink }}">{{ page.image.credit }}</a></div><!-- /.image-credit -->{% endif %}
-  <div class="entry-image">
-    <img src="{{ site.url }}/images/{{ page.image.feature }}" alt="{{ page.title }}">
-  </div><!-- /.entry-image -->
-</div><!-- /.entry-header -->
-{% endif %}
-
-<div id="main" role="main">
-  <article class="hentry">
-    <header class="header-title">
-      <div class="header-title-wrap">
-        <h1 class="entry-title">{{ page.title }}</h1>
-        {% if site.reading_time %}
-        <p class="entry-reading-time">
-          <i class="fa fa-clock-o"></i>
-          {% include read-time.html %}
-        </p><!-- /.entry-reading-time -->
-        {% endif %}
-      </div><!-- /.header-title-wrap -->
-    </header>
-    <div class="entry-content">
+<div class="row">
+  <div class="col-12 col-lg-11 col-xl-8">
+    <div id="page" class="post pb-5 pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4 mb-md-4">
+    {% if page.dynamic_title %}
+      <h1 class="dynamic-title">{{ page.title }}</h1>
+      <div class="post-content">
+        {{ content }}
+      </div>
+    {% else %}
       {{ content }}
-      <footer class="entry-meta">
-        {% if page.modified %}<span>Updated on <span class="entry-date date published updated"><time datetime="{{ page.modified }}">{{ page.modified | date: "%B %d, %Y" }}</time></span></span>
-        <span class="author vcard"><span class="fn">{{ site.owner.name }}</span></span>{% endif %}
-        {% if page.share != false %}{% include social-share.html %}{% endif %}
-      </footer>
-    </div><!-- /.entry-content -->
-    {% if page.comments != false and site.disqus_shortname %}
-      {% include disqus.html %}
     {% endif %}
-  </article>
-</div><!-- /#main -->
+    </div> <!-- #page -->
+  </div><!-- .col-12 -->
 
-<div class="footer-wrapper">
-  <footer role="contentinfo">
-    {% include footer.html %}
-  </footer>
-</div><!-- /.footer-wrapper -->
+  {% include panel.html %}
 
-{% include scripts.html %}
+</div>
 
-</body>
-</html>
+{% if site.disqus.comments and page.comments %}
+<div class="row">
+  <div class="col-12 col-lg-11 col-xl-8">
+    <div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4">
+
+    {% include disqus.html %}
+
+    </div> <!-- .pl-1 pr-1 -->
+  </div> <!-- .col-12 -->
+</div> <!-- .row -->
+{% endif %}
