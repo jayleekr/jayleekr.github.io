@@ -2,7 +2,7 @@
 title: Github Blog 만들기 
 author: Jay Lee
 date: 2020-09-11 14:10:00 +0800
-categories: [Blogging, Tech, GithubPages]
+categories: [Blogging, GithubPages]
 tags: [GithubPages]
 ---
 
