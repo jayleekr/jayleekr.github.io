@@ -6,6 +6,9 @@
 # © 2019 Cotes Chung
 # Published under MIT License
 
+# Modification History
+# Add "bundle exec" in front of jekyll cmd | jaylee0125@gmail.com 2021-01-05
+
 set -eu
 
 CMD="JEKYLL_ENV=production bundle exec jekyll b"
@@ -37,7 +40,7 @@ _init() {
   fi
 
   if [[ -d _site ]]; then
-    jekyll clean
+    bundle exec jekyll clean
   fi
 
   local _temp=$(mktemp -d)

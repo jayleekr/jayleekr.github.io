@@ -10,6 +10,9 @@
 # © 2019 Cotes Chung
 # Published under MIT License
 
+# Modification History
+# Add "bundle exec" in front of jekyll cmd | jaylee0125@gmail.com 2021-01-05
+
 set -eu
 
 WORK_DIR=$(dirname $(dirname $(realpath "$0")))
@@ -38,7 +41,7 @@ _help() {
 
 _cleanup() {
   if [[ -d _site || -d .jekyll-cache ]]; then
-    jekyll clean
+    bundle exec jekyll clean
   fi
 
   rm -rf ${WORK_DIR}/${CONTAINER}

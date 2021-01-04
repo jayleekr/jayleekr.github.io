@@ -2,8 +2,9 @@
 title: Github Blog 만들기 
 author: Jay Lee
 date: 2020-09-11 14:10:00 +0800
-categories: [Blogging, GithubPages]
-tags: [GithubPages]
+categories: [Blogging, Github]
+tags: [Blogging, Github]
+image: /assets/img/github.jpg
 ---
 
 ## How it works
@@ -50,11 +51,13 @@ Jekyll 을 이용하여 사이트를 생성하는 방식은 크게 두가지이�
 참조 : https://poiemaweb.com/jekyll-basics
 
 ### 특정 theme 설치
+
 필자는 jekyll-theme-chirpy 라는 jekyll 테마를 설치할 예정이다.
 ~~이를 위해서는 jekyll installer 가 읽어드리는 설정파일들이 필요한데, 이러한 과정들이 번거로워 아예 해당 테마의 github source를 submodule 로 저장소에 추가하였다.~~
 * 참조 : https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88
 
 ~~아래와 같은 커맨드로 submodule 로 저장소의 docs 라는 디렉토리를 jekyll의 chroot로 사용하도록 하면 끝이다.~~
+
 ```sh
 $ git submodule add https://github.com/cotes2020/jekyll-theme-chirpy.git docs
 $ cat .gitmodules
@@ -62,14 +65,17 @@ $ cat .gitmodules
 	path = docs
 	url = https://github.com/cotes2020/jekyll-theme-chirpy.git
 ```
+
 ~~위와 같이 jekyll theme 을 가져오면 해당 디렉토리에는 ruby on rails 에서 사용할 gemfile과 기본적인 설정파일들 및 Markdown으로 작성된 문서들이 복사 된다.~~
 
 처음에는 submodule로 설계했으나, submodule에 블로그를 포스팅
 
 ### Init Jekyll
+
 위 예제 처럼 docs 디렉토리에 jekyll-chirpy 테마가 설치된 스켈레톤들이 설치됐다고 가정하자.
 아래와 같이 실행하면, 해당 설정파일로 만든 Web Page 가 로컬호스트에서 동작한다.
-```sh
+
+``` sh
 $ bundle install
 $ bundle exec jekyll serve
 Configuration file: /home/jayleekr/00_Projects/06_ADAS/docs/_config.yml

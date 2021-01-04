@@ -2,8 +2,9 @@
 title: GPG Signature를 Github에 추가하자
 author: Jay Lee
 date: 2020-10-07 00:00:00 +08007
-categories: [Blogging, Tutorial]
-tags: [Writing, Blogging]
+categories: [Blogging, Github]
+tags: [Blogging, Github]
+image: /assets/img/github.jpg
 ---
 
 ## About GPG
