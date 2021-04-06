@@ -2,8 +2,8 @@
 title: Github Blog 만들기 
 author: Jay Lee
 date: 2020-09-11 14:10:00 +0800
-categories: [Blogging, Github]
-tags: [Blogging, Github]
+categories: [TechSavvy, Github]
+tags: [TechSavvy, Github, ProgrammingLanguage, Yocto]
 image: /assets/img/github.jpg
 ---
 

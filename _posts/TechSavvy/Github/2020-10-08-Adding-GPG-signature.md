@@ -2,8 +2,8 @@
 title: GPG Signature를 Github에 추가하자
 author: Jay Lee
 date: 2020-10-07 00:00:00 +08007
-categories: [Blogging, Github]
-tags: [Blogging, Github]
+categories: [TechSavvy, Github]
+tags: [TechSavvy, Github, ProgrammingLanguage, Yocto]
 image: /assets/img/github.jpg
 ---
 

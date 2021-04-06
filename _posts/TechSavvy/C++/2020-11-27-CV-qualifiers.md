@@ -2,8 +2,8 @@
 title: CV-qualifiers
 author: Jay Lee
 date: 2020-11-27 00:00:00 +0800
-categories: [ProgrammingLanguage, C++]
-tags: [ProgrammingLanguage, C++]
+categories: [TechSavvy, C++]
+tags: [TechSavvy, ProgrammingLanguage, C++]
 image : /assets/img/post/cpp.png
 ---
 
