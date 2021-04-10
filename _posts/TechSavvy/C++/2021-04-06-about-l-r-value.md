@@ -141,11 +141,12 @@ i = function();         // r-value function의 return값을 대입한 i 는 l-va
 int *ptr = &function(); // ERROR!!! r-value의 주소는 참조할수 없다
 ```
 
-초기 c/c++의 설계자들은 r-value를 일시적 개체로 정의했기 때문에 기본적으로 대입이되지 않게 만들어 두었다.
+초기 c/c++의 설계자들은 r-value를 일시적 개체로 정의했기 때문에 
+기본적으로 r-value에는 대입이되지 않게 만들어 두었다.
 
 하지만 Modern C++ (stdc++11)에서 r-value의 "**move semantic**" 을 도입한 이후에 달라졌다.
 
-### 3. Move Semantic의 등장
+### 3. Move Semantic
 
 아래와 같은 시나리오를 생각해보자.
 
@@ -169,27 +170,33 @@ int main(){
 
 ```
 
-main 함수에서 ConvertToPercentage(scores)를 호출 했을때 Math 클래스는 std::vector<int> 타입의 percentages의 임시값을 생성하고 scores에 대입을 한다.
+main 함수에서 ConvertToPercentage(scores)를 호출하면,
+Math 클래스내의 이 함수는 std::vector<int> 타입의 percentages의 임시값인 r-value을 생성한다.
+그리고 대입연산자인 "="에 의해 scores에 대입된다.
+
 이 경우 Modern C++ 이라 불리우는 C++1x 이전인 구 C++에서는 위와 같은 상황에서 어떻게 동작할까?
 
 scores의 초기화시 생성된 메모리 영역에 percentages의 임시 값이 **대입**되는 순간에 **복사**가 된다.
-그리고 임시 값은 Math::ConvertToPercentage 함수 스택을 나오며 사라지게 된다.
+그리고 임시 값인 r-value는 Math::ConvertToPercentage 함수 스택을 나오며 사라지게 된다.
 
-여기에서 상당히 불필요한 과정이 있는데, 이는 percentages 임시값을 **복사** 하는 순간이다.
+> 여기에서 상당히 불필요한 과정이 있는데, 이는 percentages 임시값을 **복사** 하는 순간이다.
 
-임시로 생성된 percentages의 결과값이 저장된 메모리 영역과 scores의 초기화 과정에서 생성된 메모리 영역을 단순히 바꿔(**Swap**)버리면,
+상식적으로 생각해보자.
+
+임시로 생성된 percentages의 결과값(r-value)이 저장된 메모리 영역과
+scores의 초기화 과정에서 생성된 메모리 영역을 단순히 바꿔(**Swap**)버리면,
 어짜피 임시로 생성된 percentages의 메모리영역은 스택을 빠져나오며 없어질 것이기 때문에 "**복사**"라는 과정이 필요없게 된다.
 
 이 불필요한 **복사**를 막는 방법이 바로 Modern C++ 가 자랑하는 r-value의 참조와 Move Semantic의 핵심이다.
 
-> 사실 최근엔 컴파일러느님들이 알아서 잘해준다.
+> 사실 최근엔 컴파일러느님들이 알아서 잘해준다.. 사실 r-value의 참조를 너무 남발해서 시스템이 느려지는 경우도 종종발생한다. ㄷㄷ
 
 ### 4. r-value 참조 (&&) 와 std::move
 
 r-value 의 참조는 Modern C++ 인 C++11에 처음 등장한 연산자이다.
 기능상 & 연산자와 비슷한 역할을 한다.
 
-아래에 예시코드를 보자.
+아래 예제는 move semantic을 이용하여 기본 타입들의 참조를 보여준다.
 
 ``` cpp
 #include <memory>
@@ -201,16 +208,20 @@ float CaculateAverage(){
 }
 
 int main(){
-    int num = 10;
-    int && rNum = num;                   // Error!!! num 은 l-value -> int & lnum 은 가능
+    int num = 10;                           // num -> l-value
+    //int && rNum = num;                      // Error!!! num 은 l-value -> int & lnum 은 가능
     int && rNum = std::move(num);           // l-value인 num을 참조할 수 있도록 해주는 move
-    int && rNum1= 10;                       // OK, 10 은 r-value
-    float&& rAverage = CaculateAverage();   // OK CaculateAverage 는 r-value
+    num = 30;                               // num 을 바꾸면 rNum도 바뀐다 (reference 값이기때문)
+    
+    int && rNum1 = 10;                       // OK, 10 은 r-value
+
+    float && rAverage = CaculateAverage();   // OK CaculateAverage 는 r-value
+    float tmp_1 = std::move(rAverage);       // tmp_1 는 l-value, 즉 대입됨
+    float tmp_2 = rAverage;                  // tmp_2 는 l-value, 즉 대입됨
+    float && tmp_3 = std::move(rAverage);    // tmp_3 는 l-value, 그러나 r-value의 참조(reference) 값
+    rAverage = 1.0f;                         // rAverage 를 바꾸면 tmp_3 값만 바뀜, tmp_1, tmp_2 는 대입
 }
 ```
-
-위
-
 
 
 
