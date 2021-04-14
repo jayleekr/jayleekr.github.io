@@ -1,10 +1,10 @@
 ---
-title:  06. ABIStandards
+title:  ABI Standards
 author: Jay Lee
 date: 2021-04-11 00:00:00 +0800
-categories: [TechSavvy, OperatingSystems]
-tags: [Blogging, Linux, AGL, EmbeddedLinux, OpenEmbedded, Yocto, CrossDevelopment, GCC, GDB, Toolchain]
-image: /assets/img/embeddedlinux.jpg
+categories: [TechSavvy, ComputerArchitecture]
+tags: [Blogging, ComputerArchitecture, Linux, AGL, EmbeddedLinux, OpenEmbedded, Yocto, CrossDevelopment, GCC, GDB, Toolchain]
+image: /assets/img/abi.png
 ---
 
 ## **ABI(Application Binary Interface) 표준**

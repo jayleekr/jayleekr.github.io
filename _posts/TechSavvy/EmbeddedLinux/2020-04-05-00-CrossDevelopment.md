@@ -2,7 +2,7 @@
 title: 00. Cross Development
 author: Jay Lee
 date: 2021-04-05 00:00:00 +0800
-categories: [TechSavvy, OperatingSystems]
+categories: [TechSavvy, EmbeddedLinux]
 tags: [Blogging, Linux, AGL, EmbeddedLinux, OpenEmbedded, Yocto, CrossDevelopment, GCC, GDB, Toolchain]
 image: /assets/img/embeddedlinux.jpg
 ---
