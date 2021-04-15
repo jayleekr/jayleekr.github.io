@@ -1,43 +1,36 @@
 ---
-title: Bash Tips
+title: Bash and & or with if
 author: Jay Lee
-date: 2020-11-27 00:00:01 +0800
+date: 2020-11-17 00:00:01 +0800
 categories: [TechSavvy, Bash]
 tags: [TechSavvy, ProgrammingLanguage, Bash]
 image : /assets/img/post/bash.png
 ---
 
-## Bash Tips
-
-### 1. if 
-
-#### 1.1 string comparision
-
-"==" and "!=" only can be used in case of string comparision.
+## And
 
 ``` sh
-if [ "$STRING" == "abc" ];then
-    echo "STRING is abc!"
-fi 
-```
-
-#### 1.2 And
-
-``` sh
-$ cat if_or_and.sh 
+$ cat and_or.sh 
 #!/bin/bash
-test_string_exist(){
-    set -e 
+test_and_or(){
     TEST="11"
     TEST2="22"
     if [ "$TEST" == "11" ] && [ "$TEST2" == "22" ] ;then
-        echo "String Exist"
-        exit 1
+        echo "String Exist by And"
+    fi
+
+    if [ "$TEST" == "33" ] || [ "$TEST2" == "22" ] ;then
+        echo "String Exist by Or"
     fi
 }
-test_string_exist
-$ ./if_or_and.sh
-String Exist
+
+test_and_or
+```
+
+``` sh
+$ ./and_or.sh
+String Exist by And
+String Exist by Or
 ```
 
 #### 1.3 Directory Exist
@@ -148,17 +141,7 @@ b
 c
 ```
 
-## Appendix.A. Useful technics
-
-### A.1. Get Ip Address
-
-``` sh
-$ IPADDR=$(ifconfig eth0|grep inet|head -1|sed 's/\:/ /'|awk '{print $2}')
-$ echo $IPADDR
-172.17.0.3
-```
-
-## Apendix.B References
+## Appendix. References
 
 - General : [http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)
 
