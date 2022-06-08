@@ -27,7 +27,7 @@ PF enjoying a very intense physical contact on the basketball court
   - Lead Software Development Engineer @ [Hyundai Autron](https://www.linkedin.com/company/hyundaiautron/), Seoul, South Korea
     Dec 2019 – Jun 2021 in Adaptive AUTOSAR platform Development team
 ### Basketball
-  - 2017, 2018, 2020, 2021 representative basketball player of Anyang City, Gyeonggi-do, Korea (PF position)
+  - 2017, 2018, 2020, 2021, 2022 representative basketball player of Anyang City, Gyeonggi-do, Korea (PF position)
   - Team Yanadoo FIBA 3x3 basketball player [`19.01 **47th of Korea rank**](https://play.fiba3x3.com/players/9f245589-8a03-4f0e-ae53-4b0f3ecf7a0b)
   
 ## Links
@@ -35,4 +35,4 @@ PF enjoying a very intense physical contact on the basketball court
 * Github: https://github.com/jayleekr
 * Facebook: https://www.facebook.com/jayjaykr
 * Linkedin : https://www.linkedin.com/in/jayjayleekr
-* Instram : https://www.instagram.com/jaylee.kr
+* Instgram : https://www.instagram.com/jaylee.kr
