@@ -14,9 +14,12 @@
 DEST=_site
 URL_IGNORE=cdn.jsdelivr.net
 
+set -x
 bundle exec htmlproofer $DEST \
-  --disable-external \
-  --check-html \
-  --empty_alt_ignore \
-  --allow_hash_href \
-  --url_ignore $URL_IGNORE
+  --disable-external=true \
+  --enforce-https=false \
+  --ignore-empty-alt=true \
+  --ignore-missing-alt=true \
+  --allow-hash-href=true \
+  --allow-missing-href=true \
+  --ignore-urls $URL_IGNORE

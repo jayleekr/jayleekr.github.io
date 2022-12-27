@@ -13,7 +13,7 @@ Verrrrrrrrrry Curious persion about everything<br/>
 PF enjoying a very intense physical contact on the basketball court
 </center>
 
-![Desktop View]({{ "assets/img/pic/avatar.jpg" | relative_url }})
+![Desktop View]({{ "/assets/img/pic/avatar.jpg" | relative_url }})
 
 ## Now
   - Software Engineer @ [Sonatus](https://www.sonatus.com/), San Jose
