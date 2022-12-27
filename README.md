@@ -11,6 +11,10 @@ And I used this repo for practicing Markdown and writing down some bull-shit pos
 Basically all you gotta do is just to write down your post on **_posts** directory.
 If there are any hierachy in directory manner in the _post, build libraries will create categories automatically.
 
+And there's no PR needed, coz no one is gonna review your post lol
+
+Anyway have fun (if you forked this from my repo) !
+
 ## Update History
 
 |Date|Description|
