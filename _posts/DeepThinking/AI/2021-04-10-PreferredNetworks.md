@@ -3,7 +3,7 @@ title: Preferred Networks
 author: Jay Lee
 date: 2021-04-10 00:00:00 +0800
 categories: [DeepThinking, AI]
-tags: [DeepThinking, AI, GithubPage, Memoir, AdaptiveAUTOSAR, AUTOSAR, ClassicAUTOSAR, ECU, CPU, GPU, OTA]
+tags: [DeepThinking, AI, GithubPage, Retrospective, AdaptiveAUTOSAR, AUTOSAR, ClassicAUTOSAR, ECU, CPU, GPU, OTA]
 image : /assets/img/PreferredNetwork.png
 ---
 
