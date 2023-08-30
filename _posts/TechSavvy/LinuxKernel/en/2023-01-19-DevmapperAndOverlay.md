@@ -1,10 +1,11 @@
 ---
-title: [Devmapper and Overlay] Understanding the Differences
+title: Devmapper and Overlay, Understanding the Differences
 author: Jay Lee
 date: 2023-01-19 00:00:00 +0800
 categories: [TechSavvy, LinuxKernel]
 tags: [Blogging, Linux, Docker, EmbeddedLinux, Overlay, Devmapper, kernel, filesystem]
 image: /assets/img/OverlayFS_Image.png
+lang: en
 ---
 
 # Devmapper and Overlay: Understanding the Differences
