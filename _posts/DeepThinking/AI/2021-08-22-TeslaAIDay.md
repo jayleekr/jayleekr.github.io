@@ -3,7 +3,7 @@ title: 2021 Aug Tesla AI Day 후기
 author: Jay Lee
 date: 2021-08-22 00:00:00 +0800
 categories: [DeepThinking, AI]
-tags: [DeepThinking, GithubPage, AI, Retrospective, CPU, GPU, SoC, AP, Semiconductor]
+tags: [DeepThinking, GithubPage, AI, Retrospect, CPU, GPU, SoC, AP, Semiconductor]
 image : /assets/img/aiday/0.png
 ---
 
