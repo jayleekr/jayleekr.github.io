@@ -9,7 +9,7 @@
 # Modification History
 # Add "bundle exec" in front of jekyll cmd | jaylee0125@gmail.com 2021-01-05
 
-set -eu
+set -eux
 
 CMD="JEKYLL_ENV=production bundle exec jekyll b"
 
