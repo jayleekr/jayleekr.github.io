@@ -4,7 +4,7 @@ author: Jay Lee
 date: 2025-03-04 00:00:00 +0800
 categories: [Deepthinking, Daily]
 tags: [DeepThinking, GithubPage, Blog, AI, Claude, LLM]
-image : /assets/img/claude-sonnet.jpeg
+image : /assets/img/claude.jpeg
 permalink: /posts/2025-blog-renewal/
 ---
 
