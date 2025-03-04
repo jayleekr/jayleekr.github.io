@@ -1,9 +1,9 @@
 ---
-title: 2021 Aug Tesla AI Day 후기 
+title: Tesla AI Day
 author: Jay Lee
 date: 2021-08-22 00:00:00 +0800
-categories: [DeepThinking, AI]
-tags: [DeepThinking, GithubPage, AI, Retrospect, CPU, GPU, SoC, AP, Semiconductor]
+categories: [Deepthinking, AI]
+tags: [DeepThinking, AI, GithubPage, Retrospect, CPU, GPU, SoC, AP, Semiconductor, Tesla]
 image : /assets/img/aiday/0.png
 ---
 
@@ -22,7 +22,7 @@ Intel, Tesla, Apple, Google, MS 과 같은 회사들이 세상을 바꾸고 있�
 차세대 플랫폼을 만들 수 있는 Researcher & Engineer 들을 품을 수 있는 역량이 있어서 라는 것을 단연 보여주는 Tech Talk이었다.
 ![Desktop View]({{ "/assets/img/aiday/2.png" | relative_url }})
 
-또 이런 차세대 플랫폼은 전세계 모든 소프트웨어 및 비지니스의 기반이 되고 우리는 거기서 벗어날 수 없게 되겠지 ㅋㅋ...
+또 이런 차세대 플랫폼은 전세계 모든 소프트웨어 및 비지니스의 기반이 되고 우리는 거기서 벗어날 수 없겠지 ㅋㅋ...
 
 이런 엔지니어들은 이제는 막을 수 없는 오픈소스의 흐름에서 움직이기 때문에, 새로운 비전과 새 아키텍쳐를 보여주지 않으면 경쟁사에게 금방 빼앗길 수 밖에 없다. (사실 이러면서 오픈소스 소스의 흐름이 되려 커지는 것 같다)
 이런 엄청난 비전을 볼 수 있고 보여줄 수 있는 사람들이 한국에 많이 없는 건 항상 안타까운 현실인 것 같다.
