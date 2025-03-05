@@ -2,7 +2,7 @@
 title: Tesla AI Day
 author: Jay Lee
 date: 2021-08-22 00:00:00 +0800
-categories: [Deepthinking, AI]
+categories: [DeepThinking, AI]
 tags: [DeepThinking, AI, GithubPage, Retrospect, CPU, GPU, SoC, AP, Semiconductor, Tesla]
 image : /assets/img/aiday/0.png
 ---

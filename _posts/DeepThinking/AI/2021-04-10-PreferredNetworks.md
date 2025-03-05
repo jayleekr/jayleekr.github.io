@@ -2,7 +2,7 @@
 title: Preferred Networks 소개
 author: Jay Lee
 date: 2021-04-10 00:00:00 +0800
-categories: [Deepthinking, AI]
+categories: [DeepThinking, AI]
 tags: [DeepThinking, ToyProjects, TensorFlow, AI, DL, ML, Preferred Networks, GithubPage, Retrospect, AdaptiveAUTOSAR, AUTOSAR, ClassicAUTOSAR, ECU, CPU, GPU, OTA]
 image : /assets/img/PreferredNetwork.png
 ---

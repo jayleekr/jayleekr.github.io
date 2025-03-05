@@ -2,7 +2,7 @@
 title: 2025-03-04 Claude 3.7 Sonnet과 함께한 블로그 프레임워크 리뉴얼
 author: Jay Lee
 date: 2025-03-04 00:00:00 +0800
-categories: [Deepthinking, Daily]
+categories: [DeepThinking, Daily]
 tags: [DeepThinking, GithubPage, Blog, AI, Claude, LLM]
 image : /assets/img/claude.jpeg
 permalink: /posts/2025-blog-renewal/
