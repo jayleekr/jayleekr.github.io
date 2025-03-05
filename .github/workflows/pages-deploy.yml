@@ -10,18 +10,18 @@ on:
 
 jobs:
   build-n-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: ruby/setup-ruby@v1.171.0
-        with:
-          ruby-version: '3.0'
-          bundler-cache: true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1.164.0
+        with:
+          ruby-version: '3.0'
 
       - name: Bundle Caching
         id: bundle-cache
@@ -56,18 +56,18 @@ jobs:
 
   deploy:
     needs: build-n-test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: ruby/setup-ruby@v1.171.0
-        with:
-          ruby-version: '3.0'
-          bundler-cache: true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1.164.0
+        with:
+          ruby-version: '3.0'
 
       - name: Bundle Caching
         id: bundle-cache
