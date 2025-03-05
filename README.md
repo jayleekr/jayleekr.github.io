@@ -20,7 +20,7 @@ Anyway have fun (if you forked this from my repo) !
 |Date|Description|
 |---|--|
 |2022-12-27|Update template html and test scripts for github action|
-|2025-03-04|Update Framework to use docker|
+|2023-11-25|Update Framework to use docker and fix GitHub Actions workflow|
 
 ## Docker로 개발 환경 구성하기
 
@@ -52,6 +52,17 @@ docker-compose run build
 # 테스트 실행하기
 docker-compose run test
 ```
+
+### 테스트 정보
+
+이 프로젝트는 다음과 같은 테스트를 수행합니다:
+
+- HTML 문법 검사
+- 내부 링크 확인
+- 이미지 참조 확인
+- 스크립트 참조 확인
+
+테스트는 GitHub Actions를 통해 자동으로, 또는 로컬에서 `docker-compose run test` 명령으로 실행할 수 있습니다.
 
 ### 컨테이너 정리
 
