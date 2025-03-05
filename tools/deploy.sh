@@ -14,11 +14,17 @@ PAGES_BRANCH="gh-pages"
 
 _no_branch=false
 
+# 체크아웃 전에 로컬 변경사항 초기화
+git reset --hard HEAD
+git clean -fd
+git status
+
 if [[ -z `git branch -av | grep $PAGES_BRANCH` ]]; then
   _no_branch=true
   git checkout -b $PAGES_BRANCH
 else
-  git checkout $PAGES_BRANCH
+  # 강제로 gh-pages 브랜치 체크아웃
+  git checkout -f $PAGES_BRANCH
 fi
 
 # 로컬 빌드와 일치하도록 baseurl을 빈 문자열로 설정하여 빌드

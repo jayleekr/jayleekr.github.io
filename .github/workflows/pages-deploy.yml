@@ -76,6 +76,12 @@ jobs:
         run: |
           JEKYLL_ENV=production bundle exec jekyll build -b "" -d _site
 
+      - name: Clean working directory
+        run: |
+          git reset --hard HEAD
+          git clean -fd
+          git status
+
       - name: Deploy
         run: |
           bash tools/deploy.sh
