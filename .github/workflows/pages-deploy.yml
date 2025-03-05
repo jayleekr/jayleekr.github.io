@@ -33,7 +33,9 @@ jobs:
 
       - name: Create Jekyll Pages
         run: |
-          bash _scripts/sh/create_pages.sh
+          mkdir -p categories tags
+          ls -la categories tags || true
+          bash _scripts/sh/create_pages.sh || { echo "Error during create_pages.sh, showing directory structure:"; ls -R categories tags; exit 1; }
           bash _scripts/sh/dump_lastmod.sh
           
       - name: Build Site
@@ -69,12 +71,16 @@ jobs:
 
       - name: Create Jekyll Pages
         run: |
-          bash _scripts/sh/create_pages.sh
+          mkdir -p categories tags
+          ls -la categories tags || true
+          bash _scripts/sh/create_pages.sh || { echo "Error during create_pages.sh, showing directory structure:"; ls -R categories tags; exit 1; }
           bash _scripts/sh/dump_lastmod.sh
           
       - name: Build site
         run: |
           JEKYLL_ENV=production bundle exec jekyll build -b "" -d _site
+          echo "Build completed, site files:"
+          ls -la _site
 
       - name: Clean working directory
         run: |

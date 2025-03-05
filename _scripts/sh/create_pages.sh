@@ -58,7 +58,10 @@ init() {
     exit 0
   fi
 
-  mkdir categories tags
+  echo "[DEBUG] Creating initial directories"
+  mkdir -p categories tags
+  echo "[DEBUG] Directories created:"
+  ls -la categories tags
 }
 
 
@@ -68,6 +71,12 @@ create_category() {
     local _filepath="categories/$(echo $_name | sed 's/ /-/g' | awk '{print tolower($0)}').html"
 
     if [[ ! -f $_filepath ]]; then
+      # 디렉토리가 없으면 생성
+      local _dir=$(dirname $_filepath)
+      if [[ ! -d $_dir ]]; then
+        mkdir -p $_dir
+      fi
+
       echo "---" > $_filepath
       echo "layout: category" >> $_filepath
       echo "title: $_name" >> $_filepath
@@ -86,6 +95,11 @@ create_tag() {
     local _filepath="tags/$( echo $_name | sed "s/ /-/g;s/'//g" | awk '{print tolower($0)}' ).html"
 
     if [[ ! -f $_filepath ]]; then
+      # 디렉토리가 없으면 생성
+      local _dir=$(dirname $_filepath)
+      if [[ ! -d $_dir ]]; then
+        mkdir -p $_dir
+      fi
 
       echo "---" > $_filepath
       echo "layout: tag" >> $_filepath
