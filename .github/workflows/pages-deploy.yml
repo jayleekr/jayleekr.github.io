@@ -27,11 +27,17 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
+          gem install jekyll
           bundle install
 
+      - name: Create Jekyll Pages
+        run: |
+          bash _scripts/sh/create_pages.sh
+          bash _scripts/sh/dump_lastmod.sh
+          
       - name: Build Site
         run: |
-          bash tools/build.sh -b ""
+          JEKYLL_ENV=production bundle exec jekyll build -b "" -d _site
 
       - name: Test Site
         run: |
@@ -56,11 +62,17 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
+          gem install jekyll
           bundle install
 
+      - name: Create Jekyll Pages
+        run: |
+          bash _scripts/sh/create_pages.sh
+          bash _scripts/sh/dump_lastmod.sh
+          
       - name: Build site
         run: |
-          bash tools/build.sh
+          JEKYLL_ENV=production bundle exec jekyll build -d _site
 
       - name: Deploy
         run: |
