@@ -21,6 +21,11 @@ else
   git checkout $PAGES_BRANCH
 fi
 
+# 로컬 빌드와 일치하도록 baseurl을 빈 문자열로 설정하여 빌드
+if [[ ! -d _site ]]; then
+  JEKYLL_ENV=production bundle exec jekyll build -b "" -d _site
+fi
+
 mv _site ../
 mv .git ../
 

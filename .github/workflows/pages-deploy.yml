@@ -74,7 +74,7 @@ jobs:
           
       - name: Build site
         run: |
-          JEKYLL_ENV=production bundle exec jekyll build -d _site
+          JEKYLL_ENV=production bundle exec jekyll build -b "" -d _site
 
       - name: Deploy
         run: |
