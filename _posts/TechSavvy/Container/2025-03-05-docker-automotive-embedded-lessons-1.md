@@ -2,7 +2,7 @@
 layout: post
 title: "차량용 임베디드 시스템과 Docker: 현장에서 배운 교훈들 (1)"
 date: 2025-03-05 09:00:00 +0900
-categories: TechSavvy/Container
+categories: [TechSavvy, Container]
 tags: [Docker, Embedded, Automotive, Linux, Container]
 image: /assets/img/docker.jpeg
 ---
