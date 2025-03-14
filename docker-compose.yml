@@ -1,0 +1,24 @@
+services:
+  jekyll:
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/blog
+    environment:
+      - JEKYLL_ENV=development
+    command: sh -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --livereload --incremental"
+    
+  # 빌드 및 테스트를 위한 서비스
+  build:
+    build: .
+    volumes:
+      - .:/blog
+    command: bash tools/build.sh -b ""
+    
+  # 테스트만 수행하는 서비스
+  test:
+    build: .
+    volumes:
+      - .:/blog
+    command: bash tools/test.sh 

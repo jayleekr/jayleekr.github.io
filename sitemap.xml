@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/capabilities/</loc>
+      
+        <lastmod>2025-03-14T09:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/docker-automotive-embedded-lessons-1/</loc>
+      
+        <lastmod>2025-03-05T09:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2025-blog-renewal/</loc>
+      
+        <lastmod>2025-03-04T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2025-what-makes-me-happy/</loc>
+      
+        <lastmod>2025-02-28T10:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/retro-1/</loc>
+      
+        <lastmod>2025-02-03T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2024-vehicle-software-production/</loc>
+      
+        <lastmod>2024-08-23T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2024-p-day/</loc>
+      
+        <lastmod>2024-01-06T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Yocto-configuration/</loc>
+      
+        <lastmod>2023-11-30T11:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/CPS2_1/</loc>
+      
+        <lastmod>2023-11-29T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2023-hospital/</loc>
+      
+        <lastmod>2023-11-19T14:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Devmapper-And-Overlay/</loc>
+      
+        <lastmod>2023-01-09T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/pre-retro/</loc>
+      
+        <lastmod>2022-12-26T02:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2021-retrospective/</loc>
+      
+        <lastmod>2021-12-31T02:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/TeslaAIDay/</loc>
+      
+        <lastmod>2021-08-22T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2021-adaptive-autosar/</loc>
+      
+        <lastmod>2021-04-15T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/POSIX/</loc>
+      
+        <lastmod>2021-04-14T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/ABIStandards/</loc>
+      
+        <lastmod>2021-04-11T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/ARM64/</loc>
+      
+        <lastmod>2021-04-10T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/PreferredNetworks/</loc>
+      
+        <lastmod>2021-04-10T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/04-RemoteDebuggingUsingVSCode/</loc>
+      
+        <lastmod>2021-04-09T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/03-RemoteDebuggingUsingGdbserver/</loc>
+      
+        <lastmod>2021-04-08T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/02-PreparingToDebugWithGDB/</loc>
+      
+        <lastmod>2021-04-07T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/01-Toolchain/</loc>
+      
+        <lastmod>2021-04-06T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/about-l-r-value/</loc>
+      
+        <lastmod>2021-04-06T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/00-CrossDevelopment/</loc>
+      
+        <lastmod>2021-04-05T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/2020/</loc>
+      
+        <lastmod>2020-12-31T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/constexpr/</loc>
+      
+        <lastmod>2020-11-27T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/CV-qualifiers/</loc>
+      
+        <lastmod>2020-11-27T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-set/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-sed/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-for/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-eval/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-array/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-String-Comparision/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-GetIPAddr/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-DirectoryExists/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Bash-AndOR/</loc>
+      
+        <lastmod>2020-11-17T01:00:01+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/YoctoBasics-1/</loc>
+      
+        <lastmod>2020-11-16T11:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Blog-%EA%B4%80%EB%A0%A8-FAQ/</loc>
+      
+        <lastmod>2020-11-10T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/AGL-%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC/</loc>
+      
+        <lastmod>2020-10-19T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Adding-GPG-signature/</loc>
+      
+        <lastmod>2020-10-07T00:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/%EA%B7%B8%EB%A3%B9%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80-fork%ED%95%9C-%EC%A0%80%EC%9E%A5%EC%86%8C-%EB%8F%99%EA%B8%B0%ED%99%94%ED%95%98%EA%B8%B0/</loc>
+      
+        <lastmod>2020-10-05T01:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%A0%80%EC%9E%A5%EC%86%8C%EC%97%90-%EC%98%AC%EB%A6%AC%EC%A3%A0/</loc>
+      
+        <lastmod>2020-09-20T15:10:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/Github-Pages%EB%A1%9C-%EB%B8%94%EB%A1%9C%EA%B7%B8%EB%A7%8C%EB%93%A4%EA%B8%B0/</loc>
+      
+        <lastmod>2020-09-11T15:10:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>https://jayleekr.github.io/posts/toyproject1/</loc>
+      
+        <lastmod>2019-04-17T13:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+</urlset>
