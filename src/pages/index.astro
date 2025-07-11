@@ -6,43 +6,108 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main id="main-content" class="min-h-screen">
+			<section class="hero py-20 text-center">
+				<div class="max-w-4xl mx-auto">
+					<h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
+						Jay Lee
+					</h1>
+					<p class="text-2xl text-gray-600 dark:text-gray-300 mb-8">
+						Software Engineer & Tech Enthusiast
+					</p>
+					<p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+						안녕하세요! 저는 풀스택 개발자이자 기술 블로거입니다. 
+						새로운 기술을 탐구하고 지식을 공유하는 것을 좋아합니다.
+					</p>
+					
+					<div class="flex flex-wrap justify-center gap-4 mb-16">
+						<a 
+							href="/blog" 
+							class="px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-semibold"
+						>
+							블로그 보기
+						</a>
+						<a 
+							href="/about" 
+							class="px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors font-semibold"
+						>
+							소개
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<section class="featured-posts py-16 bg-gray-50 dark:bg-gray-800/50">
+				<div class="max-w-6xl mx-auto px-4">
+					<h2 class="text-3xl font-bold text-center mb-12">최근 글</h2>
+					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<!-- Featured posts will be populated here -->
+						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+							<h3 class="text-xl font-semibold mb-3">DevContainer MCP Bootstrapper</h3>
+							<p class="text-gray-600 dark:text-gray-400 mb-4">
+								컨테이너 환경에서 MCP 서버를 쉽게 설정하는 방법을 소개합니다.
+							</p>
+							<a href="/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
+								더 읽기 →
+							</a>
+						</div>
+						
+						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+							<h3 class="text-xl font-semibold mb-3">Linux Capabilities와 빌드 시스템</h3>
+							<p class="text-gray-600 dark:text-gray-400 mb-4">
+								Linux에서 보안을 강화하면서 효율적인 빌드 환경을 구축하는 방법을 다룹니다.
+							</p>
+							<a href="#" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
+								더 읽기 →
+							</a>
+						</div>
+
+						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+							<h3 class="text-xl font-semibold mb-3">더 많은 글들</h3>
+							<p class="text-gray-600 dark:text-gray-400 mb-4">
+								다양한 기술 주제들에 대한 통찰과 경험을 공유하고 있습니다.
+							</p>
+							<a href="/blog" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
+								전체 보기 →
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="skills py-16">
+				<div class="max-w-4xl mx-auto text-center">
+					<h2 class="text-3xl font-bold mb-12">기술 스택</h2>
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+						<div class="p-4">
+							<div class="text-4xl mb-2">🚀</div>
+							<h3 class="font-semibold mb-2">Frontend</h3>
+							<p class="text-sm text-gray-600 dark:text-gray-400">React, Vue, Astro</p>
+						</div>
+						<div class="p-4">
+							<div class="text-4xl mb-2">⚡</div>
+							<h3 class="font-semibold mb-2">Backend</h3>
+							<p class="text-sm text-gray-600 dark:text-gray-400">Node.js, Python, Go</p>
+						</div>
+						<div class="p-4">
+							<div class="text-4xl mb-2">🐳</div>
+							<h3 class="font-semibold mb-2">DevOps</h3>
+							<p class="text-sm text-gray-600 dark:text-gray-400">Docker, Kubernetes</p>
+						</div>
+						<div class="p-4">
+							<div class="text-4xl mb-2">☁️</div>
+							<h3 class="font-semibold mb-2">Cloud</h3>
+							<p class="text-sm text-gray-600 dark:text-gray-400">AWS, GCP</p>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
 		<Footer />
 	</body>

@@ -1,0 +1,53 @@
+---
+title: "2024-08-23 Vehicle Software 양산에 대한 단상 1"
+author: "Jay Lee"
+pubDate: "2024-08-23 00:00:00"
+categories: ["DeepThinking", "Daily"]
+tags: ["DeepThinking", "GithubPage", "Retrospect", "Sonatus", "SDV"]
+permalink: "/posts/2024-vehicle-software-production/"
+---
+
+
+이제 하고있는 CCU2 프로젝트가 Mass production에 가까워져오면서 출장이 요즘 참 잦다.
+Automotive Industry에서 약 10여년 일하면서 이번이 두번째로 겪는 MP인데, 이 시기가 다가오면 모두가 민감해진다.
+
+정말 매일매일이 올라오는 이슈들을 파악하고 처내는 전쟁에 가까운데, 이시기를 정리하고 넘어가지않으면 나중에 다 잊을 것 같아 이 기록을 남기기로 마음 먹었다.
+
+자주 남길 수 있을지는 모르겠지만 그래도 최대한 자주 남기기로한다.
+
+이 시기가 언제냐라고 생각해보면 꽤나 긴 기간이다.
+
+보통은 PoC(Proof of Concept)를 마치고 Bidding을 통해 업체선정이 완료되면 그때부터는 Mass Production 시기라고 볼 수있다.
+PoC기간만해도 짧으면 6개월 CCU2의 경우에는 2년이 넘게 진행하면서 Feature들의 개발을 마쳤고, 업체선정 완료 후 2023년 말부터 Mass Production 시기에 진입하여 2024년 말 ~ 2025년 초에 CCU2 프로젝트가 처음으로 실리는 첫차종이 나온다.
+그리고 이 차종을 기반으로 확대전개되어 몇십차종들이 전세계의 도로에 돌아다닐 것이니, OEM입장에서는 프로젝트의 첫 차종의 첫 MP가 가장 중요하다.
+
+이 Mass Production 기간의 중요한 이벤트들은 순서대로보면 Wire car -&gt; Proto car -&gt; Master Car -&gt; Pilot 1 -&gt; Pilot 2 -&gt; M Stage -&gt; SoP 이다.
+
+보통은 이 기간들이 3개월의 텀을두고 있기때문에 12~15개월의 검증&보완 기간이 이루어진다.
+
+PoC기간동안은 OEM의 R&D 조직과 같이 고분분투하며 일했다면, Mass Production기간에는 OEM의 R&D조직과 한편이되어 OEM내부의 Quality Assuarance 조직, Cyber security 조직 등의 다양한 시각의 검증프로세스를 넘어야한다.
+
+Wire Car 때는 차안에 들어가는 단품(ECU)들을 처음으로 그야말로 전선으로 엮는다.
+
+보통은 대혼란의 시기다.
+
+차량이라는 것을 거대한 머신이라고 생각해보면 그 들어가는 컴퓨터들이 정말 많고 그 컴퓨터들이 동작하는 시스템의 상태정의, 동작 정의 이런 구조들이 정말로 복잡하다.
+시스템 레벨의 상태를 동작시키는 것도 Software + Hardware의 집합체이고 이들끼리의 동작도 실제로 처음 다 연결해서 해보는 시기기때문에 이때는 네트워크단의 문제를 가장 중점적으로 잡고 넘어간다. 대부분은 진단(Diag)메세지 프로토콜로 정의하여 다양한 네트워크 인터페이스로 왔다갔다하는데 이 메세지로 시스템레벨의 동작, 예를들면  Acc On/Off IGN On/Off 와 같은 전원 동작으로 다양한 Power state에 따라 동작들이 잘 이루어지는지를 체크한다.
+
+이 과정에서 Hardware문제보다는 Platform Software의 문제가 엄청 많이 걸러진다. 예를들면 Someip libary, adaptive autosar & classic autosar library 그 위에단에서 Abstract하는 Middleware software (SOA adapter 등)의 Benchmark테스트가 이루어지고 동작이 안한다면 많은 패치가 이루어진다.
+
+각자 이러한 H/W, Low level S/W, Middleware S/W개발하는 회사들은 다 다르고, 그들의 각자 경험도 다르고 수준도 다른 상황이라 엄청난 문제들이 쏟아지잔다.
+
+일을 하다보면 여기서 각 회사들의 민낯이 까발려진다.. 재정적 상황(Resource), 실력 등등말이다.
+
+그 긴기간의 PoC기간동안 아무리 다른 프로덕트들에 대한 많은 정보들이 없이 그들의 프러덕트만 개발을 해왔다하더라도, OEM은 그 상황에 맞는 최소한의 정보들은 준다. 예를들면 시스템사양, 시스템 테스트 사양, 연관된 소프트웨어의 테스트 사양들을 전달해주고 해당 업체는 이 상황에 맞는 테스트 시나리오 및 결과들도 제출을 해야한다.
+
+마치 아주 잘 정제된 상황의 정제된 데이터로만 논문을 쓰는것과 같이 프러덕트를 만드는 업체들, 즉 경험이 많이 부족한 업체들은 이 단계에서 아주 도태된다. 이미지가 실추되기도하고 엔지니어들이 우울증으로 잠수 혹은 사라지기도하고 별일을 다 겪는다.
+
+이렇게 Wire Car가 이벤트가 빡센 것 같지만 사실 이제까지가 맛뵈기다.
+
+그 이후에 다가오는 Event들은 마라맛이거든....
+
+다음편에 이어서..
+
+

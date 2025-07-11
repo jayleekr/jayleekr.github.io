@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.astro/
+backup*/
+_site/
+vendor/
+*.min.js
+*.min.css
+package-lock.json

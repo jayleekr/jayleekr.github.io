@@ -1,0 +1,960 @@
+I"�_
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_0">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/ai/" class="ml-1 mr-2">
+          AI
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            3
+            카테고리,
+          
+            3
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_0" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_0" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/c/" class="ml-1 mr-2">C++</a>
+          
+          <span class="text-muted small font-weight-light">4
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/deepthinking/" class="ml-1 mr-2">DeepThinking</a>
+          
+          <span class="text-muted small font-weight-light">12
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_1">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/bash/" class="ml-1 mr-2">
+          Bash
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            9
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_1" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_1" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_2">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/c/" class="ml-1 mr-2">
+          C++
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            2
+            카테고리,
+          
+            4
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_2" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_2" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/ai/" class="ml-1 mr-2">AI</a>
+          
+          <span class="text-muted small font-weight-light">3
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_3">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/collaboration/" class="ml-1 mr-2">
+          Collaboration
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            1
+            포스트
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_3" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_3" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/toyprojects/" class="ml-1 mr-2">ToyProjects</a>
+          
+          <span class="text-muted small font-weight-light">1
+            포스트
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_4">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/computerarchitecture/" class="ml-1 mr-2">
+          ComputerArchitecture
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            3
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_4" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_4" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_5">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/container/" class="ml-1 mr-2">
+          Container
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            1
+            포스트
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_5" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_5" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_6">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/daily/" class="ml-1 mr-2">
+          Daily
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            5
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_6" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_6" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/deepthinking/" class="ml-1 mr-2">DeepThinking</a>
+          
+          <span class="text-muted small font-weight-light">12
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_7">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/deepthinking/" class="ml-1 mr-2">
+          DeepThinking
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            3
+            카테고리,
+          
+            12
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_7" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_7" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/ai/" class="ml-1 mr-2">AI</a>
+          
+          <span class="text-muted small font-weight-light">3
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/daily/" class="ml-1 mr-2">Daily</a>
+          
+          <span class="text-muted small font-weight-light">5
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/retrospect/" class="ml-1 mr-2">Retrospect</a>
+          
+          <span class="text-muted small font-weight-light">5
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_8">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/embeddedlinux/" class="ml-1 mr-2">
+          EmbeddedLinux
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            5
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_8" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_8" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_9">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/github/" class="ml-1 mr-2">
+          Github
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            5
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_9" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_9" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_10">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/linuxkernel/" class="ml-1 mr-2">
+          LinuxKernel
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            1
+            포스트
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_10" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_10" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_11">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/operatingsystems/" class="ml-1 mr-2">
+          OperatingSystems
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            1
+            포스트
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_11" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_11" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_12">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/retrospect/" class="ml-1 mr-2">
+          Retrospect
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            5
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_12" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_12" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/deepthinking/" class="ml-1 mr-2">DeepThinking</a>
+          
+          <span class="text-muted small font-weight-light">12
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_13">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">
+          TechSavvy
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            10
+            카테고리,
+          
+            31
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_13" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_13" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/ai/" class="ml-1 mr-2">AI</a>
+          
+          <span class="text-muted small font-weight-light">3
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/bash/" class="ml-1 mr-2">Bash</a>
+          
+          <span class="text-muted small font-weight-light">9
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/c/" class="ml-1 mr-2">C++</a>
+          
+          <span class="text-muted small font-weight-light">4
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/computerarchitecture/" class="ml-1 mr-2">ComputerArchitecture</a>
+          
+          <span class="text-muted small font-weight-light">3
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/container/" class="ml-1 mr-2">Container</a>
+          
+          <span class="text-muted small font-weight-light">1
+            포스트
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/embeddedlinux/" class="ml-1 mr-2">EmbeddedLinux</a>
+          
+          <span class="text-muted small font-weight-light">5
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/github/" class="ml-1 mr-2">Github</a>
+          
+          <span class="text-muted small font-weight-light">5
+            포스트들
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/linuxkernel/" class="ml-1 mr-2">LinuxKernel</a>
+          
+          <span class="text-muted small font-weight-light">1
+            포스트
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/operatingsystems/" class="ml-1 mr-2">OperatingSystems</a>
+          
+          <span class="text-muted small font-weight-light">1
+            포스트
+          </span>
+        </li>
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/yocto/" class="ml-1 mr-2">Yocto</a>
+          
+          <span class="text-muted small font-weight-light">2
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_14">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/toyprojects/" class="ml-1 mr-2">
+          ToyProjects
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            1
+            포스트
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_14" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_14" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/collaboration/" class="ml-1 mr-2">Collaboration</a>
+          
+          <span class="text-muted small font-weight-light">1
+            포스트
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+<div class="card categories">
+    <!-- top-category -->
+    <div class="card-header d-flex justify-content-between hide-border-bottom" id="h_15">
+      <span>
+      
+        <i class="far fa-folder-open fa-fw"></i>
+      
+        <a href="/ko/categories/yocto/" class="ml-1 mr-2">
+          Yocto
+        </a>
+
+        <!-- content count -->
+        <span class="text-muted small font-weight-light">
+          
+            1
+            카테고리,
+          
+            2
+            포스트들
+        </span>
+      </span>
+
+      <!-- arrow -->
+      
+      <a href="#l_15" data-toggle="collapse" aria-expanded="true" class="category-trigger hide-border-bottom">
+        <i class="fas fa-fw fa-angle-down"></i>
+      </a>
+      
+
+    </div> <!-- .card-header -->
+
+    <!-- Sub-categories -->
+    
+    <div id="l_15" class="collapse show" aria-expanded="true">
+      <ul class="list-group">
+        
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          <a href="/ko/categories/techsavvy/" class="ml-1 mr-2">TechSavvy</a>
+          
+          <span class="text-muted small font-weight-light">31
+            포스트들
+          </span>
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+<p><!-- .card --></p>
+
+:ET

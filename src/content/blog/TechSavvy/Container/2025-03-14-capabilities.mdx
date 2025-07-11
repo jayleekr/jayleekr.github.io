@@ -1,0 +1,151 @@
+---
+title: "리눅스 capabilities와의 씨름: 빌드 시스템에서 겪은 하루"
+pubDate: "2025-03-14 09:00:00"
+categories: ["TechSavvy", "Container"]
+tags: ["Linux", "Container", "Capabilities", "Yocto", "Docker", "Security"]
+---
+
+
+![Linux Capabilities](/assets/img/linux_capabilities.jpeg)
+
+# 리눅스 capabilities와의 씨름: 빌드 시스템에서 겪은 하루
+
+안녕하세요! 오늘은 리눅스 capabilities와 관련해서 빌드 시스템에서 마주쳤던 흥미로운 문제와 그 해결 과정을 공유하려고 합니다. 
+
+## 🏗️ CM 구조와 OTA 시스템의 이해
+
+우리 시스템의 Container Manager(CM)는 독특한 구조를 가지고 있습니다. CM은 기본적으로 CAP(Container Application Package)을 타겟 디바이스 위에서 빌드해야 하는 구조로 설계되어 있어요. 단순한 구현상의 선택이 아니라, 기존 OTA(Over-The-Air) 업데이트 구조와 Docker의 layered filesystem 개념을 효율적으로 결합하기 위한 전략적인 결정이었습니다.
+
+Docker의 계층화된 파일시스템은 이미지를 여러 레이어로 구성하여 스토리지 효율성과 빌드 시간을 최적화합니다. 이 개념을 OTA 업데이트 시스템과 결합함으로써, 전체 시스템을 다시 배포하지 않고도 특정 컨테이너나 애플리케이션만 업데이트할 수 있게 되었어요. 이런 방식은 제한된 대역폭과 스토리지를 가진 임베디드 시스템에서 특히 중요한 이점을 제공합니다.
+
+하지만 이런 구조는 빌드 시스템에서 새로운 도전과제를 제시합니다. 특히 Linux capabilities와 같은 특수한 권한 설정에 관련해서 말이죠! 🤔
+
+## 🔍 문제의 본질 파헤치기
+
+레시피 코드를 좀 더 자세히 살펴봤습니다:
+
+```bash
+# EIDS 바이너리에 capabilities 설정
+do_set_capabilities() {
+    local image_name=$(find ${S} -type d -maxdepth 1 -mindepth 1 -exec basename {} \;)
+    local eids_binary_path="${S}/$image_name/usr/opt/EIDS/bin/snt_eids"
+    
+    if [ -f "$eids_binary_path" ]; then
+        bbnote "[SNT] Setting capabilities on $eids_binary_path"
+        
+        # 바이너리에 필요한 capabilities 설정
+        if setcap cap_net_admin,cap_net_raw=eip "$eids_binary_path"; then
+            # 성공 시 검증 로직
+        else
+            bbwarn "[SNT] Failed to set capabilities on $eids_binary_path"
+            bbwarn "[SNT] This might be expected in environments without CAP_SETFCAP permissions"
+        fi
+    else
+        bbnote "[SNT] snt_eids binary not found at $eids_binary_path, skipping capability setting"
+    fi
+}
+```
+
+아하! 이제 이해가 됩니다. 이 태스크는 EIDS 바이너리에 네트워크 관련 capabilities를 설정하려고 시도하지만, 빌드 환경에서 권한이 없으면 실패할 수 있도록 설계되어 있었네요. 그냥 경고만 출력하고 빌드를 계속 진행하는 것이 의도적인 설계였던 거죠.
+
+하지만 여전히 의문이 남았습니다: "그럼 이 capabilities는 언제, 어디서 설정되는 걸까?" 🧐
+
+## 🧪 첫 번째 실험: sudo 사용하기
+
+일단 간단한 실험을 해보기로 했습니다. 터미널에서 직접 sudo를 사용해 capabilities를 설정해보는 것이었죠:
+
+```bash
+sudo setcap cap_net_admin,cap_net_raw=eip ./path/to/snt_eids
+```
+
+신기하게도 이 명령은 아무런 에러 없이 실행되었습니다! 설정이 잘 되었는지 확인해봤어요:
+
+```bash
+getcap ./path/to/snt_eids
+./path/to/snt_eids = cap_net_admin,cap_net_raw+eip
+```
+
+완벽합니다! 그렇다면 레시피에 sudo를 추가하는 것은 어떨까요? 🤔 그런데 Yocto 빌드 시스템에서 sudo를 사용하는 것이 표준적인 방법은 아닐 것 같다는 느낌이 들었습니다.
+
+## 🕵️ 더 깊은 탐구: update_setup.sh 발견
+
+시스템 코드를 더 탐색하다가 `update_setup.sh`라는 파일을 발견했습니다. 이 파일에는 시스템 업데이트 중에 실행되는 스크립트가 포함되어 있었고, 놀랍게도 여기에는 많은 capabilities 설정 명령이 있었어요:
+
+```bash
+# set capabilities for xuser after update
+setcap cap_sys_time,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_sys_resource=+eip ${CCU2_BINARY_PATH}/ApSysMgr/bin/LGSystemManager 2&gt;&1 | update_log
+setcap_socket "${CCU2_BINARY_PATH}/BSM/bin/LGBootSyncManager"
+# ... 더 많은 setcap 명령들 ...
+```
+
+이 스크립트는 시스템이 업데이트될 때 실행되며, 적절한 권한으로 capabilities를 설정하는 것 같았습니다. 그리고 이 스크립트는 특별한 SMACK 레이블 검사를 통해 올바른 권한을 가진 상태에서만 실행되도록 설계되어 있었어요.
+
+```bash
+function check_label {
+    shell_label=$(chsmack "/bin/busybox_smack")
+    update_label=$(cat /proc/$$/attr/current)
+    # ... SMACK 레이블 확인 로직 ...
+    if [[ "${shell_label}" =~ "Privileged" ]]; then
+        if [[ "${update_label}" =~ "Privileged" ]]; then
+            echo "[SMACK][XUSER] Start Update!" | update_log
+        else
+            # ... 권한 없을 때의 로직 ...
+        fi
+    fi
+}
+```
+
+이제 그림이 맞춰지기 시작했습니다! 빌드 시에는 capabilities 설정이 실패해도 괜찮고, 실제 중요한 설정은 시스템 업데이트 중에 이루어지는 것이었습니다. 😮
+
+## 🔧 세 번째 방법: CAP_SETFCAP 권한 부여하기
+
+그래도 빌드 환경에서 capabilities를 설정할 수 있다면 좋을 것 같아서, 또 다른 접근법을 시도해봤습니다. setcap 바이너리 자체에 CAP_SETFCAP 권한을 부여하는 것이었죠:
+
+```bash
+sudo setcap cap_setfcap=+ep /usr/sbin/setcap
+```
+
+이후 권한이 제대로 설정되었는지 확인했습니다:
+
+```bash
+getcap /usr/sbin/setcap
+/usr/sbin/setcap = cap_setfcap+ep
+```
+
+이제 일반 사용자로도 setcap 명령을 사용할 수 있게 되었습니다:
+
+```bash
+setcap cap_net_admin,cap_net_raw=eip ./path/to/snt_eids
+```
+
+성공입니다! 🎉 이 방법을 사용하면 sudo 없이도, 빌드 환경에서 capabilities를 설정할 수 있게 되었습니다.
+
+## 🤔 그런데, 실제 상황은 더 복잡했습니다
+
+더 깊이 파고들수록, 상황이 더 복잡하다는 것을 알게 되었습니다. 우리 시스템에서는 `cm_create_cap.py`라는 스크립트를 사용해 바이너리를 압축하고 패키징한 후 타겟에 전달하고 있었어요. 게다가 일부 패키지는 향후 암호화될 예정이었고, 이렇게 되면 타겟에서 압축을 풀고 다시 capabilities를 설정하는 것이 불가능해질 수 있었죠.
+
+특히 factory 패키지는 암호화되지 않지만, test 패키지는 암호화될 예정이었기 때문에 일원화된 로직을 구현하기 어려웠습니다. 😵‍💫
+
+## 📚 Yocto의 권장 방식은 무엇일까?
+
+Yocto 문서를 찾아보면서, 일반적으로 권장되는 접근법들도 살펴봤습니다:
+
+1. **postinst 스크립트 사용**: 패키지가 설치된 후 타겟에서 capabilities 설정
+2. **init 스크립트 사용**: 시스템 부팅 중에 capabilities 설정
+3. **빌드 시점 설정 우회**: 빌드 환경과 타겟 환경의 차이를 인정하고 타겟에서만 설정
+
+그런데 우리의 경우처럼 암호화된 패키지를 사용하는 경우, 이러한 표준 접근법이 항상 적용 가능한 것은 아니었습니다.
+
+## 💡 결론: 때로는 기존 방식이 최선입니다
+
+이런 복잡한 상황을 고려했을 때, 결국 가장 안정적인 접근법은 기존에 검증된 방식을 유지하는 것이었습니다. 우리의 경우에는 Dockerfile에서 컨테이너 이미지 빌드 시점에 capabilities를 설정하는 방식이었죠.
+
+비록 빌드 시스템에서 capabilities를 설정하는 다양한 방법을 배웠지만, 때로는 모든 제약사항과 요구사항을 고려했을 때 기존의 방식이 가장 견고한 해결책일 수 있다는 교훈을 얻었습니다.
+
+이 과정은 리눅스 보안 메커니즘의 복잡성, 빌드 환경과 런타임 환경의 차이, 그리고 실제 제품 개발에서 마주하는 복잡한 요구사항들을 이해하는 좋은 기회였습니다. 간단해 보이는 문제도 깊이 파고들면 다양한 층위의 복잡성이 있다는 것을 다시 한번 깨닫게 되었어요! 🧠
+
+빌드 시스템과 보안 메커니즘의 씨름은 오늘도 계속됩니다. 하지만 이제 리눅스 capabilities에 대해 조금 더 깊이 이해하게 되었으니, 다음 문제는 좀 더 쉽게 해결할 수 있겠죠? 😉
+
+---
+
+*이 글은 실제 빌드 시스템에서 리눅스 capabilities를 다루면서 겪은 경험을 바탕으로 작성되었으며, 유사한 환경에서 개발하는 엔지니어들에게 도움이 되길 바랍니다.*

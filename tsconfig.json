@@ -1,8 +1,9 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "exclude": ["dist", "backup*", "_site"],
   "compilerOptions": {
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["astro/client", "vitest/globals"]
   }
 }

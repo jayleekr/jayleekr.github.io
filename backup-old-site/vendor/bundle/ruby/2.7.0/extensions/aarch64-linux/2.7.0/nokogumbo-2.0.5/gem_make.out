@@ -1,0 +1,37 @@
+current directory: /blog/vendor/bundle/ruby/2.7.0/gems/nokogumbo-2.0.5/ext/nokogumbo
+/usr/local/bin/ruby -I /usr/local/lib/ruby/2.7.0 -r ./siteconf20250310-7-13g3c5a.rb extconf.rb
+checking for whether -I/blog/vendor/bundle/ruby/2.7.0/gems/nokogiri-1.15.7-aarch64-linux/ext/nokogiri is accepted as CFLAGS... yes
+checking for whether -I/blog/vendor/bundle/ruby/2.7.0/gems/nokogiri-1.15.7-aarch64-linux/ext/nokogiri/include is accepted as CFLAGS... yes
+checking for whether -I/blog/vendor/bundle/ruby/2.7.0/gems/nokogiri-1.15.7-aarch64-linux/ext/nokogiri/include/libxml2 is accepted as CFLAGS... yes
+checking for libxml/tree.h... yes
+checking for nokogiri.h... yes
+creating Makefile
+
+current directory: /blog/vendor/bundle/ruby/2.7.0/gems/nokogumbo-2.0.5/ext/nokogumbo
+make "DESTDIR=" clean
+
+current directory: /blog/vendor/bundle/ruby/2.7.0/gems/nokogumbo-2.0.5/ext/nokogumbo
+make "DESTDIR="
+compiling nokogumbo.c
+compiling ./../../gumbo-parser/src/string_buffer.c
+compiling ./../../gumbo-parser/src/svg_attrs.c
+compiling ./../../gumbo-parser/src/ascii.c
+compiling ./../../gumbo-parser/src/util.c
+compiling ./../../gumbo-parser/src/svg_tags.c
+compiling ./../../gumbo-parser/src/vector.c
+compiling ./../../gumbo-parser/src/attribute.c
+compiling ./../../gumbo-parser/src/token_buffer.c
+compiling ./../../gumbo-parser/src/char_ref.c
+compiling ./../../gumbo-parser/src/utf8.c
+compiling ./../../gumbo-parser/src/error.c
+compiling ./../../gumbo-parser/src/tag.c
+compiling ./../../gumbo-parser/src/parser.c
+compiling ./../../gumbo-parser/src/foreign_attrs.c
+compiling ./../../gumbo-parser/src/tokenizer.c
+compiling ./../../gumbo-parser/src/string_piece.c
+compiling ./../../gumbo-parser/src/tag_lookup.c
+linking shared-object nokogumbo/nokogumbo.so
+
+current directory: /blog/vendor/bundle/ruby/2.7.0/gems/nokogumbo-2.0.5/ext/nokogumbo
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 nokogumbo.so ./.gem.20250310-7-1k4g0jk/nokogumbo

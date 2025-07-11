@@ -1,63 +1,125 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`About - ${SITE_TITLE}`} description="Jay Lee - 소프트웨어 엔지니어이자 기술 블로거입니다." />
+	</head>
+	<body>
+		<Header />
+		<main id="main-content">
+			<section class="py-12">
+				<div class="max-w-4xl mx-auto">
+					<div class="text-center mb-16">
+						<h1 class="text-4xl font-bold mb-6">About Me</h1>
+						<div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-4xl text-white font-bold">
+							JL
+						</div>
+						<p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+							안녕하세요! 저는 Jay Lee입니다. 소프트웨어 개발과 새로운 기술 탐구를 좋아하는 엔지니어입니다.
+						</p>
+					</div>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+					<div class="grid md:grid-cols-2 gap-12 mb-16">
+						<div>
+							<h2 class="text-2xl font-bold mb-6">🚀 전문 분야</h2>
+							<ul class="space-y-3">
+								<li class="flex items-center gap-3">
+									<span class="w-2 h-2 bg-primary-500 rounded-full"></span>
+									<span>풀스택 웹 개발</span>
+								</li>
+								<li class="flex items-center gap-3">
+									<span class="w-2 h-2 bg-primary-500 rounded-full"></span>
+									<span>컨테이너 및 DevOps</span>
+								</li>
+								<li class="flex items-center gap-3">
+									<span class="w-2 h-2 bg-primary-500 rounded-full"></span>
+									<span>클라우드 아키텍처</span>
+								</li>
+								<li class="flex items-center gap-3">
+									<span class="w-2 h-2 bg-primary-500 rounded-full"></span>
+									<span>AI/ML 통합</span>
+								</li>
+							</ul>
+						</div>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+						<div>
+							<h2 class="text-2xl font-bold mb-6">🛠️ 기술 스택</h2>
+							<div class="space-y-4">
+								<div>
+									<h3 class="font-semibold mb-2">Frontend</h3>
+									<p class="text-gray-600 dark:text-gray-400">React, Vue.js, Astro, TypeScript</p>
+								</div>
+								<div>
+									<h3 class="font-semibold mb-2">Backend</h3>
+									<p class="text-gray-600 dark:text-gray-400">Node.js, Python, Go, Java</p>
+								</div>
+								<div>
+									<h3 class="font-semibold mb-2">DevOps & Cloud</h3>
+									<p class="text-gray-600 dark:text-gray-400">Docker, Kubernetes, AWS, GCP</p>
+								</div>
+							</div>
+						</div>
+					</div>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+					<div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 mb-16">
+						<h2 class="text-2xl font-bold mb-6 text-center">💼 경험</h2>
+						<div class="space-y-6">
+							<div class="border-l-4 border-primary-500 pl-6">
+								<h3 class="font-bold text-lg">Senior Software Engineer</h3>
+								<p class="text-gray-600 dark:text-gray-400 mb-2">Tech Company • 2020 - Present</p>
+								<p class="text-gray-700 dark:text-gray-300">
+									마이크로서비스 아키텍처를 기반으로 한 대규모 시스템 설계 및 개발을 담당하고 있습니다.
+									특히 컨테이너 오케스트레이션과 CI/CD 파이프라인 구축에 중점을 두고 있습니다.
+								</p>
+							</div>
+							
+							<div class="border-l-4 border-primary-500 pl-6">
+								<h3 class="font-bold text-lg">Full Stack Developer</h3>
+								<p class="text-gray-600 dark:text-gray-400 mb-2">Startup • 2018 - 2020</p>
+								<p class="text-gray-700 dark:text-gray-300">
+									스타트업에서 프론트엔드부터 백엔드까지 전체 스택을 담당하며,
+									빠른 프로토타이핑과 MVP 개발 경험을 쌓았습니다.
+								</p>
+							</div>
+						</div>
+					</div>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+					<div class="text-center">
+						<h2 class="text-2xl font-bold mb-6">📬 연락하기</h2>
+						<p class="text-gray-600 dark:text-gray-400 mb-8">
+							프로젝트 협업이나 기술 토론에 관심이 있으시면 언제든 연락주세요!
+						</p>
+						<div class="flex justify-center gap-6">
+							<a 
+								href="mailto:jayleekr0125@gmail.com"
+								class="flex items-center gap-2 px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+							>
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+								</svg>
+								이메일
+							</a>
+							<a 
+								href="https://github.com/jayleekr"
+								target="_blank"
+								class="flex items-center gap-2 px-6 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
+							>
+								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16">
+									<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+								</svg>
+								GitHub
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "useTabs": true,
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "options": {
+        "parser": "astro"
+      }
+    },
+    {
+      "files": ["*.md", "*.mdx"],
+      "options": {
+        "useTabs": false,
+        "tabWidth": 2
+      }
+    }
+  ]
+}

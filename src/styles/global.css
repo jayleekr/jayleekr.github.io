@@ -1,21 +1,26 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+@import 'tailwindcss';
 
+/* Modern theme variables */
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+	--accent: theme('colors.primary.600');
+	--accent-dark: theme('colors.primary.700');
+	--bg-primary: theme('colors.white');
+	--bg-secondary: theme('colors.gray.50');
+	--text-primary: theme('colors.gray.900');
+	--text-secondary: theme('colors.gray.600');
+	--border-color: theme('colors.gray.200');
 }
+
+.dark {
+	--accent: theme('colors.primary.400');
+	--accent-dark: theme('colors.primary.300');
+	--bg-primary: theme('colors.gray.900');
+	--bg-secondary: theme('colors.gray.800');
+	--text-primary: theme('colors.gray.100');
+	--text-secondary: theme('colors.gray.300');
+	--border-color: theme('colors.gray.700');
+}
+/* Keep Atkinson font for compatibility */
 @font-face {
 	font-family: 'Atkinson';
 	src: url('/fonts/atkinson-regular.woff') format('woff');
@@ -30,126 +35,207 @@
 	font-style: normal;
 	font-display: swap;
 }
-body {
-	font-family: 'Atkinson', sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
-}
-main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+
+/* Base styles using Tailwind */
+html {
+	@apply scroll-smooth;
 }
 
+body {
+	@apply font-sans text-lg leading-relaxed text-gray-900 dark:text-gray-100;
+	@apply bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800;
+	@apply transition-colors duration-300;
+	font-family: 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+}
+
+main {
+	@apply max-w-3xl mx-auto px-4 py-12 md:px-6 lg:px-8;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+	@apply font-bold text-gray-900 dark:text-gray-100 leading-tight;
+}
+
+h1 { @apply text-5xl mb-4; }
+h2 { @apply text-4xl mb-3; }
+h3 { @apply text-3xl mb-3; }
+h4 { @apply text-2xl mb-2; }
+h5 { @apply text-xl mb-2; }
+h6 { @apply text-lg mb-2; }
+
+p {
+	@apply mb-4 text-gray-700 dark:text-gray-300;
+}
+
+a {
+	@apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300;
+	@apply transition-colors duration-200 underline decoration-2 underline-offset-2;
+}
+
+strong, b {
+	@apply font-bold text-gray-900 dark:text-gray-100;
+}
+
+/* Code styling */
+code {
+	@apply px-2 py-1 text-sm bg-gray-100 dark:bg-gray-800 rounded;
+	@apply border border-gray-200 dark:border-gray-700;
+}
+
+pre {
+	@apply p-6 rounded-lg overflow-x-auto;
+	@apply bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+}
+
+pre code {
+	@apply p-0 bg-transparent border-0 text-sm;
+}
+
+/* Quote styling */
+blockquote {
+	@apply border-l-4 border-primary-500 pl-5 py-2 my-4;
+	@apply bg-gray-50 dark:bg-gray-800 rounded-r-lg;
+	@apply text-lg italic text-gray-700 dark:text-gray-300;
+}
+
+/* Table styling */
+table {
+	@apply w-full border-collapse border border-gray-200 dark:border-gray-700 rounded-lg;
+}
+
+th, td {
+	@apply border border-gray-200 dark:border-gray-700 px-4 py-2;
+}
+
+th {
+	@apply bg-gray-50 dark:bg-gray-800 font-semibold;
+}
+
+/* Image styling */
+img {
+	@apply max-w-full h-auto rounded-lg shadow-sm;
+}
+
+/* Form elements */
+input, textarea {
+	@apply text-base border border-gray-300 dark:border-gray-600;
+	@apply bg-white dark:bg-gray-800 rounded-md px-3 py-2;
+	@apply focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+}
+
+textarea {
+	@apply w-full resize-vertical;
+}
+
+/* HR styling */
+hr {
+	@apply border-0 border-t border-gray-200 dark:border-gray-700 my-8;
+}
+
+/* Utility classes */
 .sr-only {
+	@apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap;
+	clip: rect(0, 0, 0, 0);
 	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+}
+
+/* Dark mode toggle */
+.theme-toggle {
+	@apply p-2 rounded-full bg-gray-100 dark:bg-gray-800;
+	@apply hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+}
+
+/* Prose improvements for blog posts */
+.prose {
+	@apply text-gray-700 dark:text-gray-300;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+	@apply text-gray-900 dark:text-gray-100 font-bold;
+}
+
+.prose h1 { @apply text-3xl mb-6 mt-8; }
+.prose h2 { @apply text-2xl mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700; }
+.prose h3 { @apply text-xl mb-3 mt-6; }
+.prose h4 { @apply text-lg mb-2 mt-4; }
+
+.prose p {
+	@apply mb-4 leading-relaxed;
+}
+
+.prose ul, .prose ol {
+	@apply mb-4 pl-6;
+}
+
+.prose li {
+	@apply mb-2;
+}
+
+.prose blockquote {
+	@apply border-l-4 border-primary-500 pl-4 my-6 italic;
+	@apply bg-gray-50 dark:bg-gray-800 py-4 rounded-r-lg;
+}
+
+.prose pre {
+	@apply bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto my-6;
+	@apply border border-gray-700;
+}
+
+.prose code {
+	@apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm;
+	@apply border border-gray-200 dark:border-gray-700;
+}
+
+.prose pre code {
+	@apply bg-transparent border-0 p-0 text-green-400;
+}
+
+.prose img {
+	@apply rounded-lg shadow-md my-6 mx-auto max-w-full;
+}
+
+.prose table {
+	@apply w-full border-collapse my-6;
+}
+
+.prose th {
+	@apply bg-gray-100 dark:bg-gray-800 font-semibold p-3 text-left;
+	@apply border border-gray-300 dark:border-gray-600;
+}
+
+.prose td {
+	@apply p-3 border border-gray-300 dark:border-gray-600;
+}
+
+.prose a {
+	@apply text-primary-600 dark:text-primary-400 underline;
+	@apply hover:text-primary-700 dark:hover:text-primary-300 transition-colors;
+}
+
+.prose strong {
+	@apply font-bold text-gray-900 dark:text-gray-100;
+}
+
+.prose em {
+	@apply italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	body {
+		@apply text-base;
+	}
+	
+	main {
+		@apply px-4 py-8;
+	}
+	
+	h1 { @apply text-3xl; }
+	h2 { @apply text-2xl; }
+	h3 { @apply text-xl; }
+	
+	.prose h1 { @apply text-2xl; }
+	.prose h2 { @apply text-xl; }
+	.prose h3 { @apply text-lg; }
 }

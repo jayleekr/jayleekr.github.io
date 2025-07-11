@@ -1,0 +1,96 @@
+---
+title: "Github Blog 관련 FAQ"
+author: "Jay Lee"
+pubDate: "2020-11-10 00:00:00"
+categories: ["TechSavvy", "Github"]
+tags: ["TechSavvy", "Github", "ProgrammingLanguage", "Yocto"]
+---
+
+
+## 1. 구글 검색 활성화
+
+### 1.1 Activate sitemap
+
+Modify _config.yml
+``` yml
+plugins: ['jekyll-paginate', 'jekyll-sitemap', 'jekyll-include-cache', 'jekyll-gist']
+```
+
+### 1.2 Add robots.txt
+
+``` txt
+User-agent: *
+Allow:/
+
+Sitemap: https://jayleekr.github.io/sitemap.xml
+```
+
+### 1.3 Register sitemap to google search console
+
+1. Go to https://www.google.com/webmasters
+2. Click **SEARCH CONSOLE**
+
+## 2. Jekyll 관련 
+
+### 2.1 로컬에서 blog를 테스트하기위한 Dependency들 설치
+
+``` sh
+$ sudo apt-get install -y gem 
+$ sudo gem install jekyll bundler tzinfo tzinfo-data minima 
+```
+
+### 2.2 Theme 설치
+
+minimal-mistakes 를 설치해보도록 하겠다.
+
+1. 먼저 Gemfile 에 설치하고자 하는 minimal-mistakes 테마를 추가해주자
+
+``` sh
+gem "minimal-mistakes-jekyll"
+```
+
+2. bundle을 설치하자.
+``` sh
+$ bundle install 
+```
+3. _config.yml 파일에 theme를 추가하자
+``` yml
+theme : minimal-mistakes-jekyll
+```
+
+### 2.3 Jekyll 실행
+``` sh
+$ jekyll serve
+Configuration file: /home/jayleekr/workspace/00_codes/07_blog/_config.yml
+            Source: /home/jayleekr/workspace/00_codes/07_blog
+       Destination: /home/jayleekr/workspace/00_codes/07_blog/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+       Jekyll Feed: Generating feed for posts
+                    done in 0.823 seconds.
+ Auto-regeneration: enabled for '/home/jayleekr/workspace/00_codes/07_blog'
+    Server address: http://127.0.0.1:4000
+  Server running... press ctrl-c to stop.
+```
+
+### 2. Jekyll 버전 호환이슈
+
+프로젝트의 버전과 설치한 Jekyll의 버전이 다를때 발생한다.
+
+Gem 의 의존성을 모두 제거하면 해결가능하다.
+``` sh
+$ sudo gem install bundler
+$ bundle install
+$ bundle exec jekyll serve
+bundle exec jekyll serve
+Configuration file: /home/jayleekr/workspace/00_codes/07_blog/_config.yml
+            Source: /home/jayleekr/workspace/00_codes/07_blog
+       Destination: /home/jayleekr/workspace/00_codes/07_blog/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+       Jekyll Feed: Generating feed for posts
+                    done in 0.823 seconds.
+ Auto-regeneration: enabled for '/home/jayleekr/workspace/00_codes/07_blog'
+    Server address: http://127.0.0.1:4000
+  Server running... press ctrl-c to stop.
+```

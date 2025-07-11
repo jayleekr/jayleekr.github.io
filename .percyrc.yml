@@ -1,0 +1,16 @@
+version: 2
+snapshot:
+  widths:
+    - 375  # Mobile
+    - 768  # Tablet
+    - 1280 # Desktop
+  minHeight: 1024
+discovery:
+  allowedHostnames:
+    - localhost
+    - 127.0.0.1
+  networkIdleTimeout: 750
+agent:
+  assetDiscovery:
+    requestHeaders:
+      User-Agent: percy-agent
