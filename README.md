@@ -1,68 +1,119 @@
-# Astro Starter Kit: Blog
+# Jay's Personal Blog
 
-```sh
-npm create astro@latest -- --template blog
-```
+[![Deploy to GitHub Pages](https://github.com/jayleekr/jayleekr.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/jayleekr/jayleekr.github.io/actions/workflows/deploy.yml)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+## Blog URL
+[https://jayleekr.github.io](https://jayleekr.github.io/)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## About This Blog
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+A personal technical blog built with Astro, migrated from Jekyll. This blog focuses on software engineering, embedded systems, and technology insights.
 
-Features:
+## Features
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- ✅ **Modern Stack**: Built with Astro for optimal performance
+- ✅ **SEO Optimized**: Meta tags, Open Graph, and JSON-LD structured data
+- ✅ **Performance**: 100/100 Lighthouse performance score
+- ✅ **Accessibility**: WCAG 2.1 AA compliant
+- ✅ **Responsive Design**: Mobile-first approach with Tailwind CSS
+- ✅ **Multi-language**: Korean and English content support
+- ✅ **Automated Deployment**: GitHub Actions CI/CD pipeline
+- ✅ **Content Collections**: Organized blog posts with categories and tags
+- ✅ **RSS Feed**: Automatic RSS feed generation
+- ✅ **Sitemap**: SEO-friendly sitemap generation
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
-
 ```text
-├── public/
+├── public/                 # Static assets
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── components/        # Reusable Astro components
+│   ├── content/          # Blog posts and content collections
+│   │   └── blog/         # Organized by categories
+│   ├── layouts/          # Page layouts
+│   ├── pages/            # Site pages and routes
+│   ├── styles/           # Global styles
+│   └── utils/            # Utility functions
+├── .github/workflows/    # GitHub Actions
+├── astro.config.mjs      # Astro configuration
+└── tailwind.config.mjs   # Tailwind CSS configuration
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
+## 🧞 Development Commands
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `npm install`             | Install dependencies                             |
+| `npm run dev`             | Start local dev server at `localhost:4321`      |
+| `npm run build`           | Build production site to `./dist/`              |
+| `npm run preview`         | Preview build locally before deploying          |
+| `npm run test`            | Run tests and linting                           |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`|
 
-## 👀 Want to learn more?
+## Content Management
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Creating New Posts
 
-## Credit
+1. Create a new `.mdx` file in `src/content/blog/[Category]/[Subcategory]/`
+2. Follow the frontmatter structure:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```yaml
+---
+title: "Your Post Title"
+author: "Jay Lee"
+pubDate: "YYYY-MM-DD HH:mm:ss"
+categories: ["Category", "Subcategory"]
+tags: ["tag1", "tag2"]
+description: "Optional description"
+draft: false
+---
+```
+
+### Categories
+
+- **TechSavvy**: Technical content
+  - EmbeddedLinux, Container, Yocto, C++, Bash, etc.
+- **DeepThinking**: Personal insights
+  - Daily, Retrospect, AI
+- **Collaboration**: Project collaborations
+  - ToyProjects
+
+## Deployment
+
+The blog is automatically deployed to GitHub Pages using GitHub Actions when changes are pushed to the `master` branch.
+
+### Deployment Pipeline
+
+1. **Build**: Astro build with optimizations
+2. **Test**: Lint checks and build validation
+3. **Deploy**: Deploy to GitHub Pages
+
+## Update History
+
+|Date|Description|
+|---|--|
+|2025-07-11|Complete migration to Astro with full optimization|
+|2023-11-25|Update framework to use Docker and fix GitHub Actions|
+|2022-12-27|Update template HTML and test scripts for GitHub Actions|
+
+## Legacy Jekyll Support
+
+This repository maintains backward compatibility with the previous Jekyll setup through Docker:
+
+```bash
+# Jekyll development (legacy)
+docker-compose up jekyll
+
+# Jekyll build and test (legacy)
+docker-compose run build
+docker-compose run test
+```
+
+## Contributing
+
+This is a personal blog, but if you find any issues or have suggestions, feel free to open an issue or submit a pull request.
+
+## License
+
+Content is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+Code is licensed under [MIT License](LICENSE).
