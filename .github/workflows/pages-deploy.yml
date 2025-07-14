@@ -1,8 +1,7 @@
 name: 'Automatic build'
+# Disabled - using Astro deployment instead
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch: # manual trigger only
     paths-ignore:
       - '.gitignore'
       - 'README.md'

@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -87,13 +87,28 @@ jobs:
   # Deploy job
   deploy:
     name: Deploy
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./artifact
+          
+      - name: Extract artifact
+        run: |
+          cd ./artifact
+          tar -xf artifact.tar
+          
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./artifact
+          publish_branch: gh-pages
+          force_orphan: true
