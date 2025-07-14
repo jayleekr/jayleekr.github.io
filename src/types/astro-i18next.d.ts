@@ -15,6 +15,9 @@ declare module "astro-i18next" {
     };
   }
 
-  function astroI18next(config?: Partial<AstroI18nextConfig>): any;
+  function astroI18next(): {
+    name: string;
+    hooks: Record<string, any>;
+  };
   export default astroI18next;
 }
