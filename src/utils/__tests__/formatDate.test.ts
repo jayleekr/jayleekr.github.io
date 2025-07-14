@@ -28,7 +28,6 @@ describe('Date Formatting Utils', () => {
   it('should calculate relative time correctly', () => {
     const now = new Date()
     const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000)
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
 
     expect(getRelativeTime(now, 'ko')).toBe('오늘')
     expect(getRelativeTime(yesterday, 'ko')).toBe('어제')

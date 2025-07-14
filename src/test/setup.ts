@@ -1,14 +1,15 @@
 import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 // Global test setup
-global.ResizeObserver = class MockedResizeObserver {
+globalThis.ResizeObserver = class MockedResizeObserver {
   observe = vi.fn()
   unobserve = vi.fn()
   disconnect = vi.fn()
 }
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(globalThis, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation(query => ({
     matches: false,
