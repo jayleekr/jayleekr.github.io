@@ -1,4 +1,6 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Modern theme variables */
 :root {
@@ -125,7 +127,7 @@ input, textarea {
 }
 
 textarea {
-	@apply w-full resize-vertical;
+	@apply w-full resize-y;
 }
 
 /* HR styling */

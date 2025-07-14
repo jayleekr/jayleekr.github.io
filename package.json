@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^6.0.2",
     "@axe-core/playwright": "^4.10.2",
     "@percy/cli": "^1.31.0",
     "@percy/playwright": "^1.0.8",
@@ -52,7 +53,7 @@
     "playwright": "^1.54.0",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   }

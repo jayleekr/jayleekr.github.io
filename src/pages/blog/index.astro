@@ -174,8 +174,8 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 				@apply bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 border-primary-300 dark:border-primary-700;
 			}
 
-			.post-card.hidden {
-				@apply hidden;
+			.post-card.hide {
+				display: none;
 			}
 
 			#no-results {
@@ -237,10 +237,10 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 
 					// Show/hide card
 					if (matchesSearch && matchesCategory && matchesTags) {
-						card.classList.remove('hidden');
+						card.classList.remove('hide');
 						visibleCount++;
 					} else {
-						card.classList.add('hidden');
+						card.classList.add('hide');
 					}
 				});
 
