@@ -15,6 +15,9 @@ declare module "astro-i18next" {
     };
   }
 
-  const astroI18next: any;
+  const astroI18next: {
+    config: AstroI18nextConfig;
+    init: (config: AstroI18nextConfig) => void;
+  };
   export default astroI18next;
 }
