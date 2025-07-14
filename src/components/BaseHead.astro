@@ -4,6 +4,8 @@
 import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
+import GoogleAnalytics from './GoogleAnalytics.astro';
+import WebVitals from './WebVitals.astro';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
@@ -115,6 +117,9 @@ const jsonLD = {
 <meta name="language" content="ko-KR" />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Google Search Console Verification -->
+<!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> -->
+
 <!-- Keywords for articles -->
 {tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
 
@@ -157,3 +162,9 @@ const jsonLD = {
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
+
+<!-- Google Analytics -->
+<GoogleAnalytics />
+
+<!-- Web Vitals Performance Monitoring -->
+<WebVitals />

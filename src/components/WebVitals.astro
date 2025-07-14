@@ -1,0 +1,46 @@
+---
+// Web Vitals 성능 측정
+// Core Web Vitals (CLS, FID, LCP) 및 기타 성능 지표 수집
+---
+
+<script is:inline>
+  // Web Vitals 측정 및 Google Analytics로 전송
+  function sendToGoogleAnalytics({name, delta, value, id}) {
+    // GA4가 로드되어 있는 경우에만 전송
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, {
+        event_category: 'Web Vitals',
+        event_label: id,
+        value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        non_interaction: true,
+      });
+    }
+    
+    // 콘솔에도 로그 (개발 환경에서)
+    if (window.location.hostname === 'localhost') {
+      console.log(`${name}: ${value} (delta: ${delta})`);
+    }
+  }
+
+  // Web Vitals 라이브러리를 동적으로 로드
+  async function measureWebVitals() {
+    try {
+      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('https://unpkg.com/web-vitals@3/dist/web-vitals.js');
+      
+      getCLS(sendToGoogleAnalytics);
+      getFID(sendToGoogleAnalytics);
+      getFCP(sendToGoogleAnalytics);
+      getLCP(sendToGoogleAnalytics);
+      getTTFB(sendToGoogleAnalytics);
+    } catch (error) {
+      console.warn('Web Vitals measurement failed:', error);
+    }
+  }
+
+  // 페이지 로드 후 측정 시작
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measureWebVitals);
+  } else {
+    measureWebVitals();
+  }
+</script>
