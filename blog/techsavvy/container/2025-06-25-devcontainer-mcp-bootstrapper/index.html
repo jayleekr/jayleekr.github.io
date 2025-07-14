@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="ko"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#3b82f6"><meta name="color-scheme" content="light dark"><!-- Icons and Manifest --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><!-- RSS and Sitemap --><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Jay Lee - Tech Blog" href="https://jayleekr.github.io/rss.xml"><!-- Preload Critical Resources --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- DNS Prefetch for External Resources --><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//github.com"><!-- Canonical URL --><link rel="canonical" href="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/"><!-- Primary Meta Tags --><title>개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기</title><meta name="title" content="개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기"><meta name="description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="author" content="Jay Lee"><meta name="robots" content="index, follow"><meta name="language" content="ko-KR"><meta name="generator" content="Astro v5.11.0"><!-- Google Search Console Verification --><!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> --><!-- Keywords for articles --><meta name="keywords" content="DevContainer, MCP, Docker, Claude, AI, Bootstrap, Automation, Development"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:site_name" content="Jay Lee"><meta property="og:url" content="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/"><meta property="og:title" content="개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기"><meta property="og:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta property="og:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기"><meta property="og:locale" content="ko_KR"><!-- Article specific Open Graph --><meta property="article:author" content="Jay Lee"><meta property="article:published_time" content="2025-06-25T10:00:00.000Z"><meta property="article:section" content="Technology"><meta property="article:tag" content="DevContainer"><meta property="article:tag" content="MCP"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Claude"><meta property="article:tag" content="AI"><meta property="article:tag" content="Bootstrap"><meta property="article:tag" content="Automation"><meta property="article:tag" content="Development"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@jayleekr"><meta name="twitter:creator" content="@jayleekr"><meta name="twitter:url" content="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/"><meta name="twitter:title" content="개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기"><meta name="twitter:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="twitter:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta name="twitter:image:alt" content="개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기"><!-- Additional SEO Meta Tags --><meta name="format-detection" content="telephone=no"><meta name="revisit-after" content="7 days"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","name":"개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기","headline":"개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기","description":"소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다.","url":"https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/","image":{"@type":"ImageObject","url":"https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg","width":1200,"height":630},"author":{"@type":"Person","name":"Jay Lee","url":"https://jayleekr.github.io/","sameAs":["https://github.com/jayleekr","https://linkedin.com/in/jayleekr"]},"publisher":{"@type":"Organization","name":"Jay Lee","url":"https://jayleekr.github.io/","logo":{"@type":"ImageObject","url":"https://jayleekr.github.io/favicon.svg"}},"datePublished":"2025-06-25T10:00:00.000Z","keywords":"DevContainer, MCP, Docker, Claude, AI, Bootstrap, Automation, Development","articleSection":"Technology","inLanguage":"ko-KR"}</script><!-- Google Analytics --><!-- Web Vitals Performance Monitoring --><script>
+  // Web Vitals 측정 및 Google Analytics로 전송
+  function sendToGoogleAnalytics({name, delta, value, id}) {
+    // GA4가 로드되어 있는 경우에만 전송
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, {
+        event_category: 'Web Vitals',
+        event_label: id,
+        value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        non_interaction: true,
+      });
+    }
+    
+    // 콘솔에도 로그 (개발 환경에서)
+    if (window.location.hostname === 'localhost') {
+      console.log(`${name}: ${value} (delta: ${delta})`);
+    }
+  }
+
+  // Web Vitals 라이브러리를 동적으로 로드
+  async function measureWebVitals() {
+    try {
+      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('https://unpkg.com/web-vitals@3/dist/web-vitals.js');
+      
+      getCLS(sendToGoogleAnalytics);
+      getFID(sendToGoogleAnalytics);
+      getFCP(sendToGoogleAnalytics);
+      getLCP(sendToGoogleAnalytics);
+      getTTFB(sendToGoogleAnalytics);
+    } catch (error) {
+      console.warn('Web Vitals measurement failed:', error);
+    }
+  }
+
+  // 페이지 로드 후 측정 시작
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measureWebVitals);
+  } else {
+    measureWebVitals();
+  }
+</script><link rel="stylesheet" href="/assets/_slug_.HdoLLdys.css"></head> <body> <!-- Skip to main content link for accessibility --><a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg focus:shadow-lg transition-all">
+메인 콘텐츠로 건너뛰기
+</a> <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"> <nav class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between" role="navigation" aria-label="메인 네비게이션"> <div class="flex items-center space-x-4"> <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 m-0"> <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors no-underline"> Jay Lee </a> </h2> </div> <div class="flex items-center space-x-6"> <div class="hidden md:flex items-center space-x-4"> <a href="/" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500"> Home </a> <a href="/blog" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-primary-600 dark:text-primary-400 border-primary-500 font-semibold"> Blog </a> <a href="/about" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500"> About </a> </div> <!-- Theme Toggle --> <button id="theme-toggle" class="theme-toggle p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode"> <svg id="theme-toggle-dark-icon" class="w-5 h-5 text-gray-800 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20"> <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path> </svg> <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-gray-800 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20"> <path d="M10 2L13.09 8.26L20 9L14 14.74L15.18 21.02L10 17.77L4.82 21.02L6 14.74L0 9L6.91 8.26L10 2Z"></path> </svg> </button> <div class="hidden md:flex items-center space-x-3"> <a href="https://github.com/jayleekr" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors" aria-label="GitHub Profile"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path> </svg> </a> <a href="mailto:jayleekr0125@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors" aria-label="Email"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path> </svg> </a> </div> </div> </nav> </header> <script type="module">const d=document.getElementById("theme-toggle"),e=document.getElementById("theme-toggle-dark-icon"),t=document.getElementById("theme-toggle-light-icon"),s=localStorage.getItem("theme")||"light";s==="dark"?(document.documentElement.classList.add("dark"),e?.classList.add("hidden"),t?.classList.remove("hidden")):(document.documentElement.classList.remove("dark"),t?.classList.add("hidden"),e?.classList.remove("hidden"));d?.addEventListener("click",()=>{document.documentElement.classList.toggle("dark"),document.documentElement.classList.contains("dark")?(localStorage.setItem("theme","dark"),e?.classList.add("hidden"),t?.classList.remove("hidden")):(localStorage.setItem("theme","light"),t?.classList.add("hidden"),e?.classList.remove("hidden"))});</script> <main id="main-content" class="max-w-4xl mx-auto px-4 py-8"> <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"> <!-- Hero Image -->  <!-- Article Header --> <header class="p-6 md:p-8"> <!-- Categories --> <div class="flex flex-wrap gap-2 mb-4"> <span class="px-3 py-1 text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full"> TechSavvy </span><span class="px-3 py-1 text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full"> Container </span> </div> <!-- Title --> <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"> 개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기 </h1> <!-- Description -->  <!-- Meta Information --> <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4"> <time datetime="2025-06-25T10:00:00.000Z" class="flex items-center gap-2"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path> </svg> <time datetime="2025-06-25T10:00:00.000Z"> Jun 25, 2025 </time> </time>  <!-- Reading Time Estimate --> <span class="flex items-center gap-2"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path> </svg>
+3분 읽기
+</span> </div> <!-- Tags --> <div class="flex flex-wrap gap-2 mt-4"> <span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#DevContainer </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#MCP </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Docker </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Claude </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#AI </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Bootstrap </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Automation </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Development </span> </div> </header> <!-- Article Content --> <div class="prose prose-lg dark:prose-invert max-w-none px-6 md:px-8 pb-8">  <p><img src="/assets/img/docker.jpeg" alt="DevContainer MCP Bootstrapper"/></p>
+<h1 id="개발환경-부트스트래핑-자동화-devcontainer-mcp-bootstrapper-만들기">개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기</h1>
+<p>안녕하세요! 오늘은 최근에 만든 <a href="https://github.com/jayleekr/devcontainer-mcp-bootstrapper">DevContainer MCP Bootstrapper</a>에 대해서 이야기해보려고 한다.</p>
+<p>Claude MCP(Model Context Protocol) 서버들을 자동으로 설치하고 개발 도구들을 쭉 설정해주는 부트스트래퍼를 만들어봤는데, 개발 과정에서 꽤 재밌는 이야기들이 있어서 공유하고 싶다.</p>
+<h2 id="-왜-만들게-되었나">🤔 왜 만들게 되었나?</h2>
+<p>최근에 Claude Code 설치 가이드를 작성하면서 느낀 점이 있었다. 컨테이너 환경에서 매번 개발 환경을 설정하는 게 너무 번거롭다는 것이었다.</p>
+<p>특히 다음과 같은 상황들이 반복되고 있었다:</p>
+<ol>
+<li><strong>새로운 DevContainer 생성할 때마다</strong>: Git 설정, 셸 alias, Vim 설정 등을 매번 다시 해야 함</li>
+<li><strong>Claude MCP 설정</strong>: Context7과 Supermemory MCP 서버를 매번 수동으로 설치하고 설정</li>
+<li><strong>개발 도구들</strong>: Docker alias, 유용한 함수들을 계속 다시 설정</li>
+</ol>
+<p>이런 반복 작업이 귀찮아서 “아예 원스텝으로 모든 걸 자동화해버리자!”라고 생각했다.</p>
+<h2 id="-뭘-자동화했나">🚀 뭘 자동화했나?</h2>
+<h3 id="핵심-기능들">핵심 기능들</h3>
+<p><strong>1. Claude MCP 서버 자동 설치</strong></p>
+<ul>
+<li>Context7: 최신 문서와 코드 예제 검색</li>
+<li>Supermemory: AI 도구 간 개인 메모리 관리</li>
+</ul>
+<p><strong>2. 개발 도구 설정</strong></p>
+<ul>
+<li>Git 글로벌 설정과 유용한 alias들</li>
+<li>생산성을 높이는 셸 alias와 함수들</li>
+<li>Vim 기본 설정</li>
+<li>Docker 관리용 단축 명령어들</li>
+</ul>
+<p><strong>3. 환경 감지와 적응</strong></p>
+<ul>
+<li>Docker, DevContainer, Codespaces 등 자동 감지</li>
+<li>패키지 매니저 자동 선택 (apt, yum, brew 등)</li>
+<li>권한 상황에 맞는 설치 방식 선택</li>
+</ul>
+<h2 id="-설계-철학-모듈화와-선택적-설치">🔧 설계 철학: 모듈화와 선택적 설치</h2>
+<p>처음에는 그냥 “모든 걸 다 설치하자!”였는데, 개발하다 보니 사용자마다 필요한 게 다르다는 걸 깨달았다.</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 모든 컴포넌트 설치 (기본)</span>
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.githubusercontent.com/jayleekr/devcontainer-mcp-bootstrapper/main/bootstrap.sh <span class="token operator">|</span> <span class="token function">bash</span>
+
+<span class="token comment"># 특정 컴포넌트만 설치</span>
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.githubusercontent.com/jayleekr/devcontainer-mcp-bootstrapper/main/bootstrap.sh <span class="token operator">|</span> <span class="token function">bash</span> <span class="token parameter variable">-s</span> -- <span class="token parameter variable">--only</span> claude,git,shell
+</code></pre>
+<p>이런 식으로 모듈화해서 원하는 것만 설치할 수 있게 만들었다.</p>
+<h3 id="컴포넌트별-구성">컴포넌트별 구성</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>컴포넌트</th><th>기능</th><th>왜 필요한가?</th></tr></thead><tbody><tr><td><code>claude</code></td><td>Claude MCP 서버들</td><td>AI 개발 워크플로우 통합</td></tr><tr><td><code>git</code></td><td>Git 설정과 alias</td><td>버전 관리 효율성</td></tr><tr><td><code>shell</code></td><td>셸 alias와 함수</td><td>터미널 생산성</td></tr><tr><td><code>vim</code></td><td>Vim 기본 설정</td><td>에디터 환경</td></tr><tr><td><code>docker</code></td><td>Docker alias</td><td>컨테이너 관리 편의성</td></tr></tbody></table>
+<h2 id="️-환경-감지의-복잡함">🕵️ 환경 감지의 복잡함</h2>
+<p>가장 까다로웠던 부분은 <strong>환경 감지</strong>였다.</p>
+<p>Docker 컨테이너인지, GitHub Codespaces인지, WSL인지, 일반 Linux인지를 정확히 판단해야 했고, 각각에 맞는 설치 방식을 써야 했다.</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 환경 감지 로직의 일부</span>
+<span class="token function-name function">detect_environment</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token parameter variable">-f</span> /.dockerenv <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">&quot;docker&quot;</span>
+    <span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token parameter variable">-n</span> <span class="token string">&quot;<span class="token variable">$CODESPACES</span>&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">&quot;codespaces&quot;</span>
+    <span class="token keyword">elif</span> <span class="token function">grep</span> <span class="token parameter variable">-q</span> Microsoft /proc/version <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null<span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">&quot;wsl&quot;</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">&quot;native&quot;</span>
+    <span class="token keyword">fi</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>특히 권한 관리가 까다로웠다. 일부 환경에서는 sudo가 없고, 일부는 root로 실행되고, 또 일부는 사용자 권한만 있는 상황이었다.</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 권한에 맞는 패키지 설치</span>
+<span class="token function-name function">install_package</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">local</span> <span class="token assign-left variable">package</span><span class="token operator">=</span><span class="token variable">$1</span>
+    <span class="token keyword">if</span> <span class="token builtin class-name">command</span> <span class="token parameter variable">-v</span> <span class="token function">sudo</span> <span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">[</span> <span class="token string">&quot;<span class="token environment constant">$EUID</span>&quot;</span> <span class="token parameter variable">-ne</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token function">sudo</span> <span class="token variable">$PKG_MANAGER</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token string">&quot;<span class="token variable">$package</span>&quot;</span>
+    <span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token string">&quot;<span class="token environment constant">$EUID</span>&quot;</span> <span class="token parameter variable">-eq</span> <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token variable">$PKG_MANAGER</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token string">&quot;<span class="token variable">$package</span>&quot;</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">&quot;⚠️  권한 부족: <span class="token variable">$package</span> 설치를 건너뜀&quot;</span>
+    <span class="token keyword">fi</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="-mcp-설정의-자동화">💡 MCP 설정의 자동화</h2>
+<p>Claude MCP 설정이 생각보다 복잡했다. 특히 설정 파일 구조가 JSON이라서 기존 설정을 망가뜨리지 않으면서 새로운 서버를 추가하는 게 까다로웠다.</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># MCP 설정 파일 백업 및 업데이트</span>
+<span class="token function-name function">update_claude_config</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">local</span> <span class="token assign-left variable">config_file</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.config/Claude/claude_desktop_config.json&quot;</span>
+    
+    <span class="token comment"># 기존 설정 백업</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token parameter variable">-f</span> <span class="token string">&quot;<span class="token variable">$config_file</span>&quot;</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token function">cp</span> <span class="token string">&quot;<span class="token variable">$config_file</span>&quot;</span> <span class="token string">&quot;<span class="token variable">$config_file</span>.backup.<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> +%Y%m%d_%H%M%S<span class="token variable">)</span></span>&quot;</span>
+    <span class="token keyword">fi</span>
+    
+    <span class="token comment"># 새 설정 생성</span>
+    create_mcp_config <span class="token string">&quot;<span class="token variable">$config_file</span>&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>그리고 Supermemory MCP의 경우 개인별 고유 URL이 필요해서, 환경변수로 받을 수 있게 만들었다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 개인 Supermemory URL 설정</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SUPERMEMORY_MCP_URL</span><span class="token operator">=</span><span class="token string">&quot;https://mcp.supermemory.ai/YOUR_UNIQUE_ID/sse&quot;</span>
+</code></pre>
+<h2 id="-사용자-경험-개선">🎯 사용자 경험 개선</h2>
+<p>처음에는 단순히 “설치만 되면 끝”이라고 생각했는데, 실제로 써보니 사용자가 뭐가 설치되고 있는지, 어떻게 사용하는지 알기 어려웠다.</p>
+<p>그래서 다음과 같은 기능들을 추가했다:</p>
+<p><strong>1. 상세한 진행상황 표시</strong></p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">&quot;📦 NVM 설치...&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🔧 NVM 환경 설정...&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🚀 Node.js 최신 LTS 설치...&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;✅ 설치된 버전 확인...&quot;</span>
+</code></pre>
+<p><strong>2. 설치 후 가이드</strong></p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token builtin class-name">echo</span> <span class="token string">&quot;=== 설치 완료! ===&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;Claude Code 버전: <span class="token variable"><span class="token variable">$(</span>claude <span class="token parameter variable">--version</span><span class="token variable">)</span></span>&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;다음 단계:&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;1. 새 터미널을 열거나 &#39;source ~/.bashrc&#39; 실행&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;2. &#39;claude&#39; 명령어로 실행&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;3. 첫 실행 시 인증 과정 진행&quot;</span>
+</code></pre>
+<p><strong>3. 편리한 관리 명령어들</strong></p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash">mcp_status              <span class="token comment"># MCP 설정 상태 확인</span>
+bootstrap_update        <span class="token comment"># 부트스트래퍼 업데이트</span>
+dev_info               <span class="token comment"># 개발 환경 정보 표시</span>
+</code></pre>
+<h2 id="-예상치-못한-문제들">🐛 예상치 못한 문제들</h2>
+<h3 id="1-패키지-매니저의-다양성">1. 패키지 매니저의 다양성</h3>
+<p>Linux 배포판마다 패키지 매니저가 다르다는 건 알고 있었지만, 실제로 지원하려니 정말 다양했다:</p>
+<ul>
+<li>Debian/Ubuntu: <code>apt</code></li>
+<li>CentOS/RHEL/Fedora: <code>yum</code>/<code>dnf</code></li>
+<li>Arch Linux: <code>pacman</code></li>
+<li>openSUSE: <code>zypper</code></li>
+<li>Alpine: <code>apk</code></li>
+<li>macOS/Linux: <code>brew</code></li>
+</ul>
+<p>각각의 문법도 미묘하게 달라서 통합 인터페이스를 만드는 게 생각보다 복잡했다.</p>
+<h3 id="2-컨테이너별-특이사항들">2. 컨테이너별 특이사항들</h3>
+<p><strong>Google Colab</strong>: 패키지 설치는 되는데 영구 저장이 안 됨
+<strong>Replit</strong>: Node.js가 이미 설치되어 있지만 권한 문제 있음
+<strong>GitHub Codespaces</strong>: 사용자 설정이 특별한 위치에 저장됨</p>
+<p>이런 환경별 특이사항들을 다 고려해야 했다.</p>
+<h3 id="3-네트워크-문제">3. 네트워크 문제</h3>
+<p>기업 환경에서는 프록시 설정 때문에 외부 스크립트 다운로드가 안 되는 경우가 많았다. 그래서 오프라인 모드도 지원하게 되었다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 오프라인 모드</span>
+./bootstrap.sh <span class="token parameter variable">--offline</span>
+</code></pre>
+<h2 id="-업데이트와-유지보수">🔄 업데이트와 유지보수</h2>
+<p>부트스트래퍼를 만들고 나니 “이걸 어떻게 업데이트하지?”라는 고민이 생겼다.</p>
+<p>그래서 자체 업데이트 기능을 추가했다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token function-name function">bootstrap_update</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">&quot;🔄 부트스트래퍼 업데이트 중...&quot;</span>
+    <span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.githubusercontent.com/jayleekr/devcontainer-mcp-bootstrapper/main/bootstrap.sh <span class="token parameter variable">-o</span> /tmp/bootstrap_update.sh
+    <span class="token function">chmod</span> +x /tmp/bootstrap_update.sh
+    /tmp/bootstrap_update.sh <span class="token parameter variable">--update</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>그리고 설정 백업 기능도 넣어서 업데이트할 때 기존 설정이 날아가지 않게 했다.</p>
+<h2 id="-실제-사용해본-결과">📊 실제 사용해본 결과</h2>
+<p>몇 주 동안 실제로 써보니 정말 편했다.</p>
+<p><strong>이전</strong>: 새 환경 설정에 30분 이상
+<strong>현재</strong>: 원라이너로 5분 안에 완료</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 정말 이거 한 줄이면 끝</span>
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://raw.githubusercontent.com/jayleekr/devcontainer-mcp-bootstrapper/main/bootstrap.sh <span class="token operator">|</span> <span class="token function">bash</span>
+</code></pre>
+<p>특히 DevContainer나 Codespaces에서 새 프로젝트 시작할 때 <code>postCreateCommand</code>에 넣어두면 자동으로 모든 게 설정되니까 정말 편하다.</p>
+<h3 id="devcontainer-통합-예시">DevContainer 통합 예시</h3>
+<pre class="language-json" data-language="json"><code is:raw class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;My Development Environment&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;image&quot;</span><span class="token operator">:</span> <span class="token string">&quot;mcr.microsoft.com/devcontainers/base:ubuntu&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;postCreateCommand&quot;</span><span class="token operator">:</span> <span class="token string">&quot;curl -fsSL https://raw.githubusercontent.com/jayleekr/devcontainer-mcp-bootstrapper/main/bootstrap.sh | bash&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;customizations&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;vscode&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">&quot;extensions&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">&quot;ms-vscode.claude-dev&quot;</span>
+      <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="-앞으로의-계획">🎨 앞으로의 계획</h2>
+<p>현재 기본적인 기능들은 다 구현했지만, 앞으로 추가하고 싶은 것들이 있다:</p>
+<ol>
+<li><strong>더 많은 MCP 서버 지원</strong>: 앞으로 나올 새로운 MCP 서버들 자동 지원</li>
+<li><strong>개인화 설정</strong>: 사용자별 프리셋 저장 기능</li>
+<li><strong>GUI 도구들</strong>: 개발에 유용한 GUI 도구들 자동 설치</li>
+<li><strong>성능 최적화</strong>: 병렬 설치로 설치 시간 단축</li>
+</ol>
+<h2 id="-회고-자동화의-가치">💭 회고: 자동화의 가치</h2>
+<p>이번 프로젝트를 하면서 느낀 건, <strong>반복되는 작업은 무조건 자동화해야 한다</strong>는 것이다.</p>
+<p>처음에는 “스크립트 만드는 시간에 그냥 수동으로 하는 게 빠르지 않을까?”라고 생각했는데, 막상 만들고 나니 시간 절약은 물론이고 <strong>실수도 줄고</strong>, <strong>일관성도 보장</strong>되고, <strong>다른 사람들도 쉽게 사용</strong>할 수 있게 되었다.</p>
+<p>특히 개발 환경 설정 같은 경우는 한 번 제대로 자동화해두면 계속 써먹을 수 있어서 투자 대비 효과가 크다.</p>
+<h2 id="-커뮤니티와-기여">🤝 커뮤니티와 기여</h2>
+<p>이 부트스트래퍼는 개인적인 필요에서 시작했지만, 비슷한 문제를 겪는 개발자들이 많을 것 같다. 그래서 MIT 라이선스로 오픈소스화했다.</p>
+<p>혹시 사용해보시고 개선점이나 버그를 발견하시면 언제든지 이슈나 PR을 올려주세요!</p>
+<p>특히 다음과 같은 기여를 환영한다:</p>
+<ul>
+<li>새로운 환경 지원 (새로운 컨테이너 플랫폼, OS 등)</li>
+<li>추가 MCP 서버 통합</li>
+<li>설치 스크립트 최적화</li>
+<li>문서 개선</li>
+</ul>
+<h2 id="-마무리">🔚 마무리</h2>
+<p>DevContainer MCP Bootstrapper를 만들면서 환경 감지, 패키지 관리, 사용자 경험 등 많은 것들을 배웠다.</p>
+<p>무엇보다도 <strong>자동화의 힘</strong>을 다시 한번 실감했다. 반복적인 작업을 자동화하는 것은 단순히 시간을 절약하는 것뿐만 아니라, 실수를 줄이고 일관성을 보장하며 다른 사람들과 쉽게 공유할 수 있게 해준다.</p>
+<p>앞으로도 개발 워크플로우에서 반복되는 부분들을 찾아서 자동화해나갈 계획이다. 여러분도 반복 작업이 있으면 자동화를 고려해보시길!</p>
+<hr/>
+<p><em>이 글은 실제 DevContainer MCP Bootstrapper 개발 과정에서 겪은 경험을 바탕으로 작성되었으며, 다양한 개발 환경에서 테스트되었다.</em></p>
+<p><strong>저장소</strong>: <a href="https://github.com/jayleekr/devcontainer-mcp-bootstrapper">https://github.com/jayleekr/devcontainer-mcp-bootstrapper</a></p>  </div> <!-- Article Footer --> <footer class="border-t border-gray-200 dark:border-gray-700 p-6 md:p-8"> <div class="flex items-center justify-between"> <div class="flex items-center gap-4"> <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
+JL
+</div> <div> <h3 class="font-semibold text-gray-900 dark:text-gray-100">Jay Lee</h3> <p class="text-sm text-gray-600 dark:text-gray-400">소프트웨어 엔지니어</p> </div> </div> <div class="flex gap-3"> <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" title="공유하기"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path> </svg> </button> <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors" title="좋아요"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path> </svg> </button> </div> </div> </footer> </article> <!-- Navigation --> <nav class="mt-12 flex justify-between items-center"> <a href="/blog" class="flex items-center gap-2 px-4 py-2 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg>
+블로그 목록으로
+</a> <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path> </svg>
+맨 위로
+</button> </nav> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2025 Your name here. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://m.webtoo.ls/@astro" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Astro on Mastodon</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/mastodon" data-astro-cid-sz7xmlte><path fill="currentColor" d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://twitter.com/astrodotbuild" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Astro on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/withastro/astro" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Astro's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> </div> </footer>  </body></html>

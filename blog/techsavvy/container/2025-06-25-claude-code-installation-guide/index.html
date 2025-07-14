@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="ko"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#3b82f6"><meta name="color-scheme" content="light dark"><!-- Icons and Manifest --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><!-- RSS and Sitemap --><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Jay Lee - Tech Blog" href="https://jayleekr.github.io/rss.xml"><!-- Preload Critical Resources --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- DNS Prefetch for External Resources --><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//github.com"><!-- Canonical URL --><link rel="canonical" href="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/"><!-- Primary Meta Tags --><title>기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)</title><meta name="title" content="기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)"><meta name="description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="author" content="Jay Lee"><meta name="robots" content="index, follow"><meta name="language" content="ko-KR"><meta name="generator" content="Astro v5.11.0"><!-- Google Search Console Verification --><!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> --><!-- Keywords for articles --><meta name="keywords" content="Claude, AI, Docker, Linux, Container, Node.js, Installation"><!-- Open Graph / Facebook --><meta property="og:type" content="article"><meta property="og:site_name" content="Jay Lee"><meta property="og:url" content="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/"><meta property="og:title" content="기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)"><meta property="og:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta property="og:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)"><meta property="og:locale" content="ko_KR"><!-- Article specific Open Graph --><meta property="article:author" content="Jay Lee"><meta property="article:published_time" content="2025-06-25T09:00:00.000Z"><meta property="article:section" content="Technology"><meta property="article:tag" content="Claude"><meta property="article:tag" content="AI"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Container"><meta property="article:tag" content="Node.js"><meta property="article:tag" content="Installation"><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@jayleekr"><meta name="twitter:creator" content="@jayleekr"><meta name="twitter:url" content="https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/"><meta name="twitter:title" content="기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)"><meta name="twitter:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="twitter:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta name="twitter:image:alt" content="기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)"><!-- Additional SEO Meta Tags --><meta name="format-detection" content="telephone=no"><meta name="revisit-after" content="7 days"><!-- JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","name":"기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)","headline":"기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)","description":"소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다.","url":"https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/","image":{"@type":"ImageObject","url":"https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg","width":1200,"height":630},"author":{"@type":"Person","name":"Jay Lee","url":"https://jayleekr.github.io/","sameAs":["https://github.com/jayleekr","https://linkedin.com/in/jayleekr"]},"publisher":{"@type":"Organization","name":"Jay Lee","url":"https://jayleekr.github.io/","logo":{"@type":"ImageObject","url":"https://jayleekr.github.io/favicon.svg"}},"datePublished":"2025-06-25T09:00:00.000Z","keywords":"Claude, AI, Docker, Linux, Container, Node.js, Installation","articleSection":"Technology","inLanguage":"ko-KR"}</script><!-- Google Analytics --><!-- Web Vitals Performance Monitoring --><script>
+  // Web Vitals 측정 및 Google Analytics로 전송
+  function sendToGoogleAnalytics({name, delta, value, id}) {
+    // GA4가 로드되어 있는 경우에만 전송
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, {
+        event_category: 'Web Vitals',
+        event_label: id,
+        value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        non_interaction: true,
+      });
+    }
+    
+    // 콘솔에도 로그 (개발 환경에서)
+    if (window.location.hostname === 'localhost') {
+      console.log(`${name}: ${value} (delta: ${delta})`);
+    }
+  }
+
+  // Web Vitals 라이브러리를 동적으로 로드
+  async function measureWebVitals() {
+    try {
+      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('https://unpkg.com/web-vitals@3/dist/web-vitals.js');
+      
+      getCLS(sendToGoogleAnalytics);
+      getFID(sendToGoogleAnalytics);
+      getFCP(sendToGoogleAnalytics);
+      getLCP(sendToGoogleAnalytics);
+      getTTFB(sendToGoogleAnalytics);
+    } catch (error) {
+      console.warn('Web Vitals measurement failed:', error);
+    }
+  }
+
+  // 페이지 로드 후 측정 시작
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measureWebVitals);
+  } else {
+    measureWebVitals();
+  }
+</script><link rel="stylesheet" href="/assets/_slug_.HdoLLdys.css"></head> <body> <!-- Skip to main content link for accessibility --><a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg focus:shadow-lg transition-all">
+메인 콘텐츠로 건너뛰기
+</a> <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"> <nav class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between" role="navigation" aria-label="메인 네비게이션"> <div class="flex items-center space-x-4"> <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 m-0"> <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors no-underline"> Jay Lee </a> </h2> </div> <div class="flex items-center space-x-6"> <div class="hidden md:flex items-center space-x-4"> <a href="/" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500"> Home </a> <a href="/blog" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-primary-600 dark:text-primary-400 border-primary-500 font-semibold"> Blog </a> <a href="/about" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500"> About </a> </div> <!-- Theme Toggle --> <button id="theme-toggle" class="theme-toggle p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode"> <svg id="theme-toggle-dark-icon" class="w-5 h-5 text-gray-800 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20"> <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path> </svg> <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-gray-800 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20"> <path d="M10 2L13.09 8.26L20 9L14 14.74L15.18 21.02L10 17.77L4.82 21.02L6 14.74L0 9L6.91 8.26L10 2Z"></path> </svg> </button> <div class="hidden md:flex items-center space-x-3"> <a href="https://github.com/jayleekr" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors" aria-label="GitHub Profile"> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path> </svg> </a> <a href="mailto:jayleekr0125@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors" aria-label="Email"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 7.89a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path> </svg> </a> </div> </div> </nav> </header> <script type="module">const d=document.getElementById("theme-toggle"),e=document.getElementById("theme-toggle-dark-icon"),t=document.getElementById("theme-toggle-light-icon"),s=localStorage.getItem("theme")||"light";s==="dark"?(document.documentElement.classList.add("dark"),e?.classList.add("hidden"),t?.classList.remove("hidden")):(document.documentElement.classList.remove("dark"),t?.classList.add("hidden"),e?.classList.remove("hidden"));d?.addEventListener("click",()=>{document.documentElement.classList.toggle("dark"),document.documentElement.classList.contains("dark")?(localStorage.setItem("theme","dark"),e?.classList.add("hidden"),t?.classList.remove("hidden")):(localStorage.setItem("theme","light"),t?.classList.add("hidden"),e?.classList.remove("hidden"))});</script> <main id="main-content" class="max-w-4xl mx-auto px-4 py-8"> <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden"> <!-- Hero Image -->  <!-- Article Header --> <header class="p-6 md:p-8"> <!-- Categories --> <div class="flex flex-wrap gap-2 mb-4"> <span class="px-3 py-1 text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full"> TechSavvy </span><span class="px-3 py-1 text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full"> Container </span> </div> <!-- Title --> <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight"> 기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨) </h1> <!-- Description -->  <!-- Meta Information --> <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4"> <time datetime="2025-06-25T09:00:00.000Z" class="flex items-center gap-2"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path> </svg> <time datetime="2025-06-25T09:00:00.000Z"> Jun 25, 2025 </time> </time>  <!-- Reading Time Estimate --> <span class="flex items-center gap-2"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path> </svg>
+3분 읽기
+</span> </div> <!-- Tags --> <div class="flex flex-wrap gap-2 mt-4"> <span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Claude </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#AI </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Docker </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Linux </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Container </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Node.js </span><span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+#Installation </span> </div> </header> <!-- Article Content --> <div class="prose prose-lg dark:prose-invert max-w-none px-6 md:px-8 pb-8">  <p><img src="/assets/img/claude.jpeg" alt="Claude Code Installation Guide"/></p>
+<h1 id="기존-linux-container에서-claude-code-설치-가이드-실제-검증됨">기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)</h1>
+<h2 id="목차">목차</h2>
+<ol>
+<li><a href="#claude-code-%EA%B0%9C%EC%9A%94">Claude Code 개요</a></li>
+<li><a href="#%EC%8B%A4%ED%96%89-%EC%A4%91%EC%9D%B8-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EC%97%90-%EC%A0%91%EC%86%8D">실행 중인 컨테이너에 접속</a></li>
+<li><a href="#%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%99%98%EA%B2%BD-%ED%99%95%EC%9D%B8">시스템 환경 확인</a></li>
+<li><a href="#nodejs-%EC%84%A4%EC%B9%98-nvm-%EA%B6%8C%EC%9E%A5">Node.js 설치 (NVM 권장)</a></li>
+<li><a href="#claude-code-%EC%84%A4%EC%B9%98">Claude Code 설치</a></li>
+<li><a href="#%EC%9D%B8%EC%A6%9D-%EC%84%A4%EC%A0%95">인증 설정</a></li>
+<li><a href="#%EC%82%AC%EC%9A%A9%EB%B2%95">사용법</a></li>
+<li><a href="#%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0">문제 해결</a></li>
+<li><a href="#%EA%B2%80%EC%A6%9D%EB%90%9C-%EC%84%A4%EC%B9%98-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8">검증된 설치 스크립트</a></li>
+</ol>
+<h2 id="claude-code-개요">Claude Code 개요</h2>
+<p>Claude Code는 Anthropic에서 개발한 터미널 기반 AI 코딩 도구로, 다음과 같은 기능을 제공한다:</p>
+<ul>
+<li>코드베이스 전반의 파일 편집 및 버그 수정</li>
+<li>코드 아키텍처와 로직에 대한 질문 응답</li>
+<li>테스트, 린팅 및 기타 명령 실행 및 수정</li>
+<li>Git 워크플로우 관리 (병합 충돌 해결, PR 생성 등)</li>
+<li>웹 검색을 통한 문서 및 리소스 탐색</li>
+</ul>
+<p><strong>시스템 요구사항</strong>: Node.js 18+ (권장: 20+ LTS)</p>
+<h2 id="실행-중인-컨테이너에-접속">실행 중인 컨테이너에 접속</h2>
+<h3 id="1-컨테이너-목록-확인">1. 컨테이너 목록 확인</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 실행 중인 컨테이너 확인</span>
+<span class="token function">docker</span> <span class="token function">ps</span>
+
+<span class="token comment"># 또는 모든 컨테이너 확인 (중지된 것 포함)</span>
+<span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span>
+</code></pre>
+<h3 id="2-컨테이너에-접속">2. 컨테이너에 접속</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 컨테이너 이름으로 접속</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span>컨테이너_이름<span class="token operator">&amp;</span>gt<span class="token punctuation">;</span> /bin/bash
+
+<span class="token comment"># 또는 컨테이너 ID로 접속</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span>컨테이너_ID<span class="token operator">&gt;</span> /bin/bash
+
+<span class="token comment"># bash가 없는 경우 sh 사용</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span>컨테이너_이름<span class="token operator">&amp;</span>gt<span class="token punctuation">;</span> /bin/sh
+</code></pre>
+<h3 id="3-root-권한으로-접속-필요시">3. root 권한으로 접속 (필요시)</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># root 사용자로 접속</span>
+<span class="token function">docker</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-it</span> <span class="token parameter variable">-u</span> root <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span>컨테이너_이름<span class="token operator">&amp;</span>gt<span class="token punctuation">;</span> /bin/bash
+</code></pre>
+<h2 id="시스템-환경-확인">시스템 환경 확인</h2>
+<h3 id="1-운영체제-및-권한-확인">1. 운영체제 및 권한 확인</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># OS 정보 확인</span>
+<span class="token function">cat</span> /etc/os-release
+
+<span class="token comment"># 현재 사용자 및 권한 확인</span>
+<span class="token function">whoami</span> <span class="token operator">&amp;&amp;</span> <span class="token function">id</span>
+
+<span class="token comment"># sudo 권한 확인</span>
+<span class="token function">sudo</span> <span class="token parameter variable">-l</span> <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null <span class="token operator">||</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;sudo not available&quot;</span>
+</code></pre>
+<h3 id="2-기존-nodejs-확인">2. 기존 Node.js 확인</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 현재 Node.js 확인</span>
+<span class="token function">node</span> <span class="token parameter variable">--version</span> <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null <span class="token operator">||</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;Node.js not installed&quot;</span>
+<span class="token function">npm</span> <span class="token parameter variable">--version</span> <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null <span class="token operator">||</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;npm not installed&quot;</span>
+</code></pre>
+<h2 id="nodejs-설치-nvm-권장">Node.js 설치 (NVM 권장)</h2>
+<p>⚠️ <strong>중요</strong>: Ubuntu 기본 저장소의 Node.js는 버전이 너무 낮다 (v10.x). NVM 사용을 강력히 권장한다.</p>
+<h3 id="방법-1-nvm-사용-추천---검증됨">방법 1: NVM 사용 (추천 - 검증됨)</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 1. NVM 설치</span>
+<span class="token function">curl</span> -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh <span class="token operator">|</span> <span class="token function">bash</span>
+
+<span class="token comment"># 2. NVM 환경 변수 로드</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span>
+
+<span class="token comment"># 3. 최신 LTS Node.js 설치</span>
+nvm <span class="token function">install</span> <span class="token parameter variable">--lts</span>
+nvm use <span class="token parameter variable">--lts</span>
+
+<span class="token comment"># 4. 설치 확인</span>
+<span class="token function">node</span> <span class="token parameter variable">--version</span>  <span class="token comment"># v22.x.x (또는 최신 LTS)</span>
+<span class="token function">npm</span> <span class="token parameter variable">--version</span>   <span class="token comment"># v10.x.x</span>
+
+<span class="token comment"># 5. 기본값으로 설정</span>
+nvm <span class="token builtin class-name">alias</span> default lts/*
+</code></pre>
+<h3 id="방법-2-nodesource-저장소-문제-발생-가능">방법 2: NodeSource 저장소 (문제 발생 가능)</h3>
+<p>⚠️ <strong>주의</strong>: 실제 테스트에서 컨테이너 환경에서 문제가 발생할 수 있다.</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># Ubuntu/Debian 계열</span>
+<span class="token function">curl</span> <span class="token parameter variable">-fsSL</span> https://deb.nodesource.com/setup_20.x <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">bash</span> -
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> nodejs
+
+<span class="token comment"># 버전 확인</span>
+<span class="token function">node</span> <span class="token parameter variable">--version</span>
+<span class="token function">npm</span> <span class="token parameter variable">--version</span>
+</code></pre>
+<h3 id="npm-설정-충돌-해결">npm 설정 충돌 해결</h3>
+<p>NVM 사용 시 기존 npm 설정과 충돌이 발생할 수 있다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 기존 npm 설정 파일 제거</span>
+<span class="token function">rm</span> <span class="token parameter variable">-f</span> ~/.npmrc
+
+<span class="token comment"># NVM 재로드</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+nvm use <span class="token parameter variable">--lts</span>
+</code></pre>
+<h2 id="claude-code-설치">Claude Code 설치</h2>
+<h3 id="1-환경-설정-nvm-사용자">1. 환경 설정 (NVM 사용자)</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># NVM 환경 로드 (매번 터미널 시작 시 필요)</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span>
+</code></pre>
+<h3 id="2-claude-code-설치">2. Claude Code 설치</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># Claude Code 전역 설치</span>
+<span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> @anthropic-ai/claude-code
+
+<span class="token comment"># 설치 확인</span>
+claude <span class="token parameter variable">--version</span>  <span class="token comment"># 1.0.34 (또는 최신 버전)</span>
+</code></pre>
+<h3 id="3-영구-환경-설정">3. 영구 환경 설정</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># bashrc에 NVM 설정 추가 (영구 설정)</span>
+<span class="token function">cat</span> <span class="token operator">&amp;</span>gt<span class="token punctuation">;</span><span class="token operator">&gt;</span> ~/.bashrc <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span><span class="token operator">&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span>
+EOF
+
+<span class="token comment"># 현재 세션에 적용</span>
+<span class="token builtin class-name">source</span> ~/.bashrc
+</code></pre>
+<h3 id="4-선택적-도구-설치">4. 선택적 도구 설치</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># Git (이미 설치되어 있을 가능성 높음)</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token function">git</span>
+
+<span class="token comment"># Ripgrep (검색 성능 향상 - 이미 설치되어 있을 수 있음)</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> ripgrep
+
+<span class="token comment"># 설치 확인</span>
+<span class="token function">git</span> <span class="token parameter variable">--version</span>
+rg <span class="token parameter variable">--version</span>
+</code></pre>
+<h2 id="인증-설정">인증 설정</h2>
+<h3 id="방법-1-oauth-인증-권장---claude-max-사용자">방법 1: OAuth 인증 (권장 - Claude Max 사용자)</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># Claude Code 첫 실행</span>
+claude
+
+<span class="token comment"># 프로세스:</span>
+<span class="token comment"># 1. 터미널 스타일 선택</span>
+<span class="token comment"># 2. Enter 키를 눌러 브라우저에서 로그인</span>
+<span class="token comment"># 3. Anthropic 계정으로 로그인</span>
+<span class="token comment"># 4. 인증 완료 후 터미널로 돌아옴</span>
+</code></pre>
+<h3 id="방법-2-api-키-사용">방법 2: API 키 사용</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># API 키 환경변수 설정</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">ANTHROPIC_API_KEY</span><span class="token operator">=</span><span class="token string">&quot;your_api_key_here&quot;</span>
+
+<span class="token comment"># 영구 설정</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&#39;export ANTHROPIC_API_KEY=&quot;your_api_key_here&quot;&#39;</span> <span class="token operator">&amp;</span>gt<span class="token punctuation">;</span><span class="token operator">&gt;</span> ~/.bashrc
+<span class="token builtin class-name">source</span> ~/.bashrc
+</code></pre>
+<h3 id="컨테이너-환경에서-브라우저-접근이-어려운-경우">컨테이너 환경에서 브라우저 접근이 어려운 경우</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 방법 1: API 키 방식 사용 (위 참조)</span>
+
+<span class="token comment"># 방법 2: 호스트에서 인증 후 설정 파일 복사</span>
+<span class="token comment"># 호스트에서 claude 실행하여 인증 완료 후:</span>
+<span class="token comment"># docker cp ~/.claude/ &amp;lt;컨테이너_이름&amp;gt;:/home/&amp;lt;사용자&amp;gt;/</span>
+</code></pre>
+<h2 id="사용법">사용법</h2>
+<h3 id="1-기본-실행">1. 기본 실행</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 프로젝트 디렉토리로 이동</span>
+<span class="token builtin class-name">cd</span> /path/to/your/project
+
+<span class="token comment"># Claude Code 시작</span>
+claude
+
+<span class="token comment"># 도움말</span>
+claude <span class="token parameter variable">--help</span>
+</code></pre>
+<h3 id="2-일반적인-사용-예시">2. 일반적인 사용 예시</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 프로젝트 분석</span>
+claude <span class="token string">&quot;이 프로젝트의 구조와 주요 기능을 설명해줘&quot;</span>
+
+<span class="token comment"># 코드 작성</span>
+claude <span class="token string">&quot;Python Flask API 엔드포인트를 만들어줘&quot;</span>
+
+<span class="token comment"># 버그 수정</span>
+claude <span class="token string">&quot;main.py 파일을 검토하고 버그를 찾아서 수정해줘&quot;</span>
+
+<span class="token comment"># 테스트 실행</span>
+claude <span class="token string">&quot;테스트를 실행하고 실패한 부분이 있으면 수정해줘&quot;</span>
+
+<span class="token comment"># 대화 계속</span>
+claude <span class="token parameter variable">--continue</span>
+
+<span class="token comment"># 특정 대화 재개</span>
+claude <span class="token parameter variable">--resume</span>
+</code></pre>
+<h3 id="3-고급-옵션">3. 고급 옵션</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 권한 확인 무시 (샌드박스 환경에서만)</span>
+claude --dangerously-skip-permissions
+
+<span class="token comment"># 특정 모델 사용</span>
+claude <span class="token parameter variable">--model</span> sonnet
+
+<span class="token comment"># 디버그 모드</span>
+claude <span class="token parameter variable">--debug</span>
+
+<span class="token comment"># 출력만 확인 (비대화형)</span>
+claude <span class="token parameter variable">--print</span> <span class="token string">&quot;코드 리뷰해줘&quot;</span>
+</code></pre>
+<h2 id="문제-해결">문제 해결</h2>
+<h3 id="1-claude-command-not-found-오류">1. “claude: command not found” 오류</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># NVM 환경 재로드</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+
+<span class="token comment"># 또는 bashrc 재로드</span>
+<span class="token builtin class-name">source</span> ~/.bashrc
+
+<span class="token comment"># Claude 명령어 위치 확인</span>
+<span class="token function">which</span> claude
+<span class="token function">npm</span> list <span class="token parameter variable">-g</span> <span class="token parameter variable">--depth</span><span class="token operator">=</span><span class="token number">0</span> <span class="token operator">|</span> <span class="token function">grep</span> claude
+</code></pre>
+<h3 id="2-nodejs-버전-문제">2. Node.js 버전 문제</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 현재 버전 확인</span>
+<span class="token function">node</span> <span class="token parameter variable">--version</span>
+
+<span class="token comment"># 18 미만인 경우 업그레이드 필요</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">node</span> <span class="token parameter variable">--version</span> <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">&#39;v&#39;</span> <span class="token parameter variable">-f2</span> <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">&#39;.&#39;</span> <span class="token parameter variable">-f1</span><span class="token variable">)</span></span> <span class="token parameter variable">-lt</span> <span class="token number">18</span> <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">&quot;Node.js 18+ 버전이 필요하다&quot;</span>
+    nvm <span class="token function">install</span> <span class="token parameter variable">--lts</span>
+    nvm use <span class="token parameter variable">--lts</span>
+<span class="token keyword">fi</span>
+</code></pre>
+<h3 id="3-npm-권한-오류">3. npm 권한 오류</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># npm 설정 초기화</span>
+<span class="token function">rm</span> <span class="token parameter variable">-f</span> ~/.npmrc
+
+<span class="token comment"># NVM 재설정</span>
+nvm uninstall <span class="token function">node</span>
+nvm <span class="token function">install</span> <span class="token parameter variable">--lts</span>
+nvm use <span class="token parameter variable">--lts</span>
+
+<span class="token comment"># Claude Code 재설치</span>
+<span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> @anthropic-ai/claude-code
+</code></pre>
+<h3 id="4-시스템-패키지-오류-tzdata-등">4. 시스템 패키지 오류 (tzdata 등)</h3>
+<p>컨테이너 환경에서 시스템 패키지 설정 오류는 일반적으로 Claude Code 기능에 영향을 주지 않는다. 다음과 같은 오류는 무시해도 된다:</p>
+<pre class="language-plaintext" data-language="plaintext"><code is:raw class="language-plaintext">tzdata failed to preconfigure
+/etc/timezone: Read-only file system
+</code></pre>
+<h3 id="5-네트워크-연결-문제">5. 네트워크 연결 문제</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 인터넷 연결 확인</span>
+<span class="token function">ping</span> <span class="token parameter variable">-c</span> <span class="token number">3</span> <span class="token number">8.8</span>.8.8
+
+<span class="token comment"># npm 레지스트리 연결 확인</span>
+<span class="token function">npm</span> <span class="token function">ping</span>
+
+<span class="token comment"># 프록시 설정 (필요시)</span>
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> proxy http://proxy.company.com:8080
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> https-proxy http://proxy.company.com:8080
+</code></pre>
+<h2 id="검증된-설치-스크립트">검증된 설치 스크립트</h2>
+<p>다음은 실제 테스트를 통해 검증된 원스텝 설치 스크립트다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># Claude Code 자동 설치 스크립트 (검증됨)</span>
+
+<span class="token builtin class-name">set</span> <span class="token parameter variable">-e</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;=== Claude Code 설치 시작 ===&quot;</span>
+
+<span class="token comment"># 1. 시스템 정보 확인</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;📋 시스템 환경 확인...&quot;</span>
+<span class="token function">cat</span> /etc/os-release <span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-3</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;사용자: <span class="token variable"><span class="token variable">$(</span><span class="token function">whoami</span><span class="token variable">)</span></span>&quot;</span>
+
+<span class="token comment"># 2. 기존 npm 설정 정리</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🧹 기존 npm 설정 정리...&quot;</span>
+<span class="token function">rm</span> <span class="token parameter variable">-f</span> ~/.npmrc <span class="token number">2</span><span class="token operator">&amp;</span>gt<span class="token punctuation">;</span>/dev/null <span class="token operator">||</span> <span class="token boolean">true</span>
+
+<span class="token comment"># 3. NVM 설치</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;📦 NVM 설치...&quot;</span>
+<span class="token function">curl</span> -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh <span class="token operator">|</span> <span class="token function">bash</span>
+
+<span class="token comment"># 4. NVM 환경 로드</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🔧 NVM 환경 설정...&quot;</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span>
+
+<span class="token comment"># 5. Node.js LTS 설치</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🚀 Node.js 최신 LTS 설치...&quot;</span>
+nvm <span class="token function">install</span> <span class="token parameter variable">--lts</span>
+nvm use <span class="token parameter variable">--lts</span>
+nvm <span class="token builtin class-name">alias</span> default lts/*
+
+<span class="token comment"># 6. 버전 확인</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;✅ 설치된 버전 확인...&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;Node.js: <span class="token variable"><span class="token variable">$(</span><span class="token function">node</span> <span class="token parameter variable">--version</span><span class="token variable">)</span></span>&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;npm: <span class="token variable"><span class="token variable">$(</span><span class="token function">npm</span> <span class="token parameter variable">--version</span><span class="token variable">)</span></span>&quot;</span>
+
+<span class="token comment"># 7. Claude Code 설치</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🤖 Claude Code 설치...&quot;</span>
+<span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> @anthropic-ai/claude-code
+
+<span class="token comment"># 8. bashrc에 영구 설정 추가</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;⚙️  영구 환경 설정...&quot;</span>
+<span class="token function">cat</span> <span class="token operator">&amp;</span>gt<span class="token punctuation">;</span><span class="token operator">&gt;</span> ~/.bashrc <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span><span class="token operator">&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+
+<span class="token comment"># NVM 설정 (Claude Code용)</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">NVM_DIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token environment constant">$HOME</span>/.nvm&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/nvm.sh&quot;</span>
+<span class="token punctuation">[</span> <span class="token parameter variable">-s</span> <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span> <span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">\</span>. <span class="token string">&quot;<span class="token variable">$NVM_DIR</span>/bash_completion&quot;</span>
+EOF
+
+<span class="token comment"># 9. 설치 확인</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;🎉 설치 완료 확인...&quot;</span>
+claude <span class="token parameter variable">--version</span>
+
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;=== 설치 완료! ===&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;Claude Code 버전: <span class="token variable"><span class="token variable">$(</span>claude <span class="token parameter variable">--version</span><span class="token variable">)</span></span>&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;다음 단계:&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;1. 새 터미널을 열거나 &#39;source ~/.bashrc&#39; 실행&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;2. &#39;claude&#39; 명령어로 실행&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;3. 첫 실행 시 인증 과정 진행&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;사용법:&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;  claude                    # 대화형 모드 시작&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;  claude --help            # 도움말&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;  claude <span class="token entity" title="\&#34;">\&quot;</span>질문내용<span class="token entity" title="\&#34;">\&quot;</span>        # 직접 질문&quot;</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;&quot;</span>
+</code></pre>
+<h3 id="스크립트-사용법">스크립트 사용법</h3>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 스크립트 파일 생성</span>
+<span class="token function">cat</span> <span class="token operator">&amp;</span>gt<span class="token punctuation">;</span> install_claude_code.sh <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span><span class="token operator">&lt;</span> <span class="token string">&#39;EOF&#39;</span>
+<span class="token punctuation">[</span>위의 스크립트 내용<span class="token punctuation">]</span>
+EOF
+
+<span class="token comment"># 실행 권한 부여</span>
+<span class="token function">chmod</span> +x install_claude_code.sh
+
+<span class="token comment"># 실행</span>
+./install_claude_code.sh
+</code></pre>
+<h2 id="컨테이너-영구화">컨테이너 영구화</h2>
+<p>현재 컨테이너의 변경사항을 새 이미지로 저장한다:</p>
+<pre class="language-bash" data-language="bash"><code is:raw class="language-bash"><span class="token comment"># 호스트에서 실행 (새 터미널)</span>
+<span class="token function">docker</span> commit <span class="token operator">&amp;</span>lt<span class="token punctuation">;</span>컨테이너_이름<span class="token operator">&amp;</span>gt<span class="token punctuation">;</span> my-claude-code-image:latest
+
+<span class="token comment"># 새 이미지로 컨테이너 실행</span>
+<span class="token function">docker</span> run <span class="token parameter variable">-it</span> <span class="token parameter variable">--name</span> claude-env <span class="token punctuation">\</span>
+  <span class="token parameter variable">-v</span> <span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>:/workspace <span class="token punctuation">\</span>
+  <span class="token parameter variable">-w</span> /workspace <span class="token punctuation">\</span>
+  my-claude-code-image:latest
+</code></pre>
+<h2 id="추가-팁">추가 팁</h2>
+<ol>
+<li><strong>성능</strong>: ripgrep이 설치되어 있어 빠른 코드 검색이 가능하다</li>
+<li><strong>권한</strong>: 컨테이너 환경에서는 <code>--dangerously-skip-permissions</code> 옵션 사용을 고려한다</li>
+<li><strong>모델</strong>: <code>--model sonnet</code> 또는 <code>--model opus</code>로 특정 모델 사용이 가능하다</li>
+<li><strong>대화 관리</strong>: <code>--continue</code>로 이전 대화를 이어갈 수 있고, <code>--resume</code>으로 특정 세션을 재개할 수 있다</li>
+<li><strong>디버깅</strong>: 문제 발생 시 <code>--debug</code> 옵션으로 상세 정보를 확인할 수 있다</li>
+</ol>
+<p>이 가이드는 실제 Ubuntu 20.04 컨테이너 환경에서 테스트하여 검증되었다.</p>
+<hr/>
+<p><em>이 글은 실제 컨테이너 환경에서 Claude Code를 설치하면서 얻은 경험을 바탕으로 작성되었으며, 다양한 Linux 배포판과 컨테이너 환경에서 테스트되었다.</em></p>  </div> <!-- Article Footer --> <footer class="border-t border-gray-200 dark:border-gray-700 p-6 md:p-8"> <div class="flex items-center justify-between"> <div class="flex items-center gap-4"> <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
+JL
+</div> <div> <h3 class="font-semibold text-gray-900 dark:text-gray-100">Jay Lee</h3> <p class="text-sm text-gray-600 dark:text-gray-400">소프트웨어 엔지니어</p> </div> </div> <div class="flex gap-3"> <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" title="공유하기"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path> </svg> </button> <button class="p-2 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors" title="좋아요"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path> </svg> </button> </div> </div> </footer> </article> <!-- Navigation --> <nav class="mt-12 flex justify-between items-center"> <a href="/blog" class="flex items-center gap-2 px-4 py-2 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path> </svg>
+블로그 목록으로
+</a> <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path> </svg>
+맨 위로
+</button> </nav> </main> <footer data-astro-cid-sz7xmlte>
+&copy; 2025 Your name here. All rights reserved.
+<div class="social-links" data-astro-cid-sz7xmlte> <a href="https://m.webtoo.ls/@astro" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Astro on Mastodon</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/mastodon" data-astro-cid-sz7xmlte><path fill="currentColor" d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://twitter.com/astrodotbuild" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Follow Astro on Twitter</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/twitter" data-astro-cid-sz7xmlte><path fill="currentColor" d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" data-astro-cid-sz7xmlte></path></svg> </a> <a href="https://github.com/withastro/astro" target="_blank" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Go to Astro's GitHub repo</span> <svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32" astro-icon="social/github" data-astro-cid-sz7xmlte><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-astro-cid-sz7xmlte></path></svg> </a> </div> </footer>  </body></html>

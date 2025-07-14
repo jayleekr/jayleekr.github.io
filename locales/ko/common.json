@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "home": "홈",
+    "about": "소개",
+    "blog": "블로그",
+    "contact": "연락처"
+  },
+  "common": {
+    "readMore": "더 보기",
+    "backToTop": "맨 위로",
+    "search": "검색",
+    "tags": "태그",
+    "categories": "카테고리",
+    "language": "언어"
+  },
+  "hero": {
+    "title": "포트폴리오에 오신 것을 환영합니다",
+    "subtitle": "임베디드 리눅스 & 컨테이너 전문가",
+    "description": "자동차 소프트웨어, 컨테이너 기술, 그리고 임베디드 시스템에 열정적입니다."
+  },
+  "about": {
+    "title": "소개",
+    "description": "임베디드 리눅스 시스템과 컨테이너 기술을 전문으로 하는 소프트웨어 엔지니어입니다."
+  }
+}

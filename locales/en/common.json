@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "common": {
+    "readMore": "Read More",
+    "backToTop": "Back to Top",
+    "search": "Search",
+    "tags": "Tags",
+    "categories": "Categories",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Welcome to My Portfolio",
+    "subtitle": "Embedded Linux & Container Expert",
+    "description": "Passionate about automotive software, container technologies, and embedded systems."
+  },
+  "about": {
+    "title": "About Me",
+    "description": "I'm a software engineer specializing in embedded Linux systems and container technologies."
+  }
+}
