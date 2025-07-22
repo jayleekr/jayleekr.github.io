@@ -11,15 +11,69 @@
     "search": "검색",
     "tags": "태그",
     "categories": "카테고리",
-    "language": "언어"
+    "language": "언어",
+    "skipToContent": "메인 콘텐츠로 건너뛰기",
+    "viewBlog": "블로그 보기",
+    "viewAll": "전체 보기"
   },
   "hero": {
     "title": "포트폴리오에 오신 것을 환영합니다",
     "subtitle": "임베디드 리눅스 & 컨테이너 전문가",
-    "description": "자동차 소프트웨어, 컨테이너 기술, 그리고 임베디드 시스템에 열정적입니다."
+    "description": "자동차 소프트웨어, 컨테이너 기술, 그리고 임베디드 시스템에 열정적입니다.",
+    "greeting": "안녕하세요! 저는 풀스택 개발자이자 기술 블로거입니다. 새로운 기술을 탐구하고 지식을 공유하는 것을 좋아합니다.",
+    "role": "Software Engineer & Tech Enthusiast"
   },
   "about": {
     "title": "소개",
-    "description": "임베디드 리눅스 시스템과 컨테이너 기술을 전문으로 하는 소프트웨어 엔지니어입니다."
+    "description": "임베디드 리눅스 시스템과 컨테이너 기술을 전문으로 하는 소프트웨어 엔지니어입니다.",
+    "pageTitle": "Jay Lee 소개",
+    "tagline": "모든 것에 대해 매우 호기심이 많은 사람",
+    "tagline2": "농구 코트에서 매우 강한 피지컬 컨택을 즐기는 PF",
+    "education": "학력",
+    "bachelor": "전기전자컴퓨터공학부 학사",
+    "masters": "석박사 통합과정 (휴학)",
+    "vehicularComm": "차량 무선 통신 시스템",
+    "basketball": "농구 경력",
+    "representative": "대표 선수",
+    "anyangCity": "경기도 안양시 (PF 포지션)",
+    "fibaPlayer": "FIBA 3x3 선수",
+    "teamYanadoo": "팀 야나두",
+    "koreaRank": "2019년 1월 - 한국 랭킹 47위",
+    "career": "경력",
+    "softwareEngineer": "소프트웨어 엔지니어",
+    "leadSDE": "선임 소프트웨어 개발 엔지니어",
+    "assistantManager": "대리",
+    "present": "현재",
+    "workFromHome": "산호세 (재택근무)",
+    "seoul": "서울, 대한민국",
+    "swSolutionDivision": "SW 솔루션 사업부 (3년간 대체복무)",
+    "links": "링크",
+    "connectMessage": "다양한 플랫폼에서 저와 연결해보세요!",
+    "sonatusDesc": "미국 산호세에 본사를 둔 선도적인 자동차 소프트웨어 회사인 Sonatus에서 소프트웨어 엔지니어로 일하고 있습니다.",
+    "autronDesc": "Adaptive AUTOSAR 플랫폼 개발팀에서 차세대 자동차 소프트웨어 플랫폼 개발에 기여했습니다."
+  },
+  "home": {
+    "recentPosts": "최근 글",
+    "morePosts": "더 많은 글들",
+    "morePostsDesc": "다양한 기술 주제들에 대한 통찰과 경험을 공유하고 있습니다.",
+    "skills": "기술 스택",
+    "skillCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "cloud": "Cloud"
+    }
+  },
+  "blog": {
+    "title": "기술 블로그",
+    "subtitle": "개발과 기술에 대한 경험과 인사이트를 공유합니다",
+    "postsCount": "개 포스트",
+    "searchPlaceholder": "포스트 검색...",
+    "filterAll": "전체",
+    "filterByTags": "태그로 필터링",
+    "tagCount": "개",
+    "noResults": "검색 결과가 없습니다",
+    "noResultsDesc": "다른 검색어나 필터를 시도해보세요.",
+    "noPosts": "아직 게시된 글이 없습니다."
   }
 }

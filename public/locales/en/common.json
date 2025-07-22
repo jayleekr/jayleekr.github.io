@@ -11,15 +11,69 @@
     "search": "Search",
     "tags": "Tags",
     "categories": "Categories",
-    "language": "Language"
+    "language": "Language",
+    "skipToContent": "Skip to main content",
+    "viewBlog": "View Blog",
+    "viewAll": "View All"
   },
   "hero": {
     "title": "Welcome to My Portfolio",
     "subtitle": "Embedded Linux & Container Expert",
-    "description": "Passionate about automotive software, container technologies, and embedded systems."
+    "description": "Passionate about automotive software, container technologies, and embedded systems.",
+    "greeting": "Hello! I'm a full-stack developer and tech blogger who loves exploring new technologies and sharing knowledge.",
+    "role": "Software Engineer & Tech Enthusiast"
   },
   "about": {
     "title": "About Me",
-    "description": "I'm a software engineer specializing in embedded Linux systems and container technologies."
+    "description": "I'm a software engineer specializing in embedded Linux systems and container technologies.",
+    "pageTitle": "About Jay Lee",
+    "tagline": "Verrrrrrrrrry Curious person about everything",
+    "tagline2": "PF enjoying a very intense physical contact on the basketball court",
+    "education": "Education",
+    "bachelor": "B.S. in Electrical and Computer Engineering",
+    "masters": "M.S. and Ph.D Candidate",
+    "vehicularComm": "Vehicular Wireless Communications Systems",
+    "basketball": "Basketball Career",
+    "representative": "Representative Player",
+    "anyangCity": "Anyang City, Gyeonggi-do, Korea (PF position)",
+    "fibaPlayer": "FIBA 3x3 Player",
+    "teamYanadoo": "Team Yanadoo",
+    "koreaRank": "Jan 2019 - 47th Korea Rank",
+    "career": "Career Experience",
+    "softwareEngineer": "Software Engineer",
+    "leadSDE": "Lead Software Development Engineer",
+    "assistantManager": "Assistant Manager",
+    "present": "Present",
+    "workFromHome": "San Jose (Work from home)",
+    "seoul": "Seoul, South Korea",
+    "swSolutionDivision": "SW Solution Business Division (Alternative Military Service for 3 years)",
+    "links": "Links",
+    "connectMessage": "Feel free to connect with me on various platforms!",
+    "sonatusDesc": "Working as a software engineer for Sonatus, a leading automotive software company based in San Jose.",
+    "autronDesc": "Worked in the Adaptive AUTOSAR platform Development team, contributing to next-generation automotive software platforms."
+  },
+  "home": {
+    "recentPosts": "Recent Posts",
+    "morePosts": "More Posts",
+    "morePostsDesc": "Sharing insights and experiences on various technical topics.",
+    "skills": "Tech Stack",
+    "skillCategories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "devops": "DevOps",
+      "cloud": "Cloud"
+    }
+  },
+  "blog": {
+    "title": "Tech Blog",
+    "subtitle": "Sharing insights and experiences on development and technology",
+    "postsCount": "posts",
+    "searchPlaceholder": "Search posts...",
+    "filterAll": "All",
+    "filterByTags": "Filter by tags",
+    "tagCount": "tags",
+    "noResults": "No search results found",
+    "noResultsDesc": "Try different keywords or filters.",
+    "noPosts": "No posts published yet."
   }
 }

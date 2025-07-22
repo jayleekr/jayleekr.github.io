@@ -1,6 +1,28 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
 import { SITE_TITLE } from '../consts';
+import { getLangFromUrl, getTranslation } from '../utils/i18n';
+import i18next from 'i18next';
+
+// Initialize i18next if not already initialized
+if (!i18next.isInitialized) {
+  await i18next.init({
+    lng: 'ko',
+    fallbackLng: 'ko',
+    resources: {
+      ko: {
+        common: await import('../../public/locales/ko/common.json')
+      },
+      en: {
+        common: await import('../../public/locales/en/common.json')
+      }
+    }
+  });
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = getTranslation(lang);
 ---
 
 <!-- Skip to main content link for accessibility -->
@@ -8,7 +30,7 @@ import { SITE_TITLE } from '../consts';
 	href="#main-content" 
 	class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-600 focus:text-white focus:rounded-lg focus:shadow-lg transition-all"
 >
-	메인 콘텐츠로 건너뛰기
+	{t('common.skipToContent') || '메인 콘텐츠로 건너뛰기'}
 </a>
 
 <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
@@ -23,9 +45,9 @@ import { SITE_TITLE } from '../consts';
 		
 		<div class="flex items-center space-x-6">
 			<div class="hidden md:flex items-center space-x-4">
-				<HeaderLink href="/">Home</HeaderLink>
-				<HeaderLink href="/blog">Blog</HeaderLink>
-				<HeaderLink href="/about">About</HeaderLink>
+				<HeaderLink href="/">{t('navigation.home')}</HeaderLink>
+				<HeaderLink href="/blog">{t('navigation.blog')}</HeaderLink>
+				<HeaderLink href="/about">{t('navigation.about')}</HeaderLink>
 			</div>
 			
 			<!-- Theme Toggle -->
@@ -41,6 +63,9 @@ import { SITE_TITLE } from '../consts';
 					<path d="M10 2L13.09 8.26L20 9L14 14.74L15.18 21.02L10 17.77L4.82 21.02L6 14.74L0 9L6.91 8.26L10 2Z"></path>
 				</svg>
 			</button>
+			
+			<!-- Language Switcher -->
+			<LanguageSwitcher />
 			
 			<div class="hidden md:flex items-center space-x-3">
 				<a 

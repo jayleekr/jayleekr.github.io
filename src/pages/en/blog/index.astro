@@ -1,0 +1,334 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import I18nProvider from '../../../components/I18nProvider.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import { Image } from 'astro:assets';
+import { getLangFromUrl, getTranslation } from '../../../utils/i18n';
+import i18next from 'i18next';
+
+// Initialize i18next if not already initialized
+if (!i18next.isInitialized) {
+  await i18next.init({
+    lng: 'en',
+    fallbackLng: 'ko',
+    resources: {
+      ko: {
+        common: await import('../../../../public/locales/ko/common.json')
+      },
+      en: {
+        common: await import('../../../../public/locales/en/common.json')
+      }
+    }
+  });
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = getTranslation(lang);
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Extract all unique categories and tags
+const allCategories = [...new Set(posts.flatMap(post => post.data.categories || []))];
+const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
+---
+
+<!doctype html>
+<html lang={lang}>
+	<head>
+		<BaseHead title={`${t('blog.title')} - ${SITE_TITLE}`} description={t('blog.subtitle')} />
+	</head>
+	<body class="min-h-screen bg-gray-50 dark:bg-gray-900">
+		<I18nProvider>
+			<Header />
+			<main id="main-content" class="max-w-6xl mx-auto px-4 py-8">
+				<section>
+					<div class="mb-8">
+						<h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t('blog.title')}</h1>
+						<p class="text-gray-600 dark:text-gray-400">
+							{t('blog.subtitle')}. ({posts.length} {t('blog.postsCount')})
+						</p>
+					</div>
+
+					<!-- Search and Filter Section -->
+					<div class="mb-8 space-y-4">
+						<!-- Search Bar -->
+						<div class="relative">
+							<input 
+								type="text" 
+								id="search"
+								placeholder={t('blog.searchPlaceholder')}
+								class="w-full px-4 py-3 pl-12 pr-4 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+							/>
+							<svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+							</svg>
+						</div>
+
+						<!-- Filter Tabs -->
+						<div class="flex flex-wrap gap-2">
+							<button class="filter-btn active" data-filter="all">
+								{t('blog.filterAll')} ({posts.length})
+							</button>
+							{allCategories.map((category) => {
+								const count = posts.filter(post => post.data.categories?.includes(category)).length;
+								return (
+									<button class="filter-btn" data-filter={`category:${category}`}>
+										{category} ({count})
+									</button>
+								);
+							})}
+						</div>
+
+						<!-- Tags -->
+						{allTags.length > 0 && (
+							<details class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+								<summary class="cursor-pointer font-medium text-gray-900 dark:text-gray-100 mb-3">
+									{t('blog.filterByTags')} ({allTags.length} {t('blog.tagCount')})
+								</summary>
+								<div class="flex flex-wrap gap-2">
+									{allTags.map((tag) => {
+										const count = posts.filter(post => post.data.tags?.includes(tag)).length;
+										return (
+											<button class="tag-btn px-3 py-1 text-sm bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-full hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors" data-tag={tag}>
+												#{tag} ({count})
+											</button>
+										);
+									})}
+								</div>
+							</details>
+						)}
+					</div>
+					
+					<div id="posts-grid" class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+						{posts.map((post, index) => (
+							<article 
+								class={`post-card group ${index === 0 ? 'md:col-span-2 lg:col-span-3' : ''}`}
+								data-title={post.data.title.toLowerCase()}
+								data-description={(post.data.description || '').toLowerCase()}
+								data-categories={post.data.categories?.join(',') || ''}
+								data-tags={post.data.tags?.join(',') || ''}
+							>
+								<a 
+									href={`/en/blog/${post.id}/`}
+									class="block bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-200 dark:border-gray-700"
+								>
+									{post.data.heroImage && (
+										<div class="relative overflow-hidden">
+											<Image 
+												width={index === 0 ? 1200 : 600} 
+												height={index === 0 ? 400 : 300} 
+												src={post.data.heroImage} 
+												alt=""
+												class="w-full h-48 md:h-56 object-cover group-hover:scale-105 transition-transform duration-300"
+											/>
+										</div>
+									)}
+									
+									<div class="p-6">
+										<div class="flex items-center gap-2 mb-3">
+											{post.data.categories && post.data.categories.map((category: string) => (
+												<span class="inline-block px-2 py-1 text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded">
+													{category}
+												</span>
+											))}
+										</div>
+										
+										<h2 class={`font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-3 ${index === 0 ? 'text-2xl' : 'text-xl'}`}>
+											{post.data.title}
+										</h2>
+										
+										{post.data.description && (
+											<p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+												{post.data.description}
+											</p>
+										)}
+										
+										<div class="flex items-center justify-between">
+											<time class="text-sm text-gray-500 dark:text-gray-400">
+												<FormattedDate date={post.data.pubDate} />
+											</time>
+											
+											{post.data.tags && post.data.tags.length > 0 && (
+												<div class="flex items-center gap-1">
+													{post.data.tags.slice(0, 2).map((tag: string) => (
+														<span class="inline-block px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded">
+															#{tag}
+														</span>
+													))}
+													{post.data.tags.length > 2 && (
+														<span class="text-xs text-gray-500 dark:text-gray-400">
+															+{post.data.tags.length - 2}
+														</span>
+													)}
+												</div>
+											)}
+										</div>
+									</div>
+								</a>
+							</article>
+						))}
+					</div>
+					
+					{posts.length === 0 && (
+						<div class="text-center py-12">
+							<p class="text-gray-500 dark:text-gray-400 text-lg">{t('blog.noPosts')}</p>
+						</div>
+					)}
+				</section>
+			</main>
+			<Footer />
+		</I18nProvider>
+
+		<style>
+			.filter-btn {
+				@apply px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors;
+			}
+			
+			.filter-btn.active {
+				@apply bg-primary-600 text-white border-primary-600 hover:bg-primary-700;
+			}
+
+			.tag-btn.active {
+				@apply bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 border-primary-300 dark:border-primary-700;
+			}
+
+			.post-card.hide {
+				display: none;
+			}
+
+			#no-results {
+				@apply text-center py-12 text-gray-500 dark:text-gray-400;
+			}
+		</style>
+
+		<script>
+			// Search and filter functionality
+			const searchInput = document.getElementById('search') as HTMLInputElement;
+			const filterBtns = document.querySelectorAll('.filter-btn');
+			const tagBtns = document.querySelectorAll('.tag-btn');
+			const postCards = document.querySelectorAll('.post-card');
+			const postsGrid = document.getElementById('posts-grid');
+
+			let currentFilter = 'all';
+			let activeTags: string[] = [];
+			let searchQuery = '';
+
+			// Create no results message
+			const noResultsMsg = document.createElement('div');
+			noResultsMsg.id = 'no-results';
+			noResultsMsg.innerHTML = `
+				<div class="text-center py-16">
+					<svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.137 0-4.146-.832-5.657-2.343m0 0l-.707-.707M6.343 12.657l-.707-.707m12.728 0l-.707.707M17.657 12.657l-.707-.707M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.635 2.25 12 6.615 2.25 12 2.25z"/>
+					</svg>
+					<h3 class="text-xl font-semibold mb-2">No search results found</h3>
+					<p class="text-gray-600 dark:text-gray-400">Try different keywords or filters.</p>
+				</div>
+			`;
+			noResultsMsg.style.display = 'none';
+			postsGrid?.parentNode?.appendChild(noResultsMsg);
+
+			function filterPosts() {
+				let visibleCount = 0;
+
+				postCards.forEach((card) => {
+					const title = (card as HTMLElement).dataset.title || '';
+					const description = (card as HTMLElement).dataset.description || '';
+					const categories = (card as HTMLElement).dataset.categories || '';
+					const tags = (card as HTMLElement).dataset.tags || '';
+
+					// Search filter
+					const matchesSearch = searchQuery === '' || 
+						title.includes(searchQuery.toLowerCase()) || 
+						description.includes(searchQuery.toLowerCase());
+
+					// Category filter
+					let matchesCategory = true;
+					if (currentFilter !== 'all' && currentFilter.startsWith('category:')) {
+						const categoryName = currentFilter.replace('category:', '');
+						matchesCategory = categories.includes(categoryName);
+					}
+
+					// Tag filter
+					const matchesTags = activeTags.length === 0 || 
+						activeTags.some(tag => tags.includes(tag));
+
+					// Show/hide card
+					if (matchesSearch && matchesCategory && matchesTags) {
+						card.classList.remove('hide');
+						visibleCount++;
+					} else {
+						card.classList.add('hide');
+					}
+				});
+
+				// Show/hide no results message
+				if (visibleCount === 0) {
+					noResultsMsg.style.display = 'block';
+					postsGrid!.style.display = 'none';
+				} else {
+					noResultsMsg.style.display = 'none';
+					postsGrid!.style.display = 'grid';
+				}
+			}
+
+			// Search input handler
+			searchInput?.addEventListener('input', (e) => {
+				searchQuery = (e.target as HTMLInputElement).value;
+				filterPosts();
+			});
+
+			// Filter button handlers
+			filterBtns.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					filterBtns.forEach(b => b.classList.remove('active'));
+					btn.classList.add('active');
+					currentFilter = (btn as HTMLElement).dataset.filter || 'all';
+					filterPosts();
+				});
+			});
+
+			// Tag button handlers
+			tagBtns.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const tag = (btn as HTMLElement).dataset.tag || '';
+					
+					if (activeTags.includes(tag)) {
+						// Remove tag
+						activeTags = activeTags.filter(t => t !== tag);
+						btn.classList.remove('active');
+					} else {
+						// Add tag
+						activeTags.push(tag);
+						btn.classList.add('active');
+					}
+					
+					filterPosts();
+				});
+			});
+
+			// Clear all filters function
+			function clearFilters() {
+				searchInput.value = '';
+				searchQuery = '';
+				currentFilter = 'all';
+				activeTags = [];
+				
+				filterBtns.forEach(b => b.classList.remove('active'));
+				filterBtns[0]?.classList.add('active'); // Activate "All"
+				tagBtns.forEach(b => b.classList.remove('active'));
+				
+				filterPosts();
+			}
+
+			// Add clear button functionality (if needed)
+			(window as any).clearFilters = clearFilters;
+		</script>
+	</body>
+</html>

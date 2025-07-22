@@ -1,0 +1,28 @@
+---
+import i18next from 'i18next';
+import { getLangFromUrl } from '../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+
+// Initialize i18next if not already initialized
+if (!i18next.isInitialized) {
+  await i18next.init({
+    lng: lang,
+    fallbackLng: 'ko',
+    defaultNS: 'common',
+    resources: {
+      ko: {
+        common: await import('../../public/locales/ko/common.json')
+      },
+      en: {
+        common: await import('../../public/locales/en/common.json')
+      }
+    }
+  });
+} else {
+  // Change language if already initialized
+  await i18next.changeLanguage(lang);
+}
+---
+
+<slot />

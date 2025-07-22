@@ -1,0 +1,76 @@
+---
+import { getLangFromUrl, supportedLanguages, getLocalizedPath } from '../utils/i18n';
+
+const currentLang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname.replace(/^\/(ko|en)/, '') || '/';
+---
+
+<div class="language-switcher">
+  <button
+    id="language-toggle"
+    class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+    aria-label="Change language"
+    aria-expanded="false"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+    </svg>
+    <span class="text-sm font-medium">
+      {currentLang === 'ko' ? '한국어' : 'English'}
+    </span>
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  
+  <div
+    id="language-menu"
+    class="absolute right-0 mt-2 w-48 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hidden"
+    role="menu"
+  >
+    {supportedLanguages.map((lang) => (
+      <a
+        href={getLocalizedPath(currentPath, lang)}
+        class={`block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
+          currentLang === lang ? 'bg-gray-50 dark:bg-gray-700/50 font-medium' : ''
+        }`}
+        role="menuitem"
+        data-lang={lang}
+      >
+        {lang === 'ko' ? '한국어' : 'English'}
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .language-switcher {
+    position: relative;
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('language-toggle');
+  const menu = document.getElementById('language-menu');
+  
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.contains('hidden') === false;
+    
+    if (isOpen) {
+      menu?.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+    } else {
+      menu?.classList.remove('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+  
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!toggle?.contains(target) && !menu?.contains(target)) {
+      menu?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>

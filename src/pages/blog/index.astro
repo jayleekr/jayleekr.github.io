@@ -154,7 +154,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 				
 				{posts.length === 0 && (
 					<div class="text-center py-12">
-						<p class="text-gray-500 dark:text-gray-400 text-lg">아직 게시된 글이 없습니다.</p>
+						<p class="text-gray-500 dark:text-gray-400 text-lg">{t('blog.noPosts')}</p>
 					</div>
 				)}
 			</section>
@@ -203,8 +203,8 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 					<svg class="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.137 0-4.146-.832-5.657-2.343m0 0l-.707-.707M6.343 12.657l-.707-.707m12.728 0l-.707.707M17.657 12.657l-.707-.707M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.635 2.25 12 6.615 2.25 12 2.25z"/>
 					</svg>
-					<h3 class="text-xl font-semibold mb-2">검색 결과가 없습니다</h3>
-					<p class="text-gray-600 dark:text-gray-400">다른 검색어나 필터를 시도해보세요.</p>
+					<h3 class="text-xl font-semibold mb-2">${t('blog.noResults')}</h3>
+					<p class="text-gray-600 dark:text-gray-400">${t('blog.noResultsDesc')}</p>
 				</div>
 			`;
 			noResultsMsg.style.display = 'none';

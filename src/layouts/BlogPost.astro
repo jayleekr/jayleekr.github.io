@@ -3,7 +3,10 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import I18nProvider from '../components/I18nProvider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getTranslation } from '../utils/i18n';
+import i18next from 'i18next';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
@@ -15,6 +18,24 @@ const { title, description, pubDate, updatedDate, heroImage, categories, tags, l
 
 // Convert heroImage to string if it's an object
 const heroImageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
+
+// Initialize i18next if not already initialized
+if (!i18next.isInitialized) {
+  await i18next.init({
+    lng: lang,
+    fallbackLng: 'ko',
+    resources: {
+      ko: {
+        common: await import('../../public/locales/ko/common.json')
+      },
+      en: {
+        common: await import('../../public/locales/en/common.json')
+      }
+    }
+  });
+}
+
+const t = getTranslation(lang);
 ---
 
 <!doctype html>
@@ -33,8 +54,9 @@ const heroImageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
 	</head>
 
 	<body>
-		<Header />
-		<main id="main-content" class="max-w-4xl mx-auto px-4 py-8">
+		<I18nProvider>
+			<Header />
+			<main id="main-content" class="max-w-4xl mx-auto px-4 py-8">
 			<article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
 				<!-- Hero Image -->
 				{heroImageSrc && (
