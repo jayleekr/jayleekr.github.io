@@ -2,136 +2,156 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import I18nProvider from '../components/I18nProvider.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getLangFromUrl, getTranslation } from '../utils/i18n';
-import i18next from 'i18next';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+import { t } from "astro-i18next";
 
-// Initialize i18next if not already initialized
-if (!i18next.isInitialized) {
-  await i18next.init({
-    lng: 'ko',
-    fallbackLng: 'ko',
-    resources: {
-      ko: {
-        common: await import('../../public/locales/ko/common.json')
-      },
-      en: {
-        common: await import('../../public/locales/en/common.json')
-      }
-    }
-  });
-}
-
-const lang = getLangFromUrl(Astro.url);
-const t = getTranslation(lang);
+const posts = (await getCollection('blog')).sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="ko">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<I18nProvider>
-			<Header />
-			<main id="main-content" class="min-h-screen">
-			<section class="hero py-20 text-center">
+		<Header />
+		<main id="main-content">
+			<!-- Hero Section -->
+			<section class="py-20 text-center">
 				<div class="max-w-4xl mx-auto">
-					<h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
-						Jay Lee
+					<h1 class="text-5xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
+						{t("hero.title")}
 					</h1>
-					<p class="text-2xl text-gray-600 dark:text-gray-300 mb-8">
-						{t('hero.role')}
+					<h2 class="text-2xl text-gray-600 dark:text-gray-300 mb-8">
+						{t("hero.subtitle")}
+					</h2>
+					<p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-10">
+						{t("hero.description")}
 					</p>
-					<p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-						{t('hero.greeting')}
-					</p>
-					
-					<div class="flex flex-wrap justify-center gap-4 mb-16">
-						<a 
-							href="/blog" 
-							class="px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-semibold"
-						>
-							{t('common.viewBlog')}
-						</a>
+					<div class="flex justify-center gap-4">
 						<a 
 							href="/about" 
+							class="px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-semibold"
+						>
+							{t("navigation.about")}
+						</a>
+						<a 
+							href="/blog" 
 							class="px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors font-semibold"
 						>
-							{t('navigation.about')}
+							{t("common.viewBlog")}
 						</a>
 					</div>
 				</div>
 			</section>
 
-			<section class="featured-posts py-16 bg-gray-50 dark:bg-gray-800/50">
-				<div class="max-w-6xl mx-auto px-4">
-					<h2 class="text-3xl font-bold text-center mb-12">{t('home.recentPosts')}</h2>
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-						<!-- Featured posts will be populated here -->
-						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-							<h3 class="text-xl font-semibold mb-3">DevContainer MCP Bootstrapper</h3>
-							<p class="text-gray-600 dark:text-gray-400 mb-4">
-								컨테이너 환경에서 MCP 서버를 쉽게 설정하는 방법을 소개합니다.
-							</p>
-							<a href="/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
-								{t('common.readMore')} →
-							</a>
+			<!-- Skills Section -->
+			<section class="py-16 bg-gray-50 dark:bg-gray-800">
+				<div class="max-w-4xl mx-auto">
+					<h2 class="text-3xl font-bold text-center mb-12">{t("home.skills")}</h2>
+					<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+						<div class="text-center">
+							<div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+								<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+								</svg>
+							</div>
+							<h3 class="font-bold text-lg mb-2">{t("home.skillCategories.frontend")}</h3>
+							<p class="text-gray-600 dark:text-gray-400 text-sm">React, Vue, Astro, TypeScript</p>
 						</div>
 						
-						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-							<h3 class="text-xl font-semibold mb-3">Linux Capabilities와 빌드 시스템</h3>
-							<p class="text-gray-600 dark:text-gray-400 mb-4">
-								Linux에서 보안을 강화하면서 효율적인 빌드 환경을 구축하는 방법을 다룹니다.
-							</p>
-							<a href="#" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
-								{t('common.readMore')} →
-							</a>
+						<div class="text-center">
+							<div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+								<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/>
+								</svg>
+							</div>
+							<h3 class="font-bold text-lg mb-2">{t("home.skillCategories.backend")}</h3>
+							<p class="text-gray-600 dark:text-gray-400 text-sm">Node.js, Python, C++, Embedded Linux</p>
 						</div>
-
-						<div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-							<h3 class="text-xl font-semibold mb-3">{t('home.morePosts')}</h3>
-							<p class="text-gray-600 dark:text-gray-400 mb-4">
-								{t('home.morePostsDesc')}
-							</p>
-							<a href="/blog" class="text-primary-600 dark:text-primary-400 font-medium hover:underline">
-								{t('common.viewAll')} →
-							</a>
+						
+						<div class="text-center">
+							<div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
+								<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+								</svg>
+							</div>
+							<h3 class="font-bold text-lg mb-2">{t("home.skillCategories.devops")}</h3>
+							<p class="text-gray-600 dark:text-gray-400 text-sm">Docker, Kubernetes, CI/CD</p>
 						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="skills py-16">
-				<div class="max-w-4xl mx-auto text-center">
-					<h2 class="text-3xl font-bold mb-12">{t('home.skills')}</h2>
-					<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-						<div class="p-4">
-							<div class="text-4xl mb-2">🚀</div>
-							<h3 class="font-semibold mb-2">{t('home.skillCategories.frontend')}</h3>
-							<p class="text-sm text-gray-600 dark:text-gray-400">React, Vue, Astro</p>
-						</div>
-						<div class="p-4">
-							<div class="text-4xl mb-2">⚡</div>
-							<h3 class="font-semibold mb-2">{t('home.skillCategories.backend')}</h3>
-							<p class="text-sm text-gray-600 dark:text-gray-400">Node.js, Python, Go</p>
-						</div>
-						<div class="p-4">
-							<div class="text-4xl mb-2">🐳</div>
-							<h3 class="font-semibold mb-2">{t('home.skillCategories.devops')}</h3>
-							<p class="text-sm text-gray-600 dark:text-gray-400">Docker, Kubernetes</p>
-						</div>
-						<div class="p-4">
-							<div class="text-4xl mb-2">☁️</div>
-							<h3 class="font-semibold mb-2">{t('home.skillCategories.cloud')}</h3>
-							<p class="text-sm text-gray-600 dark:text-gray-400">AWS, GCP</p>
+						
+						<div class="text-center">
+							<div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
+								<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+								</svg>
+							</div>
+							<h3 class="font-bold text-lg mb-2">{t("home.skillCategories.cloud")}</h3>
+							<p class="text-gray-600 dark:text-gray-400 text-sm">AWS, Container Orchestration</p>
 						</div>
 					</div>
 				</div>
 			</section>
-			</main>
-			<Footer />
-		</I18nProvider>
+
+			<!-- Recent Posts Section -->
+			<section class="py-16">
+				<div class="max-w-4xl mx-auto">
+					<div class="flex justify-between items-center mb-12">
+						<h2 class="text-3xl font-bold">{t("home.recentPosts")}</h2>
+						<a 
+							href="/blog" 
+							class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold"
+						>
+							{t("common.viewAll")} →
+						</a>
+					</div>
+					
+					{posts.length > 0 ? (
+						<div class="grid gap-8">
+							{posts.slice(0, 3).map((post) => (
+								<article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow">
+									<div class="flex flex-col md:flex-row md:items-center gap-4">
+										<div class="flex-1">
+											<h3 class="text-xl font-bold mb-2">
+												<a 
+													href={`/blog/${post.slug}/`}
+													class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+												>
+													{post.data.title}
+												</a>
+											</h3>
+											<p class="text-gray-600 dark:text-gray-400 mb-3">
+												{post.data.description}
+											</p>
+											<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
+												<FormattedDate date={post.data.pubDate} />
+												{post.data.tags && post.data.tags.length > 0 && (
+													<div class="flex gap-2">
+														{post.data.tags.slice(0, 2).map((tag) => (
+															<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">
+																{tag}
+															</span>
+														))}
+													</div>
+												)}
+											</div>
+										</div>
+									</div>
+								</article>
+							))}
+						</div>
+					) : (
+						<div class="text-center py-12">
+							<p class="text-gray-600 dark:text-gray-400 text-lg">{t("blog.noPosts")}</p>
+						</div>
+					)}
+				</div>
+			</section>
+		</main>
+		<Footer />
 	</body>
 </html>

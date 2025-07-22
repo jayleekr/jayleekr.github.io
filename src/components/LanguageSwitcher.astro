@@ -1,76 +1,66 @@
 ---
-import { getLangFromUrl, supportedLanguages, getLocalizedPath } from '../utils/i18n';
+import { getLangFromUrl, getAlternateLangPath } from '../utils/i18n';
+import { t } from "astro-i18next";
 
 const currentLang = getLangFromUrl(Astro.url);
-const currentPath = Astro.url.pathname.replace(/^\/(ko|en)/, '') || '/';
+const currentPath = Astro.url.pathname;
+const alternatePath = getAlternateLangPath(currentPath, currentLang);
+const alternateLabel = currentLang === 'ko' ? 'English' : '한국어';
+const currentLabel = currentLang === 'ko' ? '한국어' : 'English';
 ---
 
-<div class="language-switcher">
-  <button
-    id="language-toggle"
-    class="flex items-center space-x-2 px-3 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-    aria-label="Change language"
+<div class="relative">
+  <button 
+    id="language-switcher" 
+    class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
     aria-expanded="false"
+    aria-haspopup="true"
   >
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
-    </svg>
-    <span class="text-sm font-medium">
-      {currentLang === 'ko' ? '한국어' : 'English'}
-    </span>
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+    </svg>
+    <span>{currentLabel}</span>
+    <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
     </svg>
   </button>
   
-  <div
-    id="language-menu"
-    class="absolute right-0 mt-2 w-48 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hidden"
-    role="menu"
+  <div 
+    id="language-menu" 
+    class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 invisible opacity-0 transition-all duration-200 z-50"
   >
-    {supportedLanguages.map((lang) => (
-      <a
-        href={getLocalizedPath(currentPath, lang)}
-        class={`block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${
-          currentLang === lang ? 'bg-gray-50 dark:bg-gray-700/50 font-medium' : ''
-        }`}
-        role="menuitem"
-        data-lang={lang}
-      >
-        {lang === 'ko' ? '한국어' : 'English'}
-      </a>
-    ))}
+    <a 
+      href={alternatePath}
+      class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+    >
+      {alternateLabel}
+    </a>
   </div>
 </div>
 
-<style>
-  .language-switcher {
-    position: relative;
-  }
-</style>
-
 <script>
-  const toggle = document.getElementById('language-toggle');
-  const menu = document.getElementById('language-menu');
-  
-  toggle?.addEventListener('click', () => {
-    const isOpen = menu?.classList.contains('hidden') === false;
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('language-switcher');
+    const menu = document.getElementById('language-menu');
     
-    if (isOpen) {
-      menu?.classList.add('hidden');
-      toggle.setAttribute('aria-expanded', 'false');
-    } else {
-      menu?.classList.remove('hidden');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-  });
-  
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (!toggle?.contains(target) && !menu?.contains(target)) {
-      menu?.classList.add('hidden');
-      toggle?.setAttribute('aria-expanded', 'false');
+    if (button && menu) {
+      button.addEventListener('click', () => {
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', (!isExpanded).toString());
+        
+        if (isExpanded) {
+          menu.classList.add('invisible', 'opacity-0');
+        } else {
+          menu.classList.remove('invisible', 'opacity-0');
+        }
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!button.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+          button.setAttribute('aria-expanded', 'false');
+          menu.classList.add('invisible', 'opacity-0');
+        }
+      });
     }
   });
 </script>
