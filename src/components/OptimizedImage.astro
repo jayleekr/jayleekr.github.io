@@ -1,0 +1,115 @@
+---
+// Optimized image component for better SEO and performance
+
+export interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  sizes?: string;
+  caption?: string;
+}
+
+const {
+  src,
+  alt,
+  width = 800,
+  height = 600,
+  class: className = '',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  caption
+} = Astro.props;
+
+// Generate WebP version if original is not WebP
+const isWebP = src.includes('.webp');
+const webpSrc = isWebP ? src : src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+
+// Generate different sizes for responsive images
+const generateSrcSet = (baseSrc: string) => {
+  const sizes = [400, 600, 800, 1200, 1600];
+  return sizes
+    .map(size => {
+      const scaledSrc = baseSrc.replace(/\.(jpg|jpeg|png|webp)$/i, `-${size}w.$1`);
+      return `${scaledSrc} ${size}w`;
+    })
+    .join(', ');
+};
+---
+
+<figure class={`image-figure ${className}`}>
+  <picture>
+    <!-- WebP source for modern browsers -->
+    {!isWebP && (
+      <source 
+        srcset={generateSrcSet(webpSrc)}
+        sizes={sizes}
+        type="image/webp"
+      />
+    )}
+    
+    <!-- Fallback for older browsers -->
+    <img
+      src={src}
+      srcset={generateSrcSet(src)}
+      alt={alt}
+      width={width}
+      height={height}
+      sizes={sizes}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class={`optimized-image ${className}`}
+      decoding="async"
+    />
+  </picture>
+  
+  {caption && (
+    <figcaption class="image-caption text-sm text-gray-600 dark:text-gray-400 mt-2 text-center italic">
+      {caption}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .image-figure {
+    @apply my-8 mx-auto;
+  }
+  
+  .optimized-image {
+    @apply w-full h-auto rounded-lg shadow-lg;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .optimized-image:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .image-caption {
+    font-style: italic;
+  }
+  
+  /* Print styles */
+  @media print {
+    .optimized-image {
+      transform: none !important;
+      box-shadow: none !important;
+      max-width: 100% !important;
+    }
+  }
+  
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .optimized-image {
+      transition: none;
+    }
+    
+    .optimized-image:hover {
+      transform: none;
+    }
+  }
+</style>

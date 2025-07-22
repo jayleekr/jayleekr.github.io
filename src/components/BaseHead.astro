@@ -35,45 +35,104 @@ const {
 // Get image URL, handle both string and ImageMetadata
 const imageUrl = typeof image === 'string' ? image : image.src;
 
-// JSON-LD 구조화된 데이터
-const jsonLD = {
-	'@context': 'https://schema.org',
-	'@type': article ? 'BlogPosting' : 'WebSite',
-	name: title,
-	headline: title,
+// Enhanced JSON-LD structured data for better SEO
+const authorData = {
+	'@type': 'Person',
+	name: author,
+	url: Astro.site?.toString(),
+	gender: 'Male',
+	jobTitle: 'Software Engineer',
+	workFor: {
+		'@type': 'Organization',
+		name: 'Sonatus'
+	},
+	alumniOf: [
+		{
+			'@type': 'CollegeOrUniversity',
+			name: 'University Name'
+		}
+	],
+	knowsAbout: ['Software Engineering', 'Web Development', 'Basketball', 'Startup'],
+	sameAs: [
+		'https://github.com/jayleekr',
+		'https://linkedin.com/in/jayleekr'
+	]
+};
+
+const organizationData = {
+	'@type': 'Organization',
+	name: SITE_TITLE,
+	url: Astro.site?.toString(),
 	description: description,
-	url: canonicalURL.toString(),
+	founder: authorData,
+	logo: {
+		'@type': 'ImageObject',
+		url: new URL('/favicon.svg', Astro.site).toString(),
+		width: 32,
+		height: 32
+	},
+	sameAs: [
+		'https://github.com/jayleekr',
+		'https://linkedin.com/in/jayleekr'
+	]
+};
+
+const jsonLD = article ? {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': canonicalURL.toString()
+	},
+	headline: title,
+	name: title,
+	description: description,
 	image: {
 		'@type': 'ImageObject',
 		url: new URL(imageUrl, Astro.site).toString(),
 		width: 1200,
 		height: 630
 	},
-	author: {
-		'@type': 'Person',
-		name: author,
-		url: Astro.site?.toString(),
-		sameAs: [
-			'https://github.com/jayleekr',
-			'https://linkedin.com/in/jayleekr'
-		]
-	},
-	publisher: {
-		'@type': 'Organization',
-		name: SITE_TITLE,
-		url: Astro.site?.toString(),
-		logo: {
-			'@type': 'ImageObject',
-			url: new URL('/favicon.svg', Astro.site).toString()
-		}
-	},
-	...(article && publishedTime && {
+	author: authorData,
+	publisher: organizationData,
+	...(publishedTime && {
 		datePublished: publishedTime.toISOString(),
-		...(modifiedTime && { dateModified: modifiedTime.toISOString() }),
-		keywords: tags.join(', '),
-		articleSection: 'Technology',
-		inLanguage: 'ko-KR'
-	})
+		...(modifiedTime && { dateModified: modifiedTime.toISOString() })
+	}),
+	articleSection: tags.length > 0 ? tags[0] : 'Technology',
+	keywords: tags.join(', '),
+	language: 'ko-KR',
+	inLanguage: 'ko-KR',
+	wordCount: description ? description.split(' ').length * 10 : 500,
+	timeRequired: 'PT5M',
+	audience: {
+		'@type': 'Audience',
+		audienceType: 'Software Developers'
+	},
+	genre: 'Technology Blog',
+	copyrightYear: new Date().getFullYear(),
+	copyrightHolder: authorData
+} : {
+	'@context': 'https://schema.org',
+	'@type': 'WebSite',
+	name: title,
+	description: description,
+	url: canonicalURL.toString(),
+	potentialAction: {
+		'@type': 'SearchAction',
+		target: {
+			'@type': 'EntryPoint',
+			urlTemplate: `${Astro.site}?search={search_term_string}`
+		},
+		'query-input': 'required name=search_term_string'
+	},
+	author: authorData,
+	publisher: organizationData,
+	inLanguage: ['ko-KR', 'en-US'],
+	audience: {
+		'@type': 'Audience',
+		audienceType: 'Software Developers, Basketball Enthusiasts'
+	}
 };
 ---
 
@@ -131,10 +190,18 @@ const jsonLD = {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Google Search Console Verification -->
-<!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" /> -->
+<meta name="google-site-verification" content="" />
+<!-- To be filled with actual verification code when setting up GSC -->
 
-<!-- Keywords for articles -->
-{tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
+<!-- Bing Webmaster Tools Verification -->
+<meta name="msvalidate.01" content="" />
+
+<!-- Yandex Verification -->
+<meta name="yandex-verification" content="" />
+
+<!-- Enhanced Keywords for articles -->
+{tags.length > 0 && <meta name="keywords" content={tags.concat(['Jay Lee', 'Software Engineer', 'Basketball', 'Technology', 'Blog']).join(', ')} />}
+{!tags.length && <meta name="keywords" content="Jay Lee, Software Engineer, Basketball, Technology, Development, Programming, Blog, Tutorial" />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={article ? 'article' : 'website'} />
@@ -171,9 +238,28 @@ const jsonLD = {
 <meta name="twitter:image" content={new URL(imageUrl, Astro.site)} />
 <meta name="twitter:image:alt" content={title} />
 
-<!-- Additional SEO Meta Tags -->
-<meta name="format-detection" content="telephone=no" />
+<!-- Enhanced SEO Meta Tags -->
+<meta name="format-detection" content="telephone=no,date=no,email=no,address=no" />
 <meta name="revisit-after" content="7 days" />
+<meta name="distribution" content="global" />
+<meta name="rating" content="general" />
+<meta name="referrer" content="origin-when-cross-origin" />
+
+<!-- Performance hints -->
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- Security headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-Frame-Options" content="DENY" />
+
+<!-- Geo meta tags -->
+<meta name="geo.region" content="KR" />
+<meta name="geo.placename" content="Seoul, South Korea" />
+
+<!-- Content classification -->
+<meta name="classification" content="Technology Blog" />
+<meta name="category" content="Software Engineering, Basketball, Technology" />
 
 <!-- Theme Initialization Script (prevents FOUC) -->
 <script is:inline>
@@ -204,8 +290,37 @@ const jsonLD = {
 	})();
 </script>
 
-<!-- JSON-LD Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify(jsonLD)} />
+<!-- Enhanced JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLD, null, 0)} />
+
+<!-- Additional Schema.org markup for breadcrumbs -->
+{article && (
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{
+					"@type": "ListItem",
+					"position": 1,
+					"name": "Home",
+					"item": "{Astro.site}"
+				},
+				{
+					"@type": "ListItem",
+					"position": 2,
+					"name": "Blog",
+					"item": "{new URL('/blog', Astro.site)}"
+				},
+				{
+					"@type": "ListItem",
+					"position": 3,
+					"name": "{title}"
+				}
+			]
+		}
+	</script>
+)}
 
 <!-- Google Analytics -->
 <GoogleAnalytics />
