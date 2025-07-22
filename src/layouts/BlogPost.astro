@@ -3,10 +3,8 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import I18nProvider from '../components/I18nProvider.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { getTranslation } from '../utils/i18n';
-import i18next from 'i18next';
+import { getLangFromUrl, t } from '../utils/i18n';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
@@ -19,173 +17,115 @@ const { title, description, pubDate, updatedDate, heroImage, categories, tags, l
 // Convert heroImage to string if it's an object
 const heroImageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
 
-// Initialize i18next if not already initialized
-if (!i18next.isInitialized) {
-  await i18next.init({
-    lng: lang,
-    fallbackLng: 'ko',
-    resources: {
-      ko: {
-        common: await import('../../public/locales/ko/common.json')
-      },
-      en: {
-        common: await import('../../public/locales/en/common.json')
-      }
-    }
-  });
-}
-
-const t = getTranslation(lang);
+// Get current language from URL
+const currentLang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={currentLang}>
 	<head>
-		<BaseHead 
-			title={title} 
-			description={description}
-			image={heroImageSrc}
-			article={true}
-			publishedTime={pubDate}
-			modifiedTime={updatedDate}
-			tags={tags}
-			author="Jay Lee"
-		/>
+		<BaseHead title={title} description={description} image={heroImageSrc} />
 	</head>
 
 	<body>
-		<I18nProvider>
-			<Header />
-			<main id="main-content" class="max-w-4xl mx-auto px-4 py-8">
-			<article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-				<!-- Hero Image -->
+		<Header />
+		<main id="main-content">
+			<article class="max-w-4xl mx-auto py-8">
 				{heroImageSrc && (
-					<div class="relative">
+					<div class="mb-8">
 						<img 
-							width={1200} 
-							height={600} 
 							src={heroImageSrc} 
 							alt={title}
-							class="w-full h-64 md:h-80 object-cover"
+							class="w-full h-64 object-cover rounded-xl"
 						/>
-						<div class="absolute inset-0 bg-black bg-opacity-20"></div>
 					</div>
 				)}
-
-				<!-- Article Header -->
-				<header class="p-6 md:p-8">
-					<!-- Categories -->
-					{categories && categories.length > 0 && (
-						<div class="flex flex-wrap gap-2 mb-4">
-							{categories.map((category) => (
-								<span class="px-3 py-1 text-sm font-medium bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full">
-									{category}
+				
+				<header class="mb-8">
+					<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+						<FormattedDate date={pubDate} />
+						{updatedDate && (
+							<>
+								<span>•</span>
+								<span>Updated: <FormattedDate date={updatedDate} /></span>
+							</>
+						)}
+						{lang && (
+							<>
+								<span>•</span>
+								<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
+									{lang.toUpperCase()}
 								</span>
-							))}
-						</div>
-					)}
-
-					<!-- Title -->
-					<h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
-						{title}
-					</h1>
-
-					<!-- Description -->
+							</>
+						)}
+					</div>
+					
+					<h1 class="text-4xl font-bold mb-4">{title}</h1>
+					
 					{description && (
-						<p class="text-xl text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+						<p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
 							{description}
 						</p>
 					)}
-
-					<!-- Meta Information -->
-					<div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 pt-4">
-						<time datetime={pubDate.toISOString()} class="flex items-center gap-2">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-							</svg>
-							<FormattedDate date={pubDate} />
-						</time>
-
-						{updatedDate && (
-							<time datetime={updatedDate.toISOString()} class="flex items-center gap-2 italic">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-								</svg>
-								업데이트: <FormattedDate date={updatedDate} />
-							</time>
-						)}
-
-						<!-- Reading Time Estimate -->
-						<span class="flex items-center gap-2">
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-							</svg>
-							3분 읽기
-						</span>
-					</div>
-
-					<!-- Tags -->
-					{tags && tags.length > 0 && (
-						<div class="flex flex-wrap gap-2 mt-4">
-							{tags.map((tag) => (
-								<span class="px-2 py-1 text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-									#{tag}
-								</span>
-							))}
+					
+					{(categories || tags) && (
+						<div class="flex flex-wrap gap-4">
+							{categories && categories.length > 0 && (
+								<div class="flex items-center gap-2">
+									<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Categories:</span>
+									<div class="flex gap-2">
+										{categories.map((category) => (
+											<span class="px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full text-sm">
+												{category}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
+							
+							{tags && tags.length > 0 && (
+								<div class="flex items-center gap-2">
+									<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Tags:</span>
+									<div class="flex gap-2">
+										{tags.map((tag) => (
+											<span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm">
+												{tag}
+											</span>
+										))}
+									</div>
+								</div>
+							)}
 						</div>
 					)}
 				</header>
-
-				<!-- Article Content -->
-				<div class="prose prose-lg dark:prose-invert max-w-none px-6 md:px-8 pb-8">
+				
+				<div class="prose prose-lg dark:prose-invert max-w-none">
 					<slot />
 				</div>
-
-				<!-- Article Footer -->
-				<footer class="border-t border-gray-200 dark:border-gray-700 p-6 md:p-8">
-					<div class="flex items-center justify-between">
-						<div class="flex items-center gap-4">
-							<div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold">
-								JL
-							</div>
-							<div>
-								<h3 class="font-semibold text-gray-900 dark:text-gray-100">Jay Lee</h3>
-								<p class="text-sm text-gray-600 dark:text-gray-400">소프트웨어 엔지니어</p>
-							</div>
-						</div>
+				
+				<footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+					<div class="flex justify-between items-center">
+						<a 
+							href="/blog" 
+							class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+						>
+							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+							</svg>
+							Back to Blog
+						</a>
 						
-						<div class="flex gap-3">
-							<button class="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" title="공유하기">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-								</svg>
-							</button>
-							<button class="p-2 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors" title="좋아요">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-								</svg>
+						<div class="flex items-center gap-4">
+							<button 
+								onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+								class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+							>
+								Back to top ↑
 							</button>
 						</div>
 					</div>
 				</footer>
 			</article>
-
-			<!-- Navigation -->
-			<nav class="mt-12 flex justify-between items-center">
-				<a href="/blog" class="flex items-center gap-2 px-4 py-2 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-lg transition-colors">
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-					</svg>
-					블로그 목록으로
-				</a>
-				
-				<button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-					</svg>
-					맨 위로
-				</button>
-			</nav>
 		</main>
 		<Footer />
 	</body>

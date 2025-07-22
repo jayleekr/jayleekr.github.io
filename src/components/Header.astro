@@ -2,7 +2,9 @@
 import HeaderLink from './HeaderLink.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { SITE_TITLE } from '../consts';
-import { t } from "astro-i18next";
+import { getLangFromUrl, t } from '../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
@@ -15,9 +17,9 @@ import { t } from "astro-i18next";
 			</div>
 			
 			<div class="hidden md:flex items-center space-x-8">
-				<HeaderLink href="/">{t("navigation.home")}</HeaderLink>
-				<HeaderLink href="/about">{t("navigation.about")}</HeaderLink>
-				<HeaderLink href="/blog">{t("navigation.blog")}</HeaderLink>
+				<HeaderLink href="/">{t("navigation.home", lang)}</HeaderLink>
+				<HeaderLink href="/about">{t("navigation.about", lang)}</HeaderLink>
+				<HeaderLink href="/blog">{t("navigation.blog", lang)}</HeaderLink>
 				<LanguageSwitcher />
 			</div>
 			
@@ -43,9 +45,9 @@ import { t } from "astro-i18next";
 		<!-- Mobile menu -->
 		<div id="mobile-menu" class="md:hidden hidden">
 			<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200 dark:border-gray-700">
-				<HeaderLink href="/" class="block px-3 py-2 text-base font-medium">{t("navigation.home")}</HeaderLink>
-				<HeaderLink href="/about" class="block px-3 py-2 text-base font-medium">{t("navigation.about")}</HeaderLink>
-				<HeaderLink href="/blog" class="block px-3 py-2 text-base font-medium">{t("navigation.blog")}</HeaderLink>
+				<HeaderLink href="/" class="block px-3 py-2 text-base font-medium">{t("navigation.home", lang)}</HeaderLink>
+				<HeaderLink href="/about" class="block px-3 py-2 text-base font-medium">{t("navigation.about", lang)}</HeaderLink>
+				<HeaderLink href="/blog" class="block px-3 py-2 text-base font-medium">{t("navigation.blog", lang)}</HeaderLink>
 			</div>
 		</div>
 	</nav>

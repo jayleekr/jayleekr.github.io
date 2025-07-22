@@ -3,13 +3,15 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE } from '../consts';
-import { t } from "astro-i18next";
+import { getLangFromUrl, t } from '../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang={lang}>
 	<head>
-		<BaseHead title={`${t("about.title")} - ${SITE_TITLE}`} description={t("about.description")} />
+		<BaseHead title={`${t("about.title", lang)} - ${SITE_TITLE}`} description={t("about.description", lang)} />
 	</head>
 	<body>
 		<Header />
@@ -17,32 +19,32 @@ import { t } from "astro-i18next";
 			<section class="py-12">
 				<div class="max-w-4xl mx-auto">
 					<div class="text-center mb-16">
-						<h1 class="text-4xl font-bold mb-6">{t("about.pageTitle")}</h1>
+						<h1 class="text-4xl font-bold mb-6">{t("about.pageTitle", lang)}</h1>
 						<div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-4xl text-white font-bold">
 							JL
 						</div>
 						<p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-							{t("about.tagline")}<br/>
-							{t("about.tagline2")}
+							{t("about.tagline", lang)}<br/>
+							{t("about.tagline2", lang)}
 						</p>
 					</div>
 
 					<div class="grid md:grid-cols-2 gap-12 mb-16">
 						<div>
-							<h2 class="text-2xl font-bold mb-6">🎓 {t("about.education")}</h2>
+							<h2 class="text-2xl font-bold mb-6">🎓 {t("about.education", lang)}</h2>
 							<ul class="space-y-3">
 								<li class="flex items-start gap-3">
 									<span class="w-2 h-2 bg-primary-500 rounded-full mt-2"></span>
 									<div>
-										<p class="font-semibold">{t("about.bachelor")}</p>
+										<p class="font-semibold">{t("about.bachelor", lang)}</p>
 										<p class="text-sm text-gray-600 dark:text-gray-400">Hanyang University (2007-2011)</p>
 									</div>
 								</li>
 								<li class="flex items-start gap-3">
 									<span class="w-2 h-2 bg-primary-500 rounded-full mt-2"></span>
 									<div>
-										<p class="font-semibold">{t("about.masters")}</p>
-										<p class="text-sm text-gray-600 dark:text-gray-400">{t("about.vehicularComm")}</p>
+										<p class="font-semibold">{t("about.masters", lang)}</p>
+										<p class="text-sm text-gray-600 dark:text-gray-400">{t("about.vehicularComm", lang)}</p>
 										<p class="text-sm text-gray-600 dark:text-gray-400">Hanyang University (2011-2015, LOA)</p>
 									</div>
 								</li>
@@ -50,55 +52,55 @@ import { t } from "astro-i18next";
 						</div>
 
 						<div>
-							<h2 class="text-2xl font-bold mb-6">🏀 {t("about.basketball")}</h2>
+							<h2 class="text-2xl font-bold mb-6">🏀 {t("about.basketball", lang)}</h2>
 							<div class="space-y-4">
 								<div>
-									<h3 class="font-semibold mb-2">{t("about.representative")}</h3>
-									<p class="text-gray-600 dark:text-gray-400">{t("about.anyangCity")}</p>
+									<h3 class="font-semibold mb-2">{t("about.representative", lang)}</h3>
+									<p class="text-gray-600 dark:text-gray-400">{t("about.anyangCity", lang)}</p>
 									<p class="text-sm text-gray-500 dark:text-gray-500">2017, 2018, 2020, 2021, 2022</p>
 								</div>
 								<div>
-									<h3 class="font-semibold mb-2">{t("about.fibaPlayer")}</h3>
-									<p class="text-gray-600 dark:text-gray-400">{t("about.teamYanadoo")}</p>
-									<p class="text-sm text-gray-500 dark:text-gray-500">{t("about.koreaRank")}</p>
+									<h3 class="font-semibold mb-2">{t("about.fibaPlayer", lang)}</h3>
+									<p class="text-gray-600 dark:text-gray-400">{t("about.teamYanadoo", lang)}</p>
+									<p class="text-sm text-gray-500 dark:text-gray-500">{t("about.koreaRank", lang)}</p>
 								</div>
 							</div>
 						</div>
 					</div>
 
 					<div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 mb-16">
-						<h2 class="text-2xl font-bold mb-6 text-center">💼 {t("about.career")}</h2>
+						<h2 class="text-2xl font-bold mb-6 text-center">💼 {t("about.career", lang)}</h2>
 						<div class="space-y-6">
 							<div class="border-l-4 border-primary-500 pl-6">
-								<h3 class="font-bold text-lg">{t("about.softwareEngineer")}</h3>
-								<p class="text-gray-600 dark:text-gray-400 mb-2">Sonatus • San Jose • {t("about.present")}</p>
+								<h3 class="font-bold text-lg">{t("about.softwareEngineer", lang)}</h3>
+								<p class="text-gray-600 dark:text-gray-400 mb-2">Sonatus • San Jose • {t("about.present", lang)}</p>
 								<p class="text-gray-700 dark:text-gray-300">
-									{t("about.sonatusDesc")}
+									{t("about.sonatusDesc", lang)}
 								</p>
 							</div>
 
 							<div class="border-l-4 border-primary-500 pl-6">
-								<h3 class="font-bold text-lg">{t("about.leadSDE")}</h3>
-								<p class="text-gray-600 dark:text-gray-400 mb-2">Hyundai Autron • {t("about.seoul")} • Dec 2019 - Jun 2021</p>
+								<h3 class="font-bold text-lg">{t("about.leadSDE", lang)}</h3>
+								<p class="text-gray-600 dark:text-gray-400 mb-2">Hyundai Autron • {t("about.seoul", lang)} • Dec 2019 - Jun 2021</p>
 								<p class="text-gray-700 dark:text-gray-300">
-									{t("about.autronDesc")}
+									{t("about.autronDesc", lang)}
 								</p>
 							</div>
 							
 							<div class="border-l-4 border-primary-500 pl-6">
-								<h3 class="font-bold text-lg">{t("about.assistantManager")}</h3>
+								<h3 class="font-bold text-lg">{t("about.assistantManager", lang)}</h3>
 								<p class="text-gray-600 dark:text-gray-400 mb-2">Opticis Co., Ltd • May 2016 - May 2019</p>
 								<p class="text-gray-700 dark:text-gray-300">
-									{t("about.swSolutionDivision")}
+									{t("about.swSolutionDivision", lang)}
 								</p>
 							</div>
 						</div>
 					</div>
 
 					<div class="text-center">
-						<h2 class="text-2xl font-bold mb-6">🔗 {t("about.links")}</h2>
+						<h2 class="text-2xl font-bold mb-6">🔗 {t("about.links", lang)}</h2>
 						<p class="text-gray-600 dark:text-gray-400 mb-8">
-							{t("about.connectMessage")}
+							{t("about.connectMessage", lang)}
 						</p>
 						<div class="flex justify-center gap-4 flex-wrap">
 							<a 
