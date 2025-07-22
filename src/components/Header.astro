@@ -1,6 +1,9 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import SearchButton from './SearchButton.astro';
+import GlobalSearch from './GlobalSearch.astro';
 import { SITE_TITLE } from '../consts';
 import { getLangFromUrl, t } from '../utils/i18n';
 
@@ -20,11 +23,16 @@ const lang = getLangFromUrl(Astro.url);
 				<HeaderLink href="/">{t("navigation.home", lang)}</HeaderLink>
 				<HeaderLink href="/about">{t("navigation.about", lang)}</HeaderLink>
 				<HeaderLink href="/blog">{t("navigation.blog", lang)}</HeaderLink>
+				<HeaderLink href="/categories">{lang === 'ko' ? '카테고리' : 'Categories'}</HeaderLink>
+				<SearchButton />
+				<ThemeToggle />
 				<LanguageSwitcher />
 			</div>
 			
 			<!-- Mobile menu button -->
 			<div class="md:hidden flex items-center gap-4">
+				<SearchButton />
+				<ThemeToggle />
 				<LanguageSwitcher />
 				<button 
 					id="mobile-menu-button"
@@ -48,10 +56,14 @@ const lang = getLangFromUrl(Astro.url);
 				<HeaderLink href="/" class="block px-3 py-2 text-base font-medium">{t("navigation.home", lang)}</HeaderLink>
 				<HeaderLink href="/about" class="block px-3 py-2 text-base font-medium">{t("navigation.about", lang)}</HeaderLink>
 				<HeaderLink href="/blog" class="block px-3 py-2 text-base font-medium">{t("navigation.blog", lang)}</HeaderLink>
+				<HeaderLink href="/categories" class="block px-3 py-2 text-base font-medium">{lang === 'ko' ? '카테고리' : 'Categories'}</HeaderLink>
 			</div>
 		</div>
 	</nav>
 </header>
+
+<!-- Global Search Modal -->
+<GlobalSearch />
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {

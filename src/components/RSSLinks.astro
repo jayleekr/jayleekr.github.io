@@ -1,0 +1,116 @@
+---
+// RSS feed links component for discovery and subscription
+import { getLangFromUrl } from '../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<div class="rss-links-container">
+  <!-- RSS Discovery Links in HTML Head -->
+  <link 
+    rel="alternate" 
+    type="application/rss+xml" 
+    title="RSS Feed - All Posts" 
+    href="/rss.xml"
+  >
+  <link 
+    rel="alternate" 
+    type="application/rss+xml" 
+    title="RSS Feed - English Posts" 
+    href="/rss/en.xml"
+  >
+  
+  <!-- RSS Links Display Component -->
+  <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-6">
+    <div class="flex items-center gap-3 mb-3">
+      <svg class="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3.429 2.786c0.456 0 0.829 0.372 0.829 0.829s-0.372 0.829-0.829 0.829c-0.456 0-0.829-0.372-0.829-0.829s0.372-0.829 0.829-0.829zM3.429 7.143c3.304 0 5.976 2.672 5.976 5.976h1.659c0-4.220-3.415-7.635-7.635-7.635v1.659zM3.429 11.5c1.382 0 2.5 1.118 2.5 2.5h1.659c0-2.293-1.866-4.159-4.159-4.159v1.659z"/>
+      </svg>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        {lang === 'ko' ? 'RSS 구독' : 'RSS Subscription'}
+      </h3>
+    </div>
+    
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+      {lang === 'ko' 
+        ? 'RSS 리더를 사용해 새로운 글을 바로 받아보세요' 
+        : 'Subscribe to get new posts delivered to your RSS reader'
+      }
+    </p>
+    
+    <div class="space-y-2">
+      <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
+        <div>
+          <div class="font-medium text-gray-900 dark:text-gray-100">
+            {lang === 'ko' ? '전체 글' : 'All Posts'}
+          </div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            {lang === 'ko' ? '모든 카테고리의 최신 글' : 'Latest posts from all categories'}
+          </div>
+        </div>
+        <a 
+          href="/rss.xml"
+          class="inline-flex items-center gap-1 px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded text-sm font-medium hover:bg-orange-200 dark:hover:bg-orange-800 transition-colors"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3.429 2.786c0.456 0 0.829 0.372 0.829 0.829s-0.372 0.829-0.829 0.829c-0.456 0-0.829-0.372-0.829-0.829s0.372-0.829 0.829-0.829zM3.429 7.143c3.304 0 5.976 2.672 5.976 5.976h1.659c0-4.220-3.415-7.635-7.635-7.635v1.659zM3.429 11.5c1.382 0 2.5 1.118 2.5 2.5h1.659c0-2.293-1.866-4.159-4.159-4.159v1.659z"/>
+          </svg>
+          RSS
+        </a>
+      </div>
+      
+      <div class="flex items-center justify-between p-3 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
+        <div>
+          <div class="font-medium text-gray-900 dark:text-gray-100">
+            {lang === 'ko' ? '영어 글' : 'English Posts'}
+          </div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            {lang === 'ko' ? '영어로 작성된 글만' : 'English posts only'}
+          </div>
+        </div>
+        <a 
+          href="/rss/en.xml"
+          class="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3.429 2.786c0.456 0 0.829 0.372 0.829 0.829s-0.372 0.829-0.829 0.829c-0.456 0-0.829-0.372-0.829-0.829s0.372-0.829 0.829-0.829zM3.429 7.143c3.304 0 5.976 2.672 5.976 5.976h1.659c0-4.220-3.415-7.635-7.635-7.635v1.659zM3.429 11.5c1.382 0 2.5 1.118 2.5 2.5h1.659c0-2.293-1.866-4.159-4.159-4.159v1.659z"/>
+          </svg>
+          RSS
+        </a>
+      </div>
+    </div>
+    
+    <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+      <div class="text-xs text-gray-500 dark:text-gray-400">
+        <strong>{lang === 'ko' ? '추천 RSS 리더:' : 'Recommended RSS Readers:'}</strong>
+        <span class="ml-1">
+          Feedly, Inoreader, NetNewsWire, Reeder
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Analytics tracking for RSS link clicks
+  document.addEventListener('DOMContentLoaded', function() {
+    const rssLinks = document.querySelectorAll('a[href$=".xml"]');
+    
+    rssLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Track RSS subscription attempts
+        if (typeof window.gtag !== 'undefined') {
+          window.gtag('event', 'rss_subscription', {
+            event_category: 'engagement',
+            event_label: link.href,
+            transport_type: 'beacon'
+          });
+        }
+      });
+    });
+  });
+</script>

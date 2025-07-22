@@ -2,9 +2,10 @@
 // Google Analytics 4 (GA4) 설정
 // 환경변수 GOOGLE_ANALYTICS_ID를 통해 활성화
 const GA_TRACKING_ID = import.meta.env.GOOGLE_ANALYTICS_ID;
+const isDev = import.meta.env.DEV;
 ---
 
-{GA_TRACKING_ID && (
+{GA_TRACKING_ID && !isDev && (
   <>
     <!-- Google tag (gtag.js) -->
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}></script>
@@ -12,15 +13,157 @@ const GA_TRACKING_ID = import.meta.env.GOOGLE_ANALYTICS_ID;
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+      
+      // Initialize GA4 with privacy-focused settings
       gtag('config', GA_TRACKING_ID, {
         page_title: document.title,
         page_location: window.location.href,
         send_page_view: true,
-        // Privacy settings
+        // Privacy settings (GDPR compliant)
         anonymize_ip: true,
         allow_google_signals: false,
-        allow_ad_personalization_signals: false
+        allow_ad_personalization_signals: false,
+        // Performance settings
+        transport_type: 'beacon',
+        custom_map: {
+          'custom_parameter_1': 'blog_category',
+          'custom_parameter_2': 'reading_time'
+        }
+      });
+
+      // Enhanced blog tracking
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track scroll depth
+        let scrollDepths = [10, 25, 50, 75, 90];
+        let scrollDepthsTriggered = [];
+        
+        function trackScrollDepth() {
+          const scrollPercent = Math.round(
+            (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+          );
+          
+          scrollDepths.forEach(depth => {
+            if (scrollPercent >= depth && !scrollDepthsTriggered.includes(depth)) {
+              scrollDepthsTriggered.push(depth);
+              gtag('event', 'scroll_depth', {
+                event_category: 'engagement',
+                event_label: depth + '%',
+                value: depth
+              });
+            }
+          });
+        }
+        
+        // Throttled scroll tracking
+        let scrollTimer;
+        window.addEventListener('scroll', function() {
+          if (scrollTimer) clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(trackScrollDepth, 100);
+        });
+
+        // Track reading time (estimate)
+        const startTime = Date.now();
+        let maxScroll = 0;
+        
+        window.addEventListener('scroll', function() {
+          maxScroll = Math.max(maxScroll, window.scrollY);
+        });
+        
+        // Track reading progress on page unload
+        window.addEventListener('beforeunload', function() {
+          const timeSpent = Math.round((Date.now() - startTime) / 1000);
+          const scrollPercent = Math.round(
+            (maxScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+          );
+          
+          if (timeSpent > 10) { // Only track if user spent more than 10 seconds
+            gtag('event', 'reading_progress', {
+              event_category: 'engagement',
+              event_label: window.location.pathname,
+              value: timeSpent,
+              custom_parameter_1: scrollPercent
+            });
+          }
+        });
+
+        // Track external link clicks
+        document.querySelectorAll('a[href^="http"]').forEach(function(link) {
+          if (!link.href.includes(window.location.hostname)) {
+            link.addEventListener('click', function() {
+              gtag('event', 'click', {
+                event_category: 'external_link',
+                event_label: link.href,
+                transport_type: 'beacon'
+              });
+            });
+          }
+        });
+
+        // Track blog post category views (if available)
+        const categories = document.querySelector('[data-categories]');
+        if (categories) {
+          const categoryList = JSON.parse(categories.dataset.categories || '[]');
+          if (categoryList.length > 0) {
+            gtag('event', 'page_view', {
+              custom_parameter_1: categoryList[0], // Main category
+              content_group1: categoryList[0]
+            });
+          }
+        }
+
+        // Track search usage
+        const searchButton = document.getElementById('open-search');
+        if (searchButton) {
+          searchButton.addEventListener('click', function() {
+            gtag('event', 'search_open', {
+              event_category: 'navigation',
+              event_label: 'global_search'
+            });
+          });
+        }
+
+        // Track theme changes
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function() {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            gtag('event', 'theme_change', {
+              event_category: 'user_preference',
+              event_label: newTheme
+            });
+          });
+        }
+
+        // Track language changes
+        const languageSwitcher = document.querySelector('.language-switcher');
+        if (languageSwitcher) {
+          languageSwitcher.addEventListener('click', function(e) {
+            if (e.target.closest('a')) {
+              const newLang = e.target.closest('a').href.includes('/en') ? 'en' : 'ko';
+              gtag('event', 'language_change', {
+                event_category: 'user_preference',
+                event_label: newLang
+              });
+            }
+          });
+        }
       });
     </script>
+
+    <!-- Debug mode for development -->
+    <script is:inline>
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log('GA4 Analytics: Running in development mode - tracking disabled');
+      }
+    </script>
   </>
+)}
+
+{!GA_TRACKING_ID && (
+  <!-- Development reminder -->
+  <script is:inline>
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      console.log('GA4 Analytics: Set GOOGLE_ANALYTICS_ID environment variable to enable tracking');
+    }
+  </script>
 )}

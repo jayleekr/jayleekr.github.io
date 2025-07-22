@@ -5,16 +5,50 @@ import Footer from '../../components/Footer.astro';
 import { SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import ReadingTime from '../../components/ReadingTime.astro';
 import { Image } from 'astro:assets';
 import { getLangFromUrl, t } from '../../utils/i18n';
 
 const lang = getLangFromUrl(Astro.url);
 
-const posts = (await getCollection('blog')).sort(
+// Get URL parameters for filtering
+const url = Astro.url;
+const categoryFilter = url.searchParams.get('category');
+const subcategoryFilter = url.searchParams.get('subcategory');
+const tagFilter = url.searchParams.get('tag');
+
+let posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-// Extract all unique categories and tags
+// Apply filters if present
+let filteredPosts = posts;
+let filterTitle = '';
+
+if (categoryFilter) {
+	filteredPosts = posts.filter(post => {
+		const categories = post.data.categories || [];
+		const matchesCategory = categories.includes(categoryFilter);
+		const matchesSubcategory = !subcategoryFilter || categories.includes(subcategoryFilter);
+		return matchesCategory && matchesSubcategory;
+	});
+	
+	if (subcategoryFilter) {
+		filterTitle = `${categoryFilter} > ${subcategoryFilter}`;
+	} else {
+		filterTitle = categoryFilter;
+	}
+}
+
+if (tagFilter) {
+	filteredPosts = posts.filter(post => {
+		const tags = post.data.tags || [];
+		return tags.includes(tagFilter);
+	});
+	filterTitle = `#${tagFilter}`;
+}
+
+// Extract all unique categories and tags for filter options
 const allCategories = [...new Set(posts.flatMap(post => post.data.categories || []))];
 const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 ---
@@ -29,12 +63,39 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 		<main id="main-content" class="max-w-6xl mx-auto px-4 py-8">
 			<section>
 				<div class="mb-8">
-					<h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">{t("navigation.blog", lang)}</h1>
+					<h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+						{filterTitle ? `${filterTitle} - ${t("navigation.blog", lang)}` : t("navigation.blog", lang)}
+					</h1>
 					<p class="text-gray-600 dark:text-gray-400">
-						개발과 기술에 대한 경험과 인사이트를 공유합니다
+						{filterTitle 
+							? lang === 'ko' ? `${filterTitle} 카테고리의 글들` : `Posts in ${filterTitle}`
+							: lang === 'ko' ? '개발과 기술에 대한 경험과 인사이트를 공유합니다' : 'Sharing experiences and insights about development and technology'
+						}
 					</p>
-					<div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
-						총 <span id="posts-count">{posts.length}</span>개의 포스트
+					
+					{filterTitle && (
+						<div class="mt-4">
+							<a 
+								href="/blog"
+								class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm font-medium"
+							>
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+								</svg>
+								{lang === 'ko' ? '모든 글 보기' : 'View all posts'}
+							</a>
+						</div>
+					)}
+					
+					<div class="mt-4 flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+						<span>
+							총 <span id="posts-count">{filteredPosts.length}</span>개의 포스트
+						</span>
+						{filterTitle && (
+							<span>
+								(전체 {posts.length}개 중)
+							</span>
+						)}
 					</div>
 				</div>
 
@@ -79,7 +140,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 
 				<!-- Posts Grid -->
 				<div id="posts-container" class="grid gap-8">
-					{posts.map((post) => (
+					{filteredPosts.map((post) => (
 						<article class="post-item bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow" 
 							data-categories={JSON.stringify(post.data.categories || [])}
 							data-tags={JSON.stringify(post.data.tags || [])}
@@ -111,6 +172,12 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 									<div class="flex-1">
 										<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
 											<FormattedDate date={post.data.pubDate} />
+											{post.body && (
+												<>
+													<span>•</span>
+													<ReadingTime content={post.body} showIcon={false} />
+												</>
+											)}
 											{post.data.lang && (
 												<>
 													<span>•</span>
@@ -165,7 +232,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags || []))];
 					))}
 				</div>
 				
-				{posts.length === 0 && (
+				{filteredPosts.length === 0 && (
 					<div class="text-center py-12">
 						<p class="text-gray-500 dark:text-gray-400 text-lg">{t('blog.noPosts', lang)}</p>
 					</div>

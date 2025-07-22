@@ -4,15 +4,22 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import RelatedPosts from '../components/RelatedPosts.astro';
+import ReadingTime from '../components/ReadingTime.astro';
+import SocialShare from '../components/SocialShare.astro';
+import Comments from '../components/Comments.astro';
+import Newsletter from '../components/Newsletter.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 import { getLangFromUrl, t } from '../utils/i18n';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
 	tags?: string[];
 	lang?: 'ko' | 'en';
+	content?: string;
 };
 
-const { title, description, pubDate, updatedDate, heroImage, categories, tags, lang = 'ko' } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, categories, tags, lang = 'ko', content = '' } = Astro.props;
 
 // Convert heroImage to string if it's an object
 const heroImageSrc = typeof heroImage === 'string' ? heroImage : heroImage?.src;
@@ -27,106 +34,293 @@ const currentLang = getLangFromUrl(Astro.url);
 		<BaseHead title={title} description={description} image={heroImageSrc} />
 	</head>
 
-	<body>
+	<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
 		<Header />
-		<main id="main-content">
-			<article class="max-w-4xl mx-auto py-8">
-				{heroImageSrc && (
-					<div class="mb-8">
+		
+		<!-- Progress Bar -->
+		<div class="fixed top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800 z-50">
+			<div id="reading-progress-bar" class="h-full bg-primary-600 dark:bg-primary-500 transition-all duration-300 ease-out" style="width: 0%"></div>
+		</div>
+		
+		<main id="main-content" class="min-h-screen">
+			<!-- Hero Section -->
+			{heroImageSrc && (
+				<div class="relative">
+					<div class="aspect-[21/9] max-h-[500px] overflow-hidden">
 						<img 
 							src={heroImageSrc} 
 							alt={title}
-							class="w-full h-64 object-cover rounded-xl"
+							class="w-full h-full object-cover"
+						/>
+						<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+					</div>
+				</div>
+			)}
+			
+			<!-- Content Container -->
+			<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+				<!-- Floating TOC Button (Mobile) -->
+				<button 
+					id="toc-toggle-mobile" 
+					class="fixed bottom-6 right-6 lg:hidden z-40 w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+					aria-label="Toggle table of contents"
+				>
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+					</svg>
+				</button>
+				
+				<!-- Table of Contents Overlay (Mobile) -->
+				<div id="toc-overlay-mobile" class="fixed inset-0 bg-black/50 z-30 lg:hidden hidden">
+					<div class="fixed right-0 top-0 h-full w-80 max-w-[80vw] bg-white dark:bg-gray-900 shadow-xl transform translate-x-full transition-transform duration-300">
+						<div class="p-6">
+							<div class="flex items-center justify-between mb-6">
+								<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+									{currentLang === 'ko' ? '목차' : 'Table of Contents'}
+								</h3>
+								<button id="toc-close-mobile" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+									</svg>
+								</button>
+							</div>
+							<TableOfContents 
+								content={content}
+								maxDepth={3}
+								showNumbers={false}
+								className=""
+							/>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Desktop TOC Sidebar -->
+				<aside class="hidden xl:block fixed left-4 top-1/2 transform -translate-y-1/2 w-64 z-20">
+					<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 max-h-[80vh] overflow-y-auto">
+						<TableOfContents 
+							content={content}
+							maxDepth={3}
+							showNumbers={false}
+							className=""
 						/>
 					</div>
-				)}
+				</aside>
 				
-				<header class="mb-8">
-					<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
-						<FormattedDate date={pubDate} />
-						{updatedDate && (
-							<>
-								<span>•</span>
-								<span>Updated: <FormattedDate date={updatedDate} /></span>
-							</>
+				<!-- Main Article -->
+				<article class="xl:ml-8 xl:mr-8 py-16">
+					<!-- Article Header -->
+					<header class="mb-16 max-w-3xl mx-auto">
+						<!-- Meta Information -->
+						<div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-8 font-medium">
+							<FormattedDate date={pubDate} />
+							{content && (
+								<>
+									<span class="text-gray-300 dark:text-gray-600">•</span>
+									<ReadingTime content={content} />
+								</>
+							)}
+							{updatedDate && (
+								<>
+									<span class="text-gray-300 dark:text-gray-600">•</span>
+									<span>Updated: <FormattedDate date={updatedDate} /></span>
+								</>
+							)}
+							{lang && (
+								<>
+									<span class="text-gray-300 dark:text-gray-600">•</span>
+									<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-semibold uppercase tracking-wide">
+										{lang}
+									</span>
+								</>
+							)}
+						</div>
+						
+						<!-- Title -->
+						<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-gray-100 mb-6">
+							{title}
+						</h1>
+						
+						<!-- Description -->
+						{description && (
+							<p class="text-xl md:text-2xl leading-relaxed text-gray-600 dark:text-gray-300 mb-10 font-light">
+								{description}
+							</p>
 						)}
-						{lang && (
-							<>
-								<span>•</span>
-								<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">
-									{lang.toUpperCase()}
-								</span>
-							</>
-						)}
-					</div>
-					
-					<h1 class="text-4xl font-bold mb-4">{title}</h1>
-					
-					{description && (
-						<p class="text-xl text-gray-600 dark:text-gray-300 mb-6">
-							{description}
-						</p>
-					)}
-					
-					{(categories || tags) && (
-						<div class="flex flex-wrap gap-4">
-							{categories && categories.length > 0 && (
-								<div class="flex items-center gap-2">
-									<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Categories:</span>
-									<div class="flex gap-2">
+						
+						<!-- Categories and Tags -->
+						{(categories || tags) && (
+							<div class="space-y-4">
+								{categories && categories.length > 0 && (
+									<div class="flex flex-wrap items-center gap-3">
+										<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Categories</span>
 										{categories.map((category) => (
-											<span class="px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full text-sm">
+											<span class="px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium border border-primary-200 dark:border-primary-800 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
 												{category}
 											</span>
 										))}
 									</div>
-								</div>
-							)}
-							
-							{tags && tags.length > 0 && (
-								<div class="flex items-center gap-2">
-									<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Tags:</span>
-									<div class="flex gap-2">
+								)}
+								
+								{tags && tags.length > 0 && (
+									<div class="flex flex-wrap items-center gap-3">
+										<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Tags</span>
 										{tags.map((tag) => (
-											<span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-sm">
-												{tag}
+											<span class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+												#{tag}
 											</span>
 										))}
 									</div>
-								</div>
-							)}
-						</div>
-					)}
-				</header>
-				
-				<div class="prose prose-lg dark:prose-invert max-w-none">
+								)}
+							</div>
+						)}
+					</header>
+					
+					<!-- Article Content -->
+					<div class="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
 					<slot />
 				</div>
 				
-				<footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-					<div class="flex justify-between items-center">
-						<a 
-							href="/blog" 
-							class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-						>
-							<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-							</svg>
-							Back to Blog
-						</a>
-						
-						<div class="flex items-center gap-4">
-							<button 
-								onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-								class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-							>
-								Back to top ↑
-							</button>
+					<!-- Social Share -->
+					<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+						<div class="text-center mb-6">
+							<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
+							<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
+						</div>
+						<SocialShare 
+							title={title}
+							description={description || ''}
+							url={Astro.url.pathname}
+							hashtags={tags || []}
+							showLabels={true}
+						/>
+					</div>
+				
+					<!-- Related Posts -->
+					<div class="mt-16">
+						<RelatedPosts 
+							currentPostId={Astro.params.slug || ''}
+							currentCategories={categories}
+							currentTags={tags}
+							maxPosts={3}
+						/>
+					</div>
+				
+					<!-- Newsletter Subscription -->
+					<div class="mt-20 mb-16">
+						<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
+							<Newsletter variant="inline" />
 						</div>
 					</div>
-				</footer>
-			</article>
+				
+					<!-- Comments Section -->
+					<div class="mt-16">
+						<div class="text-center mb-8">
+							<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
+							<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
+						</div>
+						<Comments />
+					</div>
+				
+					<!-- Article Footer -->
+					<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700">
+						<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+							<a 
+								href="/blog" 
+								class="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+							>
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+								</svg>
+								Back to Blog
+							</a>
+							
+							<div class="flex items-center gap-6">
+								<button 
+									onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+									class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
+								>
+									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+									</svg>
+									Back to top
+								</button>
+							</div>
+						</div>
+					</footer>
+				</article>
+		</div>
 		</main>
 		<Footer />
+		
+		<!-- Reading Progress and Mobile TOC Scripts -->
+		<script is:inline>
+			// Reading progress bar
+			function updateReadingProgress() {
+				const article = document.getElementById('main-content');
+				const progressBar = document.getElementById('reading-progress-bar');
+				
+				if (!article || !progressBar) return;
+				
+				const articleTop = article.offsetTop;
+				const articleHeight = article.offsetHeight;
+				const windowTop = window.pageYOffset;
+				const windowHeight = window.innerHeight;
+				
+				const progress = Math.min(
+					Math.max((windowTop - articleTop + windowHeight * 0.1) / (articleHeight - windowHeight * 0.8), 0),
+					1
+				);
+				
+				progressBar.style.width = `${progress * 100}%`;
+			}
+			
+			// Mobile TOC functionality
+			function initMobileTOC() {
+				const toggleBtn = document.getElementById('toc-toggle-mobile');
+				const overlay = document.getElementById('toc-overlay-mobile');
+				const closeBtn = document.getElementById('toc-close-mobile');
+				const sidebar = overlay?.querySelector('.fixed');
+				
+				if (!toggleBtn || !overlay || !closeBtn || !sidebar) return;
+				
+				function openTOC() {
+					overlay.classList.remove('hidden');
+					document.body.style.overflow = 'hidden';
+					setTimeout(() => {
+						sidebar.classList.remove('translate-x-full');
+					}, 10);
+				}
+				
+				function closeTOC() {
+					sidebar.classList.add('translate-x-full');
+					document.body.style.overflow = '';
+					setTimeout(() => {
+						overlay.classList.add('hidden');
+					}, 300);
+				}
+				
+				toggleBtn.addEventListener('click', openTOC);
+				closeBtn.addEventListener('click', closeTOC);
+				overlay.addEventListener('click', (e) => {
+					if (e.target === overlay) closeTOC();
+				});
+				
+				// Close on escape key
+				document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+						closeTOC();
+					}
+				});
+			}
+			
+			// Initialize on page load
+			document.addEventListener('DOMContentLoaded', () => {
+				updateReadingProgress();
+				initMobileTOC();
+			});
+			
+			// Update progress on scroll
+			window.addEventListener('scroll', updateReadingProgress, { passive: true });
+		</script>
 	</body>
 </html>

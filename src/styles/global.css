@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import code highlighting styles */
+@import './code-highlight.css';
+
 /* Modern theme variables */
 :root {
 	--accent: theme('colors.primary.600');

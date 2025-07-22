@@ -44,7 +44,16 @@ const translations = {
     "common.viewAll": "전체 보기",
     "blog.noPosts": "아직 게시된 글이 없습니다.",
     "blog.noResults": "검색 결과가 없습니다",
-    "blog.noResultsDesc": "다른 검색어나 필터를 시도해보세요."
+    "blog.noResultsDesc": "다른 검색어나 필터를 시도해보세요.",
+    "search.title": "사이트 검색",
+    "search.placeholder": "검색어를 입력하세요...",
+    "search.button": "검색",
+    "search.close": "검색 닫기",
+    "search.results": "개의 결과",
+    "search.noResults": "검색 결과가 없습니다",
+    "search.noResultsDesc": "다른 검색어로 시도해보세요",
+    "search.recent": "최근 검색",
+    "search.prompt": "결과를 보려면 검색어를 입력하세요"
   },
   en: {
     "navigation.home": "Home",
@@ -90,7 +99,16 @@ const translations = {
     "common.viewAll": "View All",
     "blog.noPosts": "No posts published yet.",
     "blog.noResults": "No search results found",
-    "blog.noResultsDesc": "Try different keywords or filters."
+    "blog.noResultsDesc": "Try different keywords or filters.",
+    "search.title": "Site Search",
+    "search.placeholder": "Enter search terms...",
+    "search.button": "Search",
+    "search.close": "Close search",
+    "search.results": " results",
+    "search.noResults": "No search results found",
+    "search.noResultsDesc": "Try different search terms",
+    "search.recent": "Recent searches",
+    "search.prompt": "Enter search terms to see results"
   }
 };
 

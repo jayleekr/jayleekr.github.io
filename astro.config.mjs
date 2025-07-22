@@ -30,7 +30,15 @@ export default defineConfig({
 		astroI18next()
 	],
 	markdown: {
-		syntaxHighlight: 'prism',
+		syntaxHighlight: 'shiki',
+		shikiConfig: {
+			theme: 'one-dark-pro',
+			themes: {
+				light: 'one-light',
+				dark: 'one-dark-pro'
+			},
+			wrap: true
+		},
 		remarkPlugins: [],
 		rehypePlugins: []
 	},

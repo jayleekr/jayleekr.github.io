@@ -1,0 +1,280 @@
+/* Enhanced Code Block Styling */
+.code-block-enhanced {
+  @apply relative bg-gray-900 dark:bg-gray-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 my-6;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Consolas', monospace;
+}
+
+/* Add copy button to enhanced code blocks */
+.code-block-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 48px;
+  background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
+  border-bottom: 1px solid rgba(75, 85, 99, 0.5);
+  z-index: 1;
+}
+
+.code-block-enhanced::after {
+  content: 'Copy';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(55, 65, 81, 0.8);
+  color: rgb(156, 163, 175);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.code-block-enhanced:hover::after {
+  background: rgba(75, 85, 99, 0.9);
+  color: rgb(229, 231, 235);
+  border-color: rgba(156, 163, 175, 0.5);
+}
+
+/* Shiki theme customizations */
+.shiki {
+  @apply p-4 text-sm leading-relaxed;
+  background-color: transparent !important;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.shiki code {
+  @apply block;
+  background: transparent !important;
+  color: inherit;
+  font-family: inherit;
+  counter-reset: line;
+}
+
+/* Line numbers for Shiki */
+.shiki .line {
+  position: relative;
+  padding-left: 3.5rem;
+  min-height: 1.5rem;
+}
+
+.shiki .line::before {
+  content: counter(line);
+  counter-increment: line;
+  position: absolute;
+  left: 0;
+  width: 3rem;
+  text-align: right;
+  color: rgb(107, 114, 128);
+  font-variant-numeric: tabular-nums;
+  border-right: 1px solid rgb(75, 85, 99);
+  padding-right: 1rem;
+  margin-right: 1rem;
+  user-select: none;
+}
+
+/* Highlighted lines */
+.shiki .line.highlighted {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid rgb(59, 130, 246);
+}
+
+.shiki .line.highlighted::before {
+  background-color: rgba(59, 130, 246, 0.2);
+  color: rgb(147, 197, 253);
+}
+
+/* Language indicator */
+.shiki[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(55, 65, 81, 0.8);
+  color: rgb(156, 163, 175);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+/* Filename indicator */
+.shiki[data-filename]::before {
+  content: attr(data-filename);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(55, 65, 81, 0.8);
+  color: rgb(156, 163, 175);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shiki[data-filename]::before {
+  content: '📄 ' attr(data-filename);
+}
+
+/* Custom scrollbar for code blocks */
+.shiki::-webkit-scrollbar {
+  height: 8px;
+}
+
+.shiki::-webkit-scrollbar-track {
+  background: rgba(55, 65, 81, 0.5);
+  border-radius: 4px;
+}
+
+.shiki::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.7);
+  border-radius: 4px;
+}
+
+.shiki::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.8);
+}
+
+/* Dark mode adjustments */
+:global(.dark) .shiki {
+  border-color: rgb(55, 65, 81);
+}
+
+:global(.dark) .code-block-enhanced::before {
+  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(3, 7, 18, 0.95) 100%);
+  border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+:global(.dark) .code-block-enhanced::after {
+  background: rgba(31, 41, 55, 0.8);
+  border-color: rgba(55, 65, 81, 0.5);
+  color: rgb(156, 163, 175);
+}
+
+:global(.dark) .code-block-enhanced:hover::after {
+  background: rgba(55, 65, 81, 0.9);
+  color: rgb(229, 231, 235);
+  border-color: rgba(107, 114, 128, 0.5);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .shiki .line {
+    padding-left: 2.5rem;
+  }
+  
+  .shiki .line::before {
+    width: 2rem;
+  }
+  
+  .code-block-enhanced::after,
+  .shiki[data-language]::before,
+  .shiki[data-filename]::before {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .code-block-enhanced::before,
+  .code-block-enhanced::after,
+  .shiki[data-language]::before,
+  .shiki[data-filename]::before {
+    display: none;
+  }
+  
+  .shiki {
+    border: 1px solid #ccc;
+    background: white !important;
+    color: black !important;
+  }
+  
+  .shiki .line::before {
+    color: #666;
+    border-right-color: #ccc;
+  }
+}
+
+/* Animation for copy feedback */
+@keyframes copy-success {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.code-block-enhanced.copied::after {
+  content: '✓ Copied!';
+  animation: copy-success 0.3s ease;
+  background: rgba(34, 197, 94, 0.8) !important;
+  color: white !important;
+  border-color: rgba(34, 197, 94, 0.5) !important;
+}
+
+/* Language-specific styling */
+.shiki[data-language="javascript"]::before,
+.shiki[data-language="js"]::before {
+  background: rgba(240, 219, 79, 0.2);
+  color: rgb(240, 219, 79);
+  border-color: rgba(240, 219, 79, 0.3);
+}
+
+.shiki[data-language="typescript"]::before,
+.shiki[data-language="ts"]::before {
+  background: rgba(49, 120, 198, 0.2);
+  color: rgb(49, 120, 198);
+  border-color: rgba(49, 120, 198, 0.3);
+}
+
+.shiki[data-language="python"]::before,
+.shiki[data-language="py"]::before {
+  background: rgba(53, 114, 165, 0.2);
+  color: rgb(53, 114, 165);
+  border-color: rgba(53, 114, 165, 0.3);
+}
+
+.shiki[data-language="bash"]::before,
+.shiki[data-language="shell"]::before {
+  background: rgba(72, 187, 120, 0.2);
+  color: rgb(72, 187, 120);
+  border-color: rgba(72, 187, 120, 0.3);
+}
+
+/* Focus styles for accessibility */
+.code-block-enhanced:focus-within {
+  outline: 2px solid rgb(59, 130, 246);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .shiki {
+    border-width: 2px;
+  }
+  
+  .shiki .line::before {
+    border-right-width: 2px;
+  }
+  
+  .code-block-enhanced::after,
+  .shiki[data-language]::before,
+  .shiki[data-filename]::before {
+    border-width: 2px;
+    font-weight: 600;
+  }
+}
