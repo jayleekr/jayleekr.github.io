@@ -5,8 +5,9 @@
 /* Import code highlighting styles */
 @import './code-highlight.css';
 
-/* Modern theme variables */
+/* Modern theme variables with improved typography scales */
 :root {
+	/* Color system */
 	--accent: theme('colors.primary.600');
 	--accent-dark: theme('colors.primary.700');
 	--bg-primary: theme('colors.white');
@@ -14,6 +15,33 @@
 	--text-primary: theme('colors.gray.900');
 	--text-secondary: theme('colors.gray.600');
 	--border-color: theme('colors.gray.200');
+	
+	/* Typography scale (1.250 ratio) */
+	--text-xs: 0.8rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 1.875rem;
+	--text-4xl: 2.25rem;
+	--text-5xl: 3rem;
+	--text-6xl: 4rem;
+	
+	/* Line heights */
+	--leading-tight: 1.25;
+	--leading-snug: 1.375;
+	--leading-normal: 1.5;
+	--leading-relaxed: 1.625;
+	--leading-loose: 1.75;
+	
+	/* Letter spacing */
+	--tracking-tighter: -0.05em;
+	--tracking-tight: -0.025em;
+	--tracking-normal: 0;
+	--tracking-wide: 0.025em;
+	--tracking-wider: 0.05em;
+	--tracking-widest: 0.1em;
 }
 
 .dark {
@@ -25,7 +53,13 @@
 	--text-secondary: theme('colors.gray.300');
 	--border-color: theme('colors.gray.700');
 }
-/* Keep Atkinson font for compatibility */
+/* Import Google Fonts for better readability */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Korean font support */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+/* Keep Atkinson font as fallback */
 @font-face {
 	font-family: 'Atkinson';
 	src: url('/fonts/atkinson-regular.woff') format('woff');
@@ -41,36 +75,68 @@
 	font-display: swap;
 }
 
-/* Base styles using Tailwind */
+/* Base styles with improved typography */
 html {
 	@apply scroll-smooth;
+	font-size: 16px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 body {
-	@apply font-sans text-lg leading-relaxed text-gray-900 dark:text-gray-100;
+	@apply text-base leading-relaxed text-gray-900 dark:text-gray-100;
 	@apply bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800;
 	@apply transition-colors duration-300;
-	font-family: 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	font-family: 'Inter', 'Noto Sans KR', 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
+	letter-spacing: var(--tracking-normal);
+	word-spacing: 0.05em;
 }
 
 main {
 	@apply max-w-3xl mx-auto px-4 py-12 md:px-6 lg:px-8;
 }
 
-/* Typography */
+/* Typography with improved hierarchy */
 h1, h2, h3, h4, h5, h6 {
-	@apply font-bold text-gray-900 dark:text-gray-100 leading-tight;
+	@apply font-bold text-gray-900 dark:text-gray-100;
+	font-family: 'Inter', 'Noto Sans KR', 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	letter-spacing: var(--tracking-tight);
+	line-height: var(--leading-tight);
 }
 
-h1 { @apply text-5xl mb-4; }
-h2 { @apply text-4xl mb-3; }
-h3 { @apply text-3xl mb-3; }
-h4 { @apply text-2xl mb-2; }
-h5 { @apply text-xl mb-2; }
-h6 { @apply text-lg mb-2; }
+h1 { 
+	@apply text-5xl mb-6;
+	font-weight: 800;
+	letter-spacing: var(--tracking-tighter);
+}
+h2 { 
+	@apply text-4xl mb-5;
+	font-weight: 700;
+}
+h3 { 
+	@apply text-3xl mb-4;
+	font-weight: 600;
+}
+h4 { 
+	@apply text-2xl mb-3;
+	font-weight: 600;
+}
+h5 { 
+	@apply text-xl mb-3;
+	font-weight: 500;
+}
+h6 { 
+	@apply text-lg mb-2;
+	font-weight: 500;
+}
 
 p {
-	@apply mb-4 text-gray-700 dark:text-gray-300;
+	@apply mb-6 text-gray-700 dark:text-gray-300;
+	line-height: var(--leading-relaxed);
+	word-wrap: break-word;
+	hyphens: auto;
 }
 
 a {
@@ -82,26 +148,47 @@ strong, b {
 	@apply font-bold text-gray-900 dark:text-gray-100;
 }
 
-/* Code styling */
+/* Code styling with better fonts */
 code {
-	@apply px-2 py-1 text-sm bg-gray-100 dark:bg-gray-800 rounded;
+	@apply px-2 py-0.5 text-sm bg-gray-100 dark:bg-gray-800 rounded;
 	@apply border border-gray-200 dark:border-gray-700;
+	font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+	font-weight: 500;
+	font-size: 0.85em;
 }
 
 pre {
-	@apply p-6 rounded-lg overflow-x-auto;
-	@apply bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700;
+	@apply p-6 rounded-lg overflow-x-auto my-8;
+	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 pre code {
-	@apply p-0 bg-transparent border-0 text-sm;
+	@apply p-0 bg-transparent border-0;
+	font-size: 0.875rem;
+	line-height: 1.7;
 }
 
-/* Quote styling */
+/* Quote styling with better emphasis */
 blockquote {
-	@apply border-l-4 border-primary-500 pl-5 py-2 my-4;
-	@apply bg-gray-50 dark:bg-gray-800 rounded-r-lg;
-	@apply text-lg italic text-gray-700 dark:text-gray-300;
+	@apply border-l-4 border-primary-500 pl-6 py-4 my-8;
+	@apply bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50 dark:to-transparent;
+	@apply rounded-r-lg;
+	quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote p {
+	@apply text-lg leading-relaxed text-gray-700 dark:text-gray-300;
+	font-style: italic;
+	font-weight: 400;
+}
+
+blockquote p:first-child::before {
+	content: open-quote;
+	@apply text-3xl text-primary-500 mr-2;
+	font-weight: 700;
+	line-height: 0;
+	vertical-align: -0.4em;
 }
 
 /* Table styling */
@@ -145,59 +232,164 @@ hr {
 	border: 0;
 }
 
+/* List styling */
+ul, ol {
+	@apply mb-6 pl-6;
+}
+
+ul {
+	list-style-type: disc;
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+li {
+	@apply mb-2 leading-relaxed;
+}
+
+li > ul, li > ol {
+	@apply mt-2 mb-2;
+}
+
+/* Link styling */
+a:not(.no-underline) {
+	@apply text-primary-600 dark:text-primary-400;
+	@apply underline decoration-2 underline-offset-2 decoration-primary-300 dark:decoration-primary-600;
+	@apply hover:decoration-primary-600 dark:hover:decoration-primary-400;
+	@apply transition-all duration-200;
+}
+
+a:not(.no-underline):hover {
+	@apply text-primary-700 dark:text-primary-300;
+}
+
 /* Dark mode toggle */
 .theme-toggle {
 	@apply p-2 rounded-full bg-gray-100 dark:bg-gray-800;
 	@apply hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
 }
 
-/* Prose improvements for blog posts */
+/* Prose improvements for blog posts with better spacing */
 .prose {
 	@apply text-gray-700 dark:text-gray-300;
+	font-size: 1.125rem;
+	line-height: 1.75;
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
 	@apply text-gray-900 dark:text-gray-100 font-bold;
+	scroll-margin-top: 5rem;
 }
 
-.prose h1 { @apply text-3xl mb-6 mt-8; }
-.prose h2 { @apply text-2xl mb-4 mt-8 pb-2 border-b border-gray-200 dark:border-gray-700; }
-.prose h3 { @apply text-xl mb-3 mt-6; }
-.prose h4 { @apply text-lg mb-2 mt-4; }
+.prose h1 { 
+	@apply text-4xl mb-8 mt-12;
+	font-weight: 800;
+	letter-spacing: -0.025em;
+}
+.prose h2 { 
+	@apply text-3xl mb-6 mt-12 pb-3 border-b-2 border-gray-200 dark:border-gray-700;
+	font-weight: 700;
+}
+.prose h3 { 
+	@apply text-2xl mb-4 mt-10;
+	font-weight: 600;
+}
+.prose h4 { 
+	@apply text-xl mb-3 mt-8;
+	font-weight: 600;
+}
 
 .prose p {
-	@apply mb-4 leading-relaxed;
+	@apply mb-6 leading-relaxed;
+	text-align: justify;
+	text-justify: inter-word;
+}
+
+/* Improve first paragraph (lead) */
+.prose > p:first-of-type {
+	@apply text-xl leading-relaxed text-gray-800 dark:text-gray-200;
+	font-weight: 400;
 }
 
 .prose ul, .prose ol {
-	@apply mb-4 pl-6;
+	@apply mb-6 pl-6;
 }
 
 .prose li {
-	@apply mb-2;
+	@apply mb-3 leading-relaxed;
+}
+
+.prose li::marker {
+	@apply text-primary-600 dark:text-primary-400;
+	font-weight: 600;
 }
 
 .prose blockquote {
-	@apply border-l-4 border-primary-500 pl-4 my-6 italic;
-	@apply bg-gray-50 dark:bg-gray-800 py-4 rounded-r-lg;
+	@apply border-l-4 border-primary-500 pl-6 pr-6 py-6 my-10;
+	@apply bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50 dark:to-transparent;
+	@apply rounded-r-xl shadow-sm;
+}
+
+.prose blockquote p {
+	@apply mb-0 text-lg;
+	font-style: italic;
+	line-height: 1.7;
+}
+
+.prose blockquote cite {
+	@apply block mt-4 text-sm text-gray-600 dark:text-gray-400;
+	font-style: normal;
+	font-weight: 500;
+}
+
+.prose blockquote cite::before {
+	content: "— ";
 }
 
 .prose pre {
-	@apply bg-gray-900 dark:bg-gray-950 rounded-lg p-4 overflow-x-auto my-6;
-	@apply border border-gray-700;
+	@apply bg-gray-900 dark:bg-gray-950 rounded-xl p-6 overflow-x-auto my-8;
+	@apply border border-gray-700 shadow-lg;
+	position: relative;
+}
+
+/* Add language label to code blocks */
+.prose pre[data-language]::before {
+	content: attr(data-language);
+	@apply absolute top-2 right-2 text-xs text-gray-400;
+	@apply px-2 py-1 bg-gray-800 rounded;
+	font-family: 'Inter', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
 }
 
 .prose code {
-	@apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm;
+	@apply bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-sm;
 	@apply border border-gray-200 dark:border-gray-700;
+	font-weight: 500;
 }
 
 .prose pre code {
-	@apply bg-transparent border-0 p-0 text-green-400;
+	@apply bg-transparent border-0 p-0;
+	color: inherit;
+	font-weight: 400;
 }
 
 .prose img {
-	@apply rounded-lg shadow-md my-6 mx-auto max-w-full;
+	@apply rounded-lg shadow-lg my-10 mx-auto max-w-full;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prose img:hover {
+	transform: scale(1.02);
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Image captions */
+.prose img + em {
+	@apply block text-center text-sm text-gray-600 dark:text-gray-400 mt-2 mb-8;
+	font-style: normal;
 }
 
 .prose table {
@@ -214,8 +406,21 @@ hr {
 }
 
 .prose a {
-	@apply text-primary-600 dark:text-primary-400 underline;
-	@apply hover:text-primary-700 dark:hover:text-primary-300 transition-colors;
+	@apply text-primary-600 dark:text-primary-400;
+	@apply underline decoration-2 underline-offset-2 decoration-primary-300 dark:decoration-primary-600;
+	@apply hover:decoration-primary-600 dark:hover:decoration-primary-400;
+	@apply transition-all duration-200;
+	word-break: break-word;
+}
+
+.prose a:hover {
+	@apply text-primary-700 dark:text-primary-300;
+}
+
+/* External link indicator */
+.prose a[href^="http"]:not([href*="jayleekr.github.io"])::after {
+	content: "↗";
+	@apply ml-1 text-xs align-super text-gray-400;
 }
 
 .prose strong {
@@ -226,21 +431,78 @@ hr {
 	@apply italic;
 }
 
-/* Responsive design */
+/* Selection styling */
+::selection {
+	@apply bg-primary-200 dark:bg-primary-800 text-gray-900 dark:text-gray-100;
+}
+
+/* Focus styles for accessibility */
+:focus {
+	@apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+}
+
+/* Skip to content link */
+.skip-to-content {
+	@apply absolute left-0 top-0 bg-primary-600 text-white px-4 py-2 rounded-br-lg;
+	@apply transform -translate-y-full focus:translate-y-0;
+	@apply transition-transform duration-200;
+	z-index: 100;
+}
+
+/* Smooth transitions */
+.no-transition * {
+	transition: none !important;
+}
+
+/* Print styles */
+@media print {
+	body {
+		@apply text-black bg-white;
+		font-size: 12pt;
+	}
+	
+	.prose {
+		@apply max-w-none;
+	}
+	
+	.no-print {
+		display: none !important;
+	}
+}
+
+/* Responsive typography */
 @media (max-width: 768px) {
+	html {
+		font-size: 15px;
+	}
+	
 	body {
 		@apply text-base;
+		word-spacing: normal;
 	}
 	
 	main {
 		@apply px-4 py-8;
 	}
 	
-	h1 { @apply text-3xl; }
-	h2 { @apply text-2xl; }
-	h3 { @apply text-xl; }
+	h1 { @apply text-3xl mb-4; }
+	h2 { @apply text-2xl mb-3; }
+	h3 { @apply text-xl mb-3; }
 	
-	.prose h1 { @apply text-2xl; }
-	.prose h2 { @apply text-xl; }
-	.prose h3 { @apply text-lg; }
+	.prose {
+		font-size: 1rem;
+		line-height: 1.65;
+	}
+	
+	.prose h1 { @apply text-3xl mb-6 mt-8; }
+	.prose h2 { @apply text-2xl mb-4 mt-8; }
+	.prose h3 { @apply text-xl mb-3 mt-6; }
+	
+	.prose p {
+		text-align: left;
+	}
+	
+	.prose > p:first-of-type {
+		@apply text-lg;
+	}
 }

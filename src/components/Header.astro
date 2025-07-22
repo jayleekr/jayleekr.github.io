@@ -4,18 +4,27 @@ import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import SearchButton from './SearchButton.astro';
 import GlobalSearch from './GlobalSearch.astro';
+import Logo from './Logo.astro';
 import { SITE_TITLE } from '../consts';
 import { getLangFromUrl, t } from '../utils/i18n';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
+<!-- Skip to main content link for accessibility -->
+<a href="#main-content" class="skip-to-content">
+	{lang === 'ko' ? '본문으로 건너뛰기' : 'Skip to main content'}
+</a>
+
 <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
 	<nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between items-center h-16">
 			<div class="flex items-center">
-				<a href="/" class="text-xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-					{SITE_TITLE}
+				<a href="/" class="flex items-center gap-3 group" aria-label="Home">
+					<Logo size="md" className="transition-transform group-hover:scale-110" />
+					<span class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+						{SITE_TITLE}
+					</span>
 				</a>
 			</div>
 			

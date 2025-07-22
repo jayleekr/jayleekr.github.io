@@ -1,0 +1,56 @@
+---
+interface Props {
+	size?: 'sm' | 'md' | 'lg';
+	className?: string;
+}
+
+const { size = 'md', className = '' } = Astro.props;
+
+const sizeClasses = {
+	sm: 'w-8 h-8',
+	md: 'w-10 h-10',
+	lg: 'w-12 h-12'
+};
+---
+
+<svg
+	class={`${sizeClasses[size]} ${className}`}
+	viewBox="0 0 100 100"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+	aria-label="Jay Lee Logo"
+>
+	<!-- Background circle -->
+	<circle 
+		cx="50" 
+		cy="50" 
+		r="45" 
+		class="fill-primary-500 dark:fill-primary-400"
+	/>
+	
+	<!-- J letter -->
+	<path 
+		d="M 35 25 L 35 60 Q 35 75 50 75 Q 65 75 65 60 L 65 40" 
+		class="stroke-white dark:stroke-gray-900"
+		stroke-width="6"
+		stroke-linecap="round"
+		fill="none"
+	/>
+	
+	<!-- L letter (overlapping) -->
+	<path 
+		d="M 40 35 L 40 65 L 60 65" 
+		class="stroke-white dark:stroke-gray-900 opacity-80"
+		stroke-width="5"
+		stroke-linecap="round"
+		fill="none"
+	/>
+	
+	<!-- Decorative dot -->
+	<circle 
+		cx="70" 
+		cy="30" 
+		r="4" 
+		class="fill-white dark:fill-gray-900"
+	/>
+</svg>
