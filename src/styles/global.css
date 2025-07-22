@@ -436,17 +436,110 @@ a:not(.no-underline):hover {
 	@apply bg-primary-200 dark:bg-primary-800 text-gray-900 dark:text-gray-100;
 }
 
-/* Focus styles for accessibility */
+/* Focus styles for accessibility with touch support */
 :focus {
 	@apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
 }
 
-/* Skip to content link */
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+	/* Remove hover effects on touch devices */
+	*:hover {
+		transition: none;
+	}
+	
+	/* Larger tap targets */
+	button, a, input, select, textarea, [role="button"], [tabindex] {
+		min-height: 48px;
+		min-width: 48px;
+	}
+	
+	/* Improve button feedback on touch */
+	button:active, [role="button"]:active {
+		transform: scale(0.98);
+		transition: transform 0.1s ease;
+	}
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+	:root {
+		--border-color: black;
+		--text-primary: black;
+		--bg-primary: white;
+	}
+	
+	.dark {
+		--border-color: white;
+		--text-primary: white;
+		--bg-primary: black;
+	}
+	
+	button, a {
+		@apply border-2;
+	}
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+	
+	.no-motion {
+		transform: none !important;
+	}
+}
+
+/* Skip to content link with mobile optimization */
 .skip-to-content {
-	@apply absolute left-0 top-0 bg-primary-600 text-white px-4 py-2 rounded-br-lg;
+	@apply absolute left-0 top-0 bg-primary-600 text-white px-6 py-3 rounded-br-lg;
 	@apply transform -translate-y-full focus:translate-y-0;
-	@apply transition-transform duration-200;
+	@apply transition-transform duration-200 font-medium;
+	@apply min-h-[48px] min-w-[48px] flex items-center justify-center;
 	z-index: 100;
+}
+
+/* Mobile specific utilities */
+.touch-pan-x {
+	touch-action: pan-x;
+}
+
+.touch-pan-y {
+	touch-action: pan-y;
+}
+
+.touch-manipulation {
+	touch-action: manipulation;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+
+/* Safe area handling for devices with notches */
+@supports (padding: max(0px)) {
+	.safe-area-inset-top {
+		padding-top: max(1rem, env(safe-area-inset-top));
+	}
+	
+	.safe-area-inset-bottom {
+		padding-bottom: max(1rem, env(safe-area-inset-bottom));
+	}
+	
+	.safe-area-inset-left {
+		padding-left: max(1rem, env(safe-area-inset-left));
+	}
+	
+	.safe-area-inset-right {
+		padding-right: max(1rem, env(safe-area-inset-right));
+	}
 }
 
 /* Smooth transitions */
@@ -470,25 +563,34 @@ a:not(.no-underline):hover {
 	}
 }
 
-/* Responsive typography */
+/* Mobile-first responsive design with touch optimization */
 @media (max-width: 768px) {
 	html {
 		font-size: 15px;
+		/* Improve touch scrolling */
+		-webkit-overflow-scrolling: touch;
+		scroll-behavior: smooth;
 	}
 	
 	body {
 		@apply text-base;
 		word-spacing: normal;
+		/* Improve touch interactions */
+		-webkit-tap-highlight-color: transparent;
+		user-select: text;
+		-webkit-user-select: text;
 	}
 	
 	main {
 		@apply px-4 py-8;
 	}
 	
+	/* Touch-friendly sizing */
 	h1 { @apply text-3xl mb-4; }
 	h2 { @apply text-2xl mb-3; }
 	h3 { @apply text-xl mb-3; }
 	
+	/* Improve readability on mobile */
 	.prose {
 		font-size: 1rem;
 		line-height: 1.65;
@@ -500,9 +602,58 @@ a:not(.no-underline):hover {
 	
 	.prose p {
 		text-align: left;
+		word-break: break-word;
+		hyphens: auto;
 	}
 	
 	.prose > p:first-of-type {
 		@apply text-lg;
+	}
+	
+	/* Touch-friendly buttons */
+	button, a {
+		min-height: 44px;
+		min-width: 44px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	/* Improve form elements on mobile */
+	input, textarea, select {
+		@apply text-base;
+		/* Prevent zoom on iOS */
+		font-size: 16px;
+		min-height: 44px;
+	}
+	
+	/* Better spacing for mobile */
+	.prose ul, .prose ol {
+		@apply pl-5;
+	}
+	
+	.prose blockquote {
+		@apply pl-4 pr-4 py-4 mx-0;
+	}
+	
+	/* Mobile-specific image handling */
+	.prose img {
+		max-width: calc(100vw - 2rem);
+		height: auto;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	/* Code blocks on mobile */
+	.prose pre {
+		@apply p-4 text-sm;
+		max-width: calc(100vw - 2rem);
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	
+	.prose code {
+		font-size: 0.9em;
+		word-break: break-all;
 	}
 }

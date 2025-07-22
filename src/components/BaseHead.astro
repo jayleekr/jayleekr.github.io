@@ -79,9 +79,16 @@ const jsonLD = {
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
 <meta name="theme-color" content="#3b82f6" />
 <meta name="color-scheme" content="light dark" />
+
+<!-- Mobile optimizations -->
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no,date=no,email=no,address=no" />
 
 <!-- Icons and Manifest -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -208,3 +215,6 @@ const jsonLD = {
 
 <!-- Code Enhancement Script -->
 <script src="/scripts/code-enhancements.js" defer></script>
+
+<!-- Mobile Enhancement Script -->
+<script src="/scripts/mobile-enhancements.js" defer></script>
