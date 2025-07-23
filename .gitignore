@@ -46,9 +46,6 @@ Gemfile.lock
 # Ruby vendor directory
 vendor/
 
-# Bun lockfile (using npm/yarn instead)
-bun.lock
-
 # Temporary files and backups
 *.tmp
 *.bak
