@@ -20,13 +20,34 @@ const lang = getLangFromUrl(Astro.url);
 				<div class="max-w-4xl mx-auto">
 					<div class="text-center mb-16">
 						<h1 class="text-4xl font-bold mb-6">{t("about.pageTitle", lang)}</h1>
-						<div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-4xl text-white font-bold">
+						<div class="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-4xl text-white font-bold shadow-lg">
 							JL
 						</div>
-						<p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-							{t("about.tagline", lang)}<br/>
+						<p class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-3">Jay Lee</p>
+						<p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-2">
+							{t("about.tagline", lang)}
+						</p>
+						<p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
 							{t("about.tagline2", lang)}
 						</p>
+					</div>
+
+					<!-- Professional Summary -->
+					<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 mb-16">
+						<h2 class="text-2xl font-bold mb-4 text-center">🚀 Professional Summary</h2>
+						<div class="prose prose-lg dark:prose-invert mx-auto">
+							<p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+								{lang === 'ko' ? 
+									`6년 이상의 경력을 보유한 소프트웨어 엔지니어로, 자율주행 차량 소프트웨어 개발과 임베디드 리눅스 시스템에 특화되어 있습니다. 
+									현재 Sonatus에서 글로벌 OEM 파트너를 위한 차세대 차량 소프트웨어 플랫폼 개발에 기여하고 있으며, 
+									특히 컨테이너 기술(Docker, Kubernetes)과 Adaptive AUTOSAR 플랫폼에 대한 깊은 전문성을 보유하고 있습니다.` 
+									: 
+									`Software engineer with over 6 years of experience, specializing in autonomous vehicle software development and embedded Linux systems. 
+									Currently contributing to next-generation vehicle software platforms for global OEM partners at Sonatus, 
+									with deep expertise in container technologies (Docker, Kubernetes) and Adaptive AUTOSAR platforms.`
+								}
+							</p>
+						</div>
 					</div>
 
 					<div class="grid md:grid-cols-2 gap-12 mb-16">
@@ -68,32 +89,190 @@ const lang = getLangFromUrl(Astro.url);
 						</div>
 					</div>
 
+					<!-- Technical Skills -->
+					<div class="mb-16">
+						<h2 class="text-2xl font-bold mb-8 text-center">💻 Technical Skills</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-4 text-primary-600 dark:text-primary-400">Languages & Frameworks</h3>
+								<div class="flex flex-wrap gap-2">
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">C/C++</span>
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Python</span>
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">TypeScript</span>
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Node.js</span>
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">React</span>
+									<span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">Astro</span>
+								</div>
+							</div>
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-4 text-primary-600 dark:text-primary-400">DevOps & Cloud</h3>
+								<div class="flex flex-wrap gap-2">
+									<span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">Docker</span>
+									<span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">Kubernetes</span>
+									<span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">AWS</span>
+									<span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">GitHub Actions</span>
+									<span class="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">Terraform</span>
+								</div>
+							</div>
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-4 text-primary-600 dark:text-primary-400">Embedded & Automotive</h3>
+								<div class="flex flex-wrap gap-2">
+									<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Embedded Linux</span>
+									<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">AUTOSAR</span>
+									<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">Yocto</span>
+									<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">CAN/CAN-FD</span>
+									<span class="px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded-full text-sm">MQTT</span>
+								</div>
+							</div>
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-4 text-primary-600 dark:text-primary-400">Tools & Others</h3>
+								<div class="flex flex-wrap gap-2">
+									<span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">Git</span>
+									<span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">Jira</span>
+									<span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">VS Code</span>
+									<span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">Linux</span>
+									<span class="px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full text-sm">PostgreSQL</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 mb-16">
 						<h2 class="text-2xl font-bold mb-6 text-center">💼 {t("about.career", lang)}</h2>
 						<div class="space-y-6">
 							<div class="border-l-4 border-primary-500 pl-6">
 								<h3 class="font-bold text-lg">{t("about.softwareEngineer", lang)}</h3>
-								<p class="text-gray-600 dark:text-gray-400 mb-2">Sonatus • San Jose • {t("about.present", lang)}</p>
-								<p class="text-gray-700 dark:text-gray-300">
+								<p class="text-gray-600 dark:text-gray-400 mb-2">Sonatus • San Jose • Jun 2021 - {t("about.present", lang)}</p>
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
 									{t("about.sonatusDesc", lang)}
 								</p>
+								<ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+									<li>{lang === 'ko' ? 'OEM 파트너를 위한 차량 데이터 수집 플랫폼 개발' : 'Developing vehicle data collection platform for OEM partners'}</li>
+									<li>{lang === 'ko' ? '실시간 데이터 처리 파이프라인 설계 및 구현' : 'Designing and implementing real-time data processing pipelines'}</li>
+									<li>{lang === 'ko' ? '컨테이너 기반 마이크로서비스 아키텍처 구축' : 'Building container-based microservice architecture'}</li>
+									<li>{lang === 'ko' ? 'Edge-to-Cloud 솔루션 개발 및 최적화' : 'Developing and optimizing Edge-to-Cloud solutions'}</li>
+								</ul>
 							</div>
 
 							<div class="border-l-4 border-primary-500 pl-6">
 								<h3 class="font-bold text-lg">{t("about.leadSDE", lang)}</h3>
 								<p class="text-gray-600 dark:text-gray-400 mb-2">Hyundai Autron • {t("about.seoul", lang)} • Dec 2019 - Jun 2021</p>
-								<p class="text-gray-700 dark:text-gray-300">
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
 									{t("about.autronDesc", lang)}
 								</p>
+								<ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+									<li>{lang === 'ko' ? 'Adaptive AUTOSAR 플랫폼 개발 및 검증' : 'Developing and validating Adaptive AUTOSAR platform'}</li>
+									<li>{lang === 'ko' ? 'POSIX PSE51 호환 실시간 OS 커스터마이징' : 'Customizing POSIX PSE51 compliant real-time OS'}</li>
+									<li>{lang === 'ko' ? '차량용 소프트웨어 아키텍처 설계 참여' : 'Participating in automotive software architecture design'}</li>
+								</ul>
 							</div>
 							
 							<div class="border-l-4 border-primary-500 pl-6">
 								<h3 class="font-bold text-lg">{t("about.assistantManager", lang)}</h3>
 								<p class="text-gray-600 dark:text-gray-400 mb-2">Opticis Co., Ltd • May 2016 - May 2019</p>
-								<p class="text-gray-700 dark:text-gray-300">
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
 									{t("about.swSolutionDivision", lang)}
 								</p>
+								<ul class="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-1 text-sm">
+									<li>{lang === 'ko' ? 'FPGA 기반 비디오 전송 시스템 개발' : 'Developing FPGA-based video transmission systems'}</li>
+									<li>{lang === 'ko' ? '임베디드 리눅스 디바이스 드라이버 개발' : 'Developing embedded Linux device drivers'}</li>
+									<li>{lang === 'ko' ? '고속 데이터 전송 프로토콜 구현' : 'Implementing high-speed data transfer protocols'}</li>
+								</ul>
 							</div>
+						</div>
+					</div>
+
+					<!-- Projects & Achievements -->
+					<div class="mb-16">
+						<h2 class="text-2xl font-bold mb-8 text-center">🏆 Projects & Achievements</h2>
+						<div class="grid gap-6">
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-3 text-primary-600 dark:text-primary-400">
+									{lang === 'ko' ? '차량 데이터 수집 플랫폼' : 'Vehicle Data Collection Platform'}
+								</h3>
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
+									{lang === 'ko' 
+										? 'Sonatus에서 개발한 실시간 차량 데이터 수집 및 분석 플랫폼. 하루 10억 건 이상의 이벤트를 처리하며, Edge-to-Cloud 아키텍처로 설계되었습니다.'
+										: 'Real-time vehicle data collection and analysis platform developed at Sonatus. Processes over 1 billion events daily with Edge-to-Cloud architecture.'
+									}
+								</p>
+								<div class="flex flex-wrap gap-2">
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">Kubernetes</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">Docker</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">MQTT</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">Kafka</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">TimescaleDB</span>
+								</div>
+							</div>
+
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-3 text-primary-600 dark:text-primary-400">
+									{lang === 'ko' ? 'Adaptive AUTOSAR 플랫폼 개발' : 'Adaptive AUTOSAR Platform Development'}
+								</h3>
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
+									{lang === 'ko'
+										? '현대오트론에서 차세대 자율주행 차량을 위한 Adaptive AUTOSAR 플랫폼 개발. POSIX PSE51 호환 실시간 OS 기반으로 구축되었습니다.'
+										: 'Developed Adaptive AUTOSAR platform for next-generation autonomous vehicles at Hyundai Autron. Built on POSIX PSE51 compliant real-time OS.'
+									}
+								</p>
+								<div class="flex flex-wrap gap-2">
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">C++17</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">AUTOSAR</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">POSIX</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">CAN-FD</span>
+								</div>
+							</div>
+
+							<div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+								<h3 class="font-bold text-lg mb-3 text-primary-600 dark:text-primary-400">
+									{lang === 'ko' ? '오픈소스 기여' : 'Open Source Contributions'}
+								</h3>
+								<p class="text-gray-700 dark:text-gray-300 mb-3">
+									{lang === 'ko'
+										? 'Yocto Project, containerd, 그리고 다양한 임베디드 리눅스 프로젝트에 기여. 특히 ARM 기반 플랫폼 최적화와 컨테이너 런타임 개선에 집중했습니다.'
+										: 'Contributing to Yocto Project, containerd, and various embedded Linux projects. Focused on ARM platform optimization and container runtime improvements.'
+									}
+								</p>
+								<div class="flex flex-wrap gap-2">
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">Yocto</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">Linux Kernel</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">containerd</span>
+									<span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded">ARM</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Blog & Community -->
+					<div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 mb-16">
+						<h2 class="text-2xl font-bold mb-6 text-center">✍️ Blog & Community</h2>
+						<div class="text-center">
+							<p class="text-gray-700 dark:text-gray-300 mb-6">
+								{lang === 'ko'
+									? '기술 블로그를 통해 개발 경험과 인사이트를 공유하고 있습니다. 임베디드 시스템, 컨테이너 기술, 자율주행 소프트웨어 개발에 대한 실무 경험을 바탕으로 한 글들을 작성합니다.'
+									: 'Sharing development experiences and insights through my tech blog. Writing articles based on practical experience in embedded systems, container technologies, and autonomous vehicle software development.'
+								}
+							</p>
+							<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-6">
+								<div>
+									<p class="text-3xl font-bold text-primary-600 dark:text-primary-400">50+</p>
+									<p class="text-gray-600 dark:text-gray-400">{lang === 'ko' ? '블로그 포스트' : 'Blog Posts'}</p>
+								</div>
+								<div>
+									<p class="text-3xl font-bold text-primary-600 dark:text-primary-400">3</p>
+									<p class="text-gray-600 dark:text-gray-400">{lang === 'ko' ? '기술 컨퍼런스 발표' : 'Tech Conference Talks'}</p>
+								</div>
+								<div>
+									<p class="text-3xl font-bold text-primary-600 dark:text-primary-400">10+</p>
+									<p class="text-gray-600 dark:text-gray-400">{lang === 'ko' ? '오픈소스 기여' : 'Open Source Contributions'}</p>
+								</div>
+							</div>
+							<a href="/blog" class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors">
+								{lang === 'ko' ? '블로그 둘러보기' : 'Visit My Blog'}
+								<svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+								</svg>
+							</a>
 						</div>
 					</div>
 

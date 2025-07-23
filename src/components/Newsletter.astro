@@ -32,7 +32,7 @@ const lang = getLangFromUrl(Astro.url);
       </div>
     )}
     
-    <form class="newsletter-form" data-netlify="true" name="newsletter" method="POST">
+    <form class="newsletter-form" data-newsletter-form data-netlify="true" name="newsletter" method="POST">
       <input type="hidden" name="form-name" value="newsletter" />
       <input type="hidden" name="language" value={lang} />
       
@@ -172,23 +172,29 @@ const lang = getLangFromUrl(Astro.url);
         buttonLoading.classList.remove('hidden');
         
         try {
-          // Submit form data
-          const formData = new FormData(this);
+          // Submit form data to Netlify function
+          const response = await fetch('/.netlify/functions/newsletter-subscribe', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: emailInput.value,
+              language: lang
+            })
+          });
           
-          // For demo purposes, simulate API call
-          await new Promise(resolve => setTimeout(resolve, 1500));
-          
-          // Simulate success (replace with actual API call)
-          const success = Math.random() > 0.2; // 80% success rate for demo
+          const result = await response.json();
+          const success = result.success;
           
           if (success) {
             // Success state
             buttonLoading.classList.add('hidden');
             buttonSuccess.classList.remove('hidden');
             
-            messageDiv.textContent = lang === 'ko' 
+            messageDiv.textContent = result.message || (lang === 'ko' 
               ? '성공적으로 구독되었습니다! 확인 이메일을 확인해주세요.'
-              : 'Successfully subscribed! Please check your email for confirmation.';
+              : 'Successfully subscribed! Please check your email for confirmation.');
             messageDiv.classList.add('success');
             messageDiv.classList.remove('hidden');
             
@@ -211,7 +217,7 @@ const lang = getLangFromUrl(Astro.url);
             }, 3000);
             
           } else {
-            throw new Error('Subscription failed');
+            throw new Error(result.message || 'Subscription failed');
           }
           
         } catch (error) {
@@ -222,9 +228,9 @@ const lang = getLangFromUrl(Astro.url);
           buttonText.classList.remove('hidden');
           button.disabled = false;
           
-          messageDiv.textContent = lang === 'ko'
+          messageDiv.textContent = error.message || (lang === 'ko'
             ? '구독 중 오류가 발생했습니다. 다시 시도해주세요.'
-            : 'An error occurred during subscription. Please try again.';
+            : 'An error occurred during subscription. Please try again.');
           messageDiv.classList.add('error');
           messageDiv.classList.remove('hidden');
         }

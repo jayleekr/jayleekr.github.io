@@ -82,17 +82,17 @@
 				themeToggleLightIcon?.classList.add('hidden');
 				themeToggleDarkIcon?.classList.remove('hidden');
 				// Update accessibility attributes
-				themeToggleBtn.setAttribute('aria-pressed', 'true');
-				themeToggleBtn.setAttribute('title', 'Switch to light mode (current: dark)');
-				themeToggleBtn.setAttribute('aria-label', 'Switch to light mode');
+				themeToggleBtn?.setAttribute('aria-pressed', 'true');
+				themeToggleBtn?.setAttribute('title', 'Switch to light mode (current: dark)');
+				themeToggleBtn?.setAttribute('aria-label', 'Switch to light mode');
 			} else {
 				document.documentElement.classList.remove('dark');
 				themeToggleLightIcon?.classList.remove('hidden');
 				themeToggleDarkIcon?.classList.add('hidden');
 				// Update accessibility attributes
-				themeToggleBtn.setAttribute('aria-pressed', 'false');
-				themeToggleBtn.setAttribute('title', 'Switch to dark mode (current: light)');
-				themeToggleBtn.setAttribute('aria-label', 'Switch to dark mode');
+				themeToggleBtn?.setAttribute('aria-pressed', 'false');
+				themeToggleBtn?.setAttribute('title', 'Switch to dark mode (current: light)');
+				themeToggleBtn?.setAttribute('aria-label', 'Switch to dark mode');
 			}
 			
 			// Store theme preference

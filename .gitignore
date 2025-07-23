@@ -45,3 +45,46 @@ Gemfile.lock
 
 # Ruby vendor directory
 vendor/
+
+# Bun lockfile (using npm/yarn instead)
+bun.lock
+
+# Temporary files and backups
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS generated files
+Thumbs.db
+
+# IDE files
+*.iml
+*.ipr
+*.iws
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity

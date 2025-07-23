@@ -1,0 +1,334 @@
+---
+/**
+ * Conversion Tracking Component
+ * Google Analytics 4 전환 목표 및 고급 이벤트 추적
+ */
+const GA_TRACKING_ID = import.meta.env.GOOGLE_ANALYTICS_ID;
+const isDev = import.meta.env.DEV;
+---
+
+{GA_TRACKING_ID && !isDev && (
+  <script is:inline define:vars={{ GA_TRACKING_ID }}>
+    // 전환 목표 및 고급 이벤트 추적
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // 1. Newsletter Subscription Conversion
+      function trackNewsletterSignup() {
+        const newsletterForms = document.querySelectorAll('[data-newsletter-form]');
+        newsletterForms.forEach(form => {
+          form.addEventListener('submit', function(e) {
+            gtag('event', 'generate_lead', {
+              event_category: 'conversion',
+              event_label: 'newsletter_signup',
+              value: 10, // Assign value to conversion
+              currency: 'USD'
+            });
+            
+            // Enhanced conversion tracking
+            gtag('event', 'newsletter_signup', {
+              event_category: 'engagement',
+              event_label: window.location.pathname,
+              method: 'email_form'
+            });
+            
+            console.log('Conversion tracked: Newsletter signup');
+          });
+        });
+      }
+
+      // 2. Blog Post Engagement Conversion
+      function trackBlogEngagement() {
+        let engagementTracked = false;
+        let timeSpent = 0;
+        const startTime = Date.now();
+
+        // Track high engagement (5+ minutes reading + 75% scroll)
+        function checkEngagementConversion() {
+          timeSpent = (Date.now() - startTime) / 1000;
+          const scrollPercent = Math.round(
+            (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+          );
+
+          if (!engagementTracked && timeSpent > 300 && scrollPercent > 75) { // 5+ minutes, 75% scroll
+            engagementTracked = true;
+            
+            gtag('event', 'purchase', {
+              event_category: 'conversion',
+              event_label: 'high_engagement_reading',
+              value: 5, // Assign value to engagement
+              currency: 'USD',
+              items: [{
+                item_id: window.location.pathname,
+                item_name: document.title,
+                item_category: 'blog_post',
+                quantity: 1,
+                price: 5
+              }]
+            });
+
+            console.log('Conversion tracked: High engagement reading');
+          }
+        }
+
+        // Check engagement every 30 seconds
+        setInterval(checkEngagementConversion, 30000);
+        window.addEventListener('beforeunload', checkEngagementConversion);
+      }
+
+      // 3. Social Sharing Conversion
+      function trackSocialSharing() {
+        const shareButtons = document.querySelectorAll('[data-share-platform]');
+        shareButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const platform = this.dataset.sharePlatform;
+            
+            gtag('event', 'share', {
+              event_category: 'conversion',
+              event_label: 'social_share',
+              method: platform,
+              content_type: 'blog_post',
+              item_id: window.location.pathname
+            });
+
+            // Social sharing micro-conversion
+            gtag('event', 'social_share', {
+              event_category: 'engagement',
+              event_label: platform,
+              value: 2
+            });
+
+            console.log(`Conversion tracked: Social share on ${platform}`);
+          });
+        });
+      }
+
+      // 4. Search Usage Conversion
+      function trackSearchUsage() {
+        const searchButton = document.getElementById('open-search');
+        const searchInput = document.querySelector('[data-search-input]');
+        
+        if (searchButton) {
+          searchButton.addEventListener('click', function() {
+            gtag('event', 'search', {
+              event_category: 'conversion',
+              event_label: 'search_usage',
+              search_term: 'search_initiated'
+            });
+          });
+        }
+
+        if (searchInput) {
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+              gtag('event', 'search', {
+                event_category: 'conversion',
+                event_label: 'search_performed',
+                search_term: this.value.trim(),
+                value: 1
+              });
+
+              console.log(`Conversion tracked: Search for "${this.value.trim()}"`);
+            }
+          });
+        }
+      }
+
+      // 5. Contact Form Conversion
+      function trackContactForm() {
+        const contactForms = document.querySelectorAll('[data-contact-form]');
+        contactForms.forEach(form => {
+          form.addEventListener('submit', function() {
+            gtag('event', 'generate_lead', {
+              event_category: 'conversion',
+              event_label: 'contact_form',
+              value: 20,
+              currency: 'USD'
+            });
+
+            console.log('Conversion tracked: Contact form submission');
+          });
+        });
+      }
+
+      // 6. GitHub Profile/Project Visit Conversion
+      function trackGitHubClicks() {
+        const githubLinks = document.querySelectorAll('a[href*="github.com/jayleekr"]');
+        githubLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            gtag('event', 'click', {
+              event_category: 'conversion',
+              event_label: 'github_profile_visit',
+              link_url: this.href,
+              value: 3
+            });
+
+            console.log('Conversion tracked: GitHub profile visit');
+          });
+        });
+      }
+
+      // 7. Resume/CV Download Conversion
+      function trackResumeDownload() {
+        const resumeLinks = document.querySelectorAll('a[href*="resume"], a[href*="cv"], a[download]');
+        resumeLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            gtag('event', 'generate_lead', {
+              event_category: 'conversion',
+              event_label: 'resume_download',
+              file_name: this.href.split('/').pop(),
+              value: 15,
+              currency: 'USD'
+            });
+
+            console.log('Conversion tracked: Resume download');
+          });
+        });
+      }
+
+      // 8. Category/Tag Page Navigation
+      function trackContentDiscovery() {
+        const categoryLinks = document.querySelectorAll('a[href*="/categories"], a[href*="/tags"]');
+        categoryLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            gtag('event', 'select_content', {
+              event_category: 'engagement',
+              event_label: 'content_discovery',
+              content_type: link.href.includes('categories') ? 'category' : 'tag',
+              item_id: link.href.split('/').pop()
+            });
+          });
+        });
+      }
+
+      // 9. Advanced Reading Pattern Analysis
+      function trackReadingPatterns() {
+        let readingStartTime = Date.now();
+        let lastScrollTime = Date.now();
+        let activeReadingTime = 0;
+        let isUserActive = true;
+
+        // Track active vs passive reading time
+        function updateActiveTime() {
+          if (isUserActive) {
+            const now = Date.now();
+            activeReadingTime += now - lastScrollTime;
+            lastScrollTime = now;
+          }
+        }
+
+        // User activity detection
+        let activityTimeout;
+        function resetActivityTimeout() {
+          isUserActive = true;
+          clearTimeout(activityTimeout);
+          activityTimeout = setTimeout(() => {
+            isUserActive = false;
+          }, 30000); // 30 seconds of inactivity
+        }
+
+        // Track various user interactions
+        ['scroll', 'mousemove', 'keydown', 'click'].forEach(event => {
+          document.addEventListener(event, () => {
+            updateActiveTime();
+            resetActivityTimeout();
+          });
+        });
+
+        // Send reading pattern data
+        window.addEventListener('beforeunload', function() {
+          const totalTime = Date.now() - readingStartTime;
+          const activePercentage = Math.round((activeReadingTime / totalTime) * 100);
+
+          if (totalTime > 60000) { // Only track sessions longer than 1 minute
+            gtag('event', 'reading_pattern', {
+              event_category: 'engagement',
+              event_label: 'reading_quality',
+              value: activePercentage,
+              custom_parameter_1: Math.round(totalTime / 1000), // total seconds
+              custom_parameter_2: Math.round(activeReadingTime / 1000) // active seconds
+            });
+          }
+        });
+      }
+
+      // 10. Performance Tracking
+      function trackPerformance() {
+        // Track page load performance
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+              const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+              const totalTime = perfData.loadEventEnd - perfData.fetchStart;
+
+              gtag('event', 'timing_complete', {
+                event_category: 'performance',
+                name: 'page_load_time',
+                value: Math.round(totalTime)
+              });
+
+              // Track slow loading pages
+              if (totalTime > 3000) {
+                gtag('event', 'slow_page_load', {
+                  event_category: 'performance',
+                  event_label: window.location.pathname,
+                  value: Math.round(totalTime)
+                });
+              }
+            }
+          }, 100);
+        });
+      }
+
+      // Initialize all tracking functions
+      trackNewsletterSignup();
+      trackBlogEngagement();
+      trackSocialSharing();
+      trackSearchUsage();
+      trackContactForm();
+      trackGitHubClicks();
+      trackResumeDownload();
+      trackContentDiscovery();
+      trackReadingPatterns();
+      trackPerformance();
+
+      // Custom event for debugging
+      console.log('Advanced conversion tracking initialized');
+      
+      // Expose tracking functions for manual testing
+      window.debugGA = {
+        trackConversion: function(eventName, value = 1) {
+          gtag('event', eventName, {
+            event_category: 'debug',
+            event_label: 'manual_test',
+            value: value
+          });
+          console.log(`Debug conversion tracked: ${eventName} (value: ${value})`);
+        },
+        trackCustomEvent: function(eventName, parameters = {}) {
+          gtag('event', eventName, {
+            event_category: 'debug',
+            ...parameters
+          });
+          console.log(`Debug event tracked: ${eventName}`, parameters);
+        }
+      };
+    });
+  </script>
+)}
+
+{isDev && (
+  <script is:inline>
+    console.log('Conversion Tracking: Development mode - advanced tracking disabled');
+    
+    // Mock tracking functions for development
+    window.debugGA = {
+      trackConversion: function(eventName, value = 1) {
+        console.log(`[DEV] Conversion tracked: ${eventName} (value: ${value})`);
+      },
+      trackCustomEvent: function(eventName, parameters = {}) {
+        console.log(`[DEV] Event tracked: ${eventName}`, parameters);
+      }
+    };
+  </script>
+)}

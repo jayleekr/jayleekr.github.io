@@ -5,6 +5,7 @@ import '../styles/global.css';
 import { SITE_TITLE } from '../consts';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import GoogleAnalytics from './GoogleAnalytics.astro';
+import ConversionTracking from './ConversionTracking.astro';
 import WebVitals from './WebVitals.astro';
 import type { ImageMetadata } from 'astro';
 
@@ -324,6 +325,9 @@ const jsonLD = article ? {
 
 <!-- Google Analytics -->
 <GoogleAnalytics />
+
+<!-- Advanced Conversion Tracking -->
+<ConversionTracking />
 
 <!-- Web Vitals Performance Monitoring -->
 <WebVitals />

@@ -83,7 +83,7 @@ export function extractKeywords(content: string, tags: string[] = [], maxKeyword
  * Generate structured data for blog posts
  */
 export function generateBlogPostStructuredData(post: CollectionEntry<'blog'>, siteUrl: string) {
-  const postUrl = `${siteUrl}/blog/${post.slug}/`;
+  const postUrl = `${siteUrl}/blog/${post.id}/`;
   const imageUrl = post.data.heroImage 
     ? `${siteUrl}${typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src}`
     : `${siteUrl}/assets/default-blog-image.jpg`;
@@ -146,15 +146,18 @@ export function generateBlogPostStructuredData(post: CollectionEntry<'blog'>, si
  * Generate Open Graph image URL
  */
 export function generateOGImageUrl(title: string, description?: string): string {
-  const params = new URLSearchParams();
-  params.set('title', title);
+  // Build query string manually to avoid URLSearchParams dependency
+  const encodedTitle = encodeURIComponent(title);
+  let queryString = `title=${encodedTitle}`;
+  
   if (description) {
-    params.set('description', description.substring(0, 100));
+    const encodedDesc = encodeURIComponent(description.substring(0, 100));
+    queryString += `&description=${encodedDesc}`;
   }
   
   // This would be used with a service like Vercel OG or similar
   // For now, return a placeholder
-  return `/api/og?${params.toString()}`;
+  return `/api/og?${queryString}`;
 }
 
 /**
