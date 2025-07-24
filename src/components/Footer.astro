@@ -13,12 +13,6 @@ const lang = getLangFromUrl(Astro.url);
 				<h3 class="text-lg font-semibold text-white mb-4">
 					{lang === 'ko' ? 'Jay Lee의 기술 블로그' : "Jay Lee's Tech Blog"}
 				</h3>
-				<p class="text-sm leading-relaxed mb-4">
-					{lang === 'ko' 
-						? '소프트웨어 엔지니어링, DevOps, 스타트업에 대한 경험과 인사이트를 공유합니다.'
-						: 'Sharing experiences and insights about software engineering, DevOps, and startup life.'
-					}
-				</p>
 				<div class="flex items-center gap-4">
 					<a href="https://github.com/jayleekr" target="_blank" rel="noopener" class="social-link">
 						<span class="sr-only">GitHub</span>
@@ -44,20 +38,20 @@ const lang = getLangFromUrl(Astro.url);
 			<!-- Quick Links -->
 			<div>
 				<h3 class="text-lg font-semibold text-white mb-4">
-					{lang === 'ko' ? '빠른 링크' : 'Quick Links'}
+					Quick Links
 				</h3>
 				<ul class="space-y-2 text-sm">
-					<li><a href="/blog" class="footer-link">{lang === 'ko' ? '블로그' : 'Blog'}</a></li>
-					<li><a href="/about" class="footer-link">{lang === 'ko' ? '소개' : 'About'}</a></li>
-					<li><a href="/projects" class="footer-link">{lang === 'ko' ? '프로젝트' : 'Projects'}</a></li>
-					<li><a href="/contact" class="footer-link">{lang === 'ko' ? '연락처' : 'Contact'}</a></li>
+					<li><a href="/blog" class="footer-link">Blog</a></li>
+					<li><a href="/about" class="footer-link">About</a></li>
+					<li><a href="/projects" class="footer-link">Projects</a></li>
+					<li><a href="/contact" class="footer-link">Contact</a></li>
 				</ul>
 			</div>
 
 			<!-- RSS & Subscribe -->
 			<div>
 				<h3 class="text-lg font-semibold text-white mb-4">
-					{lang === 'ko' ? '구독하기' : 'Subscribe'}
+					Subscribe
 				</h3>
 				<ul class="space-y-2 text-sm">
 					<li>
@@ -82,7 +76,7 @@ const lang = getLangFromUrl(Astro.url);
 
 		<div class="border-t border-gray-800 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
 			<p class="text-sm">
-				&copy; {today.getFullYear()} Jay Lee. {lang === 'ko' ? '모든 권리 보유.' : 'All rights reserved.'}
+				&copy; {today.getFullYear()} Jay Lee. All rights reserved.
 			</p>
 			<div class="flex items-center gap-4 mt-4 md:mt-0 text-sm">
 				<span class="text-gray-500">

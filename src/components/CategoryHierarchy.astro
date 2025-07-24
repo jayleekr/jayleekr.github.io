@@ -15,7 +15,7 @@ const categoryHierarchy: Record<string, {
   subcategories: Record<string, { name: string; count: number }>;
 }> = {
   'TechSavvy': {
-    name: lang === 'ko' ? '기술 (Tech)' : 'Tech',
+    name: 'Tech',
     description: lang === 'ko' ? '심화 튜토리얼, 기술 트렌드 분석, 아키텍처 설계 경험' : 'Advanced tutorials, tech trends, architecture design',
     color: 'blue',
     subcategories: {
@@ -32,7 +32,7 @@ const categoryHierarchy: Record<string, {
     }
   },
   'DeepThinking': {
-    name: lang === 'ko' ? '깊은 생각 (Deep Thinking)' : 'Deep Thinking',
+    name: 'Deep Thinking',
     description: lang === 'ko' ? '커리어 전환, 면접 경험, 업계 동향, 멘토링 인사이트' : 'Career transitions, interviews, industry trends, mentoring',
     color: 'purple',
     subcategories: {
@@ -42,7 +42,7 @@ const categoryHierarchy: Record<string, {
     }
   },
   'Collaboration': {
-    name: lang === 'ko' ? '협업 (Collaboration)' : 'Collaboration',
+    name: 'Collaboration',
     description: lang === 'ko' ? '프로젝트 케이스 스터디, 문제 해결, 기술적 의사결정' : 'Project case studies, problem solving, technical decisions',
     color: 'green',
     subcategories: {

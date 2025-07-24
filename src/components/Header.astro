@@ -32,7 +32,7 @@ const lang = getLangFromUrl(Astro.url);
 				<HeaderLink href={lang === 'en' ? '/en' : '/'}>{t("navigation.home", lang)}</HeaderLink>
 				<HeaderLink href={lang === 'en' ? '/en/about' : '/about'}>{t("navigation.about", lang)}</HeaderLink>
 				<HeaderLink href={lang === 'en' ? '/en/blog' : '/blog'}>{t("navigation.blog", lang)}</HeaderLink>
-				<HeaderLink href={lang === 'en' ? '/en/categories' : '/categories'}>{lang === 'ko' ? '카테고리' : 'Categories'}</HeaderLink>
+				<HeaderLink href={lang === 'en' ? '/en/categories' : '/categories'}>Categories</HeaderLink>
 				<SearchButton />
 				<ThemeToggle />
 				<LanguageSwitcher />
@@ -65,7 +65,7 @@ const lang = getLangFromUrl(Astro.url);
 				<HeaderLink href={lang === 'en' ? '/en' : '/'} class="block px-3 py-2 text-base font-medium">{t("navigation.home", lang)}</HeaderLink>
 				<HeaderLink href={lang === 'en' ? '/en/about' : '/about'} class="block px-3 py-2 text-base font-medium">{t("navigation.about", lang)}</HeaderLink>
 				<HeaderLink href={lang === 'en' ? '/en/blog' : '/blog'} class="block px-3 py-2 text-base font-medium">{t("navigation.blog", lang)}</HeaderLink>
-				<HeaderLink href={lang === 'en' ? '/en/categories' : '/categories'} class="block px-3 py-2 text-base font-medium">{lang === 'ko' ? '카테고리' : 'Categories'}</HeaderLink>
+				<HeaderLink href={lang === 'en' ? '/en/categories' : '/categories'} class="block px-3 py-2 text-base font-medium">Categories</HeaderLink>
 			</div>
 		</div>
 	</nav>

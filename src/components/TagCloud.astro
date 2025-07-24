@@ -65,11 +65,6 @@ const displayTags = sortedTags.slice(0, maxTags);
       <h3 class={`font-bold text-gray-900 dark:text-gray-100 ${compact ? 'text-lg' : 'text-xl'}`}>
         {lang === 'ko' ? '인기 태그' : 'Popular Tags'}
       </h3>
-      {!compact && (
-        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          {lang === 'ko' ? '크기는 사용 빈도를 나타냅니다' : 'Size indicates usage frequency'}
-        </p>
-      )}
     </div>
   )}
 

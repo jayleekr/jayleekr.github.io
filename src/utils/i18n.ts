@@ -3,7 +3,7 @@ const translations = {
   ko: {
     "navigation.home": "홈",
     "navigation.about": "소개", 
-    "navigation.blog": "블로그",
+    "navigation.blog": "Blog",
     "navigation.contact": "연락처",
     "hero.title": "Welcome to Jay's small world",
     "hero.subtitle": "Learner, Giver, Hooper",
