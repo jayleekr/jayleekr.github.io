@@ -5,9 +5,9 @@ const translations = {
     "navigation.about": "소개", 
     "navigation.blog": "블로그",
     "navigation.contact": "연락처",
-    "hero.title": "포트폴리오에 오신 것을 환영합니다",
-    "hero.subtitle": "임베디드 리눅스 & 컨테이너 전문가",
-    "hero.description": "자동차 소프트웨어, 컨테이너 기술, 그리고 임베디드 시스템에 열정적입니다.",
+    "hero.title": "안녕하세요! 이재연입니다",
+    "hero.subtitle": "Learner, Giver, Hooper",
+    "hero.description": "끊임없이 배우고, 함께 나누며, 코트에서 열정을 불태우는 개발자입니다.",
     "about.title": "소개",
     "about.description": "임베디드 리눅스 시스템과 컨테이너 기술을 전문으로 하는 소프트웨어 엔지니어입니다.",
     "about.pageTitle": "Jay Lee 소개",
@@ -60,9 +60,9 @@ const translations = {
     "navigation.about": "About",
     "navigation.blog": "Blog", 
     "navigation.contact": "Contact",
-    "hero.title": "Welcome to My Portfolio",
-    "hero.subtitle": "Embedded Linux & Container Expert",
-    "hero.description": "Passionate about automotive software, container technologies, and embedded systems.",
+    "hero.title": "Hello! I'm Jay Lee",
+    "hero.subtitle": "Learner, Giver, Hooper",
+    "hero.description": "A developer who constantly learns, shares with others, and brings passion to the court.",
     "about.title": "About Me",
     "about.description": "I'm a software engineer specializing in embedded Linux systems and container technologies.",
     "about.pageTitle": "About Jay Lee",
@@ -112,7 +112,7 @@ const translations = {
   }
 };
 
-export function getLangFromUrl(url: URL): string {
+export function getLangFromUrl(url: { pathname: string }): string {
   const [, lang] = url.pathname.split('/');
   if (lang === 'en') return 'en';
   return 'ko';

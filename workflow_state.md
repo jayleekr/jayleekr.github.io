@@ -76,6 +76,8 @@ VALIDATE && COMPLETED → prepend one-liner to Changelog.
 - RULE_GIT_ROLLBACK_01: checkout SHA by description.  
 - RULE_GIT_DIFF_01: diff two SHAs.  
 - RULE_GIT_GUIDANCE_01: help on request.
+- **RULE_DEPLOYMENT_01**: Always push to remote and wait for GitHub Actions completion after major changes
+- **RULE_TYPECHECK_01**: Ensure all TypeScript errors are resolved before pushing
 
 ### RULE_BLUEPRINT_ARCHIVE_01  
 Before overwrite → save to Blueprint History with time+ID.
@@ -118,12 +120,14 @@ User request → restore/show blueprint.
 | 31 | English content creation and multilingual setup | COMPLETED |
 
 ## Log
-2025-01-24 - English content creation and multilingual setup completed
+2025-01-24 - English content creation, multilingual setup, and deployment completed
 - Created English versions of 2 main blog posts with warm, personal tone
 - Set up complete English blog infrastructure (/en/blog/, routing, navigation)
 - Enhanced multilingual navigation with proper language-specific URLs
 - Established English content workflow and management system
 - Maintained consistent warm and engaging tone across both languages
+- Fixed TypeScript errors and ensured successful GitHub Actions deployment
+- All changes now live on GitHub Pages with full multilingual support
 
 2025-01-24 - Blog content tone improvement completed
 - Enhanced personal and warm tone for existing Korean blog posts
@@ -202,6 +206,9 @@ User request → restore/show blueprint.
 
 ## Workflow History
 <!-- commit SHA & msg -->
+- 28fa274: fix: Resolve TypeScript errors in English blog infrastructure (2025-01-24) - ✅ GitHub Actions Success
+- dd7d997: feat: Enhance blog content tone and create English versions (2025-01-24) - ❌ GitHub Actions Failed (TypeScript errors)
+- c3f22cb: feat: Add English pages for internationalization (2025-01-23) - ✅ GitHub Actions Success
 
 ## ArchiveLog
 <!-- rotated log summaries -->

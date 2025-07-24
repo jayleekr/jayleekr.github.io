@@ -30,6 +30,7 @@ Develop a world-class developer blog based on successful developer blog case stu
 - GitHub Pages hosting limitations
 - Static site generation only (no server-side features)
 - **AI Content Policy**: AI must not create blog posts or personal content - only assist with technical implementation, structure, and editing
+- **Deployment Process**: All changes must pass TypeScript checks, tests, and automated deployment via GitHub Actions
 
 ## Tokenization  
 - 3.5 ch/token, 8 K cap.  
