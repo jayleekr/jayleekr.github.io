@@ -118,8 +118,18 @@ User request → restore/show blueprint.
 | 29 | Performance optimization | COMPLETED |
 | 30 | Blog content tone improvement | COMPLETED |
 | 31 | English content creation and multilingual setup | COMPLETED |
+| 32 | Homepage UX improvement with personal warmth | COMPLETED |
 
 ## Log
+2025-01-24 - Homepage transformation with personal warmth completed
+- Transformed homepage from cold portfolio greeting to warm personal introduction
+- Changed hero title: "포트폴리오에 오신 것을 환영합니다" → "안녕하세요! 이재연입니다"
+- Updated subtitle to personal values: "Learner, Giver, Hooper"
+- Replaced technical description with human-centered identity
+- Removed technical skills section for cleaner, more focused homepage design
+- Applied changes consistently across Korean and English versions
+- Successfully deployed with GitHub Actions - all changes live
+
 2025-01-24 - English content creation, multilingual setup, and deployment completed
 - Created English versions of 2 main blog posts with warm, personal tone
 - Set up complete English blog infrastructure (/en/blog/, routing, navigation)
@@ -206,6 +216,7 @@ User request → restore/show blueprint.
 
 ## Workflow History
 <!-- commit SHA & msg -->
+- 7b0ca1a: feat: Transform homepage with personal warmth and improved UX (2025-01-24) - ✅ GitHub Actions Success
 - 28fa274: fix: Resolve TypeScript errors in English blog infrastructure (2025-01-24) - ✅ GitHub Actions Success
 - dd7d997: feat: Enhance blog content tone and create English versions (2025-01-24) - ❌ GitHub Actions Failed (TypeScript errors)
 - c3f22cb: feat: Add English pages for internationalization (2025-01-23) - ✅ GitHub Actions Success
