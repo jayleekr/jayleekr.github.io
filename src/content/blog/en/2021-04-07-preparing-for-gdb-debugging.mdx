@@ -1,0 +1,35 @@
+---
+title: "Preparing for GDB Debugging"
+author: "Jay Lee"
+pubDate: "2021-04-07 00:00:00"
+categories: ["TechSavvy", "EmbeddedLinux"]
+tags: ["Blogging", "Linux", "AGL", "EmbeddedLinux", "OpenEmbedded", "Yocto", "CrossDevelopment", "GCC", "GDB", "Toolchain"]
+---
+
+Once your toolchain is ready, you can consider all the tools prepared.
+
+Now let's make the actual target you need to debug ready for debugging.
+
+## Adjusting Compiler Options
+
+![Desktop View](/assets/img/02-PreparingToDebugWithGDB/1.png)
+Ref: Linux Foundation 2020 Conference   
+
+First, when compiling C or C++ source code, add the -g option or -gN option as shown in the diagram above to include various information like source code debugging information in the ELF file.
+
+Using -ggdbN will create an ELF using the gdb format instead of the standard DWARF format.
+
+Generally, just adding -g will give the ELF a level equivalent to -g2.
+
+![Desktop View](/assets/img/02-PreparingToDebugWithGDB/2.png)
+Ref: Linux Foundation 2020 Conference   
+
+Next, you need to adjust the Optimization Options.
+
+When optimization is enabled, the compiler analyzes the code logic and might generate different execution code that produces the same results, so you should remove optimization options during debugging.
+
+Use the -O0 option or give -Og for GDB-compatible optimization options.
+
+## Reference
+
+1. [http://www.epnc.co.kr/news/articleView.html?idxno=48128](http://www.epnc.co.kr/news/articleView.html?idxno=48128)

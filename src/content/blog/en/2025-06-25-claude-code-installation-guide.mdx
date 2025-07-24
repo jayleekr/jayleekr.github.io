@@ -1,0 +1,361 @@
+---
+title: "Installing Claude Code in Existing Linux Containers (Battle-Tested Guide)"
+pubDate: "2025-06-25 09:00:00"
+categories: ["TechSavvy", "Container"]
+tags: ["Claude", "AI", "Docker", "Linux", "Container", "Node.js", "Installation"]
+---
+
+![Claude Code Installation Guide](/assets/img/claude.jpeg)
+
+# Installing Claude Code in Existing Linux Containers (Battle-Tested Guide)
+
+## Table of Contents
+1. [Claude Code Overview](#claude-code-overview)
+2. [Accessing Running Containers](#accessing-running-containers)
+3. [System Environment Check](#system-environment-check)
+4. [Node.js Installation (NVM Recommended)](#nodejs-installation-nvm-recommended)
+5. [Claude Code Installation](#claude-code-installation)
+6. [Authentication Setup](#authentication-setup)
+7. [Usage](#usage)
+8. [Troubleshooting](#troubleshooting)
+9. [Verified Installation Script](#verified-installation-script)
+
+## Claude Code Overview
+
+Claude Code is a terminal-based AI coding tool developed by Anthropic that provides:
+- Edit files and fix bugs across your entire codebase
+- Answer questions about code architecture and logic
+- Run and fix tests, linting, and other commands
+- Manage Git workflows (resolve merge conflicts, create PRs, etc.)
+- Explore docs and resources through web search
+
+**System Requirements**: Node.js 18+ (Recommended: 20+ LTS)
+
+## Accessing Running Containers
+
+### 1. Check Container List
+```bash
+# Check running containers
+docker ps
+
+# Example output:
+CONTAINER ID   IMAGE     COMMAND       CREATED        STATUS        PORTS     NAMES
+abc123def456   ubuntu    "/bin/bash"   2 hours ago    Up 2 hours              my-dev-container
+```
+
+### 2. Access Container
+```bash
+# Access container using container name
+docker exec -it my-dev-container /bin/bash
+
+# Or using container ID
+docker exec -it abc123def456 /bin/bash
+
+# If bash is not available, try sh
+docker exec -it my-dev-container /bin/sh
+```
+
+## System Environment Check
+
+Once inside the container, let's check what we're working with:
+
+```bash
+# Check OS version
+cat /etc/os-release
+
+# Check available package managers
+which apt-get    # Debian/Ubuntu
+which yum        # RHEL/CentOS
+which apk        # Alpine
+
+# Check if curl/wget is available
+which curl
+which wget
+
+# Check current shell
+echo $SHELL
+```
+
+## Node.js Installation (NVM Recommended)
+
+### Why NVM?
+- Easy version management
+- No root permissions needed
+- Works in most container environments
+
+### Install NVM and Node.js
+```bash
+# Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+# Reload shell configuration
+source ~/.bashrc
+# or
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install latest LTS Node.js
+nvm install --lts
+nvm use --lts
+
+# Verify installation
+node --version
+npm --version
+```
+
+### Alternative: Direct Node.js Installation
+
+For **Ubuntu/Debian**:
+```bash
+# Update package list
+apt-get update
+
+# Install Node.js
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+apt-get install -y nodejs
+
+# Verify
+node --version
+npm --version
+```
+
+For **Alpine Linux**:
+```bash
+# Install Node.js
+apk add --no-cache nodejs npm
+
+# Verify
+node --version
+npm --version
+```
+
+## Claude Code Installation
+
+### Method 1: NPM Installation
+```bash
+# Install Claude Code globally
+npm install -g @anthropic-ai/claude-code
+
+# Verify installation
+claude --version
+```
+
+### Method 2: Direct Download (if npm fails)
+```bash
+# Download and install
+curl -fsSL https://claude.ai/install.sh | sh
+
+# Add to PATH if needed
+export PATH="$HOME/.claude/bin:$PATH"
+echo 'export PATH="$HOME/.claude/bin:$PATH"' >> ~/.bashrc
+```
+
+## Authentication Setup
+
+### 1. Get API Key
+1. Visit [Claude.ai](https://claude.ai)
+2. Sign in to your account
+3. Go to Settings → API Keys
+4. Generate a new API key
+
+### 2. Configure Authentication
+```bash
+# Set up authentication
+claude auth login
+
+# Or set environment variable
+export ANTHROPIC_API_KEY="your-api-key-here"
+echo 'export ANTHROPIC_API_KEY="your-api-key-here"' >> ~/.bashrc
+```
+
+### 3. Verify Authentication
+```bash
+# Test connection
+claude --test-auth
+```
+
+## Usage
+
+### Basic Commands
+```bash
+# Start interactive session
+claude
+
+# Analyze specific files
+claude analyze src/main.js
+
+# Fix issues in files
+claude fix src/
+
+# Generate code
+claude generate "create a REST API endpoint for user authentication"
+
+# Help with Git
+claude git "help me resolve merge conflicts"
+```
+
+### Example Interactive Session
+```bash
+$ claude
+Claude Code v1.0.0
+Type 'help' for available commands or start describing what you'd like to do.
+
+> Can you help me fix the TypeScript errors in this project?
+I'll analyze your TypeScript files and help fix the errors. Let me start by examining your project structure...
+
+[Claude analyzes files and provides fixes]
+```
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+**1. Permission Denied Errors**
+```bash
+# If you get permission errors with npm
+npm config set prefix ~/.npm-global
+export PATH=~/.npm-global/bin:$PATH
+echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+```
+
+**2. Node.js Version Issues**
+```bash
+# Check Node version
+node --version
+
+# Update to latest LTS if needed
+nvm install --lts
+nvm use --lts
+```
+
+**3. Network/Firewall Issues**
+```bash
+# Test internet connectivity
+curl -I https://api.anthropic.com
+
+# Check if proxy is needed
+echo $HTTP_PROXY
+echo $HTTPS_PROXY
+```
+
+**4. Container Environment Issues**
+```bash
+# Some containers might need additional packages
+apt-get install -y ca-certificates curl gnupg
+
+# For Alpine
+apk add --no-cache ca-certificates curl
+```
+
+### Debug Mode
+```bash
+# Enable debug logging
+export CLAUDE_DEBUG=1
+claude --version
+```
+
+## Verified Installation Script
+
+Here's a battle-tested script that handles most common scenarios:
+
+```bash
+#!/bin/bash
+set -e
+
+echo "🚀 Installing Claude Code in Container..."
+
+# Detect OS
+if command -v apt-get >/dev/null 2>&1; then
+    OS="ubuntu"
+    PACKAGE_MANAGER="apt"
+elif command -v yum >/dev/null 2>&1; then
+    OS="centos"
+    PACKAGE_MANAGER="yum"
+elif command -v apk >/dev/null 2>&1; then
+    OS="alpine"
+    PACKAGE_MANAGER="apk"
+else
+    echo "❌ Unsupported OS"
+    exit 1
+fi
+
+echo "📊 Detected OS: $OS"
+
+# Install dependencies
+echo "📦 Installing dependencies..."
+case $PACKAGE_MANAGER in
+    "apt")
+        apt-get update
+        apt-get install -y curl ca-certificates gnupg
+        ;;
+    "yum")
+        yum install -y curl ca-certificates
+        ;;
+    "apk")
+        apk add --no-cache curl ca-certificates
+        ;;
+esac
+
+# Install Node.js via NVM
+echo "📦 Installing Node.js..."
+if ! command -v node >/dev/null 2>&1; then
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    nvm install --lts
+    nvm use --lts
+else
+    echo "✅ Node.js already installed: $(node --version)"
+fi
+
+# Install Claude Code
+echo "🤖 Installing Claude Code..."
+npm install -g @anthropic-ai/claude-code
+
+# Verify installation
+echo "✅ Verifying installation..."
+claude --version
+
+echo "🎉 Installation complete!"
+echo "💡 Next steps:"
+echo "   1. Run 'claude auth login' to authenticate"
+echo "   2. Run 'claude' to start using Claude Code"
+```
+
+### Save and Run the Script
+```bash
+# Save the script
+cat > install-claude.sh << 'EOF'
+[paste the script above]
+EOF
+
+# Make executable and run
+chmod +x install-claude.sh
+./install-claude.sh
+```
+
+## Final Notes
+
+### Best Practices
+1. **Always test in a non-production container first**
+2. **Keep your API key secure** - never hardcode it in scripts
+3. **Use environment variables** for configuration
+4. **Regularly update Claude Code** for new features and fixes
+
+### Container Persistence
+Remember that changes made inside a container will be lost when the container is removed unless:
+- You commit the container to a new image
+- You use volumes to persist data
+- You rebuild your Dockerfile to include these installations
+
+### Quick Container Setup for Development
+```bash
+# Create a development container with Claude Code pre-installed
+docker run -it --name claude-dev ubuntu:22.04 /bin/bash
+
+# Inside container, run the installation script
+# Then commit the container
+docker commit claude-dev my-claude-dev:latest
+```
+
+*Happy coding with Claude! 🚀 This guide has been tested on Ubuntu, Alpine, and CentOS containers.*

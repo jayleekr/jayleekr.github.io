@@ -1,0 +1,115 @@
+---
+title: "GitHub Blog FAQ - Common Questions and Solutions"
+author: "Jay Lee"
+pubDate: "2020-11-10 00:00:00"
+categories: ["TechSavvy", "Github"]
+tags: ["TechSavvy", "Github", "Jekyll", "Blog"]
+---
+
+## 1. Enabling Google Search
+
+### 1.1 Activate sitemap
+
+Modify your `_config.yml`:
+``` yml
+plugins: ['jekyll-paginate', 'jekyll-sitemap', 'jekyll-include-cache', 'jekyll-gist']
+```
+
+### 1.2 Add robots.txt
+
+Create a `robots.txt` file in your root directory:
+``` txt
+User-agent: *
+Allow:/
+
+Sitemap: https://jayleekr.github.io/sitemap.xml
+```
+
+### 1.3 Register sitemap to Google Search Console
+
+1. Go to https://www.google.com/webmasters
+2. Click **SEARCH CONSOLE**
+3. Add your site and verify ownership
+4. Submit your sitemap URL
+
+## 2. Jekyll Related Issues
+
+### 2.1 Installing dependencies for local blog testing
+
+If you want to test your Jekyll blog locally, you'll need these dependencies:
+
+``` sh
+$ sudo apt-get install -y gem 
+$ sudo gem install jekyll bundler tzinfo tzinfo-data minima 
+```
+
+### 2.2 Installing a Theme
+
+Let's install the minimal-mistakes theme as an example:
+
+1. First, add the minimal-mistakes theme to your Gemfile:
+
+``` sh
+gem "minimal-mistakes-jekyll"
+```
+
+2. Install the bundle:
+``` sh
+$ bundle install 
+```
+
+3. Add the theme to your `_config.yml` file:
+``` yml
+theme: minimal-mistakes-jekyll
+```
+
+### 2.3 Running Jekyll
+
+``` sh
+$ jekyll serve
+Configuration file: /home/jayleekr/workspace/00_codes/07_blog/_config.yml
+            Source: /home/jayleekr/workspace/00_codes/07_blog
+       Destination: /home/jayleekr/workspace/00_codes/07_blog/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+       Jekyll Feed: Generating feed for posts
+                    done in 0.823 seconds.
+ Auto-regeneration: enabled for '/home/jayleekr/workspace/00_codes/07_blog'
+    Server address: http://127.0.0.1:4000
+  Server running... press ctrl-c to stop.
+```
+
+Your blog should now be accessible at `http://127.0.0.1:4000`!
+
+### 2.4 Jekyll Version Compatibility Issues
+
+This happens when your project version doesn't match your installed Jekyll version.
+
+You can resolve this by managing gem dependencies properly:
+
+``` sh
+$ sudo gem install bundler
+$ bundle install
+$ bundle exec jekyll serve
+Configuration file: /home/jayleekr/workspace/00_codes/07_blog/_config.yml
+            Source: /home/jayleekr/workspace/00_codes/07_blog
+       Destination: /home/jayleekr/workspace/00_codes/07_blog/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+       Jekyll Feed: Generating feed for posts
+                    done in 0.823 seconds.
+ Auto-regeneration: enabled for '/home/jayleekr/workspace/00_codes/07_blog'
+    Server address: http://127.0.0.1:4000
+  Server running... press ctrl-c to stop.
+```
+
+Using `bundle exec` ensures you're running Jekyll with the exact gem versions specified in your Gemfile.lock, avoiding compatibility issues.
+
+## Pro Tips
+
+- Always use `bundle exec jekyll serve` instead of just `jekyll serve` to avoid version conflicts
+- Keep your gems updated with `bundle update`
+- Test your blog locally before pushing to GitHub Pages
+- Use GitHub Pages supported plugins to avoid build failures
+
+Hope this helps with your GitHub blog setup! 🚀

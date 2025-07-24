@@ -1,0 +1,91 @@
+---
+title: "ABI Standards Explained"
+author: "Jay Lee"
+pubDate: "2021-04-11 00:00:00"
+categories: ["TechSavvy", "ComputerArchitecture"]
+tags: ["Blogging", "ComputerArchitecture", "Linux", "AGL", "EmbeddedLinux", "OpenEmbedded", "Yocto", "CrossDevelopment", "GCC", "GDB", "Toolchain"]
+---
+
+## ABI (Application Binary Interface) Standards
+
+The ABI defines the following rules for how applications should exchange binary data:
+
+- Data types and alignment methods
+- Register exchange methods for function call arguments and results
+- System call invocation methods
+- Program code initialization and data initialization methods
+- File exchange methods (ELF, etc.)
+
+### EABI Standards
+
+EABI (Embedded ABI) deals with ABI for embedded environments. In ARM architecture, the way ABI is used differs based on the Linux version, divided into the following two approaches:
+
+- arm/OABI
+    - ABI method used before kernel v2.6.15 (mainline v2.6.16) (also called Old ABI or legacy ABI)
+    - Used up to glibc 2.3.6
+    - gcc: linux-arm-none-gnu
+- arm/EABI
+    - ARM EABI method used since kernel v2.6.16
+    - Used from glibc v2.3.7 and v2.4
+    - gcc: linux-arm-none-gnueabi
+
+## Differences between arm/OABI and arm/EABI
+
+### Software interrupt calling method
+
+- OABI
+    - swi __NR_SYSCALL_BASE(==0x900000)+1
+- EABI
+    - mov r7, #1 (system call index)
+    - swi 0
+
+### Structure packaging
+
+- OABI
+    - Structures are aligned in 4-byte units
+- EABI
+    - Uses structure size as-is
+
+### Stack argument alignment
+
+- OABI
+    - Stored in 4-byte units when saving to stack
+- EABI
+    - Stored in 8-byte units when saving to stack
+
+### 64-bit type argument alignment
+
+- OABI
+    - Aligned in 4-byte units
+- EABI
+    - Aligned in 8-byte units
+
+### Enum type size
+
+- OABI
+    - 4-byte units
+- EABI
+    - Can be specified as variable
+
+### Number of registers for argument passing
+
+- OABI
+    - 4 registers (r0~r3)
+- EABI
+    - 7 registers (r0~r6)
+
+## Example of differences
+
+### Software interrupt + 64-bit type argument alignment
+
+Example: long sum64(unsigned int start, size_t size); syscall no=100
+
+- arm/OABI
+    - Assign start to r0
+    - Assign size as 64-bit to r1 and r2
+    - swi #(0x900000 + 100)
+- arm/EABI
+    - Assign start to r0
+    - Assign size as 64-bit to r2 and r3
+    - Assign 100 to r7
+    - swi 0

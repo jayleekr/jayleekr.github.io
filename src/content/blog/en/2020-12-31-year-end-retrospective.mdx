@@ -1,0 +1,104 @@
+---
+title: "2020 Year-End Retrospective"
+author: "Jay Lee"
+pubDate: "2020-12-31 00:00:00"
+categories: ["DeepThinking", "Retrospect"]
+tags: ["DeepThinking", "GithubPage", "Retrospect", "AdaptiveAUTOSAR", "AUTOSAR", "ClassicAUTOSAR", "ECU", "CPU", "GPU", "OTA"]
+---
+
+![Desktop View](/assets/img/autron2.jpg)
+
+## 2020 Year-End Retrospective
+
+Someone once said that assistant managers and managers are when you're most productive and do the most work...
+
+I blinked and suddenly Q4 was here. Whoa!
+
+During my 4.5 years of graduate school, I focused on theoretical research. During my 3 years of military service, I did work that demanded maximum execution for users. Now I'm doing platform development that requires both aspects.
+
+Let me talk more specifically about what I do now: Adaptive AUTOSAR platform, commonly called AP middleware, which is a very important component that goes into high-performance computing chips that must be installed in vehicles.
+
+The main functions include automatically generating structured code so that vehicle application developers can easily develop according to design specifications, providing interfaces for these vehicle applications to be remotely updated via OTA, and providing various interfaces to behave differently according to different vehicle situations - all very important things to prepare for the coming autonomous driving era.
+
+Actually, European companies are typically good at designing and developing these software functions with long-term, abstract vision, and they're leading this development.
+
+Traditional European and Japanese vehicle manufacturers have considered it very important and common sense to coexist with the ecosystem for vehicle manufacturing (commonly called n-tier suppliers).
+
+Tesla, this mutant, appeared and shook all of this up.
+
+Consumers and the market chose Tesla, and the power of the market was truly terrifying.
+
+The key is approaching cars from an agile software development methodology perspective.
+
+They dramatically shortened the cycle of design → development → verification, and made it possible to update these changed or newly added features.
+
+Anyone can say this - it sounds easy.
+
+But...
+
+## The Reality of Automotive Software
+
+The reality is much more complex than it sounds. The automotive industry has decades of established processes, safety standards, and regulatory requirements that you can't just ignore because you want to be "agile."
+
+### What I Learned in 2020
+
+**1. Platform Thinking is Everything**
+Working on Adaptive AUTOSAR taught me that the most important skill in modern software development isn't coding - it's platform thinking. How do you create abstractions that make complex things simple for other developers?
+
+**2. Legacy Systems are Both Blessing and Curse**
+The automotive industry's established n-tier supplier ecosystem isn't just bureaucracy - it's decades of hard-learned lessons about safety and reliability. But it's also what makes rapid innovation so difficult.
+
+**3. The Tesla Effect is Real**
+Every automotive meeting in 2020 somehow referenced Tesla. Not always positively, but they've fundamentally changed customer expectations about what a car should be able to do.
+
+### Technical Deep Dive: What is Adaptive AUTOSAR?
+
+For those not familiar, Adaptive AUTOSAR (AP) is basically the operating system for next-generation automotive computing platforms. Think of it as:
+
+- **Application Framework**: Provides standardized APIs for vehicle applications
+- **Communication Middleware**: Handles service-oriented communication between applications  
+- **OTA Update Manager**: Enables secure over-the-air software updates
+- **Resource Management**: Manages compute, memory, and network resources
+- **Security Framework**: Implements automotive cybersecurity standards
+
+The challenge is building something that's:
+- Safe enough for automotive (ISO 26262 functional safety)
+- Secure enough for connected vehicles (ISO 21434 cybersecurity)
+- Fast enough for real-time applications
+- Flexible enough for OTA updates
+- Standard enough for ecosystem interoperability
+
+## The European vs Silicon Valley Approach
+
+**European Approach**: Comprehensive standards, long development cycles, extensive validation
+- Pros: Safety, reliability, ecosystem compatibility
+- Cons: Slow to market, expensive, less innovative
+
+**Silicon Valley Approach**: Move fast, break things, iterate quickly
+- Pros: Rapid innovation, customer focus, cost efficiency  
+- Cons: Potential safety issues, regulatory challenges, ecosystem disruption
+
+The winning approach probably combines both: "Move fast with safety rails."
+
+## Personal Growth in 2020
+
+This year I learned that being a platform engineer means:
+
+1. **Thinking in Systems**: Every decision affects multiple stakeholders
+2. **Balancing Abstractions**: Too abstract = unusable, too concrete = inflexible
+3. **Managing Complexity**: Hide complexity from users without hiding important details
+4. **Future-Proofing**: Build for today's needs and tomorrow's unknowns
+
+## What 2021 Holds
+
+The automotive industry is at an inflection point. Software-defined vehicles aren't just a buzzword - they're becoming reality. The question is whether traditional automotive companies can transform fast enough, or whether tech companies will eat their lunch.
+
+My prediction: We'll see more partnerships between traditional OEMs and tech companies, more in-house software development at car companies, and more automotive engineers learning to think like software engineers.
+
+## Closing Thoughts
+
+2020 taught me that the most interesting problems exist at the intersection of different industries. Automotive + Software + AI + Connectivity creates challenges that pure software companies and pure automotive companies can't solve alone.
+
+The future belongs to engineers who can bridge these worlds.
+
+*Here's to a 2021 full of interesting technical challenges and maybe fewer Zoom meetings! 🚗💻*

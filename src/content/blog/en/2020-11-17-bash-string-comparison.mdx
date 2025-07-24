@@ -1,0 +1,27 @@
+---
+title: "Bash String Comparison with if"
+author: "Jay Lee"
+pubDate: "2020-11-17 00:00:01"
+categories: ["TechSavvy", "Bash"]
+tags: ["TechSavvy", "ProgrammingLanguage", "Bash"]
+---
+
+## Bash string comparison using "if"
+
+"==" and "!=" only can be used in case of string comparison.
+
+``` sh
+if [ "$STRING" == "abc" ];then
+    echo "STRING is abc!"
+fi 
+
+or
+
+if [ "$STRING" = "abc" ];then
+    echo "STRING is abc!"
+fi 
+```
+
+## Appendix. References
+
+- General : [http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)

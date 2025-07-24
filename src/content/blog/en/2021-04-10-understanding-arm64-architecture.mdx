@@ -1,0 +1,32 @@
+---
+title: "Understanding ARM64 Architecture"
+author: "Jay Lee"
+pubDate: "2021-04-10 00:00:00"
+categories: ["TechSavvy", "ComputerArchitecture"]
+tags: ["Blogging", "ComputerArchitecture", "Linux", "AGL", "EmbeddedLinux", "OpenEmbedded", "Yocto", "CrossDevelopment", "GCC", "GDB", "Toolchain"]
+---
+
+## Definitions
+
+### ARM's definitions when introducing 64-bit support
+
+- **AArch32** – The legacy 32-bit instruction set architecture (ISA) defined by ARM, including Thumb mode execution.
+- **AArch64** – The new 64-bit ISA (instruction set architecture) defined by ARM.
+- **ARMv7** - The specification for "7th generation" ARM hardware that also includes support for AArch32. This is the first version of ARM hardware supported by Windows for ARM.
+- **ARMv8** - The specification for "8th generation" ARM hardware that includes support for both AArch32 and AArch64.
+
+### Windows definitions
+
+- **ARM** – Refers to AArch32 (32-bit ARM architecture), also known as WoA (Windows on ARM).
+- **ARM32** – Same as ARM above, used in this document for clarity.
+- **ARM64** – Refers to 64-bit ARM architecture (AArch64). There is no WoA64.
+
+### ARM data types
+
+- **Short-Vector** – A data type that can be directly represented as 8-byte or 16-byte elements in a vector. The size is aligned to 8 or 16 bytes, and each element can be 1, 2, 4, or 8 bytes.
+- **HFA (Homogeneous Floating-point Aggregate)** – A data type containing 2-4 identical floating-point members (floats or doubles).
+- **HVA (Homogeneous Short-Vector Aggregate)** – A data type with 2-4 identical Short-Vector members.
+
+## Reference
+
+[1] ARM64 ABI Conventions Overview for C++ Projects on ARM Processors, Microsoft, [https://docs.microsoft.com/ko-kr/cpp/build/arm64-windows-abi-conventions?view=msvc-160](https://docs.microsoft.com/ko-kr/cpp/build/arm64-windows-abi-conventions?view=msvc-160)

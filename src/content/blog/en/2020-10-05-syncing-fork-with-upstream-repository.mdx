@@ -1,0 +1,78 @@
+---
+title: "Syncing Your Fork with the Upstream Repository"
+author: "Jay Lee"
+pubDate: "2020-10-05 00:00:00"
+categories: ["TechSavvy", "Github"]
+tags: ["TechSavvy", "Github", "ProgrammingLanguage", "Git"]
+---
+
+## TLDR
+
+My repository (fork): https://github.com/jayleekr/adas-study-group.github.io
+
+Group repository: https://github.com/ADAS-study-group/adas-study-group.github.io
+
+### 0. Clone your forked repository locally
+
+~~If you've already done this, you can skip it, obviously!~~
+
+``` sh
+$ git clone https://github.com/jayleekr/adas-study-group.github.io.git forked_repo
+$ cd forked_repo
+```
+
+### 1. Set up remote configuration for the upstream repository
+
+``` sh
+$ git remote add upstream https://github.com/ADAS-study-group/adas-study-group.github.io.git
+
+# Let's verify
+$ git remote -v
+origin  https://github.com/jayleekr/adas-study-group.github.io.git (fetch)
+origin  https://github.com/jayleekr/adas-study-group.github.io.git (push)
+upstream        https://github.com/ADAS-study-group/adas-study-group.github.io.git (fetch)
+upstream        https://github.com/ADAS-study-group/adas-study-group.github.io.git (push)
+```
+
+### 2. Merge the upstream repository into your fork
+
+Fetch first:
+
+``` sh
+$ git fetch upstream
+remote: Enumerating objects: 172, done.
+remote: Counting objects: 100% (172/172), done.
+remote: Compressing objects: 100% (56/56), done.
+remote: Total 148 (delta 67), reused 135 (delta 57), pack-reused 0
+Receiving objects: 100% (148/148), 1.33 MiB | 1.30 MiB/s, done.
+Resolving deltas: 100% (67/67), completed with 4 local objects.
+From https://github.com/ADAS-study-group/adas-study-group.github.io
+ * [new branch]      gh-pages   -> upstream/gh-pages
+ * [new branch]      master     -> upstream/master
+``` 
+
+Now let's merge:
+
+``` sh
+$ git merge upstream/master
+```
+
+Push to your fork:
+
+``` sh
+$ git push
+Counting objects: 7, done.
+Delta compression using up to 24 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 1.40 KiB | 1.40 MiB/s, done.
+Total 7 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/jayleekr/adas-study-group.github.io.git
+   203f2c0..d7f0922  master -> master
+```
+
+And that's it! Your fork is now synced with the upstream repository. This is super useful when you're contributing to open source projects and need to keep your fork up to date with the latest changes.
+
+## Reference
+
+1. https://hyunjun19.github.io/2018/03/09/github-fork-syncing/
