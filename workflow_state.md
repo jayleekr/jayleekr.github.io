@@ -119,8 +119,15 @@ User request → restore/show blueprint.
 | 30 | Blog content tone improvement | COMPLETED |
 | 31 | English content creation and multilingual setup | COMPLETED |
 | 32 | Homepage UX improvement with personal warmth | COMPLETED |
+| 33 | Unify homepage message to "Welcome to Jay's small world" | COMPLETED |
 
 ## Log
+2025-01-24 - Homepage message unification completed
+- Unified homepage title to "Welcome to Jay's small world" for both Korean and English
+- Removed formal greeting and description text for cleaner, more minimal design
+- Updated templates to handle empty descriptions gracefully
+- Successfully deployed with GitHub Actions - homepage now shows simplified welcome message
+
 2025-01-24 - Homepage transformation with personal warmth completed
 - Transformed homepage from cold portfolio greeting to warm personal introduction
 - Changed hero title: "포트폴리오에 오신 것을 환영합니다" → "안녕하세요! 이재연입니다"
@@ -216,6 +223,7 @@ User request → restore/show blueprint.
 
 ## Workflow History
 <!-- commit SHA & msg -->
+- ce657be: feat: Simplify homepage message to unified welcome (2025-01-24) - ✅ GitHub Actions Success
 - 7b0ca1a: feat: Transform homepage with personal warmth and improved UX (2025-01-24) - ✅ GitHub Actions Success
 - 28fa274: fix: Resolve TypeScript errors in English blog infrastructure (2025-01-24) - ✅ GitHub Actions Success
 - dd7d997: feat: Enhance blog content tone and create English versions (2025-01-24) - ❌ GitHub Actions Failed (TypeScript errors)
