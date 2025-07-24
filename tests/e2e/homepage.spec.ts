@@ -27,7 +27,7 @@ test.describe('Homepage Tests', () => {
 	});
 
 	test('should be accessible', async ({ page }) => {
-		const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+		const accessibilityScanResults = await new AxeBuilder({ page } as any).analyze();
 
 		expect(accessibilityScanResults.violations).toEqual([]);
 	});
