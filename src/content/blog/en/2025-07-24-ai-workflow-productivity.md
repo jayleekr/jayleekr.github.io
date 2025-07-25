@@ -1,9 +1,13 @@
 ---
 title: "AI Multiplexing Workflow: ADHD-Level Productivity Boost (Part 1)"
-date: 2025-07-24 17:54:00 +0900
-categories: [TechSavvy, AI]
-tags: [AI, Productivity, Cursor, ChatGPT, Claude, Gemini, Workflow]
-image: /assets/img/ai-workflow.jpg
+description: "Sharing workflow strategies and productivity insights from running multiple AI tools simultaneously"
+pubDate: 2025-07-24
+heroImage: "/assets/img/ai-workflow.jpg"
+categories: ["Tech", "AI"]
+tags: ["AI", "Productivity", "Cursor", "ChatGPT", "Claude", "Gemini", "Workflow"]
+lang: "en"
+author: "Jay Lee"
+readingTime: "10 min"
 ---
 
 ![AI Workflow Productivity](/assets/img/ai-workflow.jpg)

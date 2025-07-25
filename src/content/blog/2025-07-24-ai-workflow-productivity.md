@@ -1,9 +1,13 @@
 ---
 title: "AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1)"
-date: 2025-07-24 17:54:00 +0900
-categories: [TechSavvy, AI]
-tags: [AI, Productivity, Cursor, ChatGPT, Claude, Gemini, Workflow]
-image: /assets/img/ai-workflow.jpg
+description: "AI 도구들을 동시에 활용하는 워크플로우와 생산성 향상 노하우 공유"
+pubDate: 2025-07-24
+heroImage: "/assets/img/ai-workflow.jpg"
+categories: ["Tech", "AI"]
+tags: ["AI", "Productivity", "Cursor", "ChatGPT", "Claude", "Gemini", "Workflow"]
+lang: "ko"
+author: "Jay Lee"
+readingTime: "10분"
 ---
 
 ![AI Workflow Productivity](/assets/img/ai-workflow.jpg)
