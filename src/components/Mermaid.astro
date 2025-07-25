@@ -1,0 +1,214 @@
+---
+// Mermaid component for rendering diagrams with theme support
+interface Props {
+  diagram: string;
+  id?: string;
+}
+
+const { diagram, id = `mermaid-${Math.random().toString(36).substring(2, 11)}` } = Astro.props;
+---
+
+<div 
+  id={id} 
+  class="mermaid mermaid-diagram my-8 flex justify-center"
+  data-diagram={diagram}
+  style="background: transparent;"
+>
+  {diagram}
+</div>
+
+<script>
+  import mermaid from 'mermaid';
+
+  // Theme configuration for light and dark modes
+  const lightTheme = {
+    theme: 'default' as const,
+    themeVariables: {
+      primaryColor: '#3b82f6',
+      primaryTextColor: '#1f2937',
+      primaryBorderColor: '#d1d5db',
+      lineColor: '#6b7280',
+      sectionBkgColor: '#f9fafb',
+      altSectionBkgColor: '#ffffff',
+      gridColor: '#e5e7eb',
+      secondaryColor: '#f3f4f6',
+      tertiaryColor: '#ffffff'
+    }
+  };
+
+  const darkTheme = {
+    theme: 'dark' as const,
+    themeVariables: {
+      primaryColor: '#60a5fa',
+      primaryTextColor: '#f9fafb',
+      primaryBorderColor: '#4b5563',
+      lineColor: '#9ca3af',
+      sectionBkgColor: '#1f2937',
+      altSectionBkgColor: '#111827',
+      gridColor: '#374151',
+      secondaryColor: '#374151',
+      tertiaryColor: '#1f2937'
+    }
+  };
+
+  function getCurrentTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  function initializeMermaid() {
+    const currentTheme = getCurrentTheme();
+    const themeConfig = currentTheme === 'dark' ? darkTheme : lightTheme;
+    
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: themeConfig.theme,
+      themeVariables: themeConfig.themeVariables,
+      fontFamily: 'Inter, system-ui, sans-serif',
+      fontSize: 14,
+      logLevel: 'error',
+      securityLevel: 'sandbox',
+      flowchart: {
+        htmlLabels: true,
+        useMaxWidth: true,
+        diagramPadding: 8
+      },
+      sequence: {
+        diagramMarginX: 50,
+        diagramMarginY: 10,
+        actorMargin: 50,
+        width: 150,
+        height: 65,
+        boxMargin: 10,
+        boxTextMargin: 5,
+        noteMargin: 10,
+        messageMargin: 35,
+        mirrorActors: true,
+        bottomMarginAdj: 1,
+        useMaxWidth: true,
+        rightAngles: false,
+        showSequenceNumbers: false
+      },
+      gantt: {
+        numberSectionStyles: 4,
+        axisFormat: '%m/%d/%Y',
+        topAxis: false
+      }
+    });
+  }
+
+  function renderMermaidDiagrams() {
+    const diagrams = document.querySelectorAll('.mermaid-diagram');
+    
+    diagrams.forEach(async (element) => {
+      const diagramText = element.getAttribute('data-diagram');
+      if (!diagramText) return;
+
+      try {
+        // Clear previous content
+        element.innerHTML = '';
+        
+        // Generate unique ID for this diagram
+        const id = element.id || `mermaid-${Math.random().toString(36).substring(2, 11)}`;
+        element.id = id;
+        
+        // Render the diagram
+        const { svg } = await mermaid.render(id + '-svg', diagramText);
+        element.innerHTML = svg;
+        
+        // Apply responsive styles
+        const svgElement = element.querySelector('svg');
+        if (svgElement) {
+          svgElement.style.maxWidth = '100%';
+          svgElement.style.height = 'auto';
+          svgElement.removeAttribute('width');
+          svgElement.removeAttribute('height');
+        }
+      } catch (error) {
+        console.error('Error rendering Mermaid diagram:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        element.innerHTML = `
+          <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400">
+            <p class="font-medium">Error rendering diagram</p>
+            <p class="text-sm mt-1">${errorMessage}</p>
+          </div>
+        `;
+      }
+    });
+  }
+
+  function handleThemeChange() {
+    // Re-initialize and re-render when theme changes
+    initializeMermaid();
+    renderMermaidDiagrams();
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    initializeMermaid();
+    renderMermaidDiagrams();
+  });
+
+  // Listen for theme changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        const target = mutation.target as HTMLElement;
+        if (target === document.documentElement) {
+          handleThemeChange();
+        }
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+
+  // Clean up observer when page unloads
+  window.addEventListener('beforeunload', () => {
+    observer.disconnect();
+  });
+</script>
+
+<style>
+  .mermaid-diagram {
+    /* Ensure diagrams are centered and responsive */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background: transparent;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 2rem 0;
+  }
+
+  .mermaid-diagram svg {
+    max-width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+  }
+
+  /* Dark mode specific styles */
+  .dark .mermaid-diagram {
+    color-scheme: dark;
+  }
+
+  /* Ensure text is readable in both themes */
+  .mermaid-diagram .node text,
+  .mermaid-diagram .edgeLabel text,
+  .mermaid-diagram .cluster text {
+    fill: var(--text-color) !important;
+  }
+
+  /* Override any hardcoded colors for better theme compatibility */
+  .dark .mermaid-diagram .node rect,
+  .dark .mermaid-diagram .node polygon {
+    stroke: #4b5563 !important;
+  }
+
+  .dark .mermaid-diagram .edgePath .path {
+    stroke: #9ca3af !important;
+  }
+</style>

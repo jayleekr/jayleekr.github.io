@@ -10,7 +10,7 @@ import SocialShare from '../components/SocialShare.astro';
 import Comments from '../components/Comments.astro';
 import Newsletter from '../components/Newsletter.astro';
 import TableOfContents from '../components/TableOfContents.astro';
-import { getLangFromUrl, t } from '../utils/i18n';
+import { getLangFromUrl } from '../utils/i18n';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
@@ -313,10 +313,36 @@ const currentLang = getLangFromUrl(Astro.url);
 				});
 			}
 			
+			// Mermaid diagram processing
+			function processMermaidDiagrams() {
+				// Find all code blocks with class 'language-mermaid'
+				const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+				
+				mermaidBlocks.forEach((codeBlock) => {
+					const preElement = codeBlock.parentElement;
+					if (!preElement) return;
+					
+					// Get the mermaid diagram content
+					const diagramContent = codeBlock.textContent || '';
+					
+					// Create a new mermaid container
+					const mermaidContainer = document.createElement('div');
+					mermaidContainer.className = 'mermaid mermaid-diagram my-8 flex justify-center';
+					mermaidContainer.id = `mermaid-${Math.random().toString(36).substring(2, 11)}`;
+					mermaidContainer.setAttribute('data-diagram', diagramContent);
+					mermaidContainer.style.background = 'transparent';
+					mermaidContainer.innerHTML = diagramContent;
+					
+					// Replace the pre element with the mermaid container
+					preElement.parentNode?.replaceChild(mermaidContainer, preElement);
+				});
+			}
+			
 			// Initialize on page load
 			document.addEventListener('DOMContentLoaded', () => {
 				updateReadingProgress();
 				initMobileTOC();
+				processMermaidDiagrams();
 			});
 			
 			// Update progress on scroll

@@ -4,6 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import astroI18next from "astro-i18next";
+import remarkMermaid from 'remark-mermaid';
 // import compress from 'astro-compress'; // Temporarily disabled
 
 // https://astro.build/config
@@ -36,7 +37,7 @@ export default defineConfig({
 			},
 			wrap: true
 		},
-		remarkPlugins: [],
+		remarkPlugins: [remarkMermaid],
 		rehypePlugins: []
 	},
 	image: {
