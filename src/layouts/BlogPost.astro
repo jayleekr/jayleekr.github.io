@@ -333,16 +333,24 @@ const currentLang = getLangFromUrl(Astro.url);
 			}
 
 			function renderMermaidDiagrams() {
-				// Find all code blocks with mermaid content
-				const codeBlocks = document.querySelectorAll('pre code');
+				// Find all code blocks with mermaid content - check multiple selectors
+				const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code[class*="mermaid"], pre code');
+				console.log(`Found ${codeBlocks.length} code blocks to check for Mermaid`);
 				
 				codeBlocks.forEach(async (codeBlock) => {
 					const preElement = codeBlock.parentElement;
 					if (!preElement) return;
 					
 					const content = codeBlock.textContent || '';
-					// Check if this is a mermaid diagram (starts with common mermaid keywords)
-					if (content.trim().match(/^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitgraph)/)) {
+					const className = codeBlock.className || '';
+					
+					// Check if this is a mermaid diagram by class name or content
+					const isMermaidByClass = className.includes('mermaid') || className.includes('language-mermaid');
+					const isMermaidByContent = content.trim().match(/^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitgraph)/);
+					
+					console.log(`Code block - class: "${className}", content start: "${content.trim().substring(0, 50)}...", isMermaid: ${isMermaidByClass || isMermaidByContent}`);
+					
+					if (isMermaidByClass || isMermaidByContent) {
 						try {
 							// Create a new mermaid container
 							const mermaidContainer = document.createElement('div');

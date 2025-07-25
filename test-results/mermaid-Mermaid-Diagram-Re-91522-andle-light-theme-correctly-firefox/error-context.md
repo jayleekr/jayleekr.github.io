@@ -176,8 +176,8 @@
       - link:
         - /url: "#3-좋은-답변-포맷을-미리-제시하거나-생각하게-한다"
         - img
-    - text: mermaid
-    - code: graph TB subgraph "AI 스택 (월 $100+)" A1["🔵 Cursor Pro<br/>메인 코딩"] A2["🟢 ChatGPT Pro<br/>감정노동 & 고객대응"] A3["🟣 Claude Code<br/>공격적 코딩"] A4["🔴 Gemini CLI<br/>문서화 전문"] A5["🟡 Gemini Pro 2.5<br/>리서치 & 기획"] end subgraph "공통 워크플로우" B1["1️⃣ Context Window<br/>새로 열기"] B2["2️⃣ 정리된 Context<br/>제공하기"] B3["3️⃣ 답변 포맷<br/>생각하게 하기"] B4["4️⃣ 명확한<br/>Request"] B5["5️⃣ Feedback<br/>과정"] B6["6️⃣ Context 문서<br/>업데이트"] B1 --> B2 --> B3 --> B4 --> B5 --> B6 end subgraph "워크스페이스 구성 (5-8개)" C1["📡 Remote SSH"] C2["💻 Native"] C1 --> C11["Product Code"] C1 --> C12["Build Server 1-2개"] C1 --> C13["Test Environment 1-2개"] C2 --> C21["Blog/Documentation"] C2 --> C22["강의자료 1-2개"] end subgraph "도구별 특화" D1["Claude Code<br/>💸 3시간 제한"] --> D11["Aggressive<br/>코딩 작업"] D2["Cursor + 대화창"] --> D22["Agentic Mode<br/>Ping-ponging"] D3["ChatGPT Pro"] --> D33["이메일<br/>감정노동"] D4["Gemini 2.5 Pro"] --> D44["Documentation<br/>기똥참"] end A1 -.-> B1 A3 -.-> D1 A4 -.-> D4 style A1 fill:#e1f5fe style A2 fill:#e8f5e8 style A3 fill:#f3e5f5 style A4 fill:#ffebee style A5 fill:#fffde7
+    - paragraph: Error rendering diagram
+    - paragraph: can't access property "getBoundingClientRect", o.node() is null
     - paragraph: 위 다이어그램이 제가 현재 운영하고 있는 AI 멀티플렉싱 워크플로우의 전체 구조입니다!
     - heading "📋 모든 LLM에게 공통으로 적용하는 워크플로우" [level=2]:
       - text: 📋 모든 LLM에게 공통으로 적용하는 워크플로우
@@ -518,4 +518,5 @@
   - text: •
   - link "Tailwind CSS":
     - /url: https://tailwindcss.com
+- iframe
 ```
