@@ -134,6 +134,15 @@ User request → restore/show blueprint.
 | 38 | Verify Astro-only build process and architecture | COMPLETED |
 
 ## Log
+2025-07-25 - AI Workflow Blog Post Creation and Deployment COMPLETED
+- Created English translation of Korean AI workflow productivity blog post
+- Fixed Astro content collection schema issues (pubDate format, frontmatter fields)
+- Updated bun.lock to resolve GitHub Actions frozen lockfile errors
+- Successfully deployed both Korean and English versions of AI workflow blog post
+- GitHub Actions build succeeded after 3 iterations of fixes
+- Site validation confirmed: both versions accessible and working correctly
+- Total deployment time: ~45 minutes with comprehensive troubleshooting
+
 2025-01-24 - Architecture Improvement Phase 1 completed and deployed
 - Successfully pushed all changes to GitHub with commit: "Complete Phase 1 architecture improvements"
 - GitHub Actions deployment succeeded - all changes are live
