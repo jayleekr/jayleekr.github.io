@@ -1,0 +1,78 @@
+# Robots.txt for jayleekr.github.io - Optimized for SEO
+# Last updated: 2025-01-22
+
+User-agent: *
+Allow: /
+
+# Allow all major search engines with specific rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Specific crawling rules - Disallow development and build files
+Disallow: /test-results/
+Disallow: /playwright-report/
+Disallow: /_astro/
+Disallow: /backup/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /dist/
+Disallow: /.git/
+Disallow: /.vscode/
+Disallow: /temp/
+Disallow: /tmp/
+
+# Disallow search result pages to avoid duplicate content
+Disallow: /*?search=*
+Disallow: /*&search=*
+
+# Allow important assets for better rendering
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+Allow: /*.ico
+Allow: /*.woff
+Allow: /*.woff2
+Allow: /rss-styles.xsl
+
+# Sitemaps
+Sitemap: https://jayleekr.github.io/sitemap-index.xml
+
+# RSS Feeds for content discovery
+# Main feed: https://jayleekr.github.io/rss.xml
+# English feed: https://jayleekr.github.io/rss/en.xml
+
+# General crawl delay for respectful crawling
+Crawl-delay: 1
