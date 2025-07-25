@@ -252,6 +252,169 @@ const currentLang = getLangFromUrl(Astro.url);
 		</main>
 		<Footer />
 		
+		<!-- Mermaid Script -->
+		<script type="module">
+			import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+			
+			// Theme configuration for light and dark modes
+			const lightTheme = {
+				theme: 'default',
+				themeVariables: {
+					primaryColor: '#3b82f6',
+					primaryTextColor: '#1f2937',
+					primaryBorderColor: '#d1d5db',
+					lineColor: '#6b7280',
+					sectionBkgColor: '#f9fafb',
+					altSectionBkgColor: '#ffffff',
+					gridColor: '#e5e7eb',
+					secondaryColor: '#f3f4f6',
+					tertiaryColor: '#ffffff'
+				}
+			};
+
+			const darkTheme = {
+				theme: 'dark',
+				themeVariables: {
+					primaryColor: '#60a5fa',
+					primaryTextColor: '#f9fafb',
+					primaryBorderColor: '#4b5563',
+					lineColor: '#9ca3af',
+					sectionBkgColor: '#1f2937',
+					altSectionBkgColor: '#111827',
+					gridColor: '#374151',
+					secondaryColor: '#374151',
+					tertiaryColor: '#1f2937'
+				}
+			};
+
+			function getCurrentTheme() {
+				return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+			}
+
+			function initializeMermaid() {
+				const currentTheme = getCurrentTheme();
+				const themeConfig = currentTheme === 'dark' ? darkTheme : lightTheme;
+				
+				mermaid.initialize({
+					startOnLoad: false,
+					theme: themeConfig.theme,
+					themeVariables: themeConfig.themeVariables,
+					fontFamily: 'Inter, system-ui, sans-serif',
+					fontSize: 14,
+					logLevel: 'error',
+					securityLevel: 'sandbox',
+					flowchart: {
+						htmlLabels: true,
+						useMaxWidth: true,
+						diagramPadding: 8
+					},
+					sequence: {
+						diagramMarginX: 50,
+						diagramMarginY: 10,
+						actorMargin: 50,
+						width: 150,
+						height: 65,
+						boxMargin: 10,
+						boxTextMargin: 5,
+						noteMargin: 10,
+						messageMargin: 35,
+						mirrorActors: true,
+						bottomMarginAdj: 1,
+						useMaxWidth: true,
+						rightAngles: false,
+						showSequenceNumbers: false
+					},
+					gantt: {
+						numberSectionStyles: 4,
+						axisFormat: '%m/%d/%Y',
+						topAxis: false
+					}
+				});
+			}
+
+			function renderMermaidDiagrams() {
+				// Find all code blocks with mermaid content
+				const codeBlocks = document.querySelectorAll('pre code');
+				
+				codeBlocks.forEach(async (codeBlock) => {
+					const preElement = codeBlock.parentElement;
+					if (!preElement) return;
+					
+					const content = codeBlock.textContent || '';
+					// Check if this is a mermaid diagram (starts with common mermaid keywords)
+					if (content.trim().match(/^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitgraph)/)) {
+						try {
+							// Create a new mermaid container
+							const mermaidContainer = document.createElement('div');
+							mermaidContainer.className = 'mermaid-diagram my-8 flex justify-center';
+							mermaidContainer.id = `mermaid-${Math.random().toString(36).substring(2, 11)}`;
+							mermaidContainer.style.background = 'transparent';
+							
+							// Render the diagram
+							const { svg } = await mermaid.render(mermaidContainer.id + '-svg', content);
+							mermaidContainer.innerHTML = svg;
+							
+							// Apply responsive styles
+							const svgElement = mermaidContainer.querySelector('svg');
+							if (svgElement) {
+								svgElement.style.maxWidth = '100%';
+								svgElement.style.height = 'auto';
+								svgElement.removeAttribute('width');
+								svgElement.removeAttribute('height');
+							}
+							
+							// Replace the pre element with the mermaid container
+							preElement.parentNode?.replaceChild(mermaidContainer, preElement);
+						} catch (error) {
+							console.error('Error rendering Mermaid diagram:', error);
+							const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+							const errorDiv = document.createElement('div');
+							errorDiv.className = 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400 my-8';
+							errorDiv.innerHTML = `
+								<p class="font-medium">Error rendering diagram</p>
+								<p class="text-sm mt-1">${errorMessage}</p>
+							`;
+							preElement.parentNode?.replaceChild(errorDiv, preElement);
+						}
+					}
+				});
+			}
+
+			function handleThemeChange() {
+				// Re-initialize and re-render when theme changes
+				initializeMermaid();
+				renderMermaidDiagrams();
+			}
+
+			// Initialize on page load
+			document.addEventListener('DOMContentLoaded', () => {
+				initializeMermaid();
+				renderMermaidDiagrams();
+			});
+
+			// Listen for theme changes
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach((mutation) => {
+					if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+						const target = mutation.target;
+						if (target === document.documentElement) {
+							handleThemeChange();
+						}
+					}
+				});
+			});
+
+			observer.observe(document.documentElement, {
+				attributes: true,
+				attributeFilter: ['class']
+			});
+
+			// Clean up observer when page unloads
+			window.addEventListener('beforeunload', () => {
+				observer.disconnect();
+			});
+		</script>
+
 		<!-- Reading Progress and Mobile TOC Scripts -->
 		<script is:inline>
 			// Reading progress bar
@@ -313,29 +476,9 @@ const currentLang = getLangFromUrl(Astro.url);
 				});
 			}
 			
-			// Mermaid diagram processing
+			// Legacy Mermaid processing function (now handled by CDN script above)
 			function processMermaidDiagrams() {
-				// Find all code blocks with class 'language-mermaid'
-				const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
-				
-				mermaidBlocks.forEach((codeBlock) => {
-					const preElement = codeBlock.parentElement;
-					if (!preElement) return;
-					
-					// Get the mermaid diagram content
-					const diagramContent = codeBlock.textContent || '';
-					
-					// Create a new mermaid container
-					const mermaidContainer = document.createElement('div');
-					mermaidContainer.className = 'mermaid mermaid-diagram my-8 flex justify-center';
-					mermaidContainer.id = `mermaid-${Math.random().toString(36).substring(2, 11)}`;
-					mermaidContainer.setAttribute('data-diagram', diagramContent);
-					mermaidContainer.style.background = 'transparent';
-					mermaidContainer.innerHTML = diagramContent;
-					
-					// Replace the pre element with the mermaid container
-					preElement.parentNode?.replaceChild(mermaidContainer, preElement);
-				});
+				// No longer needed - Mermaid processing is handled by the CDN script above
 			}
 			
 			// Initialize on page load
