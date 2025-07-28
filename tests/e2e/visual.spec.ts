@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import percySnapshot from '@percy/playwright';
 
 test.describe('Visual Regression Tests', () => {
@@ -27,6 +27,7 @@ test.describe('Visual Regression Tests', () => {
 		} else {
 			// Manually add dark class if no toggle
 			await page.evaluate(() => {
+				// eslint-disable-next-line no-undef
 				document.documentElement.classList.add('dark');
 			});
 		}
@@ -63,5 +64,87 @@ test.describe('Visual Regression Tests', () => {
 		await page.waitForLoadState('networkidle');
 
 		await percySnapshot(page, 'Homepage - Tablet');
+	});
+
+	test('should capture blog post layout on desktop', async ({ page }) => {
+		// Set desktop viewport
+		await page.setViewportSize({ width: 1920, height: 1080 });
+		
+		// Look for blog posts to test
+		await page.goto('/');
+		await page.waitForLoadState('networkidle');
+		
+		// Try to find a blog post link
+		const blogPostLink = page.locator('a[href*="/blog/"], a[href*="/posts/"]').first();
+		
+		if (await blogPostLink.count() > 0) {
+			await blogPostLink.click();
+			await page.waitForLoadState('networkidle');
+			
+			// Wait for any animations to complete
+			await page.waitForTimeout(1000);
+			
+			await percySnapshot(page, 'Blog Post - Desktop Layout');
+		}
+	});
+
+	test('should capture blog post layout on laptop', async ({ page }) => {
+		// Set laptop viewport (common laptop resolution)
+		await page.setViewportSize({ width: 1366, height: 768 });
+		
+		await page.goto('/');
+		await page.waitForLoadState('networkidle');
+		
+		const blogPostLink = page.locator('a[href*="/blog/"], a[href*="/posts/"]').first();
+		
+		if (await blogPostLink.count() > 0) {
+			await blogPostLink.click();
+			await page.waitForLoadState('networkidle');
+			await page.waitForTimeout(1000);
+			
+			await percySnapshot(page, 'Blog Post - Laptop Layout');
+		}
+	});
+
+	test('should capture blog post layout on large desktop', async ({ page }) => {
+		// Set large desktop viewport
+		await page.setViewportSize({ width: 2560, height: 1440 });
+		
+		await page.goto('/');
+		await page.waitForLoadState('networkidle');
+		
+		const blogPostLink = page.locator('a[href*="/blog/"], a[href*="/posts/"]').first();
+		
+		if (await blogPostLink.count() > 0) {
+			await blogPostLink.click();
+			await page.waitForLoadState('networkidle');
+			await page.waitForTimeout(1000);
+			
+			await percySnapshot(page, 'Blog Post - Large Desktop Layout');
+		}
+	});
+
+	test('should capture blog post with TOC on mobile', async ({ page }) => {
+		await page.setViewportSize({ width: 375, height: 667 });
+		
+		await page.goto('/');
+		await page.waitForLoadState('networkidle');
+		
+		const blogPostLink = page.locator('a[href*="/blog/"], a[href*="/posts/"]').first();
+		
+		if (await blogPostLink.count() > 0) {
+			await blogPostLink.click();
+			await page.waitForLoadState('networkidle');
+			
+			// Try to open mobile TOC if it exists
+			const tocToggle = page.locator('#toc-toggle-mobile');
+			if (await tocToggle.count() > 0) {
+				await tocToggle.click();
+				await page.waitForTimeout(500);
+				await percySnapshot(page, 'Blog Post - Mobile with TOC Open');
+			} else {
+				await percySnapshot(page, 'Blog Post - Mobile Layout');
+			}
+		}
 	});
 });

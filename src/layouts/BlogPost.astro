@@ -58,7 +58,7 @@ const currentLang = getLangFromUrl(Astro.url);
 			)}
 			
 			<!-- Content Container -->
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+			<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-8 2xl:px-12">
 				<!-- Floating TOC Button (Mobile) -->
 				<button 
 					id="toc-toggle-mobile" 
@@ -95,10 +95,10 @@ const currentLang = getLangFromUrl(Astro.url);
 				</div>
 				
 				<!-- Desktop Layout Grid (XL and above) -->
-				<div class="hidden xl:block blog-layout-grid">
+				<div class="hidden xl:grid xl:grid-cols-[250px_minmax(0,1fr)_180px] xl:gap-4 2xl:gap-6 xl:items-start">
 					<!-- Left TOC -->
-					<aside class="sticky top-8">
-						<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 max-h-[80vh] overflow-y-auto">
+					<aside class="sticky top-8 min-w-0">
+						<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 max-h-[calc(100vh-8rem)] overflow-y-auto shadow-sm">
 							<TableOfContents 
 								content={content}
 								maxDepth={3}
@@ -109,7 +109,7 @@ const currentLang = getLangFromUrl(Astro.url);
 					</aside>
 					
 					<!-- Main Content - Desktop -->
-					<main class="min-w-0 py-16">
+					<main class="min-w-0 py-16 px-4">
 						<!-- Article Header -->
 						<header class="mb-16">
 							<!-- Meta Information -->
@@ -178,12 +178,12 @@ const currentLang = getLangFromUrl(Astro.url);
 						</header>
 						
 						<!-- Article Content with optimal reading width -->
-						<article class="prose prose-lg dark:prose-invert mx-auto max-w-prose prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
+						<article class="prose prose-lg dark:prose-invert max-w-4xl prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
 							<slot />
 						</article>
 						
 						<!-- Social Share -->
-						<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 max-w-prose mx-auto">
+						<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 max-w-4xl">
 							<div class="text-center mb-6">
 								<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
 								<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
@@ -198,7 +198,7 @@ const currentLang = getLangFromUrl(Astro.url);
 						</div>
 					
 						<!-- Related Posts -->
-						<div class="mt-16 max-w-prose mx-auto">
+						<div class="mt-16 max-w-4xl">
 							<RelatedPosts 
 								currentPostId={Astro.params.slug || ''}
 								currentCategories={categories}
@@ -208,14 +208,14 @@ const currentLang = getLangFromUrl(Astro.url);
 						</div>
 					
 						<!-- Newsletter Subscription -->
-						<div class="mt-20 mb-16 max-w-prose mx-auto">
+						<div class="mt-20 mb-16 max-w-4xl">
 							<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
 								<Newsletter variant="inline" />
 							</div>
 						</div>
 					
 						<!-- Comments Section -->
-						<div class="mt-16 max-w-prose mx-auto">
+						<div class="mt-16 max-w-4xl">
 							<div class="text-center mb-8">
 								<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
 								<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
@@ -224,7 +224,7 @@ const currentLang = getLangFromUrl(Astro.url);
 						</div>
 					
 						<!-- Article Footer -->
-						<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700 max-w-prose mx-auto">
+						<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700 max-w-4xl">
 							<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
 								<a 
 									href="/blog" 
@@ -251,10 +251,18 @@ const currentLang = getLangFromUrl(Astro.url);
 						</footer>
 					</main>
 					
-					<!-- Right Sidebar (for future use) -->
-					<aside class="sticky top-8">
-						<div class="space-y-4">
-							<!-- Reading progress or related links can go here -->
+					<!-- Right Sidebar -->
+					<aside class="sticky top-8 min-w-0">
+						<div class="space-y-6">
+							<!-- Reading Progress -->
+							<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
+								<h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+									{currentLang === 'ko' ? '읽기 진행률' : 'Reading Progress'}
+								</h4>
+								<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+									<div id="sidebar-progress-bar" class="bg-primary-600 dark:bg-primary-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+								</div>
+							</div>
 						</div>
 					</aside>
 				</div>
@@ -582,8 +590,9 @@ const currentLang = getLangFromUrl(Astro.url);
 			function updateReadingProgress() {
 				const article = document.getElementById('main-content');
 				const progressBar = document.getElementById('reading-progress-bar');
+				const sidebarProgressBar = document.getElementById('sidebar-progress-bar');
 				
-				if (!article || !progressBar) return;
+				if (!article) return;
 				
 				const articleTop = article.offsetTop;
 				const articleHeight = article.offsetHeight;
@@ -595,7 +604,15 @@ const currentLang = getLangFromUrl(Astro.url);
 					1
 				);
 				
-				progressBar.style.width = `${progress * 100}%`;
+				const progressPercent = `${progress * 100}%`;
+				
+				if (progressBar) {
+					progressBar.style.width = progressPercent;
+				}
+				
+				if (sidebarProgressBar) {
+					sidebarProgressBar.style.width = progressPercent;
+				}
 			}
 			
 			// Mobile TOC functionality

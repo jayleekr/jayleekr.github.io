@@ -554,20 +554,31 @@ a:not(.no-underline):hover {
 
 /* Layout improvements for better readability */
 @media (min-width: 1280px) {
-	/* Ensure proper spacing around the main content */
-	.blog-layout-grid {
-		display: grid;
-		grid-template-columns: 280px minmax(0, 1fr) 200px;
-		gap: 2rem;
-		align-items: start;
+	/* Enhanced prose width for better reading on wide screens */
+	.prose {
+		max-width: 75ch !important;
 	}
 	
-	/* Better content centering */
-	.blog-layout-grid > main {
-		max-width: none;
-		margin: 0;
-		padding: 0 1rem;
-		min-width: 0;
+	/* Ensure TOC has proper minimum width and scrolling */
+	.xl\:grid-cols-\[250px_minmax\(0\,1fr\)_180px\] {
+		grid-template-columns: 250px minmax(0, 1fr) 180px;
+	}
+}
+
+/* Enhanced layout for larger screens */
+@media (min-width: 1536px) {
+	/* Wider prose on 2XL screens */
+	.prose {
+		max-width: 80ch !important;
+	}
+	
+	/* Larger gaps for better spacing */
+	.xl\:gap-8 {
+		gap: 2rem;
+	}
+	
+	.\32xl\:gap-12 {
+		gap: 3rem;
 	}
 }
 
@@ -580,6 +591,26 @@ a:not(.no-underline):hover {
 	-moz-hyphens: auto;
 	word-break: break-word;
 	overflow-wrap: break-word;
+}
+
+/* Prevent layout shifts and ensure proper TOC positioning */
+.prose {
+	/* Ensure consistent max-width calculation */
+	max-width: min(75ch, calc(100vw - 2rem)) !important;
+}
+
+@media (min-width: 1280px) {
+	.prose {
+		/* On desktop, allow wider content with TOC present */
+		max-width: min(75ch, calc(100vw - 600px)) !important;
+	}
+}
+
+@media (min-width: 1536px) {
+	.prose {
+		/* On very wide screens, optimal reading width */
+		max-width: min(80ch, calc(100vw - 700px)) !important;
+	}
 }
 
 /* Better spacing for lists in prose */
@@ -664,6 +695,11 @@ a:not(.no-underline):hover {
 	h1 { @apply text-3xl mb-4; }
 	h2 { @apply text-2xl mb-3; }
 	h3 { @apply text-xl mb-3; }
+	
+	/* Ensure mobile prose doesn't conflict with layout */
+	.prose {
+		max-width: calc(100vw - 2rem) !important;
+	}
 	
 	/* Improve readability on mobile */
 	.prose {
