@@ -1,19 +1,8 @@
-# PDR (Product Requirements Document) - Personal Portfolio GitHub Pages
-
-## 1. 문제 정의 (Problem Definition)
-
-### 해결하고자 하는 문제
-- **핵심 문제**: 개인의 기술 역량과 프로젝트 경험을 효과적으로 보여줄 수 있는 온라인 포트폴리오의 부재
-- **현재 상황**: 
-  - 이력서나 LinkedIn 프로필만으로는 개발자의 실제 역량과 프로젝트 세부사항을 충분히 전달하기 어려움
-  - 한국어/영어 이중 언어 지원이 필요한 글로벌 기회에 대응하기 어려움
-  - 지속적인 업데이트와 유지보수가 체계적으로 이루어지지 않음
-
-### 블로그 현황 분석 기반 개선 포인트 (2025-01-22 업데이트)
-- **제한된 글로벌 도달범위**: 한국어 위주 콘텐츠로 국제적 기회 제한
-- **혼재된 콘텐츠 타입**: 명확한 분류 체계 없이 다양한 주제 혼재
-- **포트폴리오-블로그 하이브리드 설계**: 콘텐츠 집중도 저해 가능성
-- **현대적 기능 부재**: 다크모드, 검색, 태그 시스템 등 누락
-- **업데이트 주기 불규칙**: 2019년 콘텐츠 노출로 인한 활동성 의문
-
-[... rest of the existing content ...]
+## Development Notes
+- 항상 workflow_state.md 와 project_config.md를 참조해 → prehook
+- 일을 마치면  workflow_state.md 와 project_config.md을 확인하고 업데이트해 → posthook
+- TODOList 상 하나하나를 마칠때마다 commit 을 만들고 git remote에 업로드해
+- 모든일이 마치면 리뷰와 상관없이 github에 업로드해
+- Date를 넣어야하는때에는 system time을 이용하도록해
+- 모든 업로드는 Pull request 를 통해서 되어야해
+- 현재 메모리 상태를 정기적으로 확인하고 지속적으로 업데이트해야 함

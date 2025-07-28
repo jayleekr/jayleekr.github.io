@@ -3,10 +3,15 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      maxWidth: {
+        'prose': '65ch', // Optimal reading width (approximately 600-700px)
+        'prose-narrow': '55ch', // For mobile and narrow layouts
+        'prose-wide': '75ch', // For larger content
+      },
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: 'none',
+            maxWidth: '65ch', // Override the default prose max-width
             color: 'inherit',
             a: {
               color: 'inherit',

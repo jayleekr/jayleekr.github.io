@@ -177,9 +177,12 @@ if (headings.length === 0) {
 
 <style>
   .table-of-contents {
-    @apply bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sticky top-4;
-    max-height: 70vh;
+    @apply bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sticky top-8;
+    max-height: calc(100vh - 6rem);
     overflow-y: auto;
+    /* Better positioning for the 3-column layout */
+    min-width: 250px;
+    max-width: 280px;
   }
   
   .toc-header {
