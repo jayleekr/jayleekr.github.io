@@ -9,98 +9,121 @@
       - /url: /
       - img "Jay Lee Logo"
       - text: Jay Lee
-    - link "홈":
-      - /url: /
-    - link "소개":
-      - /url: /about
-    - link "Blog":
-      - /url: /blog
-    - link "Categories":
-      - /url: /categories
     - button "사이트 검색":
       - img
-      - text: 검색 ⌘K
-    - switch "Switch to dark mode"
+    - switch "Toggle between light and dark mode"
     - button "한국어":
       - img
       - text: 한국어
       - img
+    - button "Open main menu"
 - main:
-  - complementary:
+  - button "Toggle table of contents":
     - img
-    - heading "목차" [level=3]
-    - button "목차 접기/펼치기": 접기
-    - navigation "문서 목차":
-      - list:
-        - listitem:
-          - link "[J-YoutubeDL는 뭔가유?]":
-            - /url: "#jyoutubedl는-뭔가유"
-        - listitem:
-          - link "[왜만들었나유?]":
-            - /url: "#왜만들었나유"
-        - listitem:
-          - link "[설치&실행 어찌하나유?]":
-            - /url: "#설치실행-어찌하나유"
-        - listitem:
-          - link "[하우투 사용?]":
-            - /url: "#하우투-사용"
-      - text: 읽기 진행률 0%
-  - main:
+  - heading "목차" [level=3]:
+    - text: 목차
+    - link:
+      - /url: "#jyoutubedl는-뭔가유"
+      - img
+    - link:
+      - /url: "#jyoutubedl는-뭔가유"
+      - img
+  - button:
+    - img
+  - img
+  - heading "목차" [level=3]:
+    - text: 목차
+    - link:
+      - /url: "#왜만들었나유"
+      - img
+    - link:
+      - /url: "#왜만들었나유"
+      - img
+  - button "목차 접기/펼치기": 접기
+  - navigation "문서 목차":
+    - list:
+      - listitem:
+        - link "[J-YoutubeDL는 뭔가유?]":
+          - /url: "#jyoutubedl는-뭔가유"
+      - listitem:
+        - link "[왜만들었나유?]":
+          - /url: "#왜만들었나유"
+      - listitem:
+        - link "[설치&실행 어찌하나유?]":
+          - /url: "#설치실행-어찌하나유"
+      - listitem:
+        - link "[하우투 사용?]":
+          - /url: "#하우투-사용"
+    - text: 읽기 진행률 0%
+  - article:
     - time: Apr 17, 2019
     - text: •
     - img
     - text: 약 2분 (268 단어) • ko
-    - 'heading "토이 프로젝트 #1" [level=1]'
+    - 'heading "토이 프로젝트 #1" [level=1]':
+      - text: "토이 프로젝트 #1"
+      - link:
+        - /url: "#설치실행-어찌하나유"
+        - img
+      - link:
+        - /url: "#설치실행-어찌하나유"
+        - img
     - text: "Categories Collaboration ToyProjects Tags #ToyProjects #C# #Windows #Youtube #Downloader #유튜브 #다운로더 #유튜버"
-    - article:
-      - heading "[J-YoutubeDL는 뭔가유?]" [level=3]
-      - paragraph: 유튜브 링크(URL)을 복사해서 붙여넣으면 해당 유튜브 링크에서 지원하는 영상 및 음악 퀄리티들을 원하는대루 다운가능한 Windows용 프로그램이다.
-      - heading "[왜만들었나유?]" [level=3]
-      - paragraph: 웹에서 링크입력해서 이용하다가 다른 퀄리티로 받고싶어서 직접 만듬
-      - heading "[설치&실행 어찌하나유?]" [level=3]
-      - paragraph:
-        - link "설치 파일 링크↗":
-          - /url: https://github.com/jayleekr/YoutubeDownloaderWPF/releases/tag/1.0.1904
-          - strong: 설치 파일 링크
-          - text: ↗
-      - paragraph:
-        - img "Desktop View"
-      - paragraph: 위 링크에 들어가면 소스코드부터 설치파일, .Net40 다 있다.
-      - paragraph:
-        - text: dotnetfx40 어쩌구 프로그램은 윈도우 피씨에 해당 프레임워크가 깔려있으면 안깔아도되고, 심지어 설치할때 웹으로 연결해서 자동 다운을 받아준다. 혹시나 해서 올려놓은 파일이니 필요한 사람은 다운받길 바란다. (
-        - strong: dotNetFx40_Client_x86_x64.exe
-        - text: )
-      - paragraph: 자 Release1.0.1904.zip을 다운받아 압축을 풀고 setup.exe를 틀어보면 아래와 같은 화면이 뜬당.
-      - paragraph:
-        - img "Desktop View"
-      - paragraph: 기호에 맞게 설치위치를 설정하고 웬만하면 그냥 다음 다음을 눌러서 설치를 마치자.
-      - paragraph: 설치를 마치면 아래와 같은 아이콘이 바탕화면과 시작프로그램에에 생성된다.
-      - paragraph:
-        - img "Desktop View"
-      - paragraph:
-        - text: 프로그램을 실행하면 아래와 같은 화면이 나온다.
-        - img "Desktop View"
-      - heading "[하우투 사용?]" [level=3]
-      - paragraph: 사용법은 간단하다.
-      - paragraph:
-        - link "www.youtube.com↗":
-          - /url: http://www.youtube.com
-        - text: 에 접속한 후 원하는 영상의 url을 클립보드에 복사한 후 프로그램의 URL 칸에 붙여넣기 하면 해당 영상의 추출 가능한 영상 및 음악 포멧과 품질 리스트가 생성된다.
-        - img "Desktop View"
-      - paragraph:
-        - text: 원하는 세팅값을 선택하고 GO! 버튼을 누르면 “저장위치” 에 파일을 생성한다.
-        - img "Desktop View"
-        - img "Desktop View"
-      - paragraph:
-        - text: 참고로 “저장위치” 의 기본값은 프로그램의
-        - strong: 설치위치
-        - text: 이다.
-      - paragraph: 원하는 위치로 변경하길 권장한다.
-      - paragraph:
-        - text: 매우 간단한 기능만 포함하고 있으니 원하시는 기능을
-        - strong: 댓글
-        - text: 로 남겨주시면 심심할 때 또 구현해서 넣기로 하겠다.
-      - paragraph: 그럼 Adios
+    - heading "[J-YoutubeDL는 뭔가유?]" [level=3]:
+      - text: "[J-YoutubeDL는 뭔가유?]"
+      - link:
+        - /url: "#하우투-사용"
+        - img
+      - link:
+        - /url: "#하우투-사용"
+        - img
+    - paragraph: 유튜브 링크(URL)을 복사해서 붙여넣으면 해당 유튜브 링크에서 지원하는 영상 및 음악 퀄리티들을 원하는대루 다운가능한 Windows용 프로그램이다.
+    - heading "[왜만들었나유?]" [level=3]
+    - paragraph: 웹에서 링크입력해서 이용하다가 다른 퀄리티로 받고싶어서 직접 만듬
+    - heading "[설치&실행 어찌하나유?]" [level=3]
+    - paragraph:
+      - link "설치 파일 링크 ↗":
+        - /url: https://github.com/jayleekr/YoutubeDownloaderWPF/releases/tag/1.0.1904
+        - strong: 설치 파일 링크
+        - text: ↗
+    - paragraph:
+      - img "Desktop View"
+    - paragraph: 위 링크에 들어가면 소스코드부터 설치파일, .Net40 다 있다.
+    - paragraph:
+      - text: dotnetfx40 어쩌구 프로그램은 윈도우 피씨에 해당 프레임워크가 깔려있으면 안깔아도되고, 심지어 설치할때 웹으로 연결해서 자동 다운을 받아준다. 혹시나 해서 올려놓은 파일이니 필요한 사람은 다운받길 바란다. (
+      - strong: dotNetFx40_Client_x86_x64.exe
+      - text: )
+    - paragraph: 자 Release1.0.1904.zip을 다운받아 압축을 풀고 setup.exe를 틀어보면 아래와 같은 화면이 뜬당.
+    - paragraph:
+      - img "Desktop View"
+    - paragraph: 기호에 맞게 설치위치를 설정하고 웬만하면 그냥 다음 다음을 눌러서 설치를 마치자.
+    - paragraph: 설치를 마치면 아래와 같은 아이콘이 바탕화면과 시작프로그램에에 생성된다.
+    - paragraph:
+      - img "Desktop View"
+    - paragraph:
+      - text: 프로그램을 실행하면 아래와 같은 화면이 나온다.
+      - img "Desktop View"
+    - heading "[하우투 사용?]" [level=3]
+    - paragraph: 사용법은 간단하다.
+    - paragraph:
+      - link "www.youtube.com ↗":
+        - /url: http://www.youtube.com
+      - text: 에 접속한 후 원하는 영상의 url을 클립보드에 복사한 후 프로그램의 URL 칸에 붙여넣기 하면 해당 영상의 추출 가능한 영상 및 음악 포멧과 품질 리스트가 생성된다.
+      - img "Desktop View"
+    - paragraph:
+      - text: 원하는 세팅값을 선택하고 GO! 버튼을 누르면 “저장위치” 에 파일을 생성한다.
+      - img "Desktop View"
+      - img "Desktop View"
+    - paragraph:
+      - text: 참고로 “저장위치” 의 기본값은 프로그램의
+      - strong: 설치위치
+      - text: 이다.
+    - paragraph: 원하는 위치로 변경하길 권장한다.
+    - paragraph:
+      - text: 매우 간단한 기능만 포함하고 있으니 원하시는 기능을
+      - strong: 댓글
+      - text: 로 남겨주시면 심심할 때 또 구현해서 넣기로 하겠다.
+    - paragraph: 그럼 Adios
     - heading "Share this article" [level=3]
     - paragraph: Found this helpful? Share it with your network
     - img
@@ -188,8 +211,6 @@
     - button "Back to top":
       - img
       - text: Back to top
-  - complementary:
-    - heading "읽기 진행률" [level=4]
 - contentinfo:
   - heading "Jay Lee의 기술 블로그" [level=3]
   - link "GitHub":
