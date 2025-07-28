@@ -565,7 +565,28 @@ a:not(.no-underline):hover {
 	}
 }
 
+/* Grid layout definitions for LG breakpoint */
+@media (min-width: 1024px) {
+	.lg\:grid-cols-\[200px_minmax\(0\,1fr\)_140px\] {
+		grid-template-columns: 200px minmax(0, 1fr) 140px;
+	}
+	
+	.lg\:gap-3 {
+		gap: 0.75rem;
+	}
+}
+
 /* Enhanced layout for larger screens */
+@media (min-width: 1280px) {
+	.xl\:grid-cols-\[250px_minmax\(0\,1fr\)_180px\] {
+		grid-template-columns: 250px minmax(0, 1fr) 180px;
+	}
+	
+	.xl\:gap-4 {
+		gap: 1rem;
+	}
+}
+
 @media (min-width: 1536px) {
 	/* Wider prose on 2XL screens */
 	.prose {
@@ -573,12 +594,8 @@ a:not(.no-underline):hover {
 	}
 	
 	/* Larger gaps for better spacing */
-	.xl\:gap-8 {
-		gap: 2rem;
-	}
-	
-	.\32xl\:gap-12 {
-		gap: 3rem;
+	.\32xl\:gap-6 {
+		gap: 1.5rem;
 	}
 }
 
@@ -597,6 +614,13 @@ a:not(.no-underline):hover {
 .prose {
 	/* Ensure consistent max-width calculation */
 	max-width: min(75ch, calc(100vw - 2rem)) !important;
+}
+
+@media (min-width: 1024px) {
+	.prose {
+		/* On laptop/desktop, allow wider content with TOC present */
+		max-width: min(70ch, calc(100vw - 500px)) !important;
+	}
 }
 
 @media (min-width: 1280px) {

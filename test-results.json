@@ -9,9 +9,9 @@
     "globalTimeout": 0,
     "grep": {},
     "grepInvert": null,
-    "maxFailures": 2,
+    "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 2
+      "actualWorkers": 5
     },
     "preserveOutput": "always",
     "reporter": [
@@ -39,7 +39,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "chromium",
         "name": "chromium",
@@ -55,7 +55,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "firefox",
         "name": "firefox",
@@ -71,7 +71,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "webkit",
         "name": "webkit",
@@ -87,7 +87,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
@@ -103,7 +103,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "Mobile Safari",
         "name": "Mobile Safari",
@@ -163,12 +163,12 @@
                           "workerIndex": 0,
                           "parallelIndex": 0,
                           "status": "passed",
-                          "duration": 5327,
+                          "duration": 6066,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2025-07-28T05:01:58.811Z",
+                          "startTime": "2025-07-28T05:15:58.333Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -197,12 +197,12 @@
                           "workerIndex": 1,
                           "parallelIndex": 1,
                           "status": "passed",
-                          "duration": 5296,
+                          "duration": 6054,
                           "errors": [],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2025-07-28T05:01:58.815Z",
+                          "startTime": "2025-07-28T05:15:58.325Z",
                           "annotations": [],
                           "attachments": []
                         }
@@ -214,6 +214,298 @@
                   "file": "layout.spec.ts",
                   "line": 44,
                   "column": 3
+                },
+                {
+                  "title": "should use full screen width appropriately on wide screens",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 6080,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:15:58.342Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-4cdbb0f1751c0f000b63",
+                  "file": "layout.spec.ts",
+                  "line": 78,
+                  "column": 3
+                },
+                {
+                  "title": "should have proper spacing between grid columns",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 3,
+                          "parallelIndex": 3,
+                          "status": "failed",
+                          "duration": 6107,
+                          "error": {
+                            "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-227.734375\u001b[39m",
+                            "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-227.734375\u001b[39m\n    at /Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts:142:29",
+                            "location": {
+                              "file": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts",
+                              "column": 29,
+                              "line": 142
+                            },
+                            "snippet": "  140 | \t\t\t\t\t\t\n  141 | \t\t\t\t\t\texpect(leftToCenter).toBeGreaterThanOrEqual(20); // At least 20px gap\n> 142 | \t\t\t\t\t\texpect(centerToRight).toBeGreaterThanOrEqual(20); // At least 20px gap\n      | \t\t\t\t\t\t                      ^\n  143 | \t\t\t\t\t}\n  144 | \t\t\t\t}\n  145 | \t\t\t}"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts",
+                                "column": 29,
+                                "line": 142
+                              },
+                              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m20\u001b[39m\nReceived:    \u001b[31m-227.734375\u001b[39m\n\n  140 | \t\t\t\t\t\t\n  141 | \t\t\t\t\t\texpect(leftToCenter).toBeGreaterThanOrEqual(20); // At least 20px gap\n> 142 | \t\t\t\t\t\texpect(centerToRight).toBeGreaterThanOrEqual(20); // At least 20px gap\n      | \t\t\t\t\t\t                      ^\n  143 | \t\t\t\t\t}\n  144 | \t\t\t\t}\n  145 | \t\t\t}\n    at /Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts:142:29"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:15:58.325Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Blog-P-a2f4f-pacing-between-grid-columns-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Blog-P-a2f4f-pacing-between-grid-columns-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Blog-P-a2f4f-pacing-between-grid-columns-chromium/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts",
+                            "column": 29,
+                            "line": 142
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-b0e84f890b0801889ef7",
+                  "file": "layout.spec.ts",
+                  "line": 113,
+                  "column": 3
+                },
+                {
+                  "title": "should have readable content width",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 4,
+                          "parallelIndex": 4,
+                          "status": "passed",
+                          "duration": 11689,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:15:58.316Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-4197633103d214d8d18a",
+                  "file": "layout.spec.ts",
+                  "line": 148,
+                  "column": 3
+                }
+              ]
+            },
+            {
+              "title": "Mobile Layout",
+              "file": "layout.spec.ts",
+              "line": 186,
+              "column": 7,
+              "specs": [
+                {
+                  "title": "should hide desktop TOC on mobile",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 1,
+                          "parallelIndex": 1,
+                          "status": "passed",
+                          "duration": 4703,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:16:04.932Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-338f81a190b68f5dc035",
+                  "file": "layout.spec.ts",
+                  "line": 187,
+                  "column": 3
+                },
+                {
+                  "title": "should open mobile TOC correctly",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 0,
+                          "parallelIndex": 0,
+                          "status": "timedOut",
+                          "duration": 30470,
+                          "error": {
+                            "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                            "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                          },
+                          "errors": [
+                            {
+                              "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                            },
+                            {
+                              "location": {
+                                "file": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts",
+                                "column": 22,
+                                "line": 244
+                              },
+                              "message": "Error: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#toc-close-mobile')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"toc-close-mobile\" class=\"p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button aria-expanded=\"false\" id=\"mobile-menu-button\" class=\"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500\">…</button> from <header class=\"bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button aria-expanded=\"false\" id=\"mobile-menu-button\" class=\"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500\">…</button> from <header class=\"bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    46 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <button aria-expanded=\"false\" id=\"mobile-menu-button\" class=\"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500\">…</button> from <header class=\"bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n\n  242 | \t\t\t\t\tconst closeBtn = page.locator('#toc-close-mobile');\n  243 | \t\t\t\t\tif (await closeBtn.count() > 0) {\n> 244 | \t\t\t\t\t\tawait closeBtn.click();\n      | \t\t\t\t\t\t               ^\n  245 | \t\t\t\t\t\tawait page.waitForTimeout(800); // Give more time for animation\n  246 | \t\t\t\t\t\t\n  247 | \t\t\t\t\t\t// Should be hidden again\n    at /Users/jaylee/CodeWorkspace/jayleekr.github.io/tests/e2e/layout.spec.ts:244:22"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:16:04.943Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Mobile-18024-d-open-mobile-TOC-correctly-chromium/test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Mobile-18024-d-open-mobile-TOC-correctly-chromium/video.webm"
+                            },
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/jaylee/CodeWorkspace/jayleekr.github.io/test-results/layout-Layout-Tests-Mobile-18024-d-open-mobile-TOC-correctly-chromium/error-context.md"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-5f4b252fba29837be8f7",
+                  "file": "layout.spec.ts",
+                  "line": 213,
+                  "column": 3
+                }
+              ]
+            },
+            {
+              "title": "Responsive Breakpoints",
+              "file": "layout.spec.ts",
+              "line": 256,
+              "column": 7,
+              "specs": [
+                {
+                  "title": "should switch layout correctly at LG breakpoint",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium",
+                      "projectName": "chromium",
+                      "results": [
+                        {
+                          "workerIndex": 2,
+                          "parallelIndex": 2,
+                          "status": "passed",
+                          "duration": 5726,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-07-28T05:16:04.958Z",
+                          "annotations": [],
+                          "attachments": []
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "9f98fd8c8d1538f5ebbb-4573ef3153eebc096ef9",
+                  "file": "layout.spec.ts",
+                  "line": 257,
+                  "column": 3
                 }
               ]
             }
@@ -224,11 +516,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-07-28T05:01:57.296Z",
-    "duration": 7375.804,
-    "expected": 2,
+    "startTime": "2025-07-28T05:15:57.244Z",
+    "duration": 38208.382,
+    "expected": 6,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 2,
     "flaky": 0
   }
 }

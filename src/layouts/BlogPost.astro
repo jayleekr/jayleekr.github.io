@@ -59,7 +59,7 @@ const currentLang = getLangFromUrl(Astro.url);
 			
 			<!-- Content Container -->
 			<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-8 2xl:px-12">
-				<!-- Floating TOC Button (Mobile) -->
+				<!-- Floating TOC Button (Mobile/Tablet) -->
 				<button 
 					id="toc-toggle-mobile" 
 					class="fixed bottom-6 right-6 lg:hidden z-40 w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
@@ -70,7 +70,7 @@ const currentLang = getLangFromUrl(Astro.url);
 					</svg>
 				</button>
 				
-				<!-- Table of Contents Overlay (Mobile) -->
+				<!-- Table of Contents Overlay (Mobile/Tablet) -->
 				<div id="toc-overlay-mobile" class="fixed inset-0 bg-black/50 z-30 lg:hidden hidden">
 					<div class="fixed right-0 top-0 h-full w-80 max-w-[80vw] bg-white dark:bg-gray-900 shadow-xl transform translate-x-full transition-transform duration-300">
 						<div class="p-6">
@@ -94,8 +94,153 @@ const currentLang = getLangFromUrl(Astro.url);
 					</div>
 				</div>
 				
-				<!-- Desktop Layout Grid (XL and above) -->
-				<div class="hidden xl:grid xl:grid-cols-[250px_minmax(0,1fr)_180px] xl:gap-4 2xl:gap-6 xl:items-start">
+				<!-- Mobile/Tablet Layout (Below LG) -->
+				<div class="lg:hidden">
+					<article class="py-16 max-w-prose mx-auto px-4 sm:px-6">
+						<!-- Article Header -->
+						<header class="mb-16">
+							<!-- Meta Information -->
+							<div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-8 font-medium">
+								<FormattedDate date={pubDate} />
+								{content && (
+									<>
+										<span class="text-gray-300 dark:text-gray-600">•</span>
+										<ReadingTime content={content} />
+									</>
+								)}
+								{updatedDate && (
+									<>
+										<span class="text-gray-300 dark:text-gray-600">•</span>
+										<span>Updated: <FormattedDate date={updatedDate} /></span>
+									</>
+								)}
+								{lang && (
+									<>
+										<span class="text-gray-300 dark:text-gray-600">•</span>
+										<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-semibold uppercase tracking-wide">
+											{lang}
+										</span>
+									</>
+								)}
+							</div>
+							
+							<!-- Title -->
+							<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-gray-100 mb-6">
+								{title}
+							</h1>
+							
+							<!-- Description -->
+							{description && (
+								<p class="text-xl md:text-2xl leading-relaxed text-gray-600 dark:text-gray-300 mb-10 font-light">
+									{description}
+								</p>
+							)}
+							
+							<!-- Categories and Tags -->
+							{(categories || tags) && (
+								<div class="space-y-4">
+									{categories && categories.length > 0 && (
+										<div class="flex flex-wrap items-center gap-3">
+											<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Categories</span>
+											{categories.map((category) => (
+												<span class="px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium border border-primary-200 dark:border-primary-800 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
+													{category}
+												</span>
+											))}
+										</div>
+									)}
+									
+									{tags && tags.length > 0 && (
+										<div class="flex flex-wrap items-center gap-3">
+											<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Tags</span>
+											{tags.map((tag) => (
+												<span class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+													#{tag}
+												</span>
+											))}
+										</div>
+									)}
+								</div>
+							)}
+						</header>
+						
+						<!-- Article Content -->
+						<div class="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
+							<slot />
+						</div>
+					
+						<!-- Social Share -->
+						<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+							<div class="text-center mb-6">
+								<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
+								<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
+							</div>
+							<SocialShare 
+								title={title}
+								description={description || ''}
+								url={Astro.url.pathname}
+								hashtags={tags || []}
+								showLabels={true}
+							/>
+						</div>
+					
+						<!-- Related Posts -->
+						<div class="mt-16">
+							<RelatedPosts 
+								currentPostId={Astro.params.slug || ''}
+								currentCategories={categories}
+								currentTags={tags}
+								maxPosts={3}
+							/>
+						</div>
+					
+						<!-- Newsletter Subscription -->
+						<div class="mt-20 mb-16">
+							<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
+								<Newsletter variant="inline" />
+							</div>
+						</div>
+					
+						<!-- Comments Section -->
+						<div class="mt-16">
+							<div class="text-center mb-8">
+								<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
+								<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
+							</div>
+							<Comments />
+						</div>
+					
+						<!-- Article Footer -->
+						<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700">
+							<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+								<a 
+									href="/blog" 
+									class="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+								>
+									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+									</svg>
+									Back to Blog
+								</a>
+								
+								<div class="flex items-center gap-6">
+									<button 
+										onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+										class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
+									>
+										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+										</svg>
+										Back to top
+									</button>
+								</div>
+							</div>
+						</footer>
+					</article>
+				</div>
+				
+				<!-- Desktop/Laptop Layout Grid (LG and above) -->
+				<div class="hidden lg:grid lg:grid-cols-[200px_minmax(0,1fr)_140px] xl:grid-cols-[250px_minmax(0,1fr)_180px] lg:gap-3 xl:gap-4 2xl:gap-6 lg:items-start">
 					<!-- Left TOC -->
 					<aside class="sticky top-8 min-w-0">
 						<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 max-h-[calc(100vh-8rem)] overflow-y-auto shadow-sm">
@@ -266,149 +411,6 @@ const currentLang = getLangFromUrl(Astro.url);
 						</div>
 					</aside>
 				</div>
-				
-				<!-- Mobile/Tablet Layout (below XL) -->
-				<main class="xl:hidden py-16">
-					<!-- Article Header -->
-					<header class="mb-16 max-w-3xl mx-auto">
-						<!-- Meta Information -->
-						<div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-8 font-medium">
-							<FormattedDate date={pubDate} />
-							{content && (
-								<>
-									<span class="text-gray-300 dark:text-gray-600">•</span>
-									<ReadingTime content={content} />
-								</>
-							)}
-							{updatedDate && (
-								<>
-									<span class="text-gray-300 dark:text-gray-600">•</span>
-									<span>Updated: <FormattedDate date={updatedDate} /></span>
-								</>
-							)}
-							{lang && (
-								<>
-									<span class="text-gray-300 dark:text-gray-600">•</span>
-									<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-semibold uppercase tracking-wide">
-										{lang}
-									</span>
-								</>
-							)}
-						</div>
-						
-						<!-- Title -->
-						<h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-gray-100 mb-6">
-							{title}
-						</h1>
-						
-						<!-- Description -->
-						{description && (
-							<p class="text-xl md:text-2xl leading-relaxed text-gray-600 dark:text-gray-300 mb-10 font-light">
-								{description}
-							</p>
-						)}
-						
-						<!-- Categories and Tags -->
-						{(categories || tags) && (
-							<div class="space-y-4">
-								{categories && categories.length > 0 && (
-									<div class="flex flex-wrap items-center gap-3">
-										<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Categories</span>
-										{categories.map((category) => (
-											<span class="px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium border border-primary-200 dark:border-primary-800 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
-												{category}
-											</span>
-										))}
-									</div>
-								)}
-								
-								{tags && tags.length > 0 && (
-									<div class="flex flex-wrap items-center gap-3">
-										<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Tags</span>
-										{tags.map((tag) => (
-											<span class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-												#{tag}
-											</span>
-										))}
-									</div>
-								)}
-							</div>
-						)}
-					</header>
-					
-					<!-- Article Content with optimal reading width -->
-					<article class="prose prose-lg md:prose-xl dark:prose-invert max-w-prose mx-auto prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
-						<slot />
-					</article>
-				
-					<!-- Social Share -->
-					<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 max-w-prose mx-auto">
-						<div class="text-center mb-6">
-							<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
-							<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
-						</div>
-						<SocialShare 
-							title={title}
-							description={description || ''}
-							url={Astro.url.pathname}
-							hashtags={tags || []}
-							showLabels={true}
-						/>
-					</div>
-				
-					<!-- Related Posts -->
-					<div class="mt-16 max-w-prose mx-auto">
-						<RelatedPosts 
-							currentPostId={Astro.params.slug || ''}
-							currentCategories={categories}
-							currentTags={tags}
-							maxPosts={3}
-						/>
-					</div>
-				
-					<!-- Newsletter Subscription -->
-					<div class="mt-20 mb-16 max-w-prose mx-auto">
-						<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
-							<Newsletter variant="inline" />
-						</div>
-					</div>
-				
-					<!-- Comments Section -->
-					<div class="mt-16 max-w-prose mx-auto">
-						<div class="text-center mb-8">
-							<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
-							<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
-						</div>
-						<Comments />
-					</div>
-				
-					<!-- Article Footer -->
-					<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700 max-w-prose mx-auto">
-						<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
-							<a 
-								href="/blog" 
-								class="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-all duration-200 hover:scale-105"
-							>
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-								</svg>
-								Back to Blog
-							</a>
-							
-							<div class="flex items-center gap-6">
-								<button 
-									onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-									class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-								>
-									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-									</svg>
-									Back to top
-								</button>
-							</div>
-						</div>
-					</footer>
-				</article>
 		</div>
 		</main>
 		<Footer />
