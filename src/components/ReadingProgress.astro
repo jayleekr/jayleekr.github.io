@@ -51,6 +51,8 @@
     const progressMobile = document.getElementById('reading-progress-mobile');
     const progressCircle = document.getElementById('progress-circle');
     const progressText = document.getElementById('progress-text');
+    const sidebarProgressBar = document.getElementById('sidebar-progress-bar');
+    const sidebarProgressText = document.getElementById('sidebar-progress-text');
     
     if (!progressBar) return;
     
@@ -73,6 +75,15 @@
       // Update progress bar
       if (progressBar) {
         progressBar.style.width = `${progress}%`;
+      }
+      
+      // Update sidebar progress
+      if (sidebarProgressBar) {
+        sidebarProgressBar.style.width = `${progress}%`;
+      }
+      
+      if (sidebarProgressText) {
+        sidebarProgressText.textContent = `${Math.round(progress)}%`;
       }
       
       // Update mobile progress
