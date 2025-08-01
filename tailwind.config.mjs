@@ -3,6 +3,14 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px', // Added tablet breakpoint
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
       maxWidth: {
         'prose': '65ch', // Optimal reading width (approximately 600-700px)
         'prose-narrow': '55ch', // For mobile and narrow layouts

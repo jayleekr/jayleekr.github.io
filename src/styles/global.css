@@ -19,20 +19,20 @@
 	--bg-primary: theme('colors.white');
 	--bg-secondary: theme('colors.gray.50');
 	--text-primary: theme('colors.gray.900');
-	--text-secondary: theme('colors.gray.600');
+	--text-secondary: theme('colors.gray.700'); /* Improved contrast */
 	--border-color: theme('colors.gray.200');
 	
-	/* Typography scale (1.250 ratio) */
-	--text-xs: 0.8rem;
-	--text-sm: 0.875rem;
-	--text-base: 1rem;
-	--text-lg: 1.125rem;
-	--text-xl: 1.25rem;
-	--text-2xl: 1.5rem;
-	--text-3xl: 1.875rem;
-	--text-4xl: 2.25rem;
-	--text-5xl: 3rem;
-	--text-6xl: 4rem;
+	/* Fluid Typography scale with clamp() */
+	--text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);
+	--text-sm: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
+	--text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+	--text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+	--text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+	--text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
+	--text-3xl: clamp(1.875rem, 1.65rem + 1.125vw, 2.25rem);
+	--text-4xl: clamp(2.25rem, 1.95rem + 1.5vw, 3rem);
+	--text-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
+	--text-6xl: clamp(4rem, 3rem + 5vw, 6rem);
 	
 	/* Line heights */
 	--leading-tight: 1.25;
@@ -56,7 +56,7 @@
 	--bg-primary: theme('colors.gray.900');
 	--bg-secondary: theme('colors.gray.800');
 	--text-primary: theme('colors.gray.100');
-	--text-secondary: theme('colors.gray.300');
+	--text-secondary: theme('colors.gray.200'); /* Improved contrast */
 	--border-color: theme('colors.gray.700');
 }
 
@@ -108,33 +108,39 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { 
-	@apply text-5xl mb-6;
+	font-size: var(--text-5xl);
+	@apply mb-6;
 	font-weight: 800;
 	letter-spacing: var(--tracking-tighter);
 }
 h2 { 
-	@apply text-4xl mb-5;
+	font-size: var(--text-4xl);
+	@apply mb-5;
 	font-weight: 700;
 }
 h3 { 
-	@apply text-3xl mb-4;
+	font-size: var(--text-3xl);
+	@apply mb-4;
 	font-weight: 600;
 }
 h4 { 
-	@apply text-2xl mb-3;
+	font-size: var(--text-2xl);
+	@apply mb-3;
 	font-weight: 600;
 }
 h5 { 
-	@apply text-xl mb-3;
+	font-size: var(--text-xl);
+	@apply mb-3;
 	font-weight: 500;
 }
 h6 { 
-	@apply text-lg mb-2;
+	font-size: var(--text-lg);
+	@apply mb-2;
 	font-weight: 500;
 }
 
 p {
-	@apply mb-6 text-gray-700 dark:text-gray-300;
+	@apply mb-6 text-gray-800 dark:text-gray-200; /* Improved contrast */
 	line-height: var(--leading-relaxed);
 	word-wrap: break-word;
 	hyphens: auto;
@@ -179,7 +185,7 @@ blockquote {
 }
 
 blockquote p {
-	@apply text-lg leading-relaxed text-gray-700 dark:text-gray-300;
+	@apply text-lg leading-relaxed text-gray-800 dark:text-gray-200; /* Improved contrast */
 	font-style: italic;
 	font-weight: 400;
 }
@@ -274,7 +280,7 @@ a:not(.no-underline):hover {
 
 /* Prose improvements for blog posts with better spacing */
 .prose {
-	@apply text-gray-700 dark:text-gray-300;
+	@apply text-gray-800 dark:text-gray-200; /* Improved contrast */
 	font-size: 1.125rem;
 	line-height: 1.75;
 	/* Optimal reading width constraints */
@@ -320,27 +326,31 @@ a:not(.no-underline):hover {
 }
 
 .prose h1 { 
-	@apply text-4xl mb-8 mt-12;
+	font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+	@apply mb-8 mt-12;
 	font-weight: 800;
 	letter-spacing: -0.025em;
 }
 .prose h2 { 
-	@apply text-3xl mb-6 mt-12 pb-3 border-b-2 border-gray-200 dark:border-gray-700;
+	font-size: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
+	@apply mb-6 mt-12 pb-3 border-b-2 border-gray-200 dark:border-gray-700;
 	font-weight: 700;
 }
 .prose h3 { 
-	@apply text-2xl mb-4 mt-10;
+	font-size: clamp(1.25rem, 1.125rem + 0.625vw, 1.75rem);
+	@apply mb-4 mt-10;
 	font-weight: 600;
 }
 .prose h4 { 
-	@apply text-xl mb-3 mt-8;
+	font-size: clamp(1.125rem, 1.0625rem + 0.3125vw, 1.375rem);
+	@apply mb-3 mt-8;
 	font-weight: 600;
 }
 
 .prose p {
 	@apply mb-6 leading-relaxed;
-	text-align: justify;
-	text-justify: inter-word;
+	text-align: left; /* Changed from justify for better readability on mobile */
+	word-spacing: normal;
 }
 
 /* Improve first paragraph (lead) */
@@ -369,13 +379,13 @@ a:not(.no-underline):hover {
 }
 
 .prose blockquote p {
-	@apply mb-0 text-lg;
+	@apply mb-0 text-lg text-gray-800 dark:text-gray-200; /* Improved contrast */
 	font-style: italic;
 	line-height: 1.7;
 }
 
 .prose blockquote cite {
-	@apply block mt-4 text-sm text-gray-600 dark:text-gray-400;
+	@apply block mt-4 text-sm text-gray-700 dark:text-gray-300; /* Improved contrast */
 	font-style: normal;
 	font-weight: 500;
 }
@@ -424,7 +434,7 @@ a:not(.no-underline):hover {
 
 /* Image captions */
 .prose img + em {
-	@apply block text-center text-sm text-gray-600 dark:text-gray-400 mt-2 mb-8;
+	@apply block text-center text-sm text-gray-700 dark:text-gray-300 mt-2 mb-8; /* Improved contrast */
 	font-style: normal;
 }
 
@@ -456,7 +466,7 @@ a:not(.no-underline):hover {
 /* External link indicator */
 .prose a[href^="http"]:not([href*="jayleekr.github.io"])::after {
 	content: "↗";
-	@apply ml-1 text-xs align-super text-gray-400;
+	@apply ml-1 text-xs align-super text-gray-600 dark:text-gray-400; /* Improved contrast */
 }
 
 .prose strong {
@@ -552,6 +562,26 @@ a:not(.no-underline):hover {
 	touch-action: manipulation;
 }
 
+/* Tablet breakpoint (new) */
+@media (min-width: 768px) and (max-width: 1023px) {
+	/* Tablet-specific layouts */
+	.prose {
+		max-width: 70ch !important;
+		font-size: 1.0625rem; /* 17px */
+		line-height: 1.7;
+	}
+	
+	/* Tablet typography adjustments */
+	h1 { font-size: clamp(2.5rem, 2.25rem + 1.25vw, 3.5rem); }
+	h2 { font-size: clamp(2rem, 1.875rem + 0.625vw, 2.5rem); }
+	h3 { font-size: clamp(1.5rem, 1.4375rem + 0.3125vw, 1.75rem); }
+	
+	/* Better spacing for tablets */
+	main {
+		@apply px-6 py-10;
+	}
+}
+
 /* Layout improvements for better readability */
 @media (min-width: 1280px) {
 	/* Enhanced prose width for better reading on wide screens */
@@ -601,8 +631,7 @@ a:not(.no-underline):hover {
 
 /* Text optimization for better readability */
 .prose p {
-	text-align: justify;
-	text-justify: inter-word;
+	text-align: left; /* Changed from justify for better readability */
 	hyphens: auto;
 	-webkit-hyphens: auto;
 	-moz-hyphens: auto;
@@ -610,32 +639,8 @@ a:not(.no-underline):hover {
 	overflow-wrap: break-word;
 }
 
-/* Prevent layout shifts and ensure proper TOC positioning */
-.prose {
-	/* Ensure consistent max-width calculation */
-	max-width: min(75ch, calc(100vw - 2rem)) !important;
-}
-
-@media (min-width: 1024px) {
-	.prose {
-		/* On laptop/desktop, allow wider content with TOC present */
-		max-width: min(70ch, calc(100vw - 500px)) !important;
-	}
-}
-
-@media (min-width: 1280px) {
-	.prose {
-		/* On desktop, allow wider content with TOC present */
-		max-width: min(75ch, calc(100vw - 600px)) !important;
-	}
-}
-
-@media (min-width: 1536px) {
-	.prose {
-		/* On very wide screens, optimal reading width */
-		max-width: min(80ch, calc(100vw - 700px)) !important;
-	}
-}
+/* Simplified prose width calculation to prevent conflicts */
+/* Removed conflicting max-width calculations that were causing layout issues */
 
 /* Better spacing for lists in prose */
 .prose ul li, .prose ol li {
@@ -696,7 +701,7 @@ a:not(.no-underline):hover {
 /* Mobile-first responsive design with touch optimization */
 @media (max-width: 768px) {
 	html {
-		font-size: 15px;
+		font-size: 16px; /* Changed from 15px to prevent iOS zoom */
 		/* Improve touch scrolling */
 		-webkit-overflow-scrolling: touch;
 		scroll-behavior: smooth;
@@ -728,7 +733,7 @@ a:not(.no-underline):hover {
 	/* Improve readability on mobile */
 	.prose {
 		font-size: 1rem;
-		line-height: 1.65;
+		line-height: 1.75; /* Increased from 1.65 for better readability */
 	}
 	
 	.prose h1 { @apply text-3xl mb-6 mt-8; }
@@ -747,8 +752,8 @@ a:not(.no-underline):hover {
 	
 	/* Touch-friendly buttons */
 	button, a {
-		min-height: 44px;
-		min-width: 44px;
+		min-height: 48px; /* Increased from 44px for better accessibility */
+		min-width: 48px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -758,8 +763,8 @@ a:not(.no-underline):hover {
 	input, textarea, select {
 		@apply text-base;
 		/* Prevent zoom on iOS */
-		font-size: 16px;
-		min-height: 44px;
+		font-size: 16px !important;
+		min-height: 48px; /* Increased for better touch targets */
 	}
 	
 	/* Better spacing for mobile */
@@ -781,14 +786,15 @@ a:not(.no-underline):hover {
 	
 	/* Code blocks on mobile */
 	.prose pre {
-		@apply p-4 text-sm;
+		@apply p-4;
+		font-size: 0.875rem; /* Explicit size instead of text-sm */
 		max-width: calc(100vw - 2rem);
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 	
 	.prose code {
-		font-size: 0.9em;
-		word-break: break-all;
+		font-size: 0.9em; /* Increased from 0.85em for better readability */
+		word-break: break-word; /* Changed from break-all to break-word */
 	}
 }

@@ -1,24 +1,24 @@
 ---
-title: "AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1)"
-description: "AI 도구들을 동시에 활용하는 워크플로우와 생산성 향상 노하우 공유"
+title: "AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1편)"
+description: "월 100달러짜리 AI 스택으로 혼돈 속에서 시스템을 찾아가는 여정"
 pubDate: 2025-07-24
 heroImage: "/assets/img/ai-workflow.jpg"
 categories: ["Tech", "AI"]
 tags: ["AI", "Productivity", "Cursor", "ChatGPT", "Claude", "Gemini", "Workflow"]
 lang: "ko"
 author: "Jay Lee"
-readingTime: "10분"
+readingTime: "7분"
 ---
 
 ![AI Workflow Productivity](/assets/img/ai-workflow.jpg)
 
-# AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1)
+# AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1편)
 
-안녕하세요! 오늘은 좀 다른 이야기를 해보려고 합니다. 
+안녕하세요! 오늘부터 좀 특별한 시리즈를 시작해보려고 합니다. 
 
 요즘 컴퓨터 앞에 있을 때 진짜 **ADHD도 이런 ADHD가 없다**고 느낄 정도로 여러 AI 도구들을 동시에 돌리고 있어서, 이 혼돈 속에서 나름의 시스템을 찾아가는 과정을 공유해보려고 합니다.
 
-## 🤖 현재 돌리고 있는 AI 스택
+## 🤖 현재 돌리고 있는 AI 스택 (월 $100+)
 
 매달 **100달러 넘게** 쓰면서 이 녀석들을 매일 돌리고 있습니다:
 
@@ -87,82 +87,63 @@ graph TB
 
 위 다이어그램이 제가 현재 운영하고 있는 AI 멀티플렉싱 워크플로우의 전체 구조입니다!
 
-## 📋 모든 LLM에게 공통으로 적용하는 워크플로우
+## 💡 왜 이렇게 많은 AI 도구를 써야 하나?
 
-경험상 어떤 AI든 상관없이 이 방식으로 일을 시키면 훨씬 좋은 결과가 나옵니다:
+솔직히 처음에는 저도 "이게 맞나?" 싶었습니다. 하지만 실제로 써보니 **각 도구마다 확실히 특화된 영역**이 있더라고요.
 
-### 1. Context Window를 자주 새로 연다
-- 길어진 대화는 과감히 정리하고 새 창에서 시작
-- 집중력 있는 대화가 훨씬 효과적
+- **코딩할 때**: Cursor가 압도적
+- **문서 작성할 때**: Gemini가 진짜 기똥참
+- **고객 이메일 쓸 때**: ChatGPT가 감정노동을 대신해줌 ㅋㅋ
+- **무거운 코딩할 때**: Claude Code가 필요악
 
-### 2. 미리 정리된 Context를 던져서 생각하게 한다
-- 바로 답 달라고 하지 말고, 먼저 상황을 파악하게 함
-- 키워드 추출부터 시키는 것이 포인트
+결국 **하나로 모든 걸 다 하려고 하면** 오히려 비효율적이더라는 게 결론입니다.
 
-### 3. 좋은 답변 포맷을 미리 제시하거나 생각하게 한다
-- "이런 형태로 답변해줘" 보다는
-- "어떤 형태로 답변하는 게 좋을지 먼저 생각해봐"
+## 🏗️ 기본 운영 철학
 
-### 4. 명확한 Request를 한다
-- 애매한 요청은 애매한 답변을 낳음
-- 구체적이고 측정 가능한 결과물을 요청
+### 1. 모든 워크스페이스는 Git Repo
+**5~8개의 Cursor 인스턴스**가 항상 떠있는데, 각각이 독립된 git repo입니다:
+- Remote SSH 기반: Product Code, Build Server, Test Environment
+- Native 기반: Blog, Documentation, 강의자료
 
-### 5. Feedback 과정을 통해 계속 생각하게 만든다
-- 한 번에 완벽한 답을 기대하지 말고
-- 피드백을 통해 점진적으로 개선
+### 2. Context 관리가 핵심
+AI들이 들쭉날쭉 하는 이유 중 하나가 **Context 관리를 못해서**입니다. 
+- project config, workflow 등을 담은 markdown들을 계속 업데이트
+- 대화가 길어지면 과감히 새 창으로 시작
 
-### 6. Context 문서들을 지속적으로 업데이트한다
-- project config, workflow 등을 담은 markdown들
-- AI가 더 잘 이해할 수 있도록 지속 개선
+### 3. 각 도구의 한계를 인정하고 활용
+예를 들어, Claude Code는 **3시간마다 Usage 제한**이 있어서 짜증나지만, 그래서 더 전략적으로 사용하게 됩니다.
 
-## 🛠️ 실제 워크스페이스 운영 방식
+## 📋 앞으로 다룰 내용들
 
-**모든 Workspace는 git repo로** 만들고 거기서 cursor instance를 띄웁니다. 보통 **5~8개는 떠있어요**:
+이 시리즈에서 다룰 예정인 내용들입니다:
 
-### Remote Development (SSH 기반)
-- **Product Code** (remote dev-container via remote ssh)
-- **Production image build server workspace** 1~2개
-- **Test environment workspace** 1~2개
+### 2편: "공통 워크플로우 방법론" (다음주 예정)
+- 6단계 워크플로우 상세 설명
+- 실제 프롬프트 예시와 Before/After
+- Context Window 관리 실전 팁
 
-### Native Development
-- **Blog/Documentation workspace** 
-- **강의자료 만드는 workspace** 1~2개 (강의가 여러 개라서...)
+### 3편: "워크스페이스 운영 실전기"
+- Remote SSH vs Native 개발환경 구성
+- Git Repo 기반 워크스페이스 관리법
+- 5~8개 인스턴스를 효율적으로 운영하는 법
 
-## 🎯 도구별 특화 사용법
+### 4편: "도구별 프롬프트 전략"
+- Cursor Pro 활용 고급 기법
+- Claude Code 3시간 제한 극복법
+- Gemini CLI 문서화 자동화
 
-### Claude Code (100$짜리)
-**Aggressive하게 코딩 작업해야 할 Repo** 2개 정도에만 사용합니다. 
-
-> 💸 근데 Claude Code도 **3시간마다 Generated되는 Usage 제한**으로 모자라요... 비싸게 주고도 이런 제약이 있다니 ㅠㅠ
-
-### Cursor + 대화창
-뭔가 **대화를 하면서 코드 개선**을 해야 하는 부분은 Agentic Mode나 Ping-ponging으로 작업합니다.
-
-실제 고객사 응대할 때는 **Cursor + Claude Sonnet 4.0** 또는 **Gemini 2.5 Pro**를 가장 많이 씁니다.
-
-### ChatGPT Pro
-사실 잘 안 쓰는데 **구독을 끊을까 말까 고민 중**입니다만... 여전히 **고객 대응 시 이메일이나 감정노동**을 담을 때는 진짜 편해요. 이것만으로도 값어치는 하는 듯? ㅋㅋ
-
-### Gemini 2.5 Pro
-확실한 건 **2025년 1월 기준 Gemini 2.5 Pro가 Documentation은 기똥차다**는 것입니다.
-
-그래서 문서화 작업할 때는 **Gemini CLI**로 일을 시키는 편입니다.
-
-## 📝 새 프로젝트 시작할 때의 비법
-
-새로운 프로젝트를 시작할 때는 **요구사항 문서 PRD**를 제대로 작성하는 편입니다.
-
-물론 PRD를 내가 다 만들기는 어려우니까, **Gemini 2.5 Pro로 Research**를 돌려서 활용합니다. 들쭉날쭉 일을 잘하기도 하고 못하기도 하는 AI Agent가 조금이나마 더 잘하게 하기 위해 PRD 방법론에 대해 연구시켰어요.
-
-[PRD 방법론 및 템플릿](https://www.notion.so/PRD-22c248114595800487e7efbdb115a8a7?pvs=21)도 만들어뒀으니 관심 있으시면 참고하세요!
+### 5편: "PRD 방법론으로 새 프로젝트 시작하기"
+- Gemini 2.5 Pro로 Research 돌리는 법
+- 들쭉날쭉한 AI를 더 잘하게 만드는 PRD 작성법
+- 실제 프로젝트 적용 사례
 
 ## 🔚 마무리하며...
 
-사실 **Claude Code usage가 다시 찰 때까지만** 이 글을 쓰려고 한 거라... ㅋㅋㅋ
+사실 **Claude Code usage가 다시 찰 때까지만** 이 글을 쓰려고 한 거였는데... 쓰다 보니 시리즈로 만들어야겠더라고요 ㅋㅋㅋ
 
-다음 글에서는 각 도구별 구체적인 프롬프트 전략이나, 실제 프로젝트에 적용한 사례들을 더 자세히 다뤄보겠습니다.
+각 편마다 실제 사용하는 프롬프트나 설정 파일들도 공유할 예정이니, 비슷한 고민을 하시는 분들에게 도움이 되길 바랍니다!
 
-여러분도 AI 도구들 어떻게 활용하고 계신가요? 댓글로 공유해주세요!
+다음 편은 **공통 워크플로우 방법론**에 대해 더 자세히 다뤄보겠습니다. 여러분도 AI 도구들 어떻게 활용하고 계신가요? 댓글로 공유해주세요!
 
 ---
 
