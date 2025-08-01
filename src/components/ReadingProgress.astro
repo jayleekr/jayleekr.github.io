@@ -1,0 +1,136 @@
+---
+// Reading Progress Component
+// Shows reading progress for blog posts
+---
+
+<!-- Reading Progress Bar (Fixed at top) -->
+<div id="reading-progress" class="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 dark:bg-gray-800">
+  <div 
+    id="reading-progress-bar" 
+    class="h-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all duration-300 ease-out"
+    style="width: 0%"
+  ></div>
+</div>
+
+<!-- Floating Reading Progress (Mobile) -->
+<div 
+  id="reading-progress-mobile" 
+  class="fixed bottom-20 right-4 laptop:hidden z-40 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg border border-gray-200 dark:border-gray-700 opacity-0 transition-all duration-300"
+>
+  <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+    <circle 
+      cx="18" 
+      cy="18" 
+      r="15" 
+      fill="none" 
+      stroke="currentColor" 
+      stroke-width="2" 
+      class="text-gray-200 dark:text-gray-700"
+    />
+    <circle 
+      id="progress-circle"
+      cx="18" 
+      cy="18" 
+      r="15" 
+      fill="none" 
+      stroke="currentColor" 
+      stroke-width="2" 
+      stroke-dasharray="94.2" 
+      stroke-dashoffset="94.2"
+      class="text-primary-500 transition-all duration-300"
+    />
+  </svg>
+  <div class="absolute inset-0 flex items-center justify-center">
+    <span id="progress-text" class="text-xs font-medium text-gray-600 dark:text-gray-400">0%</span>
+  </div>
+</div>
+
+<script>
+  function initReadingProgress() {
+    const progressBar = document.getElementById('reading-progress-bar');
+    const progressMobile = document.getElementById('reading-progress-mobile');
+    const progressCircle = document.getElementById('progress-circle');
+    const progressText = document.getElementById('progress-text');
+    
+    if (!progressBar) return;
+    
+    let ticking = false;
+    
+    function updateProgress() {
+      const article = document.querySelector('article');
+      if (!article) return;
+      
+      const articleTop = article.offsetTop;
+      const articleHeight = article.offsetHeight;
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate reading progress
+      const progress = Math.max(0, Math.min(100, 
+        ((scrollTop + windowHeight - articleTop) / articleHeight) * 100
+      ));
+      
+      // Update progress bar
+      progressBar.style.width = `${progress}%`;
+      
+      // Update mobile progress
+      if (progressMobile && progressCircle && progressText) {
+        const circumference = 94.2;
+        const offset = circumference - (progress / 100) * circumference;
+        
+        progressCircle.style.strokeDashoffset = offset;
+        progressText.textContent = `${Math.round(progress)}%`;
+        
+        // Show/hide mobile progress based on scroll
+        if (scrollTop > 300) {
+          progressMobile.style.opacity = '1';
+          progressMobile.style.transform = 'translateY(0)';
+        } else {
+          progressMobile.style.opacity = '0';
+          progressMobile.style.transform = 'translateY(10px)';
+        }
+      }
+      
+      ticking = false;
+    }
+    
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }
+    
+    // Initial update
+    updateProgress();
+    
+    // Update on scroll
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick, { passive: true });
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReadingProgress);
+  } else {
+    initReadingProgress();
+  }
+</script>
+
+<style>
+  #reading-progress {
+    backdrop-filter: blur(8px);
+  }
+  
+  #reading-progress-mobile {
+    backdrop-filter: blur(8px);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    #reading-progress-bar,
+    #reading-progress-mobile,
+    #progress-circle {
+      transition: none !important;
+    }
+  }
+</style>

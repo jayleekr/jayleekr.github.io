@@ -1,0 +1,258 @@
+---
+// Enhanced Table of Contents with smooth scrolling and highlighting
+interface Props {
+  content?: string;
+  maxDepth?: number;
+  showNumbers?: boolean;
+  className?: string;
+}
+
+const { content = '', maxDepth = 3, showNumbers = false, className = '' } = Astro.props;
+
+// Extract headings from content
+function extractHeadings(content: string, maxDepth: number) {
+  if (!content) return [];
+  
+  const headingRegex = /^(#{1,6})\s+(.+)$/gm;
+  const headings: Array<{level: number, text: string, id: string}> = [];
+  let match;
+  
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length;
+    if (level <= maxDepth) {
+      const text = match[2].trim();
+      const id = text.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      
+      headings.push({ level, text, id });
+    }
+  }
+  
+  return headings;
+}
+
+const headings = extractHeadings(content, maxDepth);
+---
+
+{headings.length > 0 && (
+  <nav class={`toc-nav ${className}`} aria-label="Table of contents">
+    <div class="toc-header mb-4">
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+        목차
+      </h3>
+    </div>
+    
+    <ul class="toc-list space-y-1">
+      {headings.map((heading, index) => (
+        <li class={`toc-item toc-level-${heading.level}`}>
+          <a 
+            href={`#${heading.id}`}
+            class="toc-link block py-2 px-3 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-md transition-all duration-200 border-l-2 border-transparent hover:border-primary-500"
+            data-toc-target={heading.id}
+            style={`padding-left: ${0.75 + (heading.level - 1) * 0.75}rem`}
+          >
+            {showNumbers && (
+              <span class="toc-number text-xs text-gray-400 dark:text-gray-500 mr-2">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+            )}
+            <span class="toc-text">{heading.text}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  function initEnhancedTOC() {
+    const tocLinks = document.querySelectorAll('.toc-link');
+    const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+    
+    if (!tocLinks.length || !headings.length) return;
+    
+    let currentActiveLink: Element | null = null;
+    let isScrolling = false;
+    let scrollTimeout: number;
+    
+    // Smooth scroll to heading
+    function scrollToHeading(targetId: string) {
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      
+      isScrolling = true;
+      
+      // Clear existing timeout
+      clearTimeout(scrollTimeout);
+      
+      const headerOffset = 100; // Account for fixed header
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Reset scrolling flag after animation
+      scrollTimeout = window.setTimeout(() => {
+        isScrolling = false;
+      }, 1000);
+    }
+    
+    // Update active link based on scroll position
+    function updateActiveLink() {
+      if (isScrolling) return;
+      
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      let activeHeading: Element | null = null;
+      
+      // Find the currently visible heading
+      for (let i = headings.length - 1; i >= 0; i--) {
+        const heading = headings[i];
+        const rect = heading.getBoundingClientRect();
+        
+        if (rect.top <= 150) { // 150px offset for better UX
+          activeHeading = heading;
+          break;
+        }
+      }
+      
+      // Update active link
+      const newActiveLink = activeHeading 
+        ? document.querySelector(`[data-toc-target="${activeHeading.id}"]`)
+        : null;
+      
+      if (newActiveLink !== currentActiveLink) {
+        // Remove active class from previous link
+        if (currentActiveLink) {
+          currentActiveLink.classList.remove('toc-active');
+        }
+        
+        // Add active class to new link
+        if (newActiveLink) {
+          newActiveLink.classList.add('toc-active');
+          
+          // Smooth scroll TOC to show active item
+          newActiveLink.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+          });
+        }
+        
+        currentActiveLink = newActiveLink;
+      }
+    }
+    
+    // Add click handlers
+    tocLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('data-toc-target');
+        if (targetId) {
+          scrollToHeading(targetId);
+          
+          // Update URL without triggering scroll
+          history.pushState(null, '', `#${targetId}`);
+        }
+      });
+    });
+    
+    // Update active link on scroll
+    let ticking = false;
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateActiveLink);
+        ticking = true;
+        setTimeout(() => { ticking = false; }, 16);
+      }
+    }
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
+    
+    // Initial update
+    updateActiveLink();
+    
+    // Handle hash changes
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        setTimeout(() => scrollToHeading(hash), 100);
+      }
+    });
+    
+    // Handle initial hash
+    if (window.location.hash) {
+      const hash = window.location.hash.slice(1);
+      setTimeout(() => scrollToHeading(hash), 300);
+    }
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initEnhancedTOC);
+  } else {
+    initEnhancedTOC();
+  }
+</script>
+
+<style>
+  .toc-nav {
+    position: relative;
+  }
+  
+  .toc-list {
+    position: relative;
+  }
+  
+  .toc-link {
+    position: relative;
+    display: block;
+    line-height: 1.5;
+  }
+  
+  .toc-link.toc-active {
+    @apply text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 border-primary-500;
+    font-weight: 500;
+  }
+  
+  .toc-link:hover .toc-text {
+    transform: translateX(2px);
+  }
+  
+  .toc-text {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  
+  /* Accessibility improvements */
+  @media (prefers-reduced-motion: reduce) {
+    .toc-link,
+    .toc-text {
+      transition: none !important;
+    }
+  }
+  
+  /* Focus styles */
+  .toc-link:focus {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+  }
+  
+  /* Different levels styling */
+  .toc-level-1 .toc-link {
+    @apply font-medium;
+  }
+  
+  .toc-level-2 .toc-link {
+    @apply text-sm;
+  }
+  
+  .toc-level-3 .toc-link {
+    @apply text-sm opacity-80;
+  }
+</style>

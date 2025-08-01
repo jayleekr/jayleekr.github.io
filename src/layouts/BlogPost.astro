@@ -10,6 +10,8 @@ import SocialShare from '../components/SocialShare.astro';
 import Comments from '../components/Comments.astro';
 import Newsletter from '../components/Newsletter.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import EnhancedTOC from '../components/EnhancedTOC.astro';
+import ReadingProgress from '../components/ReadingProgress.astro';
 import { getLangFromUrl } from '../utils/i18n';
 
 type Props = CollectionEntry<'blog'>['data'] & {
@@ -37,10 +39,7 @@ const currentLang = getLangFromUrl(Astro.url);
 	<body class="bg-white dark:bg-gray-900 transition-colors duration-300" data-categories={categories ? JSON.stringify(categories) : '[]'}>
 		<Header />
 		
-		<!-- Progress Bar -->
-		<div class="fixed top-0 left-0 w-full h-1 bg-gray-200 dark:bg-gray-800 z-50">
-			<div id="reading-progress-bar" class="h-full bg-primary-600 dark:bg-primary-500 transition-all duration-300 ease-out" style="width: 0%"></div>
-		</div>
+		<ReadingProgress />
 		
 		<main id="main-content" class="min-h-screen">
 			<!-- Hero Section -->
@@ -58,7 +57,7 @@ const currentLang = getLangFromUrl(Astro.url);
 			)}
 			
 			<!-- Content Container -->
-			<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-8 2xl:px-12">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-8 2xl:px-12">
 				<!-- Floating TOC Button (Mobile/Tablet) -->
 				<button 
 					id="toc-toggle-mobile" 
@@ -84,7 +83,7 @@ const currentLang = getLangFromUrl(Astro.url);
 									</svg>
 								</button>
 							</div>
-							<TableOfContents 
+							<EnhancedTOC 
 								content={content}
 								maxDepth={3}
 								showNumbers={false}
@@ -240,11 +239,11 @@ const currentLang = getLangFromUrl(Astro.url);
 				</div>
 				
 				<!-- Desktop/Laptop Layout Grid (LG and above) -->
-				<div class="hidden lg:grid lg:grid-cols-[220px_minmax(0,1fr)_160px] xl:grid-cols-[260px_minmax(0,1fr)_200px] lg:gap-6 xl:gap-8 2xl:gap-10 lg:items-start">
-					<!-- Left TOC -->
-					<aside class="sticky top-8 min-w-0">
+				<div class="hidden lg:grid lg:grid-cols-[1fr] laptop:grid-cols-[200px_minmax(0,1fr)] desktop:grid-cols-[220px_minmax(0,1fr)] wide:grid-cols-[240px_minmax(0,1fr)_180px] lg:gap-6 laptop:gap-8 desktop:gap-10 wide:gap-12 lg:items-start">
+					<!-- Left TOC - Only visible on laptop and above -->
+					<aside class="hidden laptop:block sticky top-8 min-w-0">
 						<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-6 max-h-[calc(100vh-8rem)] overflow-y-auto shadow-sm">
-							<TableOfContents 
+							<EnhancedTOC 
 								content={content}
 								maxDepth={3}
 								showNumbers={false}
@@ -254,7 +253,7 @@ const currentLang = getLangFromUrl(Astro.url);
 					</aside>
 					
 					<!-- Main Content - Desktop -->
-					<main class="min-w-0 py-16 px-4">
+					<main class="min-w-0 py-16 px-4 max-w-4xl lg:max-w-none">
 						<!-- Article Header -->
 						<header class="mb-16">
 							<!-- Meta Information -->
@@ -396,8 +395,8 @@ const currentLang = getLangFromUrl(Astro.url);
 						</footer>
 					</main>
 					
-					<!-- Right Sidebar -->
-					<aside class="sticky top-8 min-w-0">
+					<!-- Right Sidebar - Only visible on ultra-wide screens -->
+					<aside class="hidden wide:block sticky top-8 min-w-0">
 						<div class="space-y-6">
 							<!-- Reading Progress -->
 							<div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-sm">

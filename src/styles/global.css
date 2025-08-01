@@ -562,70 +562,119 @@ a:not(.no-underline):hover {
 	touch-action: manipulation;
 }
 
-/* Tablet breakpoint (new) */
+/* Enhanced responsive breakpoints for content-first design */
+
+/* Tablet: 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
-	/* Tablet-specific layouts */
 	.prose {
 		max-width: 70ch !important;
-		font-size: 1.0625rem; /* 17px */
-		line-height: 1.7;
+		font-size: 1.0625rem;
+		line-height: 1.75;
 	}
 	
-	/* Tablet typography adjustments */
 	h1 { font-size: clamp(2.5rem, 2.25rem + 1.25vw, 3.5rem); }
 	h2 { font-size: clamp(2rem, 1.875rem + 0.625vw, 2.5rem); }
 	h3 { font-size: clamp(1.5rem, 1.4375rem + 0.3125vw, 1.75rem); }
 	
-	/* Better spacing for tablets */
-	main {
-		@apply px-6 py-10;
-	}
+	main { @apply px-6 py-10; }
 }
 
-/* Layout improvements for better readability */
-@media (min-width: 1280px) {
-	/* Enhanced prose width for better reading on wide screens */
+/* Small Laptop: 1024px - 1279px */
+@media (min-width: 1024px) and (max-width: 1279px) {
 	.prose {
 		max-width: 75ch !important;
+		font-size: 1.125rem;
+		line-height: 1.75;
 	}
 	
-	/* Ensure TOC has proper minimum width and scrolling */
-	.xl\:grid-cols-\[250px_minmax\(0\,1fr\)_180px\] {
-		grid-template-columns: 250px minmax(0, 1fr) 180px;
+	/* Single column layout for optimal reading */
+	main { @apply px-8 py-12; }
+}
+
+/* Standard Laptop: 1280px - 1365px */
+@media (min-width: 1280px) and (max-width: 1365px) {
+	.prose {
+		max-width: 78ch !important;
+		font-size: 1.125rem;
+		line-height: 1.75;
 	}
 }
 
-/* Grid layout definitions for LG breakpoint */
-@media (min-width: 1024px) {
-	.lg\:grid-cols-\[200px_minmax\(0\,1fr\)_140px\] {
-		grid-template-columns: 200px minmax(0, 1fr) 140px;
-	}
-	
-	.lg\:gap-3 {
-		gap: 0.75rem;
+/* Large Laptop: 1366px - 1535px */
+@media (min-width: 1366px) and (max-width: 1535px) {
+	.prose {
+		max-width: 80ch !important;
+		font-size: 1.1875rem;
+		line-height: 1.7;
 	}
 }
 
-/* Enhanced layout for larger screens */
+/* Desktop: 1536px - 1679px */
+@media (min-width: 1536px) and (max-width: 1679px) {
+	.prose {
+		max-width: 82ch !important;
+		font-size: 1.1875rem;
+		line-height: 1.7;
+	}
+}
+
+/* Large Desktop: 1680px - 1919px */
+@media (min-width: 1680px) and (max-width: 1919px) {
+	.prose {
+		max-width: 85ch !important;
+		font-size: 1.25rem;
+		line-height: 1.7;
+	}
+}
+
+/* Ultra-wide: 1920px+ */
+@media (min-width: 1920px) {
+	.prose {
+		max-width: 88ch !important;
+		font-size: 1.25rem;
+		line-height: 1.7;
+	}
+}
+
+/* Content-first layout improvements */
 @media (min-width: 1280px) {
-	.xl\:grid-cols-\[250px_minmax\(0\,1fr\)_180px\] {
-		grid-template-columns: 250px minmax(0, 1fr) 180px;
+	/* Optimized reading width for laptops */
+	.content-optimized {
+		max-width: 800px;
+		margin: 0 auto;
 	}
-	
-	.xl\:gap-4 {
-		gap: 1rem;
+}
+
+/* Responsive grid layouts */
+@media (min-width: 1024px) {
+	/* Single column for small laptops */
+	.responsive-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+	}
+}
+
+/* Enhanced layout for standard laptops */
+@media (min-width: 1280px) {
+	.responsive-grid {
+		grid-template-columns: 200px 1fr;
+		gap: 2rem;
 	}
 }
 
 @media (min-width: 1536px) {
-	/* Wider prose on 2XL screens */
-	.prose {
-		max-width: 80ch !important;
+	.responsive-grid {
+		grid-template-columns: 220px 1fr;
+		gap: 2.5rem;
 	}
-	
-	/* Larger gaps for better spacing */
-	.\32xl\:gap-6 {
-		gap: 1.5rem;
+}
+
+/* Ultra-wide screens with 3-column layout */
+@media (min-width: 1920px) {
+	.responsive-grid {
+		grid-template-columns: 240px 1fr 180px;
+		gap: 3rem;
 	}
 }
 

@@ -6,10 +6,13 @@ export default {
       screens: {
         'xs': '475px',
         'sm': '640px',
-        'md': '768px', // Added tablet breakpoint
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
+        'md': '768px', // Tablet
+        'lg': '1024px', // Small laptop
+        'laptop': '1280px', // Standard laptop
+        'xl': '1366px', // Large laptop 
+        'desktop': '1536px', // Desktop
+        '2xl': '1680px', // Large desktop
+        'wide': '1920px', // Ultra-wide
       },
       maxWidth: {
         'prose': '65ch', // Optimal reading width (approximately 600-700px)
