@@ -71,14 +71,16 @@
       ));
       
       // Update progress bar
-      progressBar.style.width = `${progress}%`;
+      if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+      }
       
       // Update mobile progress
       if (progressMobile && progressCircle && progressText) {
         const circumference = 94.2;
         const offset = circumference - (progress / 100) * circumference;
         
-        progressCircle.style.strokeDashoffset = offset;
+        progressCircle.style.strokeDashoffset = `${offset}`;
         progressText.textContent = `${Math.round(progress)}%`;
         
         // Show/hide mobile progress based on scroll
