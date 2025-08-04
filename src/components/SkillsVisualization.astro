@@ -1,0 +1,479 @@
+---
+export interface SkillCategory {
+  name: string;
+  color: string;
+  skills: Array<{
+    name: string;
+    level: number; // 1-100
+    years: number;
+    description?: string;
+  }>;
+}
+
+export interface Props {
+  categories: SkillCategory[];
+  interactive?: boolean;
+  showDetails?: boolean;
+}
+
+const { categories, interactive = true, showDetails = true } = Astro.props;
+---
+
+<div class="skills-visualization bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
+  <div class="mb-8">
+    <h3 class="text-2xl font-bold mb-4 text-center">💻 Technical Expertise</h3>
+    <p class="text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto">
+      Interactive visualization of technical skills and experience levels
+    </p>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs flex flex-wrap justify-center gap-2 mb-8">
+    {categories.map((category, index) => (
+      <button 
+        class={`tab-button px-4 py-2 rounded-lg transition-all duration-300 ${index === 0 ? 'active' : ''}`}
+        data-category={index}
+        style={`--category-color: ${category.color}`}
+      >
+        {category.name}
+      </button>
+    ))}
+  </div>
+
+  <!-- Skills Content -->
+  <div class="skills-content">
+    {categories.map((category, categoryIndex) => (
+      <div 
+        class={`skill-category ${categoryIndex === 0 ? 'active' : 'hidden'}`}
+        data-category={categoryIndex}
+      >
+        <!-- Radial Chart View -->
+        <div class="radial-chart mb-8">
+          <div class="chart-container relative w-80 h-80 mx-auto">
+            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+              <!-- Background circles -->
+              <g class="chart-bg opacity-20">
+                <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="1" class="text-gray-300 dark:text-gray-600"/>
+                <circle cx="100" cy="100" r="50" fill="none" stroke="currentColor" stroke-width="1" class="text-gray-300 dark:text-gray-600"/>
+                <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" stroke-width="1" class="text-gray-300 dark:text-gray-600"/>
+                <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="1" class="text-gray-300 dark:text-gray-600"/>
+              </g>
+              
+              <!-- Skill rays -->
+              <g class="skill-rays">
+                {category.skills.map((skill, skillIndex) => {
+                  const angle = (skillIndex * 360) / category.skills.length;
+                  const radian = (angle * Math.PI) / 180;
+                  const maxRadius = 90;
+                  const skillRadius = (skill.level / 100) * maxRadius;
+                  const endX = 100 + Math.cos(radian - Math.PI/2) * skillRadius;
+                  const endY = 100 + Math.sin(radian - Math.PI/2) * skillRadius;
+                  const labelX = 100 + Math.cos(radian - Math.PI/2) * (maxRadius + 15);
+                  const labelY = 100 + Math.sin(radian - Math.PI/2) * (maxRadius + 15);
+                  
+                  return (
+                    <g class="skill-ray" data-skill={skillIndex}>
+                      <!-- Skill line -->
+                      <line 
+                        x1="100" 
+                        y1="100" 
+                        x2={endX} 
+                        y2={endY}
+                        stroke={category.color}
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        class="skill-line opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
+                        style="stroke-dasharray: 0; stroke-dashoffset: 0;"
+                      />
+                      
+                      <!-- Skill point -->
+                      <circle 
+                        cx={endX} 
+                        cy={endY} 
+                        r="4" 
+                        fill={category.color}
+                        class="skill-point cursor-pointer hover:r-6 transition-all"
+                      />
+                      
+                      <!-- Skill label -->
+                      <text 
+                        x={labelX} 
+                        y={labelY} 
+                        text-anchor="middle" 
+                        dominant-baseline="middle"
+                        class="skill-label text-sm font-medium fill-current text-gray-700 dark:text-gray-300 cursor-pointer hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                        style="font-size: 10px;"
+                      >
+                        {skill.name}
+                      </text>
+                    </g>
+                  );
+                })}
+              </g>
+              
+              <!-- Center text -->
+              <text x="100" y="95" text-anchor="middle" class="text-lg font-bold fill-current text-gray-800 dark:text-gray-200">
+                {category.name}
+              </text>
+              <text x="100" y="110" text-anchor="middle" class="text-sm fill-current text-gray-600 dark:text-gray-400">
+                {category.skills.length} Skills
+              </text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Detailed Skills List -->
+        {showDetails && (
+          <div class="skills-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+            {category.skills.map((skill, skillIndex) => (
+              <div class="skill-item p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors cursor-pointer"
+                   data-skill={skillIndex}>
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="font-semibold text-gray-900 dark:text-gray-100">{skill.name}</h4>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">{skill.years}y</span>
+                </div>
+                
+                <!-- Skill progress bar -->
+                <div class="skill-progress mb-2">
+                  <div class="progress-track h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+                    <div 
+                      class="progress-bar h-full rounded-full transition-all duration-1000 ease-out"
+                      style={`background-color: ${category.color}; width: 0%`}
+                      data-width={skill.level}
+                    ></div>
+                  </div>
+                  <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <span>Beginner</span>
+                    <span class="skill-level-text font-medium">{skill.level}%</span>
+                    <span>Expert</span>
+                  </div>
+                </div>
+                
+                {skill.description && (
+                  <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">{skill.description}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Legend and Controls -->
+  <div class="chart-controls mt-8 flex flex-wrap justify-center gap-4">
+    <div class="legend flex items-center gap-2">
+      <span class="text-sm text-gray-600 dark:text-gray-400">Experience Level:</span>
+      <div class="level-indicators flex gap-1">
+        <div class="w-2 h-2 bg-gray-300 rounded-full" title="0-30%"></div>
+        <div class="w-2 h-2 bg-yellow-400 rounded-full" title="30-60%"></div>
+        <div class="w-2 h-2 bg-orange-500 rounded-full" title="60-80%"></div>
+        <div class="w-2 h-2 bg-green-500 rounded-full" title="80-100%"></div>
+      </div>
+    </div>
+    
+    {interactive && (
+      <button class="chart-toggle px-3 py-1 text-sm bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors">
+        <span class="toggle-text">Show Animation</span>
+      </button>
+    )}
+  </div>
+</div>
+
+<style>
+  .tab-button {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-primary);
+  }
+
+  .tab-button.active {
+    background: var(--category-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .tab-button:hover:not(.active) {
+    background: var(--interactive-secondary-hover);
+    transform: translateY(-1px);
+  }
+
+  .skill-category {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .skill-category.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .skill-category.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skill-ray {
+    transition: all 0.3s ease;
+  }
+
+  .skill-ray:hover .skill-line {
+    stroke-width: 4;
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+
+  .skill-ray:hover .skill-point {
+    r: 6;
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+
+  .skill-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .progress-bar {
+    transition: width 1s ease-out;
+  }
+
+  /* Animation classes */
+  .animate-skills .skill-line {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawLine 1s ease-out forwards;
+  }
+
+  .animate-skills .skill-point {
+    opacity: 0;
+    animation: fadeInPoint 0.5s ease-out forwards;
+    animation-delay: 0.8s;
+  }
+
+  .animate-skills .skill-label {
+    opacity: 0;
+    animation: fadeInLabel 0.5s ease-out forwards;
+    animation-delay: 1s;
+  }
+
+  @keyframes drawLine {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fadeInPoint {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInLabel {
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .chart-container {
+      width: 300px;
+      height: 300px;
+    }
+
+    .skill-label {
+      font-size: 8px !important;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .category-tabs {
+      gap: 1rem;
+    }
+
+    .tab-button {
+      font-size: 0.875rem;
+      padding: 0.5rem 0.75rem;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .skill-ray,
+    .skill-item,
+    .tab-button,
+    .progress-bar {
+      transition: none;
+    }
+
+    .animate-skills .skill-line,
+    .animate-skills .skill-point,
+    .animate-skills .skill-label {
+      animation: none;
+      opacity: 1;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
+
+<script>
+  class SkillsVisualization {
+    private container: HTMLElement;
+    private tabButtons: NodeListOf<HTMLElement>;
+    private skillCategories: NodeListOf<HTMLElement>;
+    private toggleButton: HTMLElement | null;
+    private isAnimated: boolean = false;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.tabButtons = container.querySelectorAll('.tab-button');
+      this.skillCategories = container.querySelectorAll('.skill-category');
+      this.toggleButton = container.querySelector('.chart-toggle');
+
+      this.init();
+    }
+
+    private init(): void {
+      this.bindEvents();
+      this.animateProgressBars();
+      this.setupIntersectionObserver();
+    }
+
+    private bindEvents(): void {
+      // Tab switching
+      this.tabButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          this.switchCategory(index);
+        });
+      });
+
+      // Skill item interactions
+      const skillItems = this.container.querySelectorAll('.skill-item, .skill-ray');
+      skillItems.forEach((item, index) => {
+        item.addEventListener('mouseenter', () => {
+          this.highlightSkill(item);
+        });
+
+        item.addEventListener('mouseleave', () => {
+          this.unhighlightSkill(item);
+        });
+      });
+
+      // Animation toggle
+      if (this.toggleButton) {
+        this.toggleButton.addEventListener('click', () => {
+          this.toggleAnimation();
+        });
+      }
+    }
+
+    private switchCategory(categoryIndex: number): void {
+      // Update tab buttons
+      this.tabButtons.forEach((button, index) => {
+        button.classList.toggle('active', index === categoryIndex);
+      });
+
+      // Update skill categories
+      this.skillCategories.forEach((category, index) => {
+        if (index === categoryIndex) {
+          category.classList.remove('hidden');
+          category.classList.add('active');
+        } else {
+          category.classList.add('hidden');
+          category.classList.remove('active');
+        }
+      });
+
+      // Re-animate progress bars for new category
+      setTimeout(() => {
+        this.animateProgressBars();
+      }, 100);
+    }
+
+    private highlightSkill(item: Element): void {
+      const skillIndex = item.getAttribute('data-skill');
+      if (!skillIndex) return;
+
+      // Highlight corresponding elements
+      const activeCategory = this.container.querySelector('.skill-category.active');
+      if (activeCategory) {
+        const relatedElements = activeCategory.querySelectorAll(`[data-skill="${skillIndex}"]`);
+        relatedElements.forEach(el => {
+          el.classList.add('highlighted');
+        });
+      }
+    }
+
+    private unhighlightSkill(item: Element): void {
+      const skillIndex = item.getAttribute('data-skill');
+      if (!skillIndex) return;
+
+      const activeCategory = this.container.querySelector('.skill-category.active');
+      if (activeCategory) {
+        const relatedElements = activeCategory.querySelectorAll(`[data-skill="${skillIndex}"]`);
+        relatedElements.forEach(el => {
+          el.classList.remove('highlighted');
+        });
+      }
+    }
+
+    private animateProgressBars(): void {
+      const activeCategory = this.container.querySelector('.skill-category.active');
+      if (!activeCategory) return;
+
+      const progressBars = activeCategory.querySelectorAll('.progress-bar');
+      progressBars.forEach((bar, index) => {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => {
+          (bar as HTMLElement).style.width = `${width}%`;
+        }, index * 100);
+      });
+    }
+
+    private toggleAnimation(): void {
+      const activeCategory = this.container.querySelector('.skill-category.active');
+      if (!activeCategory) return;
+
+      this.isAnimated = !this.isAnimated;
+      
+      if (this.isAnimated) {
+        activeCategory.classList.add('animate-skills');
+        if (this.toggleButton) {
+          this.toggleButton.querySelector('.toggle-text')!.textContent = 'Stop Animation';
+        }
+      } else {
+        activeCategory.classList.remove('animate-skills');
+        if (this.toggleButton) {
+          this.toggleButton.querySelector('.toggle-text')!.textContent = 'Show Animation';
+        }
+      }
+    }
+
+    private setupIntersectionObserver(): void {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.isAnimated) {
+            // Auto-start animation when component comes into view
+            setTimeout(() => {
+              this.toggleAnimation();
+            }, 500);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(this.container);
+    }
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const skillsVisualization = document.querySelector('.skills-visualization');
+    if (skillsVisualization) {
+      new SkillsVisualization(skillsVisualization as HTMLElement);
+    }
+  });
+</script>

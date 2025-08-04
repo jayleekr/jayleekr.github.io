@@ -1,0 +1,361 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getLangFromUrl } from '../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+
+const title = lang === 'ko' ? '페이지를 찾을 수 없습니다' : 'Page Not Found';
+const description = lang === 'ko' 
+  ? '요청하신 페이지를 찾을 수 없습니다. 하지만 이 귀여운 404 페이지라도 만나보세요!' 
+  : 'The page you\'re looking for doesn\'t exist. But hey, at least you found this cute 404 page!';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body class="bg-white dark:bg-gray-900 transition-colors duration-300">
+    <Header />
+    
+    <main class="min-h-screen flex items-center justify-center px-4">
+      <div class="max-w-2xl w-full text-center">
+        <!-- Animated 404 -->
+        <div class="mb-8">
+          <div class="text-8xl md:text-9xl font-black text-primary-500 dark:text-primary-400 relative">
+            <span class="inline-block animate-bounce" style="animation-delay: 0ms">4</span>
+            <span class="inline-block animate-bounce mx-2" style="animation-delay: 150ms">0</span>
+            <span class="inline-block animate-bounce" style="animation-delay: 300ms">4</span>
+            
+            <!-- Floating elements -->
+            <div class="absolute -top-4 left-0 text-2xl animate-float" style="animation-delay: 0.5s">✨</div>
+            <div class="absolute -top-2 right-0 text-xl animate-float" style="animation-delay: 1s">🎈</div>
+            <div class="absolute top-8 left-1/4 text-lg animate-float" style="animation-delay: 1.5s">🌟</div>
+          </div>
+        </div>
+        
+        <!-- Interactive Robot/Character -->
+        <div class="mb-12">
+          <div class="w-32 h-32 mx-auto mb-6 relative">
+            <!-- Robot body -->
+            <div class="w-24 h-24 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl mx-auto relative animate-sway">
+              <!-- Robot eyes -->
+              <div class="absolute top-6 left-4 w-3 h-3 bg-white rounded-full animate-blink"></div>
+              <div class="absolute top-6 right-4 w-3 h-3 bg-white rounded-full animate-blink" style="animation-delay: 0.1s"></div>
+              
+              <!-- Robot mouth -->
+              <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-white rounded-full animate-talk"></div>
+              
+              <!-- Robot antennas -->
+              <div class="absolute -top-2 left-8 w-1 h-4 bg-gray-400 rounded-full"></div>
+              <div class="absolute -top-2 right-8 w-1 h-4 bg-gray-400 rounded-full"></div>
+              <div class="absolute -top-4 left-8 w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+              <div class="absolute -top-4 right-8 w-2 h-2 bg-blue-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+            </div>
+            
+            <!-- Robot arms -->
+            <div class="absolute -left-4 top-8 w-6 h-2 bg-primary-500 rounded-full animate-wave"></div>
+            <div class="absolute -right-4 top-8 w-6 h-2 bg-primary-500 rounded-full animate-wave-reverse"></div>
+          </div>
+          
+          <!-- Speech bubble -->
+          <div class="relative bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-lg border border-gray-200 dark:border-gray-700 max-w-xs mx-auto">
+            <div class="text-gray-700 dark:text-gray-300 font-medium" id="robot-speech">
+              {lang === 'ko' ? '어라? 여기에 뭐가 있어야 하는데...' : 'Hmm... Something should be here...'}
+            </div>
+            
+            <!-- Speech bubble tail -->
+            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white dark:bg-gray-800 border-l border-b border-gray-200 dark:border-gray-700 rotate-45"></div>
+          </div>
+        </div>
+        
+        <!-- Error message -->
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+            {title}
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+            {description}
+          </p>
+        </div>
+        
+        <!-- Interactive Game -->
+        <div class="mb-12 bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+            {lang === 'ko' ? '🎮 미니게임: 클릭해서 포인트를 모아보세요!' : '🎮 Mini Game: Click to collect points!'}
+          </h3>
+          
+          <div class="flex justify-center items-center gap-8 mb-4">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-primary-600 dark:text-primary-400" id="score">0</div>
+              <div class="text-sm text-gray-500">{lang === 'ko' ? '점수' : 'Score'}</div>
+            </div>
+            
+            <button 
+              id="click-game-btn"
+              class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full text-white text-3xl hover:scale-110 transition-all duration-200 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-600"
+            >
+              🍪
+            </button>
+            
+            <div class="text-center">
+              <div class="text-2xl font-bold text-green-600 dark:text-green-400" id="clicks-per-second">0</div>
+              <div class="text-sm text-gray-500">{lang === 'ko' ? 'CPS' : 'CPS'}</div>
+            </div>
+          </div>
+          
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            {lang === 'ko' ? '힌트: 빠르게 클릭하면 보너스 포인트를 받을 수 있어요!' : 'Tip: Click rapidly for bonus points!'}
+          </div>
+        </div>
+        
+        <!-- Navigation options -->
+        <div class="space-y-4">
+          <!-- Search -->
+          <div class="relative max-w-md mx-auto mb-6">
+            <input
+              type="text"
+              id="quick-search"
+              placeholder={lang === 'ko' ? '찾고 있던 내용을 검색해보세요...' : 'Search for what you were looking for...'}
+              class="w-full px-4 py-3 pl-10 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 text-gray-800 dark:text-gray-200"
+            />
+            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+          
+          <!-- Action buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a 
+              href="/"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-600"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              {lang === 'ko' ? '홈으로' : 'Go Home'}
+            </a>
+            
+            <a 
+              href="/blog"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+              </svg>
+              {lang === 'ko' ? '블로그' : 'Blog'}
+            </a>
+            
+            <button 
+              onclick="history.back()"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              {lang === 'ko' ? '뒤로' : 'Go Back'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <Footer />
+    
+    <style>
+      @keyframes sway {
+        0%, 100% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+      }
+      
+      @keyframes blink {
+        0%, 90%, 100% { opacity: 1; }
+        95% { opacity: 0; }
+      }
+      
+      @keyframes talk {
+        0%, 100% { transform: translateX(-50%) scaleX(1); }
+        50% { transform: translateX(-50%) scaleX(1.2); }
+      }
+      
+      @keyframes wave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-20deg); }
+      }
+      
+      @keyframes wave-reverse {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(20deg); }
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      .animate-sway {
+        animation: sway 3s ease-in-out infinite;
+      }
+      
+      .animate-blink {
+        animation: blink 4s infinite;
+      }
+      
+      .animate-talk {
+        animation: talk 2s ease-in-out infinite;
+      }
+      
+      .animate-wave {
+        animation: wave 2s ease-in-out infinite;
+      }
+      
+      .animate-wave-reverse {
+        animation: wave-reverse 2s ease-in-out infinite;
+      }
+      
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-bounce,
+        .animate-sway,
+        .animate-blink,
+        .animate-talk,
+        .animate-wave,
+        .animate-wave-reverse,
+        .animate-float {
+          animation: none !important;
+        }
+      }
+    </style>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Mini game functionality
+        let score = 0;
+        let clickCount = 0;
+        let startTime = Date.now();
+        const scoreEl = document.getElementById('score');
+        const cpsEl = document.getElementById('clicks-per-second');
+        const gameBtn = document.getElementById('click-game-btn');
+        const robotSpeech = document.getElementById('robot-speech');
+        const quickSearch = document.getElementById('quick-search');
+        
+        const lang = document.documentElement.lang;
+        
+        // Robot speech messages
+        const speechMessages = {
+          ko: [
+            '어라? 여기에 뭐가 있어야 하는데...',
+            '혹시 길을 잃으셨나요?',
+            '아, 404 에러라는 게 이런 거구나!',
+            '게임은 재미있나요? 😊',
+            '저도 페이지를 찾아보고 있어요!',
+            '이런, 여기서 뭘 찾고 계시는 거죠?',
+            '괜찮아요, 가끔 길을 잃기도 하는 법이에요!'
+          ],
+          en: [
+            'Hmm... Something should be here...',
+            'Did you get lost?',
+            'Oh, so this is what a 404 error looks like!',
+            'Is the game fun? 😊',
+            'I\'m also looking for the page!',
+            'Oops, what are you looking for here?',
+            'It\'s okay, we all get lost sometimes!'
+          ]
+        };
+        
+        // Game button click handler
+        if (gameBtn) {
+          gameBtn.addEventListener('click', () => {
+            clickCount++;
+            const currentTime = Date.now();
+            const timeElapsed = (currentTime - startTime) / 1000;
+            const cps = Math.round(clickCount / timeElapsed);
+            
+            // Calculate score with bonus for rapid clicking
+            let points = 1;
+            if (cps > 5) points = 3;
+            else if (cps > 3) points = 2;
+            
+            score += points;
+            scoreEl.textContent = score;
+            cpsEl.textContent = cps;
+            
+            // Visual feedback
+            gameBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+              gameBtn.style.transform = 'scale(1)';
+            }, 100);
+            
+            // Celebrate milestones
+            if (score % 50 === 0 && score > 0) {
+              createCelebration();
+              updateRobotSpeech();
+            }
+          });
+        }
+        
+        // Update robot speech periodically
+        function updateRobotSpeech() {
+          if (robotSpeech) {
+            const messages = speechMessages[lang] || speechMessages.en;
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            robotSpeech.textContent = randomMessage;
+          }
+        }
+        
+        // Create celebration effect
+        function createCelebration() {
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              const sparkle = document.createElement('div');
+              sparkle.textContent = ['✨', '🎉', '⭐', '💫'][Math.floor(Math.random() * 4)];
+              sparkle.style.cssText = `
+                position: fixed;
+                left: ${Math.random() * window.innerWidth}px;
+                top: ${Math.random() * window.innerHeight}px;
+                font-size: 24px;
+                pointer-events: none;
+                z-index: 9999;
+                animation: float 2s ease-out forwards;
+              `;
+              
+              document.body.appendChild(sparkle);
+              
+              setTimeout(() => {
+                if (sparkle.parentNode) {
+                  sparkle.parentNode.removeChild(sparkle);
+                }
+              }, 2000);
+            }, i * 100);
+          }
+        }
+        
+        // Quick search functionality
+        if (quickSearch) {
+          quickSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+              const query = quickSearch.value.trim();
+              if (query) {
+                // Redirect to search or home with query parameter
+                window.location.href = `/?search=${encodeURIComponent(query)}`;
+              }
+            }
+          });
+        }
+        
+        // Random robot speech updates
+        setInterval(updateRobotSpeech, 10000);
+        
+        // Initialize first speech update after a delay
+        setTimeout(updateRobotSpeech, 3000);
+      });
+    </script>
+  </body>
+</html>

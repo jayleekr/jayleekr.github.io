@@ -1,0 +1,198 @@
+---
+import HeaderLink from '../HeaderLink.astro';
+import LanguageSwitcher from '../LanguageSwitcher.astro';
+import ThemeToggle from '../ThemeToggle.astro';
+import Logo from '../Logo.astro';
+import { SITE_TITLE } from '../../consts';
+import { getLangFromUrl, t } from '../../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 hidden md:block">
+  <nav class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo and Brand -->
+      <div class="flex items-center">
+        <a 
+          href="/" 
+          class="flex items-center gap-3 group" 
+          aria-label="Home"
+        >
+          <Logo size="md" className="transition-transform group-hover:scale-110" />
+          <span class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+            {SITE_TITLE}
+          </span>
+        </a>
+      </div>
+      
+      <!-- Center Navigation Links -->
+      <div class="hidden lg:flex items-center space-x-8">
+        <HeaderLink 
+          href={lang === 'en' ? '/en' : '/'} 
+          class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium"
+        >
+          {t("navigation.home", lang)}
+        </HeaderLink>
+        <HeaderLink 
+          href={lang === 'en' ? '/en/about' : '/about'}
+          class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium"
+        >
+          {t("navigation.about", lang)}
+        </HeaderLink>
+        <HeaderLink 
+          href={lang === 'en' ? '/en/blog' : '/blog'}
+          class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium"
+        >
+          {t("navigation.blog", lang)}
+        </HeaderLink>
+        <HeaderLink 
+          href={lang === 'en' ? '/en/categories' : '/categories'}
+          class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium"
+        >
+          Categories
+        </HeaderLink>
+      </div>
+      
+      <!-- Right Side: Search + Actions -->
+      <div class="flex items-center gap-4">
+        <!-- Always Visible Search -->
+        <div class="relative hidden md:block">
+          <div class="relative">
+            <button
+              id="desktop-search-button"
+              class="flex items-center gap-3 w-72 h-10 px-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-600 transition-colors group"
+              aria-label={lang === 'ko' ? '검색 열기' : 'Open search'}
+              aria-expanded="false"
+            >
+              <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span class="text-gray-500 dark:text-gray-400 text-sm">
+                {lang === 'ko' ? '검색...' : 'Search...'}
+              </span>
+              <div class="ml-auto flex items-center gap-1">
+                <kbd class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">
+                  ⌘K
+                </kbd>
+              </div>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Mobile Navigation Links (for tablet) -->
+        <div class="lg:hidden flex items-center gap-4">
+          <HeaderLink 
+            href={lang === 'en' ? '/en' : '/'} 
+            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            {t("navigation.home", lang)}
+          </HeaderLink>
+          <HeaderLink 
+            href={lang === 'en' ? '/en/blog' : '/blog'}
+            class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            {t("navigation.blog", lang)}
+          </HeaderLink>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <ThemeToggle />
+        
+        <!-- Language Switcher -->
+        <LanguageSwitcher />
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchButton = document.getElementById('desktop-search-button');
+    
+    if (searchButton) {
+      // Open search modal when clicked
+      searchButton.addEventListener('click', () => {
+        const searchModal = document.getElementById('search-modal');
+        if (searchModal) {
+          searchModal.classList.remove('hidden');
+          searchModal.focus();
+        } else {
+          // Fallback to global search
+          const globalSearch = document.querySelector('[data-search-modal]');
+          if (globalSearch) {
+            globalSearch.classList.remove('hidden');
+          }
+        }
+      });
+      
+      // Keyboard shortcut (Cmd+K / Ctrl+K)
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          searchButton.click();
+        }
+        
+        // Also support '/' key
+        if (e.key === '/' && !e.target.matches('input, textarea, [contenteditable]')) {
+          e.preventDefault();
+          searchButton.click();
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Ensure proper backdrop blur support */
+  @supports (backdrop-filter: blur(12px)) {
+    header {
+      backdrop-filter: blur(12px);
+    }
+  }
+  
+  /* Fallback for browsers without backdrop-filter */
+  @supports not (backdrop-filter: blur(12px)) {
+    header {
+      background: rgba(255, 255, 255, 0.95);
+    }
+    
+    .dark header {
+      background: rgba(17, 24, 39, 0.95);
+    }
+  }
+  
+  /* Smooth scroll behavior for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Active link styling */
+  .header-link.active {
+    color: rgb(var(--color-primary-600));
+    font-weight: 600;
+  }
+  
+  .dark .header-link.active {
+    color: rgb(var(--color-primary-400));
+  }
+  
+  /* Search button focus styles */
+  #desktop-search-button:focus {
+    outline: 2px solid rgb(var(--color-primary-500));
+    outline-offset: 2px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1023px) {
+    .search-container {
+      width: 200px;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    header {
+      display: none;
+    }
+  }
+</style>

@@ -11,6 +11,9 @@ import Comments from '../components/Comments.astro';
 import Newsletter from '../components/Newsletter.astro';
 import EnhancedTOC from '../components/EnhancedTOC.astro';
 import ReadingProgress from '../components/ReadingProgress.astro';
+import WhimsyEnhancer from '../components/WhimsyEnhancer.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import LoadingStates from '../components/LoadingStates.astro';
 import { getLangFromUrl } from '../utils/i18n';
 
 type Props = CollectionEntry<'blog'>['data'] & {
@@ -36,6 +39,11 @@ const currentLang = getLangFromUrl(Astro.url);
 	</head>
 
 	<body class="bg-white dark:bg-gray-900 transition-colors duration-300" data-categories={categories ? JSON.stringify(categories) : '[]'}>
+		<!-- Whimsy Components -->
+		<WhimsyEnhancer />
+		<CommandPalette />
+		<LoadingStates />
+		
 		<Header />
 		
 		<ReadingProgress />
@@ -423,6 +431,15 @@ const currentLang = getLangFromUrl(Astro.url);
 		</div>
 		</main>
 		<Footer />
+		
+		<!-- Console Welcome Message -->
+		<script>
+			// Fun console messages for developers
+			console.log('%c🚀 Welcome to jayleekr.github.io! 🚀', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
+			console.log('%c💡 Pro tip: Try Cmd/Ctrl + K for the command palette!', 'color: #10b981; font-size: 14px;');
+			console.log('%c🎮 Easter egg: Type "//" anywhere or try the Konami code!', 'color: #f59e0b; font-size: 14px;');
+			console.log('%c🛠️ Built with Astro + Tailwind CSS + lots of ❤️', 'color: #8b5cf6; font-size: 14px;');
+		</script>
 		
 		<!-- Mermaid Script -->
 		<script type="module">

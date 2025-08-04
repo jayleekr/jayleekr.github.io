@@ -1,0 +1,482 @@
+---
+import { getLangFromUrl, t } from '../../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!-- Search Modal -->
+<div 
+  id="search-modal" 
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="search-title"
+  data-search-modal
+>
+  <!-- Backdrop -->
+  <div 
+    class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity"
+    data-search-backdrop
+    aria-hidden="true"
+  ></div>
+  
+  <!-- Modal Content -->
+  <div class="fixed inset-0 overflow-y-auto">
+    <div class="flex min-h-full items-start justify-center p-4 pt-16 sm:p-6 sm:pt-24">
+      <div class="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-2xl transition-all">
+        
+        <!-- Search Header -->
+        <div class="relative">
+          <div class="flex items-center px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <!-- Search Icon -->
+            <svg class="w-6 h-6 text-gray-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            
+            <!-- Search Input -->
+            <input
+              type="text"
+              id="search-input"
+              class="flex-1 bg-transparent border-0 text-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0"
+              placeholder={lang === 'ko' ? '검색어를 입력하세요...' : 'Search posts, categories, tags...'}
+              autocomplete="off"
+              spellcheck="false"
+              data-search-input
+            >
+            
+            <!-- Close Button -->
+            <button
+              type="button"
+              class="ml-4 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              data-search-close
+              aria-label={lang === 'ko' ? '검색 닫기' : 'Close search'}
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Search Shortcuts -->
+          <div class="px-6 py-3 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <div class="flex items-center gap-2">
+                <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs">
+                  ↑↓
+                </kbd>
+                <span>{lang === 'ko' ? '탐색' : 'Navigate'}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs">
+                  ↵
+                </kbd>
+                <span>{lang === 'ko' ? '선택' : 'Select'}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs">
+                  ESC
+                </kbd>
+                <span>{lang === 'ko' ? '닫기' : 'Close'}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Search Results -->
+        <div class="max-h-96 overflow-y-auto" data-search-results>
+          
+          <!-- Loading State -->
+          <div class="hidden px-6 py-8 text-center" data-search-loading>
+            <div class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+              <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>{lang === 'ko' ? '검색 중...' : 'Searching...'}</span>
+            </div>
+          </div>
+          
+          <!-- Empty State -->
+          <div class="px-6 py-8 text-center" data-search-empty>
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <p class="text-gray-600 dark:text-gray-400 mb-2">
+              {lang === 'ko' ? '검색어를 입력해주세요' : 'Start typing to search'}
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-500">
+              {lang === 'ko' ? '포스트, 카테고리, 태그를 검색할 수 있습니다' : 'Search through posts, categories, and tags'}
+            </p>
+          </div>
+          
+          <!-- No Results State -->
+          <div class="hidden px-6 py-8 text-center" data-search-no-results>
+            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0120 12c0-4.411-3.589-8-8-8s-8 3.589-8 8c0 1.76.57 3.384 1.535 4.708L2 21l4.292-3.465A7.952 7.952 0 0012 20c4.411 0 8-3.589 8-8h-8z" />
+            </svg>
+            <p class="text-gray-600 dark:text-gray-400 mb-2">
+              <span data-search-query></span>에 대한 검색 결과가 없습니다
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-500">
+              {lang === 'ko' ? '다른 검색어를 시도해보세요' : 'Try a different search term'}
+            </p>
+          </div>
+          
+          <!-- Results Container -->
+          <div class="hidden" data-search-results-list>
+            <!-- Results will be inserted here by JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Search Footer -->
+        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700">
+          <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+            <div class="flex items-center gap-4">
+              <span>{lang === 'ko' ? '정확한 검색을 위해 공백으로 구분하세요' : 'Use spaces to separate search terms'}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span>{lang === 'ko' ? '검색 제공:' : 'Search powered by:'}</span>
+              <span class="font-medium text-primary-600 dark:text-primary-400">Astro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  interface SearchResult {
+    title: string;
+    url: string;
+    excerpt: string;
+    type: 'post' | 'category' | 'tag';
+    date?: string;
+    tags?: string[];
+  }
+  
+  class SearchModal {
+    private modal: HTMLElement;
+    private input: HTMLInputElement;
+    private resultsContainer: HTMLElement;
+    private loadingState: HTMLElement;
+    private emptyState: HTMLElement;
+    private noResultsState: HTMLElement;
+    private resultsList: HTMLElement;
+    private selectedIndex: number = -1;
+    private searchTimeout: number | null = null;
+    private searchData: SearchResult[] = [];
+    
+    constructor() {
+      this.modal = document.getElementById('search-modal')!;
+      this.input = document.querySelector('[data-search-input]')!;
+      this.resultsContainer = document.querySelector('[data-search-results]')!;
+      this.loadingState = document.querySelector('[data-search-loading]')!;
+      this.emptyState = document.querySelector('[data-search-empty]')!;
+      this.noResultsState = document.querySelector('[data-search-no-results]')!;
+      this.resultsList = document.querySelector('[data-search-results-list]')!;
+      
+      this.init();
+      this.loadSearchData();
+    }
+    
+    private init() {
+      // Close modal events
+      document.querySelector('[data-search-close]')?.addEventListener('click', () => this.close());
+      document.querySelector('[data-search-backdrop]')?.addEventListener('click', () => this.close());
+      
+      // Input events
+      this.input.addEventListener('input', (e) => this.handleInput(e));
+      this.input.addEventListener('keydown', (e) => this.handleKeydown(e));
+      
+      // Global keyboard shortcuts
+      document.addEventListener('keydown', (e) => this.handleGlobalKeydown(e));
+      
+      // Open search from buttons
+      document.querySelectorAll('[id*="search-button"]').forEach(button => {
+        button.addEventListener('click', () => this.open());
+      });
+    }
+    
+    private async loadSearchData() {
+      try {
+        // In a real implementation, this would fetch from an API or static JSON
+        // For now, we'll use a placeholder
+        this.searchData = [
+          {
+            title: "Getting Started with Astro",
+            url: "/blog/getting-started-astro",
+            excerpt: "Learn how to build fast, modern websites with Astro's island architecture.",
+            type: "post",
+            date: "2024-01-15",
+            tags: ["astro", "javascript", "web-development"]
+          },
+          {
+            title: "React vs Vue: A Comparison",
+            url: "/blog/react-vs-vue",
+            excerpt: "Comparing two popular frontend frameworks and their use cases.",
+            type: "post",
+            date: "2024-01-10",
+            tags: ["react", "vue", "comparison"]
+          }
+        ];
+      } catch (error) {
+        console.error('Failed to load search data:', error);
+      }
+    }
+    
+    public open() {
+      this.modal.classList.remove('hidden');
+      this.input.focus();
+      document.body.style.overflow = 'hidden';
+    }
+    
+    public close() {
+      this.modal.classList.add('hidden');
+      this.input.value = '';
+      this.selectedIndex = -1;
+      this.showEmptyState();
+      document.body.style.overflow = '';
+    }
+    
+    private handleInput(e: Event) {
+      const query = (e.target as HTMLInputElement).value.trim();
+      
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
+      }
+      
+      this.searchTimeout = window.setTimeout(() => {
+        if (query.length === 0) {
+          this.showEmptyState();
+        } else if (query.length >= 2) {
+          this.performSearch(query);
+        }
+      }, 150);
+    }
+    
+    private handleKeydown(e: KeyboardEvent) {
+      switch (e.key) {
+        case 'Escape':
+          e.preventDefault();
+          this.close();
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          this.navigateResults(1);
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          this.navigateResults(-1);
+          break;
+        case 'Enter':
+          e.preventDefault();
+          this.selectResult();
+          break;
+      }
+    }
+    
+    private handleGlobalKeydown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        this.open();
+      } else if (e.key === '/' && !e.target?.matches('input, textarea, [contenteditable]')) {
+        e.preventDefault();
+        this.open();
+      } else if (e.key === 'Escape' && !this.modal.classList.contains('hidden')) {
+        this.close();
+      }
+    }
+    
+    private performSearch(query: string) {
+      this.showLoadingState();
+      
+      // Simulate search delay
+      setTimeout(() => {
+        const results = this.searchData.filter(item => 
+          item.title.toLowerCase().includes(query.toLowerCase()) ||
+          item.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+          item.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+        );
+        
+        if (results.length === 0) {
+          this.showNoResultsState(query);
+        } else {
+          this.showResults(results, query);
+        }
+      }, 100);
+    }
+    
+    private showEmptyState() {
+      this.hideAllStates();
+      this.emptyState.classList.remove('hidden');
+    }
+    
+    private showLoadingState() {
+      this.hideAllStates();
+      this.loadingState.classList.remove('hidden');
+    }
+    
+    private showNoResultsState(query: string) {
+      this.hideAllStates();
+      this.noResultsState.classList.remove('hidden');
+      const queryElement = this.noResultsState.querySelector('[data-search-query]');
+      if (queryElement) {
+        queryElement.textContent = `"${query}"`;
+      }
+    }
+    
+    private showResults(results: SearchResult[], query: string) {
+      this.hideAllStates();
+      this.resultsList.classList.remove('hidden');
+      this.selectedIndex = -1;
+      
+      this.resultsList.innerHTML = results.map((result, index) => `
+        <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0" data-result-index="${index}">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 mt-1">
+              ${result.type === 'post' ? `
+                <svg class="w-5 h-5 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0120 12c0-4.411-3.589-8-8-8s-8 3.589-8 8c0 1.76.57 3.384 1.535 4.708L2 21l4.292-3.465A7.952 7.952 0 0012 20c4.411 0 8-3.589 8-8h-8z" />
+                </svg>
+              ` : `
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+              `}
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                ${this.highlightQuery(result.title, query)}
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2">
+                ${this.highlightQuery(result.excerpt, query)}
+              </p>
+              ${result.date ? `
+                <div class="flex items-center gap-2 mt-2 text-xs text-gray-500 dark:text-gray-500">
+                  <span>${new Date(result.date).toLocaleDateString()}</span>
+                  ${result.tags ? `
+                    <span>•</span>
+                    <div class="flex gap-1">
+                      ${result.tags.slice(0, 2).map(tag => `
+                        <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded text-xs">${tag}</span>
+                      `).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+              ` : ''}
+            </div>
+            <div class="flex-shrink-0">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Add click handlers
+      this.resultsList.querySelectorAll('[data-result-index]').forEach((element, index) => {
+        element.addEventListener('click', () => {
+          window.location.href = results[index].url;
+        });
+      });
+    }
+    
+    private hideAllStates() {
+      this.emptyState.classList.add('hidden');
+      this.loadingState.classList.add('hidden');
+      this.noResultsState.classList.add('hidden');
+      this.resultsList.classList.add('hidden');
+    }
+    
+    private navigateResults(direction: number) {
+      const results = this.resultsList.querySelectorAll('[data-result-index]');
+      if (results.length === 0) return;
+      
+      // Remove previous selection
+      if (this.selectedIndex >= 0) {
+        results[this.selectedIndex].classList.remove('bg-primary-50', 'dark:bg-primary-900/20');
+      }
+      
+      // Calculate new index
+      this.selectedIndex += direction;
+      if (this.selectedIndex < 0) {
+        this.selectedIndex = results.length - 1;
+      } else if (this.selectedIndex >= results.length) {
+        this.selectedIndex = 0;
+      }
+      
+      // Apply new selection
+      const selectedElement = results[this.selectedIndex];
+      selectedElement.classList.add('bg-primary-50', 'dark:bg-primary-900/20');
+      selectedElement.scrollIntoView({ block: 'nearest' });
+    }
+    
+    private selectResult() {
+      if (this.selectedIndex >= 0) {
+        const selectedElement = this.resultsList.querySelector(`[data-result-index="${this.selectedIndex}"]`);
+        if (selectedElement) {
+          (selectedElement as HTMLElement).click();
+        }
+      }
+    }
+    
+    private highlightQuery(text: string, query: string): string {
+      if (!query) return text;
+      
+      const regex = new RegExp(`(${query})`, 'gi');
+      return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-800/50 px-0.5 rounded">$1</mark>');
+    }
+  }
+  
+  // Initialize search modal when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new SearchModal();
+  });
+</script>
+
+<style>
+  /* Custom scrollbar for search results */
+  [data-search-results] {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(156 163 175) transparent;
+  }
+  
+  [data-search-results]::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  [data-search-results]::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  [data-search-results]::-webkit-scrollbar-thumb {
+    background-color: rgb(156 163 175);
+    border-radius: 3px;
+  }
+  
+  [data-search-results]::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(107 114 128);
+  }
+  
+  /* Line clamp utility */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Search highlight styles */
+  mark {
+    background-color: rgb(254 240 138);
+    color: inherit;
+    padding: 0 0.125rem;
+    border-radius: 0.125rem;
+  }
+  
+  .dark mark {
+    background-color: rgb(133 77 14 / 0.5);
+  }
+</style>

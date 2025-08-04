@@ -1,0 +1,395 @@
+---
+import FormattedDate from '../FormattedDate.astro';
+import { getLangFromUrl } from '../../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  heroImage?: string;
+  heroImageAlt?: string;
+  author?: string;
+  readingTime?: string;
+  tags?: string[];
+  category?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  heroImageAlt,
+  author,
+  readingTime,
+  tags = [],
+  category
+} = Astro.props;
+
+// Calculate estimated reading time if not provided
+const estimatedReadingTime = readingTime || `${Math.max(1, Math.ceil(title.length / 200))} ${lang === 'ko' ? '분 읽기' : 'min read'}`;
+---
+
+<article class="relative">
+  <!-- Hero Image (if provided) -->
+  {heroImage && (
+    <div class="relative h-64 sm:h-80 lg:h-96 mb-8 rounded-2xl overflow-hidden">
+      <img
+        src={heroImage}
+        alt={heroImageAlt || title}
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      <!-- Image Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+    </div>
+  )}
+  
+  <!-- Content Container -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-6" aria-label="Breadcrumb">
+      <a 
+        href={lang === 'en' ? '/en' : '/'} 
+        class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+      >
+        {lang === 'ko' ? '홈' : 'Home'}
+      </a>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      <a 
+        href={lang === 'en' ? '/en/blog' : '/blog'} 
+        class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+      >
+        {lang === 'ko' ? '블로그' : 'Blog'}
+      </a>
+      {category && (
+        <>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+          <span class="text-primary-600 dark:text-primary-400 font-medium">{category}</span>
+        </>
+      )}
+    </nav>
+    
+    <!-- Title -->
+    <header class="mb-8">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
+        {title}
+      </h1>
+      
+      <!-- Description -->
+      {description && (
+        <p class="text-lg sm:text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl">
+          {description}
+        </p>
+      )}
+    </header>
+    
+    <!-- Meta Information -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+      <!-- Left Side: Author & Date -->
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <!-- Author -->
+        {author && (
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+              {author.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <div class="font-medium text-gray-900 dark:text-white">{author}</div>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                {lang === 'ko' ? '개발자' : 'Developer'}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <!-- Date & Reading Time -->
+        <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <time datetime={pubDate.toISOString()}>
+              <FormattedDate date={pubDate} />
+            </time>
+          </div>
+          
+          {updatedDate && (
+            <div class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              <span>{lang === 'ko' ? '수정됨' : 'Updated'}</span>
+              <time datetime={updatedDate.toISOString()}>
+                <FormattedDate date={updatedDate} />
+              </time>
+            </div>
+          )}
+          
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{estimatedReadingTime}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Side: Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Share Button -->
+        <button
+          id="share-button"
+          class="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 rounded-lg transition-colors"
+          aria-label={lang === 'ko' ? '공유하기' : 'Share article'}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+          </svg>
+          <span class="hidden sm:inline">{lang === 'ko' ? '공유' : 'Share'}</span>
+        </button>
+        
+        <!-- Bookmark Button -->
+        <button
+          id="bookmark-button"
+          class="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 rounded-lg transition-colors"
+          aria-label={lang === 'ko' ? '북마크' : 'Bookmark article'}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+          <span class="hidden sm:inline">{lang === 'ko' ? '저장' : 'Save'}</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-8">
+        {tags.map((tag) => (
+          <a
+            href={`${lang === 'en' ? '/en' : ''}/tags/${tag}`}
+            class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 hover:bg-primary-100 dark:hover:bg-primary-900/50 border border-primary-200 dark:border-primary-800 rounded-full transition-colors"
+          >
+            <svg class="w-3 h-3 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            {tag}
+          </a>
+        ))}
+      </div>
+    )}
+  </div>
+</article>
+
+<!-- Share Modal (will be toggled by JavaScript) -->
+<div id="share-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" data-share-backdrop></div>
+  <div class="fixed inset-0 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          {lang === 'ko' ? '공유하기' : 'Share Article'}
+        </h3>
+        <button
+          data-share-close
+          class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-3">
+        <button
+          data-share-twitter
+          class="flex items-center gap-3 p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        >
+          <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+          </div>
+          <span class="font-medium">Twitter</span>
+        </button>
+        
+        <button
+          data-share-linkedin
+          class="flex items-center gap-3 p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        >
+          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </div>
+          <span class="font-medium">LinkedIn</span>
+        </button>
+        
+        <button
+          data-share-copy
+          class="flex items-center gap-3 p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        >
+          <div class="w-10 h-10 bg-gray-500 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </div>
+          <span class="font-medium">{lang === 'ko' ? '링크 복사' : 'Copy Link'}</span>
+        </button>
+        
+        <button
+          data-share-email
+          class="flex items-center gap-3 p-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+        >
+          <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <span class="font-medium">{lang === 'ko' ? '이메일' : 'Email'}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const shareButton = document.getElementById('share-button');
+    const shareModal = document.getElementById('share-modal');
+    const shareClose = document.querySelector('[data-share-close]');
+    const shareBackdrop = document.querySelector('[data-share-backdrop]');
+    
+    // Get article data
+    const articleTitle = document.querySelector('h1')?.textContent || '';
+    const articleUrl = window.location.href;
+    const articleDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+    
+    // Open share modal
+    shareButton?.addEventListener('click', () => {
+      shareModal?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    // Close share modal
+    const closeModal = () => {
+      shareModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+    
+    shareClose?.addEventListener('click', closeModal);
+    shareBackdrop?.addEventListener('click', closeModal);
+    
+    // Share handlers
+    document.querySelector('[data-share-twitter]')?.addEventListener('click', () => {
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(articleTitle)}&url=${encodeURIComponent(articleUrl)}`;
+      window.open(url, '_blank', 'width=550,height=420');
+    });
+    
+    document.querySelector('[data-share-linkedin]')?.addEventListener('click', () => {
+      const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(articleUrl)}`;
+      window.open(url, '_blank', 'width=550,height=420');
+    });
+    
+    document.querySelector('[data-share-copy]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(articleUrl);
+        // Show success feedback
+        const button = document.querySelector('[data-share-copy]');
+        const originalText = button?.querySelector('span')?.textContent;
+        const span = button?.querySelector('span');
+        if (span) {
+          span.textContent = 'Copied!';
+          setTimeout(() => {
+            span.textContent = originalText;
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Failed to copy URL:', err);
+      }
+    });
+    
+    document.querySelector('[data-share-email]')?.addEventListener('click', () => {
+      const subject = encodeURIComponent(articleTitle);
+      const body = encodeURIComponent(`Check out this article: ${articleUrl}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    });
+    
+    // Bookmark functionality
+    const bookmarkButton = document.getElementById('bookmark-button');
+    const bookmarkKey = `bookmark_${articleUrl}`;
+    
+    // Check if already bookmarked
+    if (localStorage.getItem(bookmarkKey)) {
+      bookmarkButton?.classList.add('text-primary-600', 'dark:text-primary-400');
+      const svg = bookmarkButton?.querySelector('svg');
+      if (svg) {
+        svg.setAttribute('fill', 'currentColor');
+      }
+    }
+    
+    bookmarkButton?.addEventListener('click', () => {
+      const isBookmarked = localStorage.getItem(bookmarkKey);
+      const svg = bookmarkButton.querySelector('svg');
+      
+      if (isBookmarked) {
+        localStorage.removeItem(bookmarkKey);
+        bookmarkButton.classList.remove('text-primary-600', 'dark:text-primary-400');
+        svg?.setAttribute('fill', 'none');
+      } else {
+        localStorage.setItem(bookmarkKey, JSON.stringify({
+          title: articleTitle,
+          url: articleUrl,
+          date: new Date().toISOString()
+        }));
+        bookmarkButton.classList.add('text-primary-600', 'dark:text-primary-400');
+        svg?.setAttribute('fill', 'currentColor');
+      }
+    });
+    
+    // Close modal with escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !shareModal?.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Ensure proper text rendering for the title */
+  h1 {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Image loading optimization */
+  img {
+    content-visibility: auto;
+  }
+  
+  /* Smooth transitions */
+  button {
+    transition: all 0.2s ease;
+  }
+  
+  /* Bookmark active state */
+  #bookmark-button.bookmarked {
+    color: rgb(var(--color-primary-600));
+  }
+  
+  .dark #bookmark-button.bookmarked {
+    color: rgb(var(--color-primary-400));
+  }
+</style>

@@ -1,0 +1,411 @@
+---
+import { SITE_TITLE } from '../../consts';
+import { getLangFromUrl, t } from '../../utils/i18n';
+import Logo from '../Logo.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const currentYear = new Date().getFullYear();
+
+interface SocialLink {
+  name: string;
+  href: string;
+  icon: string;
+  label: string;
+}
+
+const socialLinks: SocialLink[] = [
+  {
+    name: 'GitHub',
+    href: 'https://github.com/jayleekr',
+    icon: 'github',
+    label: 'GitHub Profile'
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://linkedin.com/in/jayleekr',
+    icon: 'linkedin',
+    label: 'LinkedIn Profile'
+  },
+  {
+    name: 'Twitter',
+    href: 'https://twitter.com/jayleekr',
+    icon: 'twitter',
+    label: 'Twitter Profile'
+  },
+  {
+    name: 'Email',
+    href: 'mailto:hello@jayleekr.com',
+    icon: 'email',
+    label: 'Send Email'
+  }
+];
+
+interface FooterSection {
+  title: string;
+  links: Array<{
+    name: string;
+    href: string;
+    external?: boolean;
+  }>;
+}
+
+const footerSections: FooterSection[] = [
+  {
+    title: lang === 'ko' ? '탐색' : 'Navigation',
+    links: [
+      {
+        name: t("navigation.home", lang),
+        href: lang === 'en' ? '/en' : '/'
+      },
+      {
+        name: t("navigation.about", lang),
+        href: lang === 'en' ? '/en/about' : '/about'
+      },
+      {
+        name: t("navigation.blog", lang),
+        href: lang === 'en' ? '/en/blog' : '/blog'
+      },
+      {
+        name: 'Categories',
+        href: lang === 'en' ? '/en/categories' : '/categories'
+      }
+    ]
+  },
+  {
+    title: lang === 'ko' ? '리소스' : 'Resources',
+    links: [
+      {
+        name: lang === 'ko' ? 'RSS 피드' : 'RSS Feed',
+        href: '/rss.xml',
+        external: true
+      },
+      {
+        name: lang === 'ko' ? '사이트맵' : 'Sitemap',
+        href: '/sitemap-index.xml',
+        external: true
+      },
+      {
+        name: lang === 'ko' ? '개인정보처리방침' : 'Privacy Policy',
+        href: lang === 'en' ? '/en/privacy' : '/privacy'
+      },
+      {
+        name: lang === 'ko' ? '이용약관' : 'Terms of Service',
+        href: lang === 'en' ? '/en/terms' : '/terms'
+      }
+    ]
+  }
+];
+---
+
+<footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Main Footer Content -->
+    <div class="py-12 lg:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        
+        <!-- Brand Section -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <Logo size="lg" className="transition-transform hover:scale-110" />
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">
+              {SITE_TITLE}
+            </span>
+          </div>
+          
+          <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-md leading-relaxed">
+            {lang === 'ko' 
+              ? '개발자의 경험과 지식을 공유하는 기술 블로그입니다. 최신 웹 기술부터 개발 노하우까지, 함께 성장하는 공간을 만들어갑니다.'
+              : 'A technical blog sharing developer experiences and knowledge. From cutting-edge web technologies to development insights, building a space for mutual growth.'
+            }
+          </p>
+          
+          <!-- Newsletter Signup -->
+          <div class="mb-6">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+              {lang === 'ko' ? '새 포스트 알림 받기' : 'Stay Updated'}
+            </h4>
+            <form class="flex flex-col sm:flex-row gap-3" id="newsletter-form">
+              <input
+                type="email"
+                placeholder={lang === 'ko' ? '이메일 주소를 입력하세요' : 'Enter your email address'}
+                class="flex-1 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                required
+                id="newsletter-email"
+              />
+              <button
+                type="submit"
+                class="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 whitespace-nowrap"
+              >
+                {lang === 'ko' ? '구독하기' : 'Subscribe'}
+              </button>
+            </form>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              {lang === 'ko' 
+                ? '새로운 포스트가 발행될 때마다 이메일로 알려드립니다. 언제든 구독 해제할 수 있습니다.'
+                : 'Get notified when new posts are published. You can unsubscribe at any time.'
+              }
+            </p>
+          </div>
+          
+          <!-- Social Links -->
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-medium text-gray-900 dark:text-white">
+              {lang === 'ko' ? '소셜 미디어:' : 'Follow me:'}
+            </span>
+            <div class="flex gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  href={social.href}
+                  class="w-10 h-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-300 dark:hover:border-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200"
+                  aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {social.icon === 'github' && (
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                  )}
+                  {social.icon === 'linkedin' && (
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  )}
+                  {social.icon === 'twitter' && (
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    </svg>
+                  )}
+                  {social.icon === 'email' && (
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer Sections -->
+        {footerSections.map((section) => (
+          <div>
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              {section.title}
+            </h4>
+            <ul class="space-y-3">
+              {section.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 flex items-center gap-2"
+                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    <span>{link.name}</span>
+                    {link.external && (
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+    
+    <!-- Bottom Bar -->
+    <div class="py-6 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+          <p>
+            © {currentYear} {SITE_TITLE}. 
+            {lang === 'ko' ? '모든 권리 보유.' : 'All rights reserved.'}
+          </p>
+          <div class="flex items-center gap-4">
+            <a 
+              href={lang === 'en' ? '/en/privacy' : '/privacy'}
+              class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
+              {lang === 'ko' ? '개인정보처리방침' : 'Privacy'}
+            </a>
+            <span>•</span>
+            <a 
+              href={lang === 'en' ? '/en/terms' : '/terms'}
+              class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
+              {lang === 'ko' ? '이용약관' : 'Terms'}
+            </a>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+          <div class="flex items-center gap-2">
+            <span>{lang === 'ko' ? '제작:' : 'Built with:'}</span>
+            <a 
+              href="https://astro.build" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+            >
+              Astro
+            </a>
+            <span>•</span>
+            <a 
+              href="https://tailwindcss.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+            >
+              Tailwind CSS
+            </a>
+          </div>
+          
+          <!-- Back to Top Button -->
+          <button
+            id="back-to-top"
+            class="p-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-200 opacity-0 translate-y-2"
+            aria-label={lang === 'ko' ? '맨 위로' : 'Back to top'}
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Newsletter Success Toast -->
+<div 
+  id="newsletter-toast" 
+  class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300 z-50"
+>
+  <div class="flex items-center gap-2">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+    <span id="newsletter-toast-message">
+      {lang === 'ko' ? '구독해 주셔서 감사합니다!' : 'Thanks for subscribing!'}
+    </span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Newsletter form handling
+    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterEmail = document.getElementById('newsletter-email');
+    const newsletterToast = document.getElementById('newsletter-toast');
+    
+    newsletterForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = (newsletterEmail as HTMLInputElement).value;
+      const button = newsletterForm.querySelector('button[type="submit"]');
+      const originalText = button?.textContent;
+      
+      // Update button state
+      if (button) {
+        button.textContent = 'Subscribing...';
+        button.setAttribute('disabled', 'true');
+      }
+      
+      try {
+        // In a real implementation, this would send to your newsletter service
+        // For now, just simulate success
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Show success toast
+        if (newsletterToast) {
+          newsletterToast.classList.remove('translate-y-full', 'opacity-0');
+          newsletterToast.classList.add('translate-y-0', 'opacity-100');
+          
+          setTimeout(() => {
+            newsletterToast.classList.add('translate-y-full', 'opacity-0');
+            newsletterToast.classList.remove('translate-y-0', 'opacity-100');
+          }, 4000);
+        }
+        
+        // Reset form
+        (newsletterEmail as HTMLInputElement).value = '';
+        
+      } catch (error) {
+        console.error('Newsletter subscription failed:', error);
+        alert('Failed to subscribe. Please try again.');
+      } finally {
+        // Reset button
+        if (button && originalText) {
+          button.textContent = originalText;
+          button.removeAttribute('disabled');
+        }
+      }
+    });
+    
+    // Back to top functionality
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    const toggleBackToTop = () => {
+      if (window.scrollY > 300) {
+        backToTopButton?.classList.remove('opacity-0', 'translate-y-2');
+        backToTopButton?.classList.add('opacity-100', 'translate-y-0');
+      } else {
+        backToTopButton?.classList.add('opacity-0', 'translate-y-2');
+        backToTopButton?.classList.remove('opacity-100', 'translate-y-0');
+      }
+    };
+    
+    window.addEventListener('scroll', toggleBackToTop);
+    toggleBackToTop(); // Check initial state
+    
+    backToTopButton?.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Ensure proper spacing for mobile bottom navigation */
+  @media (max-width: 767px) {
+    footer {
+      margin-bottom: 5rem; /* Account for mobile bottom nav */
+    }
+  }
+  
+  /* Animation for back to top button */
+  #back-to-top {
+    transition: all 0.3s ease;
+  }
+  
+  /* Newsletter toast animations */
+  #newsletter-toast {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Focus styles for accessibility */
+  button:focus,
+  input:focus,
+  a:focus {
+    outline: 2px solid rgb(var(--color-primary-500));
+    outline-offset: 2px;
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+    
+    #back-to-top {
+      transition: none;
+    }
+  }
+</style>

@@ -6,7 +6,7 @@
 	id="theme-toggle"
 	data-testid="theme-toggle"
 	type="button"
-	class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 transition-all duration-200"
+	class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 transition-all duration-200 hover:scale-110 hover:rotate-12 whimsy-button"
 	aria-label="Toggle between light and dark mode"
 	aria-pressed="false"
 	title="Toggle theme (current: light)"
@@ -109,12 +109,45 @@
 		// Initialize theme
 		const currentTheme = getStoredTheme();
 		setTheme(currentTheme);
+		
+		// Theme celebration function
+		function createThemeSparkles(button: HTMLElement, theme: string) {
+			const rect = button.getBoundingClientRect();
+			const emoji = theme === 'dark' ? '🌙' : '☀️';
+			
+			for (let i = 0; i < 8; i++) {
+				setTimeout(() => {
+					const sparkle = document.createElement('div');
+					sparkle.textContent = emoji;
+					sparkle.style.cssText = `
+						position: fixed;
+						left: ${rect.left + rect.width/2 + (Math.random() - 0.5) * 60}px;
+						top: ${rect.top + rect.height/2 + (Math.random() - 0.5) * 60}px;
+						font-size: 16px;
+						pointer-events: none;
+						z-index: 9999;
+						animation: theme-sparkle 1.5s ease-out forwards;
+					`;
+					
+					document.body.appendChild(sparkle);
+					
+					setTimeout(() => {
+						if (sparkle.parentNode) {
+							sparkle.parentNode.removeChild(sparkle);
+						}
+					}, 1500);
+				}, i * 100);
+			}
+		}
 
-		// Toggle theme on button click
+		// Toggle theme on button click with celebration
 		themeToggleBtn.addEventListener('click', () => {
 			const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 			setTheme(newTheme);
+			
+			// Add delightful feedback
+			createThemeSparkles(themeToggleBtn, newTheme);
 		});
 		
 		// Support keyboard navigation (Space and Enter)
@@ -152,5 +185,21 @@
 	/* Prevent transition on page load */
 	:global(html.no-transition *) {
 		transition: none !important;
+	}
+	
+	/* Theme sparkle animation */
+	:global(@keyframes theme-sparkle) {
+		0% {
+			opacity: 0;
+			transform: scale(0) translateY(0) rotate(0deg);
+		}
+		50% {
+			opacity: 1;
+			transform: scale(1.2) translateY(-20px) rotate(180deg);
+		}
+		100% {
+			opacity: 0;
+			transform: scale(0.5) translateY(-40px) rotate(360deg);
+		}
 	}
 </style>

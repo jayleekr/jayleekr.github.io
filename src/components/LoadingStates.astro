@@ -1,0 +1,476 @@
+---
+// LoadingStates - Delightful loading animations and error states
+// Maintains performance while adding personality to wait times
+---
+
+<div class="loading-states-container">
+  <!-- Blog Post Skeleton -->
+  <div class="blog-skeleton hidden animate-pulse">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Hero skeleton -->
+      <div class="aspect-[21/9] max-h-[500px] bg-gray-200 dark:bg-gray-700 rounded-lg mb-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+      </div>
+      
+      <!-- Title skeleton -->
+      <div class="space-y-4 mb-8">
+        <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+        </div>
+        <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/2 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+        </div>
+      </div>
+      
+      <!-- Content skeleton -->
+      <div class="space-y-3 mb-8">
+        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+        </div>
+        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+        </div>
+        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Card Grid Skeleton -->
+  <div class="cards-skeleton hidden">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
+      {Array(6).fill(0).map((_, i) => (
+        <div class="animate-pulse" style={`animation-delay: ${i * 0.1}s`}>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+            <!-- Image placeholder -->
+            <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+            </div>
+            
+            <!-- Title placeholder -->
+            <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+            </div>
+            
+            <!-- Description placeholder -->
+            <div class="space-y-2 mb-4">
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+              </div>
+              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+              </div>
+            </div>
+            
+            <!-- Tags placeholder -->
+            <div class="flex gap-2">
+              <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+              </div>
+              <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<!-- Loading Spinners -->
+<div class="loading-spinners hidden">
+  <!-- Coding-themed spinner -->
+  <div class="flex flex-col items-center justify-center p-8">
+    <div class="relative w-16 h-16 mb-4">
+      <!-- Outer ring -->
+      <div class="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-700"></div>
+      
+      <!-- Spinning part -->
+      <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-primary-500 animate-spin"></div>
+      
+      <!-- Inner code symbol -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <svg class="w-6 h-6 text-primary-500 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8.293 6.293a1 1 0 011.414 0L12 8.586l2.293-2.293a1 1 0 111.414 1.414L13.414 10l2.293 2.293a1 1 0 01-1.414 1.414L12 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 10 8.293 7.707a1 1 0 010-1.414z"/>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="text-center">
+      <p class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
+        <span class="typing-dots">Loading</span>
+      </p>
+      <p class="text-sm text-gray-500 dark:text-gray-400" id="loading-message">
+        Preparing something awesome...
+      </p>
+    </div>
+  </div>
+  
+  <!-- Minimal spinner -->
+  <div class="minimal-spinner">
+    <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-primary-500 rounded-full animate-spin"></div>
+  </div>
+  
+  <!-- Dots spinner -->
+  <div class="dots-spinner flex gap-1">
+    <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+    <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 100ms"></div>
+    <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 200ms"></div>
+  </div>
+</div>
+
+<!-- Error States -->
+<div class="error-states hidden">
+  <!-- Connection Error -->
+  <div class="connection-error text-center p-8">
+    <div class="w-20 h-20 mx-auto mb-6 relative">
+      <!-- Broken connection icon -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <svg class="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+        </svg>
+      </div>
+      
+      <!-- Sad face overlay -->
+      <div class="absolute top-6 left-8 text-red-400 animate-pulse">
+        😢
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+      Connection Lost
+    </h3>
+    <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+      Looks like you're offline. Don't worry, I'll keep trying to reconnect!
+    </p>
+    
+    <button 
+      class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105"
+      onclick="window.location.reload()"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+      </svg>
+      Try Again
+    </button>
+  </div>
+  
+  <!-- Server Error -->
+  <div class="server-error text-center p-8">
+    <div class="w-20 h-20 mx-auto mb-6 relative">
+      <!-- Server icon -->
+      <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/>
+      </svg>
+      
+      <!-- Error indicator -->
+      <div class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce">
+        !
+      </div>
+    </div>
+    
+    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+      Server Hiccup
+    </h3>
+    <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+      Our servers are having a moment. It happens to the best of us! 🤖
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <button 
+        class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105"
+        onclick="window.location.reload()"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Refresh
+      </button>
+      
+      <a 
+        href="/"
+        class="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-all duration-200 hover:scale-105"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+        Go Home
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Shimmer effect for skeleton loading */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  
+  /* Typing dots animation */
+  @keyframes typing-dots {
+    0%, 20% {
+      content: '';
+    }
+    40% {
+      content: '.';
+    }
+    60% {
+      content: '..';
+    }
+    80%, 100% {
+      content: '...';
+    }
+  }
+  
+  .typing-dots::after {
+    content: '';
+    animation: typing-dots 1.5s infinite;
+  }
+  
+  /* Pulse animation for loading messages */
+  @keyframes pulse-text {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  /* Enhanced bounce for dots */
+  .dots-spinner .animate-bounce {
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-shimmer,
+    .animate-spin,
+    .animate-bounce,
+    .animate-pulse,
+    .typing-dots::after {
+      animation: none !important;
+    }
+    
+    .animate-pulse {
+      opacity: 0.8;
+    }
+  }
+  
+  /* Dark mode adjustments */
+  :global(.dark) .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+</style>
+
+<script>
+  // Loading States Manager
+  class LoadingStatesManager {
+    constructor() {
+      this.init();
+    }
+    
+    init() {
+      this.setupLoadingMessages();
+      this.setupNetworkDetection();
+      this.setupFormEnhancements();
+    }
+    
+    setupLoadingMessages() {
+      const messages = [
+        'Preparing something awesome...',
+        'Loading with style...',
+        'Almost there...',
+        'Putting pixels in place...',
+        'Brewing some code...',
+        'Charging the flux capacitor...',
+        'Consulting the rubber duck...',
+        'Optimizing the magic...',
+        'Loading at warp speed...',
+        'Just a moment more...'
+      ];
+      
+      const messageEl = document.getElementById('loading-message');
+      if (messageEl) {
+        let messageIndex = 0;
+        setInterval(() => {
+          messageEl.textContent = messages[messageIndex];
+          messageIndex = (messageIndex + 1) % messages.length;
+        }, 2000);
+      }
+    }
+    
+    setupNetworkDetection() {
+      // Handle online/offline states
+      window.addEventListener('online', () => {
+        this.hideError();
+        this.showToast('Back online! 🎉', 'success');
+      });
+      
+      window.addEventListener('offline', () => {
+        this.showConnectionError();
+        this.showToast('Connection lost 📱', 'warning');
+      });
+    }
+    
+    setupFormEnhancements() {
+      // Enhance form submissions with loading states
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          const submitBtn = form.querySelector('button[type="submit"]');
+          if (submitBtn && !submitBtn.disabled) {
+            this.showButtonLoading(submitBtn);
+          }
+        });
+      });
+    }
+    
+    showSkeleton(type = 'blog') {
+      const skeleton = document.querySelector(`.${type}-skeleton`);
+      if (skeleton) {
+        skeleton.classList.remove('hidden');
+      }
+    }
+    
+    hideSkeleton(type = 'blog') {
+      const skeleton = document.querySelector(`.${type}-skeleton`);
+      if (skeleton) {
+        skeleton.classList.add('hidden');
+      }
+    }
+    
+    showSpinner(container, type = 'default') {
+      const spinner = this.createSpinner(type);
+      if (container) {
+        container.innerHTML = '';
+        container.appendChild(spinner);
+      }
+    }
+    
+    createSpinner(type = 'default') {
+      const spinnerContainer = document.createElement('div');
+      spinnerContainer.className = 'flex justify-center items-center p-4';
+      
+      let spinnerHTML = '';
+      switch (type) {
+        case 'minimal':
+          spinnerHTML = '<div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-primary-500 rounded-full animate-spin"></div>';
+          break;
+        case 'dots':
+          spinnerHTML = `
+            <div class="flex gap-1">
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 100ms"></div>
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 200ms"></div>
+            </div>
+          `;
+          break;
+        default:
+          spinnerHTML = `
+            <div class="relative w-8 h-8">
+              <div class="absolute inset-0 rounded-full border-2 border-gray-200 dark:border-gray-700"></div>
+              <div class="absolute inset-0 rounded-full border-2 border-transparent border-t-primary-500 animate-spin"></div>
+            </div>
+          `;
+      }
+      
+      spinnerContainer.innerHTML = spinnerHTML;
+      return spinnerContainer;
+    }
+    
+    showButtonLoading(button) {
+      if (button.dataset.originalText) return; // Already loading
+      
+      button.dataset.originalText = button.innerHTML;
+      button.disabled = true;
+      
+      const spinner = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>';
+      button.innerHTML = spinner + 'Loading...';
+    }
+    
+    hideButtonLoading(button) {
+      if (button.dataset.originalText) {
+        button.innerHTML = button.dataset.originalText;
+        button.disabled = false;
+        delete button.dataset.originalText;
+      }
+    }
+    
+    showConnectionError() {
+      const errorContainer = document.querySelector('.connection-error');
+      if (errorContainer) {
+        errorContainer.classList.remove('hidden');
+      }
+    }
+    
+    showServerError() {
+      const errorContainer = document.querySelector('.server-error');
+      if (errorContainer) {
+        errorContainer.classList.remove('hidden');
+      }
+    }
+    
+    hideError() {
+      const errors = document.querySelectorAll('.connection-error, .server-error');
+      errors.forEach(error => error.classList.add('hidden'));
+    }
+    
+    showToast(message, type = 'info', duration = 3000) {
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-green-500',
+        warning: 'bg-yellow-500',
+        error: 'bg-red-500',
+        info: 'bg-blue-500'
+      };
+      
+      toast.className = `fixed bottom-4 right-4 ${colors[type]} text-white px-4 py-2 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+      toast.textContent = message;
+      
+      document.body.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => {
+        toast.classList.remove('translate-x-full');
+      }, 100);
+      
+      // Animate out and remove
+      setTimeout(() => {
+        toast.classList.add('translate-x-full');
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 300);
+      }, duration);
+    }
+  }
+  
+  // Initialize loading states manager
+  const loadingManager = new LoadingStatesManager();
+  
+  // Export for global use
+  window.LoadingStates = {
+    showSkeleton: (type) => loadingManager.showSkeleton(type),
+    hideSkeleton: (type) => loadingManager.hideSkeleton(type),
+    showSpinner: (container, type) => loadingManager.showSpinner(container, type),
+    showButtonLoading: (button) => loadingManager.showButtonLoading(button),
+    hideButtonLoading: (button) => loadingManager.hideButtonLoading(button),
+    showConnectionError: () => loadingManager.showConnectionError(),
+    showServerError: () => loadingManager.showServerError(),
+    hideError: () => loadingManager.hideError(),
+    showToast: (message, type, duration) => loadingManager.showToast(message, type, duration)
+  };
+</script>

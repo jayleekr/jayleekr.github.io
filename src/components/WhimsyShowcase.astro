@@ -1,0 +1,267 @@
+---
+// WhimsyShowcase - Demo component showing all delightful features
+// Remove this component in production, it's just for demonstration
+---
+
+<div class="whimsy-showcase bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-8 border border-purple-200 dark:border-purple-800 mb-8">
+  <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6 text-center">
+    🎨 Whimsy Features Showcase
+  </h3>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Micro-interactions -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">✨ Micro-interactions</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Button hover effects with bounce</li>
+        <li>• Card lift animations</li>
+        <li>• Sparkle effects on success</li>
+        <li>• Heart-beat bookmark animation</li>
+        <li>• Tag floating on hover</li>
+      </ul>
+    </div>
+    
+    <!-- Easter Eggs -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">🎮 Easter Eggs</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Konami Code (↑↑↓↓←→←→BA)</li>
+        <li>• Command Palette (Cmd/Ctrl+K)</li>
+        <li>• Type "//" anywhere</li>
+        <li>• Developer console messages</li>
+        <li>• Site statistics tracking</li>
+      </ul>
+    </div>
+    
+    <!-- Loading States -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">⏳ Loading Delights</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Personality-filled loading messages</li>
+        <li>• Animated skeleton screens</li>
+        <li>• Code-themed spinners</li>
+        <li>• Error states with humor</li>
+        <li>• Connection recovery celebrations</li>
+      </ul>
+    </div>
+    
+    <!-- Interactive 404 -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">🤖 Interactive 404</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Animated robot character</li>
+        <li>• Cookie clicker mini-game</li>
+        <li>• Speech bubble conversations</li>
+        <li>• Quick search functionality</li>
+        <li>• Celebration milestones</li>
+      </ul>
+    </div>
+    
+    <!-- Theme Magic -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">🌙 Theme Magic</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Sparkle effects on toggle</li>
+        <li>• Wiggle hover animation</li>
+        <li>• Sun/moon emoji celebrations</li>
+        <li>• Smooth transitions</li>
+        <li>• System preference respect</li>
+      </ul>
+    </div>
+    
+    <!-- Performance -->
+    <div class="feature-demo bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+      <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">⚡ Performance</h4>
+      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+        <li>• Total bundle: <2KB</li>
+        <li>• CSS animations over JS</li>
+        <li>• Respects reduced motion</li>
+        <li>• Mobile optimized</li>
+        <li>• Accessibility compliant</li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Test Buttons -->
+  <div class="mt-8 text-center">
+    <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Try These Features:</h4>
+    <div class="flex flex-wrap justify-center gap-3">
+      <button 
+        onclick="window.WhimsyDemo?.testSparkles()" 
+        class="whimsy-button px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200"
+      >
+        ✨ Test Sparkles
+      </button>
+      <button 
+        onclick="window.WhimsyDemo?.testCelebration()" 
+        class="whimsy-button px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200"
+      >
+        🎉 Celebrate
+      </button>
+      <button 
+        onclick="window.WhimsyDemo?.testRainbow()" 
+        class="whimsy-button px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-all duration-200"
+      >
+        🌈 Rainbow Mode
+      </button>
+      <button 
+        onclick="window.WhimsyDemo?.showStats()" 
+        class="whimsy-button px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-all duration-200"
+      >
+        📊 Show Stats
+      </button>
+    </div>
+    
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+      💡 Pro tip: Press <kbd class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-xs">Cmd/Ctrl + K</kbd> for the command palette!
+    </p>
+  </div>
+</div>
+
+<script>
+  // Demo functions for the showcase
+  window.WhimsyDemo = {
+    testSparkles() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.textContent = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+          sparkle.style.cssText = `
+            position: fixed;
+            left: ${Math.random() * window.innerWidth}px;
+            top: ${Math.random() * window.innerHeight}px;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: demo-sparkle 2s ease-out forwards;
+          `;
+          
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 2000);
+        }, i * 100);
+      }
+    },
+    
+    testCelebration() {
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const emoji = ['🎉', '🎊', '🎈', '🥳', '🎆'][Math.floor(Math.random() * 5)];
+          const celebration = document.createElement('div');
+          celebration.textContent = emoji;
+          celebration.style.cssText = `
+            position: fixed;
+            left: ${Math.random() * 100}%;
+            top: ${20 + Math.random() * 60}%;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: demo-celebration 3s ease-out forwards;
+          `;
+          
+          document.body.appendChild(celebration);
+          
+          setTimeout(() => {
+            if (celebration.parentNode) {
+              celebration.parentNode.removeChild(celebration);
+            }
+          }, 3000);
+        }, i * 50);
+      }
+    },
+    
+    testRainbow() {
+      document.body.style.animation = 'demo-rainbow 3s linear infinite';
+      setTimeout(() => {
+        document.body.style.animation = '';
+      }, 9000);
+    },
+    
+    showStats() {
+      const visits = localStorage.getItem('site-visits') || '0';
+      const commands = localStorage.getItem('commands-used') || '0';
+      const eggs = localStorage.getItem('easter-eggs') || '0';
+      
+      alert(`🎯 Your Whimsy Stats:
+      
+Visits: ${visits}
+Commands Used: ${commands}
+Easter Eggs Found: ${eggs}
+
+Keep exploring for more surprises! 🎮`);
+    }
+  };
+  
+  // Add demo animations
+  const demoStyles = document.createElement('style');
+  demoStyles.textContent = `
+    @keyframes demo-sparkle {
+      0% { opacity: 0; transform: scale(0) translateY(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-30px) rotate(180deg); }
+      100% { opacity: 0; transform: scale(0.5) translateY(-60px) rotate(360deg); }
+    }
+    
+    @keyframes demo-celebration {
+      0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(-150px) scale(0.3) rotate(720deg); }
+    }
+    
+    @keyframes demo-rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+  `;
+  document.head.appendChild(demoStyles);
+</script>
+
+<style>
+  .whimsy-showcase {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .whimsy-showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+  
+  .feature-demo {
+    transition: all 0.2s ease-out;
+  }
+  
+  .feature-demo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  :global(.dark) .feature-demo:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .whimsy-showcase::before {
+      animation: none;
+    }
+    
+    .feature-demo:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+</style>

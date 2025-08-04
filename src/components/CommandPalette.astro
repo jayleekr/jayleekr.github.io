@@ -1,0 +1,788 @@
+---
+// CommandPalette - Developer-friendly command interface with fun commands
+// Activated by Cmd/Ctrl + K or by typing "//" anywhere
+---
+
+<div id="command-palette" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-start justify-center pt-[10vh] hidden">
+  <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full max-w-2xl mx-4 overflow-hidden">
+    <!-- Header -->
+    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          type="text"
+          id="command-input"
+          placeholder="Type a command or search..."
+          class="w-full pl-10 pr-4 py-3 bg-transparent border-none outline-none text-lg text-gray-800 dark:text-gray-200 placeholder-gray-400"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+          ESC to close
+        </div>
+      </div>
+    </div>
+    
+    <!-- Commands List -->
+    <div id="commands-list" class="max-h-96 overflow-y-auto">
+      <!-- Commands will be populated by JavaScript -->
+    </div>
+    
+    <!-- Footer -->
+    <div class="p-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500">
+      <div class="flex justify-between items-center">
+        <span>💡 Pro tip: Try typing "konami", "theme", or "stats"</span>
+        <div class="flex gap-2">
+          <kbd class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-400">↑↓</kbd>
+          <span>navigate</span>
+          <kbd class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-400">↵</kbd>
+          <span>select</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Command palette animations */
+  #command-palette {
+    transition: all 0.2s ease-out;
+  }
+  
+  #command-palette.show {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  #command-palette .bg-white {
+    animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* Command item styles */
+  .command-item {
+    transition: all 0.15s ease-out;
+  }
+  
+  .command-item:hover,
+  .command-item.selected {
+    background: rgb(59 130 246 / 0.1);
+    border-left: 3px solid rgb(59 130 246);
+  }
+  
+  .command-item.selected {
+    transform: translateX(2px);
+  }
+  
+  /* Keyboard shortcut styles */
+  .kbd {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.375rem;
+    background: rgb(243 244 246);
+    border: 1px solid rgb(209 213 219);
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgb(75 85 99);
+  }
+  
+  :global(.dark) .kbd {
+    background: rgb(55 65 81);
+    border-color: rgb(75 85 99);
+    color: rgb(156 163 175);
+  }
+  
+  /* Category headers */
+  .command-category {
+    font-weight: 600;
+    color: rgb(107 114 128);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1rem 0.5rem;
+    background: rgb(249 250 251);
+    border-top: 1px solid rgb(229 231 235);
+  }
+  
+  :global(.dark) .command-category {
+    color: rgb(156 163 175);
+    background: rgb(31 41 55);
+    border-color: rgb(75 85 99);
+  }
+  
+  /* Command icons */
+  .command-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    #command-palette,
+    #command-palette .bg-white,
+    .command-item {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  class CommandPalette {
+    constructor() {
+      this.isOpen = false;
+      this.selectedIndex = 0;
+      this.filteredCommands = [];
+      this.stats = {
+        visits: parseInt(localStorage.getItem('site-visits') || '0'),
+        timeSpent: parseInt(localStorage.getItem('time-spent') || '0'),
+        commandsUsed: parseInt(localStorage.getItem('commands-used') || '0'),
+        easterEggsFound: parseInt(localStorage.getItem('easter-eggs') || '0')
+      };
+      
+      this.commands = [
+        // Navigation
+        {
+          id: 'home',
+          title: 'Go to Home',
+          description: 'Navigate to the homepage',
+          category: 'Navigation',
+          icon: '🏠',
+          shortcut: 'gh',
+          action: () => window.location.href = '/'
+        },
+        {
+          id: 'blog',
+          title: 'Go to Blog',
+          description: 'Browse all blog posts',
+          category: 'Navigation',
+          icon: '📝',
+          shortcut: 'gb',
+          action: () => window.location.href = '/blog'
+        },
+        {
+          id: 'about',
+          title: 'About Page',
+          description: 'Learn more about me',
+          category: 'Navigation',
+          icon: '👤',
+          shortcut: 'ga',
+          action: () => window.location.href = '/about'
+        },
+        
+        // Theme & Appearance
+        {
+          id: 'theme-toggle',
+          title: 'Toggle Theme',
+          description: 'Switch between light and dark mode',
+          category: 'Appearance',
+          icon: '🌙',
+          shortcut: 'td',
+          action: () => {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) themeBtn.click();
+          }
+        },
+        {
+          id: 'theme-light',
+          title: 'Light Mode',
+          description: 'Switch to light theme',
+          category: 'Appearance',
+          icon: '☀️',
+          action: () => {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+          }
+        },
+        {
+          id: 'theme-dark',
+          title: 'Dark Mode',
+          description: 'Switch to dark theme',
+          category: 'Appearance',
+          icon: '🌙',
+          action: () => {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        },
+        
+        // Fun Commands
+        {
+          id: 'konami',
+          title: 'Konami Code',
+          description: 'Activate the legendary cheat code',
+          category: 'Easter Eggs',
+          icon: '🎮',
+          action: () => this.triggerKonami()
+        },
+        {
+          id: 'celebrate',
+          title: 'Celebrate',
+          description: 'Add some confetti to your day',
+          category: 'Easter Eggs',
+          icon: '🎉',
+          action: () => this.createCelebration()
+        },
+        {
+          id: 'sparkles',
+          title: 'Sparkle Effect',
+          description: 'Make everything sparkle ✨',
+          category: 'Easter Eggs',
+          icon: '✨',
+          action: () => this.addSparkles()
+        },
+        {
+          id: 'rainbow',
+          title: 'Rainbow Mode',
+          description: 'Add rainbow colors everywhere',
+          category: 'Easter Eggs',
+          icon: '🌈',
+          action: () => this.activateRainbow()
+        },
+        
+        // Utilities
+        {
+          id: 'scroll-top',
+          title: 'Scroll to Top',
+          description: 'Jump to the top of the page',
+          category: 'Utilities',
+          icon: '⬆️',
+          shortcut: 'st',
+          action: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+        },
+        {
+          id: 'scroll-bottom',
+          title: 'Scroll to Bottom',
+          description: 'Jump to the bottom of the page',
+          category: 'Utilities',
+          icon: '⬇️',
+          shortcut: 'sb',
+          action: () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+        },
+        {
+          id: 'copy-url',
+          title: 'Copy URL',
+          description: 'Copy current page URL to clipboard',
+          category: 'Utilities',
+          icon: '🔗',
+          shortcut: 'cu',
+          action: () => {
+            navigator.clipboard.writeText(window.location.href);
+            this.showToast('URL copied to clipboard! 📋');
+          }
+        },
+        {
+          id: 'print',
+          title: 'Print Page',
+          description: 'Print the current page',
+          category: 'Utilities',
+          icon: '🖨️',
+          action: () => window.print()
+        },
+        
+        // Developer Tools
+        {
+          id: 'stats',
+          title: 'Site Statistics',
+          description: 'View your browsing stats',
+          category: 'Developer',
+          icon: '📊',
+          action: () => this.showStats()
+        },
+        {
+          id: 'console',
+          title: 'Open Console',
+          description: 'Open browser developer console',
+          category: 'Developer',
+          icon: '🛠️',
+          action: () => {
+            console.log('Welcome to the developer console! 👨‍💻');
+            this.showToast('Check the console! 🛠️');
+          }
+        },
+        {
+          id: 'clear-storage',
+          title: 'Clear Local Storage',
+          description: 'Clear all stored data',
+          category: 'Developer',
+          icon: '🗑️',
+          action: () => {
+            if (confirm('Are you sure you want to clear all local storage?')) {
+              localStorage.clear();
+              this.showToast('Local storage cleared! 🧹');
+            }
+          }
+        },
+        
+        // Search & Social
+        {
+          id: 'search',
+          title: 'Search Site',
+          description: 'Search through all content',
+          category: 'Search',
+          icon: '🔍',
+          shortcut: '/',
+          action: () => {
+            const searchInput = document.querySelector('input[type="search"]');
+            if (searchInput) {
+              searchInput.focus();
+            } else {
+              this.showToast('Search not available on this page');
+            }
+          }
+        },
+        {
+          id: 'random-post',
+          title: 'Random Blog Post',
+          description: 'Go to a random blog post',
+          category: 'Navigation',
+          icon: '🎲',
+          action: () => this.goToRandomPost()
+        }
+      ];
+      
+      this.init();
+    }
+    
+    init() {
+      this.createPalette();
+      this.setupEventListeners();
+      this.updateStats();
+    }
+    
+    createPalette() {
+      // Palette is already in the HTML, just ensure it exists
+      this.palette = document.getElementById('command-palette');
+      this.input = document.getElementById('command-input');
+      this.commandsList = document.getElementById('commands-list');
+      
+      if (!this.palette) {
+        console.warn('Command palette not found in DOM');
+        return;
+      }
+      
+      this.renderCommands();
+    }
+    
+    setupEventListeners() {
+      // Global keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        // Cmd/Ctrl + K to open
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          this.toggle();
+        }
+        
+        // Escape to close
+        if (e.key === 'Escape' && this.isOpen) {
+          this.close();
+        }
+        
+        // Navigation when open
+        if (this.isOpen) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            this.selectNext();
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            this.selectPrevious();
+          }
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            this.executeSelected();
+          }
+        }
+      });
+      
+      // Global typing detection for "//"
+      let typingBuffer = '';
+      document.addEventListener('keypress', (e) => {
+        if (this.isOpen) return;
+        
+        // Only track typing if we're not in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        
+        typingBuffer += e.key;
+        
+        // Check for "//" trigger
+        if (typingBuffer.endsWith('//')) {
+          this.open();
+          typingBuffer = '';
+        }
+        
+        // Clear buffer after 2 seconds
+        setTimeout(() => {
+          typingBuffer = '';
+        }, 2000);
+      });
+      
+      // Input handling
+      if (this.input) {
+        this.input.addEventListener('input', (e) => {
+          this.handleSearch(e.target.value);
+        });
+      }
+      
+      // Click outside to close
+      if (this.palette) {
+        this.palette.addEventListener('click', (e) => {
+          if (e.target === this.palette) {
+            this.close();
+          }
+        });
+      }
+    }
+    
+    handleSearch(query) {
+      if (!query.trim()) {
+        this.filteredCommands = this.commands;
+      } else {
+        const searchTerm = query.toLowerCase();
+        this.filteredCommands = this.commands.filter(cmd => 
+          cmd.title.toLowerCase().includes(searchTerm) ||
+          cmd.description.toLowerCase().includes(searchTerm) ||
+          cmd.category.toLowerCase().includes(searchTerm) ||
+          (cmd.shortcut && cmd.shortcut.toLowerCase().includes(searchTerm))
+        );
+      }
+      
+      this.selectedIndex = 0;
+      this.renderCommands();
+    }
+    
+    renderCommands() {
+      if (!this.commandsList) return;
+      
+      const commands = this.filteredCommands.length ? this.filteredCommands : this.commands;
+      const groupedCommands = this.groupCommandsByCategory(commands);
+      
+      let html = '';
+      
+      Object.entries(groupedCommands).forEach(([category, categoryCommands]) => {
+        html += `<div class="command-category">${category}</div>`;
+        
+        categoryCommands.forEach((cmd, index) => {
+          const globalIndex = commands.indexOf(cmd);
+          const isSelected = globalIndex === this.selectedIndex;
+          
+          html += `
+            <div class="command-item flex items-center gap-3 px-4 py-3 cursor-pointer ${isSelected ? 'selected' : ''}" data-index="${globalIndex}">
+              <span class="command-icon text-lg">${cmd.icon}</span>
+              <div class="flex-1">
+                <div class="font-medium text-gray-800 dark:text-gray-200">${cmd.title}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">${cmd.description}</div>
+              </div>
+              ${cmd.shortcut ? `<div class="kbd">${cmd.shortcut}</div>` : ''}
+            </div>
+          `;
+        });
+      });
+      
+      this.commandsList.innerHTML = html;
+      
+      // Add click handlers
+      this.commandsList.querySelectorAll('.command-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const index = parseInt(item.dataset.index);
+          this.selectedIndex = index;
+          this.executeSelected();
+        });
+      });
+    }
+    
+    groupCommandsByCategory(commands) {
+      return commands.reduce((groups, cmd) => {
+        const category = cmd.category || 'Other';
+        if (!groups[category]) {
+          groups[category] = [];
+        }
+        groups[category].push(cmd);
+        return groups;
+      }, {});
+    }
+    
+    selectNext() {
+      const commands = this.filteredCommands.length ? this.filteredCommands : this.commands;
+      this.selectedIndex = (this.selectedIndex + 1) % commands.length;
+      this.renderCommands();
+    }
+    
+    selectPrevious() {
+      const commands = this.filteredCommands.length ? this.filteredCommands : this.commands;
+      this.selectedIndex = this.selectedIndex === 0 ? commands.length - 1 : this.selectedIndex - 1;
+      this.renderCommands();
+    }
+    
+    executeSelected() {
+      const commands = this.filteredCommands.length ? this.filteredCommands : this.commands;
+      const selectedCommand = commands[this.selectedIndex];
+      
+      if (selectedCommand && selectedCommand.action) {
+        selectedCommand.action();
+        this.incrementStat('commandsUsed');
+        this.close();
+      }
+    }
+    
+    open() {
+      if (!this.palette) return;
+      
+      this.isOpen = true;
+      this.palette.classList.remove('hidden');
+      this.palette.classList.add('show');
+      
+      if (this.input) {
+        this.input.focus();
+        this.input.value = '';
+      }
+      
+      this.filteredCommands = this.commands;
+      this.selectedIndex = 0;
+      this.renderCommands();
+    }
+    
+    close() {
+      if (!this.palette) return;
+      
+      this.isOpen = false;
+      this.palette.classList.add('hidden');
+      this.palette.classList.remove('show');
+    }
+    
+    toggle() {
+      if (this.isOpen) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    
+    // Easter egg functions
+    triggerKonami() {
+      document.body.style.animation = 'rainbow-bg 3s infinite';
+      this.showToast('🎮 Konami Code Activated! 🌈');
+      this.incrementStat('easterEggsFound');
+      
+      setTimeout(() => {
+        document.body.style.animation = '';
+      }, 10000);
+    }
+    
+    createCelebration() {
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const emoji = ['🎉', '🎊', '✨', '🎈', '🌟'][Math.floor(Math.random() * 5)];
+          const celebration = document.createElement('div');
+          celebration.textContent = emoji;
+          celebration.style.cssText = `
+            position: fixed;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: celebrate 3s ease-out forwards;
+          `;
+          
+          document.body.appendChild(celebration);
+          
+          setTimeout(() => {
+            if (celebration.parentNode) {
+              celebration.parentNode.removeChild(celebration);
+            }
+          }, 3000);
+        }, i * 50);
+      }
+      
+      this.showToast('🎉 Celebration time! 🎊');
+      this.incrementStat('easterEggsFound');
+    }
+    
+    addSparkles() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.textContent = '✨';
+          sparkle.style.cssText = `
+            position: fixed;
+            left: ${Math.random() * 100}%;
+            top: ${Math.random() * 100}%;
+            font-size: 16px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: sparkle 2s ease-out forwards;
+          `;
+          
+          document.body.appendChild(sparkle);
+          
+          setTimeout(() => {
+            if (sparkle.parentNode) {
+              sparkle.parentNode.removeChild(sparkle);
+            }
+          }, 2000);
+        }, i * 100);
+      }
+      
+      this.showToast('✨ Sparkles everywhere! ✨');
+      this.incrementStat('easterEggsFound');
+    }
+    
+    activateRainbow() {
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes rainbow-bg {
+          0% { filter: hue-rotate(0deg); }
+          100% { filter: hue-rotate(360deg); }
+        }
+        .rainbow-active {
+          animation: rainbow-bg 3s linear infinite;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      document.body.classList.add('rainbow-active');
+      this.showToast('🌈 Rainbow mode activated! 🌈');
+      this.incrementStat('easterEggsFound');
+      
+      setTimeout(() => {
+        document.body.classList.remove('rainbow-active');
+        if (style.parentNode) {
+          style.parentNode.removeChild(style);
+        }
+      }, 10000);
+    }
+    
+    goToRandomPost() {
+      // This would need to be customized based on your blog structure
+      const blogPosts = ['/blog', '/blog/example-post'];
+      const randomPost = blogPosts[Math.floor(Math.random() * blogPosts.length)];
+      window.location.href = randomPost;
+    }
+    
+    showStats() {
+      const statsHtml = `
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000] flex items-center justify-center p-4">
+          <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 max-w-md w-full border border-gray-200 dark:border-gray-700">
+            <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">📊 Your Site Stats</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Visits:</span>
+                <span class="font-semibold text-gray-800 dark:text-gray-200">${this.stats.visits}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Commands Used:</span>
+                <span class="font-semibold text-gray-800 dark:text-gray-200">${this.stats.commandsUsed}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Easter Eggs Found:</span>
+                <span class="font-semibold text-gray-800 dark:text-gray-200">${this.stats.easterEggsFound}</span>
+              </div>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="mt-6 w-full bg-primary-600 hover:bg-primary-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
+              Close
+            </button>
+          </div>
+        </div>
+      `;
+      
+      const statsModal = document.createElement('div');
+      statsModal.innerHTML = statsHtml;
+      document.body.appendChild(statsModal);
+    }
+    
+    updateStats() {
+      // Increment visit count
+      this.incrementStat('visits');
+      
+      // Track time spent (simplified)
+      const startTime = Date.now();
+      window.addEventListener('beforeunload', () => {
+        const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+        this.incrementStat('timeSpent', timeSpent);
+      });
+    }
+    
+    incrementStat(stat, amount = 1) {
+      this.stats[stat] += amount;
+      localStorage.setItem(stat === 'visits' ? 'site-visits' : 
+                          stat === 'timeSpent' ? 'time-spent' :
+                          stat === 'commandsUsed' ? 'commands-used' :
+                          'easter-eggs', this.stats[stat].toString());
+    }
+    
+    showToast(message, duration = 3000) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(59, 130, 246, 0.9);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        z-index: 10000;
+        backdrop-filter: blur(10px);
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.transform = 'translateX(0)';
+      }, 100);
+      
+      setTimeout(() => {
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        }, 300);
+      }, duration);
+    }
+  }
+  
+  // Additional CSS animations
+  const additionalStyles = `
+    @keyframes celebrate {
+      0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(-100px) scale(0.5) rotate(360deg); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+  `;
+  
+  const styleElement = document.createElement('style');
+  styleElement.textContent = additionalStyles;
+  document.head.appendChild(styleElement);
+  
+  // Initialize command palette
+  document.addEventListener('DOMContentLoaded', () => {
+    new CommandPalette();
+  });
+</script>

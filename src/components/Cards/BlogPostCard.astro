@@ -1,0 +1,491 @@
+---
+import FormattedDate from '../FormattedDate.astro';
+import { getLangFromUrl } from '../../utils/i18n';
+
+const lang = getLangFromUrl(Astro.url);
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  heroImage?: string;
+  heroImageAlt?: string;
+  author?: string;
+  readingTime?: string;
+  tags?: string[];
+  category?: string;
+  href: string;
+  featured?: boolean;
+  size?: 'default' | 'large' | 'small';
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  heroImageAlt,
+  author,
+  readingTime,
+  tags = [],
+  category,
+  href,
+  featured = false,
+  size = 'default'
+} = Astro.props;
+
+// Calculate estimated reading time if not provided
+const estimatedReadingTime = readingTime || `${Math.max(1, Math.ceil(description.length / 200))} ${lang === 'ko' ? '분' : 'min'}`;
+
+// Size variants
+const sizeClasses = {
+  small: 'p-4',
+  default: 'p-6',
+  large: 'p-8'
+};
+
+const titleSizes = {
+  small: 'text-lg',
+  default: 'text-xl',
+  large: 'text-2xl'
+};
+
+const descriptionSizes = {
+  small: 'text-sm',
+  default: 'text-base',
+  large: 'text-lg'
+};
+---
+
+<article 
+  class={`group relative bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl ${sizeClasses[size]} transition-all duration-300 hover:border-primary-200 dark:hover:border-primary-700 hover:shadow-lg hover:shadow-primary-100/50 dark:hover:shadow-primary-900/20 hover:-translate-y-1 ${featured ? 'ring-2 ring-primary-200 dark:ring-primary-800' : ''}`}
+>
+  <!-- Featured Badge -->
+  {featured && (
+    <div class="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-semibold rounded-full shadow-sm">
+      {lang === 'ko' ? '추천' : 'Featured'}
+    </div>
+  )}
+  
+  <!-- Hero Image -->
+  {heroImage && (
+    <div class="relative mb-4 -mx-2 -mt-2 rounded-t-2xl overflow-hidden">
+      <img
+        src={heroImage}
+        alt={heroImageAlt || title}
+        class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+      />
+      <!-- Image Overlay -->
+      <div class="hero-image-overlay absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300"></div>
+      
+      <!-- Sparkle Effects -->
+      <div class="card-sparkle" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+      <div class="card-sparkle" style="top: 30%; right: 25%; animation-delay: 0.5s;"></div>
+      <div class="card-sparkle" style="bottom: 25%; left: 30%; animation-delay: 1s;"></div>
+      
+      <!-- Category on Image -->
+      {category && (
+        <div class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-xs font-medium text-gray-900 dark:text-white rounded-full">
+          {category}
+        </div>
+      )}
+    </div>
+  )}
+  
+  <!-- Content -->
+  <div class="flex-1">
+    <!-- Category (if no image) -->
+    {!heroImage && category && (
+      <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs font-medium rounded-full">
+          {category}
+        </span>
+      </div>
+    )}
+    
+    <!-- Title -->
+    <h3 class={`${titleSizes[size]} font-bold text-gray-900 dark:text-white mb-3 leading-tight`}>
+      <a 
+        href={href}
+        class="stretched-link hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+        aria-label={`Read article: ${title}`}
+      >
+        {title}
+      </a>
+    </h3>
+    
+    <!-- Description -->
+    <p class={`${descriptionSizes[size]} text-gray-600 dark:text-gray-300 mb-4 leading-relaxed line-clamp-3`}>
+      {description}
+    </p>
+    
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-4">
+        {tags.slice(0, 3).map((tag) => (
+          <span class="tag-hover inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-300 transition-all duration-200 cursor-pointer">
+            <svg class="w-2.5 h-2.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            {tag}
+          </span>
+        ))}
+        {tags.length > 3 && (
+          <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+            +{tags.length - 3} {lang === 'ko' ? '더' : 'more'}
+          </span>
+        )}
+      </div>
+    )}
+  </div>
+  
+  <!-- Footer -->
+  <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+    <!-- Author & Date -->
+    <div class="flex items-center gap-3">
+      {author && (
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center text-white font-semibold text-xs">
+            {author.charAt(0).toUpperCase()}
+          </div>
+          <div class="text-sm">
+            <div class="font-medium text-gray-900 dark:text-white">{author}</div>
+          </div>
+        </div>
+      )}
+      
+      <div class="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+        <div class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <time datetime={pubDate.toISOString()}>
+            <FormattedDate date={pubDate} />
+          </time>
+        </div>
+        
+        {updatedDate && (
+          <div class="flex items-center gap-1 text-xs">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            <span>{lang === 'ko' ? '수정됨' : 'Updated'}</span>
+          </div>
+        )}
+      </div>
+    </div>
+    
+    <!-- Reading Time & Actions -->
+    <div class="flex items-center gap-3">
+      <div class="reading-time flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 px-2 py-1 rounded-md transition-all duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{estimatedReadingTime}</span>
+      </div>
+      
+      <!-- Quick Actions -->
+      <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button
+          class="p-1.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 hover:scale-110"
+          aria-label={lang === 'ko' ? '북마크' : 'Bookmark'}
+          data-bookmark-btn
+          data-post-url={href}
+          data-post-title={title}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+          </svg>
+        </button>
+        
+        <button
+          class="p-1.5 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 hover:scale-110 hover:rotate-12"
+          aria-label={lang === 'ko' ? '공유' : 'Share'}
+          data-share-btn
+          data-post-url={href}
+          data-post-title={title}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</article>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Bookmark functionality
+    document.querySelectorAll('[data-bookmark-btn]').forEach(button => {
+      const postUrl = button.getAttribute('data-post-url');
+      const postTitle = button.getAttribute('data-post-title');
+      const bookmarkKey = `bookmark_${postUrl}`;
+      
+      // Check if already bookmarked
+      if (localStorage.getItem(bookmarkKey)) {
+        button.classList.add('text-primary-600', 'dark:text-primary-400');
+        const svg = button.querySelector('svg');
+        if (svg) {
+          svg.setAttribute('fill', 'currentColor');
+        }
+      }
+      
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isBookmarked = localStorage.getItem(bookmarkKey);
+        const svg = button.querySelector('svg');
+        
+        if (isBookmarked) {
+          localStorage.removeItem(bookmarkKey);
+          button.classList.remove('text-primary-600', 'dark:text-primary-400');
+          svg?.setAttribute('fill', 'none');
+        } else {
+          localStorage.setItem(bookmarkKey, JSON.stringify({
+            title: postTitle,
+            url: postUrl,
+            date: new Date().toISOString()
+          }));
+          button.classList.add('text-primary-600', 'dark:text-primary-400');
+          svg?.setAttribute('fill', 'currentColor');
+        }
+      });
+    });
+    
+    // Share functionality
+    document.querySelectorAll('[data-share-btn]').forEach(button => {
+      const postUrl = button.getAttribute('data-post-url');
+      const postTitle = button.getAttribute('data-post-title');
+      
+      button.addEventListener('click', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: postTitle,
+              url: window.location.origin + postUrl
+            });
+          } catch (err) {
+            console.log('Error sharing:', err);
+            // Add subtle shake animation on error
+            button.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+              button.style.animation = '';
+            }, 500);
+          }
+        } else {
+          // Fallback: copy to clipboard
+          try {
+            await navigator.clipboard.writeText(window.location.origin + postUrl);
+            // Show feedback with celebration
+            const originalHTML = button.innerHTML;
+            button.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+            button.style.animation = 'success-bounce 0.6s ease-in-out';
+            
+            // Create success sparkles
+            createMiniSparkles(button);
+            
+            setTimeout(() => {
+              button.innerHTML = originalHTML;
+              button.style.animation = '';
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy URL:', err);
+          }
+        }
+      });
+    });
+  });
+  
+  // Mini sparkles function for success feedback
+  function createMiniSparkles(element) {
+    const rect = element.getBoundingClientRect();
+    const sparkleCount = 5;
+    
+    for (let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.textContent = '✨';
+      sparkle.style.cssText = `
+        position: fixed;
+        left: ${rect.left + rect.width/2 + (Math.random() - 0.5) * 40}px;
+        top: ${rect.top + rect.height/2 + (Math.random() - 0.5) * 40}px;
+        font-size: 12px;
+        pointer-events: none;
+        z-index: 9999;
+        animation: mini-sparkle 1s ease-out forwards;
+      `;
+      
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => {
+        if (sparkle.parentNode) {
+          sparkle.parentNode.removeChild(sparkle);
+        }
+      }, 1000);
+    }
+  }
+  
+  // Add mini-sparkle animation
+  const miniSparkleStyle = document.createElement('style');
+  miniSparkleStyle.textContent = `
+    @keyframes mini-sparkle {
+      0% { opacity: 0; transform: scale(0) translateY(0); }
+      50% { opacity: 1; transform: scale(1) translateY(-10px); }
+      100% { opacity: 0; transform: scale(0.5) translateY(-20px); }
+    }
+  `;
+  document.head.appendChild(miniSparkleStyle);
+  
+  });
+</script>
+
+<style>
+  /* Whimsy enhancements */
+  .card-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(45deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: sparkle-float 2s ease-in-out infinite;
+  }
+  
+  @keyframes sparkle-float {
+    0%, 100% { opacity: 0; transform: translateY(0px) scale(0); }
+    50% { opacity: 1; transform: translateY(-8px) scale(1); }
+  }
+  
+  .group:hover .card-sparkle {
+    opacity: 1;
+  }
+  
+  /* Enhanced hover effects */
+  .group:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+  
+  .group:hover .hero-image-overlay {
+    opacity: 1;
+  }
+  
+  /* Bookmark heart animation */
+  [data-bookmark-btn]:hover svg {
+    animation: heart-beat 0.6s ease-in-out;
+  }
+  
+  @keyframes heart-beat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1.2); }
+    75% { transform: scale(1.1); }
+  }
+  
+  /* Tag hover effects */
+  .tag-hover:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Reading time pulse */
+  .reading-time:hover {
+    animation: pulse-glow 1s ease-in-out;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0);
+    }
+  }
+  
+  /* Line clamp utility */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Stretched link for entire card clickability */
+  .stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    content: "";
+  }
+  
+  /* Ensure buttons are above stretched link */
+  [data-bookmark-btn],
+  [data-share-btn] {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Image loading optimization */
+  img {
+    content-visibility: auto;
+  }
+  
+  /* Hover effects */
+  .group:hover img {
+    transform: scale(1.05);
+  }
+  
+  /* Focus styles for accessibility */
+  .stretched-link:focus {
+    outline: 2px solid rgb(var(--color-primary-500));
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  
+  /* Additional whimsy animations */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+  }
+  
+  @keyframes success-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .group:hover img,
+    .group:hover,
+    .tag-hover:hover,
+    .reading-time:hover,
+    [data-bookmark-btn]:hover,
+    [data-share-btn]:hover {
+      transform: none !important;
+      animation: none !important;
+    }
+    
+    .hover:-translate-y-1 {
+      transform: none;
+    }
+    
+    .card-sparkle {
+      display: none;
+    }
+    
+    * {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

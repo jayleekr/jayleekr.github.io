@@ -1,0 +1,263 @@
+---
+export interface Props {
+  title: string;
+  subtitle: string;
+  description?: string;
+  ctaText: string;
+  ctaLink: string;
+  secondaryCta?: {
+    text: string;
+    link: string;
+  };
+}
+
+const { title, subtitle, description, ctaText, ctaLink, secondaryCta } = Astro.props;
+---
+
+<section class="hero-section relative py-20 text-center overflow-hidden">
+  <!-- Animated Background Pattern -->
+  <div class="hero-bg absolute inset-0 opacity-5 dark:opacity-10"></div>
+  
+  <!-- Floating Particles -->
+  <div class="particles absolute inset-0 pointer-events-none">
+    <div class="particle" style="--delay: 0s; --duration: 20s;"></div>
+    <div class="particle" style="--delay: 5s; --duration: 25s;"></div>
+    <div class="particle" style="--delay: 10s; --duration: 30s;"></div>
+    <div class="particle" style="--delay: 15s; --duration: 35s;"></div>
+  </div>
+  
+  <div class="hero-content relative z-10 max-w-4xl mx-auto">
+    <!-- Main Title with Gradient -->
+    <h1 class="hero-title text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-800 bg-clip-text text-transparent">
+      {title}
+    </h1>
+    
+    <!-- Animated Subtitle -->
+    <h2 class="hero-subtitle text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[2.5rem]">
+      <span class="typing-text" data-text={subtitle}></span>
+      <span class="typing-cursor">|</span>
+    </h2>
+    
+    {description && (
+      <p class="hero-description text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-10 opacity-0 animate-fade-in-up">
+        {description}
+      </p>
+    )}
+    
+    <!-- CTA Buttons with Enhanced Styling -->
+    <div class="hero-cta flex justify-center gap-4 flex-wrap opacity-0 animate-fade-in-up">
+      <a 
+        href={ctaLink}
+        class="cta-primary px-8 py-4 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transform hover:scale-105 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl"
+      >
+        {ctaText}
+        <svg class="inline-block w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+      </a>
+      
+      {secondaryCta && (
+        <a 
+          href={secondaryCta.link}
+          class="cta-secondary px-8 py-4 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-xl hover:bg-primary-50 dark:hover:bg-primary-900/20 transform hover:scale-105 transition-all duration-300 font-semibold"
+        >
+          {secondaryCta.text}
+        </a>
+      )}
+    </div>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-70 hover:opacity-100 transition-opacity">
+    <div class="scroll-arrow animate-bounce">
+      <svg class="w-6 h-6 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  }
+
+  /* Background Pattern */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, var(--brand-primary-200) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, var(--brand-primary-300) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: pattern-drift 60s linear infinite;
+  }
+
+  @keyframes pattern-drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+  }
+
+  /* Floating Particles */
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--brand-primary-400);
+    border-radius: 50%;
+    animation: float var(--duration) linear infinite;
+    animation-delay: var(--delay);
+    opacity: 0.6;
+  }
+
+  .particle:nth-child(1) { top: 10%; left: 10%; }
+  .particle:nth-child(2) { top: 20%; right: 15%; }
+  .particle:nth-child(3) { bottom: 30%; left: 20%; }
+  .particle:nth-child(4) { bottom: 15%; right: 10%; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    25% { transform: translateY(-20px) translateX(10px) rotate(90deg); }
+    50% { transform: translateY(-10px) translateX(-10px) rotate(180deg); }
+    75% { transform: translateY(-30px) translateX(5px) rotate(270deg); }
+  }
+
+  /* Typing Animation */
+  .typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typewriter 3s steps(20) 1s forwards;
+    width: 0;
+  }
+
+  .typing-cursor {
+    animation: blink 1s infinite;
+    color: var(--brand-primary-600);
+  }
+
+  @keyframes typewriter {
+    to { width: 100%; }
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Fade in animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out 2s forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Enhanced CTA styles */
+  .cta-primary {
+    background: linear-gradient(135deg, var(--brand-primary-600), var(--brand-primary-700));
+    box-shadow: 0 10px 25px rgba(14, 165, 233, 0.3);
+  }
+
+  .cta-primary:hover {
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.4);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: 70vh;
+      padding: 4rem 1rem;
+    }
+
+    .particles {
+      display: none; /* Hide particles on mobile */
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+    }
+
+    .hero-cta {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cta-primary, .cta-secondary {
+      width: 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .particle,
+    .hero-bg::before,
+    .typing-text,
+    .typing-cursor,
+    .animate-fade-in-up {
+      animation: none;
+    }
+
+    .typing-text {
+      width: 100%;
+    }
+
+    .animate-fade-in-up {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const typingText = document.querySelector('.typing-text') as HTMLElement;
+    
+    if (typingText && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const text = typingText.dataset.text || '';
+      let index = 0;
+      
+      // Clear initial content
+      typingText.textContent = '';
+      
+      // Start typing after initial delay
+      setTimeout(() => {
+        const typeInterval = setInterval(() => {
+          if (index < text.length) {
+            typingText.textContent += text.charAt(index);
+            index++;
+          } else {
+            clearInterval(typeInterval);
+            // Hide cursor after typing is complete
+            setTimeout(() => {
+              const cursor = document.querySelector('.typing-cursor') as HTMLElement;
+              if (cursor) cursor.style.display = 'none';
+            }, 2000);
+          }
+        }, 100);
+      }, 1000);
+    } else if (typingText) {
+      // Fallback for reduced motion
+      typingText.textContent = typingText.dataset.text || '';
+      const cursor = document.querySelector('.typing-cursor') as HTMLElement;
+      if (cursor) cursor.style.display = 'none';
+    }
+  });
+</script>

@@ -1,3 +1,6 @@
+/* Import design tokens first */
+@import './design-tokens.css';
+
 /* Import code highlighting styles */
 @import './code-highlight.css';
 
@@ -11,54 +14,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Modern theme variables with improved typography scales */
+/* Legacy theme variables for backward compatibility */
 :root {
-	/* Color system */
-	--accent: theme('colors.primary.600');
-	--accent-dark: theme('colors.primary.700');
-	--bg-primary: theme('colors.white');
-	--bg-secondary: theme('colors.gray.50');
-	--text-primary: theme('colors.gray.900');
-	--text-secondary: theme('colors.gray.700'); /* Improved contrast */
-	--border-color: theme('colors.gray.200');
-	
-	/* Fluid Typography scale with clamp() */
-	--text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8rem);
-	--text-sm: clamp(0.875rem, 0.85rem + 0.15vw, 0.9375rem);
-	--text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-	--text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
-	--text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-	--text-2xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
-	--text-3xl: clamp(1.875rem, 1.65rem + 1.125vw, 2.25rem);
-	--text-4xl: clamp(2.25rem, 1.95rem + 1.5vw, 3rem);
-	--text-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);
-	--text-6xl: clamp(4rem, 3rem + 5vw, 6rem);
-	
-	/* Line heights */
-	--leading-tight: 1.25;
-	--leading-snug: 1.375;
-	--leading-normal: 1.5;
-	--leading-relaxed: 1.625;
-	--leading-loose: 1.75;
-	
-	/* Letter spacing */
-	--tracking-tighter: -0.05em;
-	--tracking-tight: -0.025em;
-	--tracking-normal: 0;
-	--tracking-wide: 0.025em;
-	--tracking-wider: 0.05em;
-	--tracking-widest: 0.1em;
+	/* Map legacy variables to design tokens */
+	--accent: var(--interactive-primary);
+	--accent-dark: var(--interactive-primary-hover);
+	--bg-primary: var(--bg-primary);
+	--bg-secondary: var(--bg-secondary);
+	--text-primary: var(--text-primary);
+	--text-secondary: var(--text-secondary);
+	--border-color: var(--border-primary);
 }
 
-.dark {
-	--accent: theme('colors.primary.400');
-	--accent-dark: theme('colors.primary.300');
-	--bg-primary: theme('colors.gray.900');
-	--bg-secondary: theme('colors.gray.800');
-	--text-primary: theme('colors.gray.100');
-	--text-secondary: theme('colors.gray.200'); /* Improved contrast */
-	--border-color: theme('colors.gray.700');
-}
+/* Dark theme handled by design-tokens.css */
 
 /* Keep Atkinson font as fallback */
 @font-face {
@@ -86,73 +54,100 @@ html {
 }
 
 body {
-	@apply text-base leading-relaxed text-gray-900 dark:text-gray-100;
-	@apply bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800;
 	@apply transition-colors duration-300;
-	font-family: 'Inter', 'Noto Sans KR', 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	font-family: var(--font-primary);
 	font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
 	letter-spacing: var(--tracking-normal);
 	word-spacing: 0.05em;
+	color: var(--text-primary);
+	background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
+	font-size: var(--text-base);
+	line-height: var(--leading-relaxed);
 }
 
 main {
-	@apply max-w-3xl mx-auto px-4 py-12 md:px-6 lg:px-8;
+	@apply max-w-3xl mx-auto;
+	padding: var(--space-12) var(--space-4);
 }
 
-/* Typography with improved hierarchy */
+@media (min-width: 768px) {
+	main {
+		padding-left: var(--space-6);
+		padding-right: var(--space-6);
+	}
+}
+
+@media (min-width: 1024px) {
+	main {
+		padding-left: var(--space-8);
+		padding-right: var(--space-8);
+	}
+}
+
+/* Typography with improved hierarchy using design tokens */
 h1, h2, h3, h4, h5, h6 {
-	@apply font-bold text-gray-900 dark:text-gray-100;
-	font-family: 'Inter', 'Noto Sans KR', 'Atkinson', ui-sans-serif, system-ui, sans-serif;
+	font-family: var(--font-display);
+	font-weight: var(--font-weight-bold);
+	color: var(--text-primary);
 	letter-spacing: var(--tracking-tight);
 	line-height: var(--leading-tight);
 }
 
 h1 { 
 	font-size: var(--text-5xl);
-	@apply mb-6;
-	font-weight: 800;
+	margin-bottom: var(--space-6);
+	font-weight: var(--font-weight-extrabold);
 	letter-spacing: var(--tracking-tighter);
 }
 h2 { 
 	font-size: var(--text-4xl);
-	@apply mb-5;
-	font-weight: 700;
+	margin-bottom: var(--space-5);
+	font-weight: var(--font-weight-bold);
 }
 h3 { 
 	font-size: var(--text-3xl);
-	@apply mb-4;
-	font-weight: 600;
+	margin-bottom: var(--space-4);
+	font-weight: var(--font-weight-semibold);
 }
 h4 { 
 	font-size: var(--text-2xl);
-	@apply mb-3;
-	font-weight: 600;
+	margin-bottom: var(--space-3);
+	font-weight: var(--font-weight-semibold);
 }
 h5 { 
 	font-size: var(--text-xl);
-	@apply mb-3;
-	font-weight: 500;
+	margin-bottom: var(--space-3);
+	font-weight: var(--font-weight-medium);
 }
 h6 { 
 	font-size: var(--text-lg);
-	@apply mb-2;
-	font-weight: 500;
+	margin-bottom: var(--space-2);
+	font-weight: var(--font-weight-medium);
 }
 
 p {
-	@apply mb-6 text-gray-800 dark:text-gray-200; /* Improved contrast */
+	margin-bottom: var(--space-6);
+	color: var(--text-secondary);
 	line-height: var(--leading-relaxed);
 	word-wrap: break-word;
 	hyphens: auto;
 }
 
 a {
-	@apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300;
-	@apply transition-colors duration-200 underline decoration-2 underline-offset-2;
+	color: var(--interactive-primary);
+	transition: var(--transition-colors);
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: 2px;
+}
+
+a:hover {
+	color: var(--interactive-primary-hover);
 }
 
 strong, b {
-	@apply font-bold text-gray-900 dark:text-gray-100;
+	font-weight: var(--font-weight-bold);
+	color: var(--text-primary);
 }
 
 /* Code styling with better fonts */

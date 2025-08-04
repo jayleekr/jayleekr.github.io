@@ -1,0 +1,545 @@
+---
+// WhimsyEnhancer - Adds delightful micro-interactions and playful elements
+// Maintains performance budget and respects accessibility preferences
+---
+
+<style>
+  /* Core Whimsy Animations - Under 2KB total */
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  }
+  
+  @keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+  }
+  
+  @keyframes heart-beat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  @keyframes typing {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+  }
+
+  /* Sparkle effect for celebrations */
+  .sparkle-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 1.5s ease-in-out;
+  }
+  
+  /* Button enhancements */
+  .whimsy-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .whimsy-button:hover {
+    transform: translateY(-2px);
+    animation: pulse-glow 2s infinite;
+  }
+  
+  .whimsy-button:active {
+    animation: bounce-subtle 0.6s ease-in-out;
+  }
+  
+  /* Heart animation for bookmark button */
+  .bookmark-heart:hover {
+    animation: heart-beat 0.8s ease-in-out infinite;
+  }
+  
+  /* Typing indicator for search */
+  .typing-indicator::after {
+    content: '|';
+    animation: typing 1s infinite;
+  }
+  
+  /* Float effect for cards */
+  .float-on-hover:hover {
+    animation: float 2s ease-in-out infinite;
+  }
+  
+  /* Wiggle effect for theme toggle */
+  .wiggle-on-hover:hover {
+    animation: wiggle 0.5s ease-in-out;
+  }
+  
+  /* Loading spinner with personality */
+  .whimsy-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    border-left-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Easter egg activation styles */
+  .konami-activated {
+    animation: rainbow-border 3s linear infinite;
+  }
+  
+  @keyframes rainbow-border {
+    0% { border-color: #ef4444; }
+    16.66% { border-color: #f97316; }
+    33.33% { border-color: #eab308; }
+    50% { border-color: #22c55e; }
+    66.66% { border-color: #3b82f6; }
+    83.33% { border-color: #8b5cf6; }
+    100% { border-color: #ef4444; }
+  }
+  
+  /* Success celebration */
+  .success-celebration {
+    position: relative;
+  }
+  
+  .success-celebration::before {
+    content: '🎉';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    opacity: 0;
+    animation: celebrate 2s ease-out;
+  }
+  
+  @keyframes celebrate {
+    0% { opacity: 0; transform: translateX(-50%) translateY(0px) scale(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(-10px) scale(1.2); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(1); }
+  }
+  
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .whimsy-button:hover,
+    .bookmark-heart:hover,
+    .float-on-hover:hover,
+    .wiggle-on-hover:hover,
+    .sparkle,
+    .typing-indicator::after,
+    .whimsy-spinner,
+    .konami-activated,
+    .success-celebration::before {
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .whimsy-button:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+  
+  /* Dark mode adjustments */
+  :global(.dark) .sparkle {
+    background: linear-gradient(45deg, #60a5fa, #06b6d4);
+  }
+  
+  :global(.dark) .whimsy-button:hover {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4);
+  }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .sparkle {
+      width: 6px;
+      height: 6px;
+    }
+    
+    .whimsy-button:hover {
+      transform: translateY(-1px);
+    }
+  }
+  
+  /* Loading states */
+  .loading-dots {
+    display: inline-block;
+  }
+  
+  .loading-dots::after {
+    content: '';
+    animation: loading-dots 1.5s infinite;
+  }
+  
+  @keyframes loading-dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+  }
+  
+  /* Click ripple effect */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .ripple:active::before {
+    width: 300px;
+    height: 300px;
+  }
+</style>
+
+<script>
+  // Whimsy Enhancement JavaScript - Performance optimized
+  class WhimsyEnhancer {
+    constructor() {
+      this.konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+      this.konamiProgress = 0;
+      this.sparkleCount = 0;
+      this.maxSparkles = 20;
+      
+      this.init();
+    }
+    
+    init() {
+      this.enhanceButtons();
+      this.addKonamiCode();
+      this.addClickRipples();
+      this.enhanceFormInputs();
+      this.addLoadingStates();
+      this.addSuccessCelebrations();
+      this.addConsoleMessages();
+      
+      // Initialize after DOM is loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => this.enhance());
+      } else {
+        this.enhance();
+      }
+    }
+    
+    enhance() {
+      this.enhanceExistingElements();
+      this.addFloatingElements();
+    }
+    
+    enhanceButtons() {
+      // Enhance theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.classList.add('wiggle-on-hover');
+        
+        // Add celebration on theme change
+        themeToggle.addEventListener('click', () => {
+          this.createSparkles(themeToggle);
+        });
+      }
+      
+      // Enhance all buttons with whimsy class
+      document.querySelectorAll('button, .btn, a[role="button"]').forEach(button => {
+        if (!button.classList.contains('whimsy-enhanced')) {
+          button.classList.add('whimsy-button', 'whimsy-enhanced');
+        }
+      });
+    }
+    
+    enhanceExistingElements() {
+      // Enhance blog cards
+      document.querySelectorAll('[class*="BlogPostCard"], article').forEach(card => {
+        if (!card.classList.contains('whimsy-enhanced')) {
+          card.classList.add('float-on-hover', 'whimsy-enhanced');
+        }
+      });
+      
+      // Enhance bookmark buttons
+      document.querySelectorAll('[data-bookmark-btn]').forEach(btn => {
+        if (!btn.classList.contains('whimsy-enhanced')) {
+          btn.classList.add('bookmark-heart', 'whimsy-enhanced');
+          
+          btn.addEventListener('click', (e) => {
+            this.celebrateBookmark(btn);
+          });
+        }
+      });
+      
+      // Enhance search inputs
+      document.querySelectorAll('input[type="search"], .search-input').forEach(input => {
+        if (!input.classList.contains('whimsy-enhanced')) {
+          input.classList.add('typing-indicator', 'whimsy-enhanced');
+        }
+      });
+    }
+    
+    addKonamiCode() {
+      document.addEventListener('keydown', (e) => {
+        if (e.code === this.konamiCode[this.konamiProgress]) {
+          this.konamiProgress++;
+          
+          if (this.konamiProgress === this.konamiCode.length) {
+            this.activateKonamiEasterEgg();
+            this.konamiProgress = 0;
+          }
+        } else {
+          this.konamiProgress = 0;
+        }
+      });
+    }
+    
+    activateKonamiEasterEgg() {
+      // Rainbow border effect
+      document.body.classList.add('konami-activated');
+      
+      // Console message
+      console.log('🎮 Konami Code activated! You found the secret! 🎉');
+      
+      // Create celebration sparkles
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          this.createRandomSparkle();
+        }, i * 100);
+      }
+      
+      // Show temporary message
+      this.showTemporaryMessage('🎮 Konami Code Activated! 🎉', 3000);
+      
+      // Remove effect after 10 seconds
+      setTimeout(() => {
+        document.body.classList.remove('konami-activated');
+      }, 10000);
+    }
+    
+    createSparkles(element) {
+      if (this.sparkleCount >= this.maxSparkles) return;
+      
+      const rect = element.getBoundingClientRect();
+      const sparkleContainer = document.createElement('div');
+      sparkleContainer.className = 'sparkle-container';
+      
+      for (let i = 0; i < 5; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        
+        // Random position around the element
+        const x = rect.left + Math.random() * rect.width;
+        const y = rect.top + Math.random() * rect.height;
+        
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        sparkle.style.position = 'fixed';
+        sparkle.style.zIndex = '9999';
+        sparkle.style.pointerEvents = 'none';
+        
+        document.body.appendChild(sparkle);
+        this.sparkleCount++;
+        
+        // Remove after animation
+        setTimeout(() => {
+          if (sparkle.parentNode) {
+            sparkle.parentNode.removeChild(sparkle);
+            this.sparkleCount--;
+          }
+        }, 1500);
+      }
+    }
+    
+    createRandomSparkle() {
+      if (this.sparkleCount >= this.maxSparkles) return;
+      
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.position = 'fixed';
+      sparkle.style.left = Math.random() * window.innerWidth + 'px';
+      sparkle.style.top = Math.random() * window.innerHeight + 'px';
+      sparkle.style.zIndex = '9999';
+      sparkle.style.pointerEvents = 'none';
+      
+      document.body.appendChild(sparkle);
+      this.sparkleCount++;
+      
+      setTimeout(() => {
+        if (sparkle.parentNode) {
+          sparkle.parentNode.removeChild(sparkle);
+          this.sparkleCount--;
+        }
+      }, 1500);
+    }
+    
+    celebrateBookmark(button) {
+      button.classList.add('success-celebration');
+      this.createSparkles(button);
+      
+      setTimeout(() => {
+        button.classList.remove('success-celebration');
+      }, 2000);
+    }
+    
+    addClickRipples() {
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('ripple') || target.closest('.ripple')) {
+          // Ripple effect is handled by CSS
+        }
+      });
+    }
+    
+    enhanceFormInputs() {
+      document.querySelectorAll('input, textarea').forEach(input => {
+        if (!input.classList.contains('whimsy-enhanced')) {
+          input.addEventListener('focus', () => {
+            input.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            input.style.transform = 'scale(1.02)';
+          });
+          
+          input.addEventListener('blur', () => {
+            input.style.transform = 'scale(1)';
+          });
+          
+          input.classList.add('whimsy-enhanced');
+        }
+      });
+    }
+    
+    addLoadingStates() {
+      // Enhance any loading elements
+      document.querySelectorAll('[data-loading]').forEach(element => {
+        const spinner = document.createElement('span');
+        spinner.className = 'whimsy-spinner';
+        spinner.style.marginLeft = '8px';
+        element.appendChild(spinner);
+      });
+    }
+    
+    addSuccessCelebrations() {
+      // Enhance form submissions
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          const submitBtn = form.querySelector('button[type="submit"]');
+          if (submitBtn) {
+            this.celebrateSuccess(submitBtn);
+          }
+        });
+      });
+    }
+    
+    celebrateSuccess(element) {
+      element.classList.add('success-celebration');
+      this.createSparkles(element);
+      
+      setTimeout(() => {
+        element.classList.remove('success-celebration');
+      }, 2000);
+    }
+    
+    showTemporaryMessage(message, duration = 3000) {
+      const messageEl = document.createElement('div');
+      messageEl.textContent = message;
+      messageEl.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(59, 130, 246, 0.9);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      `;
+      
+      document.body.appendChild(messageEl);
+      
+      // Animate in
+      setTimeout(() => {
+        messageEl.style.transform = 'translateX(0)';
+      }, 100);
+      
+      // Animate out and remove
+      setTimeout(() => {
+        messageEl.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          if (messageEl.parentNode) {
+            messageEl.parentNode.removeChild(messageEl);
+          }
+        }, 300);
+      }, duration);
+    }
+    
+    addFloatingElements() {
+      // Add subtle floating animation to cards and important elements
+      const floatingElements = document.querySelectorAll('.card, .hero, .featured');
+      floatingElements.forEach((el, index) => {
+        if (!el.classList.contains('whimsy-enhanced')) {
+          el.style.animationDelay = `${index * 0.1}s`;
+          el.classList.add('float-on-hover', 'whimsy-enhanced');
+        }
+      });
+    }
+    
+    addConsoleMessages() {
+      // Fun console messages for developers
+      const messages = [
+        '🚀 Welcome to the console, fellow developer!',
+        '💡 Did you know? This site has some hidden easter eggs!',
+        '🎨 Built with love using Astro + Tailwind CSS',
+        '🔍 Try the Konami code: ↑↑↓↓←→←→BA',
+        '🌟 Thanks for inspecting the code!',
+        '🎯 Found any bugs? Let me know!',
+        '🎭 Enjoying the whimsical touches?'
+      ];
+      
+      messages.forEach((message, index) => {
+        setTimeout(() => {
+          console.log(`%c${message}`, 'color: #3b82f6; font-size: 14px; font-weight: bold;');
+        }, index * 2000);
+      });
+    }
+  }
+  
+  // Initialize whimsy enhancements
+  new WhimsyEnhancer();
+</script>

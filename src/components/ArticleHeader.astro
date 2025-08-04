@@ -1,0 +1,427 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+import ReadingTime from './ReadingTime.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  heroImage?: string | ImageMetadata;
+  categories?: string[];
+  tags?: string[];
+  author?: string;
+  readingTime?: number;
+  lang?: string;
+  showBreadcrumb?: boolean;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  categories = [],
+  tags = [],
+  author = 'Jay Lee',
+  readingTime,
+  lang = 'en',
+  showBreadcrumb = true
+} = Astro.props;
+
+// Generate reading progress indicators
+const estimatedSections = Math.max(3, Math.floor((readingTime || 5) / 2));
+---
+
+<header class="article-header relative bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
+  <!-- Breadcrumb Navigation -->
+  {showBreadcrumb && (
+    <nav class="breadcrumb py-4 px-4 md:px-6 max-w-4xl mx-auto">
+      <ol class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <li>
+          <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </a>
+        </li>
+        <li class="breadcrumb-separator">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </li>
+        <li>
+          <a href="/blog" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {lang === 'ko' ? '블로그' : 'Blog'}
+          </a>
+        </li>
+        {categories.length > 0 && (
+          <>
+            <li class="breadcrumb-separator">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </li>
+            <li>
+              <a href={`/blog?category=${categories[0]}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                {categories[0]}
+              </a>
+            </li>
+          </>
+        )}
+        <li class="breadcrumb-separator">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </li>
+        <li class="text-gray-400 dark:text-gray-500 truncate max-w-xs">
+          {title}
+        </li>
+      </ol>
+    </nav>
+  )}
+
+  <!-- Hero Image Section -->
+  {heroImage && (
+    <div class="hero-image-container relative overflow-hidden">
+      <div class="hero-image relative h-64 md:h-80 lg:h-96">
+        {typeof heroImage === 'string' ? (
+          <img 
+            src={heroImage} 
+            alt={title}
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        ) : (
+          <Image 
+            src={heroImage} 
+            alt={title}
+            class="w-full h-full object-cover"
+            loading="eager"
+            quality={85}
+          />
+        )}
+        
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+        
+        <!-- Floating Elements -->
+        <div class="hero-decorations absolute inset-0 pointer-events-none overflow-hidden">
+          <div class="floating-shape floating-shape-1 absolute w-8 h-8 bg-white/10 rounded-full"></div>
+          <div class="floating-shape floating-shape-2 absolute w-6 h-6 bg-primary-400/20 rounded-full"></div>
+          <div class="floating-shape floating-shape-3 absolute w-10 h-10 bg-white/5 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Article Meta & Title Section -->
+  <div class="article-meta px-4 md:px-6 py-8 md:py-12 max-w-4xl mx-auto">
+    <!-- Categories & Tags -->
+    <div class="meta-badges flex flex-wrap gap-2 mb-6">
+      {categories.map((category) => (
+        <a 
+          href={`/blog?category=${category}`}
+          class="category-badge px-3 py-1 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 rounded-full text-sm font-medium hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors"
+        >
+          {category}
+        </a>
+      ))}
+      
+      {tags.slice(0, 3).map((tag) => (
+        <a 
+          href={`/blog?tag=${tag}`}
+          class="tag-badge px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+        >
+          #{tag}
+        </a>
+      ))}
+    </div>
+
+    <!-- Article Title -->
+    <h1 class="article-title text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6 leading-tight">
+      {title}
+    </h1>
+
+    <!-- Article Description -->
+    {description && (
+      <p class="article-description text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl">
+        {description}
+      </p>
+    )}
+
+    <!-- Author & Meta Information -->
+    <div class="article-info flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+      <!-- Author Info -->
+      <div class="author-info flex items-center gap-3">
+        <div class="author-avatar w-10 h-10 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+          JL
+        </div>
+        <div>
+          <div class="author-name font-medium text-gray-900 dark:text-gray-100">{author}</div>
+          <div class="author-title text-xs text-gray-500 dark:text-gray-500">Software Engineer</div>
+        </div>
+      </div>
+
+      <!-- Publication Info -->
+      <div class="publication-info flex items-center gap-4">
+        <div class="publish-date flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+          <FormattedDate date={pubDate} />
+        </div>
+
+        {updatedDate && (
+          <div class="update-date flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span>{lang === 'ko' ? '수정됨' : 'Updated'}</span>
+            <FormattedDate date={updatedDate} />
+          </div>
+        )}
+
+        {readingTime && (
+          <div class="reading-time flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <ReadingTime content="" showIcon={false} />
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Reading Progress Preview -->
+    {readingTime && readingTime > 3 && (
+      <div class="reading-preview mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="font-medium text-gray-900 dark:text-gray-100">
+            {lang === 'ko' ? '읽기 가이드' : 'Reading Guide'}
+          </h4>
+          <span class="text-xs text-gray-500 dark:text-gray-500">
+            ~{readingTime} min read
+          </span>
+        </div>
+        
+        <div class="reading-sections flex gap-2">
+          {Array.from({ length: estimatedSections }, (_, i) => (
+            <div class="section-indicator flex-1 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
+              <div class="section-progress h-full bg-primary-500 rounded-full transform -translate-x-full transition-transform duration-1000" 
+                   style={`animation-delay: ${i * 0.2}s`}></div>
+            </div>
+          ))}
+        </div>
+        
+        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">
+          {lang === 'ko' 
+            ? '스크롤하면서 읽기 진행상황을 확인하세요' 
+            : 'Track your reading progress as you scroll'
+          }
+        </p>
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  .article-header {
+    position: relative;
+  }
+
+  /* Breadcrumb styling */
+  .breadcrumb-separator {
+    opacity: 0.5;
+  }
+
+  /* Hero image effects */
+  .hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(14, 165, 233, 0.1) 100%);
+    z-index: 1;
+  }
+
+  /* Floating animations */
+  .floating-shape {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .floating-shape-1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .floating-shape-2 {
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+
+  .floating-shape-3 {
+    bottom: 30%;
+    left: 70%;
+    animation-delay: 4s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-10px) rotate(120deg);
+    }
+    66% {
+      transform: translateY(5px) rotate(240deg);
+    }
+  }
+
+  /* Title animations */
+  .article-title {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .article-description {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .article-info {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Badge hover effects */
+  .category-badge:hover,
+  .tag-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Author avatar hover */
+  .author-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  }
+
+  /* Reading section animations */
+  .section-progress {
+    animation: fillSection 0.8s ease-out forwards;
+  }
+
+  @keyframes fillSection {
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .article-title {
+      font-size: 1.875rem;
+      line-height: 1.2;
+    }
+
+    .article-description {
+      font-size: 1rem;
+    }
+
+    .article-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .publication-info {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-image {
+      height: 200px;
+    }
+
+    .floating-shape {
+      display: none; /* Hide floating elements on mobile */
+    }
+  }
+
+  /* Dark mode enhancements */
+  .dark .hero-image-container::before {
+    background: linear-gradient(135deg, transparent 0%, rgba(14, 165, 233, 0.05) 100%);
+  }
+
+  /* Print styles */
+  @media print {
+    .hero-decorations,
+    .floating-shape,
+    .reading-preview {
+      display: none;
+    }
+
+    .article-header {
+      background: white;
+      border: none;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .floating-shape,
+    .article-title,
+    .article-description,
+    .article-info,
+    .section-progress {
+      animation: none;
+    }
+
+    .category-badge:hover,
+    .tag-badge:hover,
+    .author-avatar:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Animate reading sections on scroll
+    const sections = document.querySelectorAll('.section-progress');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.transform = 'translateX(0)';
+        }
+      });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // Add reading time to meta for progress tracking
+    const readingTimeElement = document.querySelector('.reading-time');
+    if (readingTimeElement) {
+      const minutes = parseInt(readingTimeElement.textContent?.match(/\d+/)?.[0] || '0');
+      document.documentElement.setAttribute('data-read-time', minutes.toString());
+    }
+  });
+</script>
