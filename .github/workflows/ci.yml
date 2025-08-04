@@ -263,6 +263,26 @@ jobs:
       - name: Run dependency check
         run: npm run deps:check || true
 
+      - name: Security headers validation
+        run: |
+          echo "Validating security configuration..."
+          # Check if security files exist
+          test -f public/_headers || { echo "❌ Missing _headers file"; exit 1; }
+          test -f public/.well-known/security.txt || { echo "❌ Missing security.txt"; exit 1; }
+          test -f SECURITY.md || { echo "❌ Missing SECURITY.md"; exit 1; }
+          echo "✅ Security configuration files present"
+
+      - name: CodeQL Analysis
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript
+          
+      - name: CodeQL Autobuild
+        uses: github/codeql-action/autobuild@v2
+        
+      - name: CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
   quality-gate:
     name: Quality Gate
     runs-on: ubuntu-latest

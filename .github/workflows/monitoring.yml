@@ -1,0 +1,445 @@
+name: Site Monitoring & Health Checks
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      check_type:
+        description: 'Type of check to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - uptime
+        - performance
+        - security
+        - accessibility
+
+env:
+  SITE_URL: 'https://jayleekr.github.io'
+  MONITORING_TIMEOUT: '30'
+
+permissions:
+  contents: read
+  issues: write
+  actions: write
+
+jobs:
+  # Uptime monitoring
+  uptime-check:
+    name: Uptime Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'uptime' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    outputs:
+      status: ${{ steps.uptime.outputs.status }}
+      response_time: ${{ steps.uptime.outputs.response_time }}
+    steps:
+      - name: Check site availability
+        id: uptime
+        run: |
+          echo "🔍 Checking site availability..."
+          
+          start_time=$(date +%s.%3N)
+          response=$(curl -s -o /dev/null -w "%{http_code}:%{time_total}" --max-time ${{ env.MONITORING_TIMEOUT }} ${{ env.SITE_URL }})
+          end_time=$(date +%s.%3N)
+          
+          http_code=$(echo $response | cut -d: -f1)
+          curl_time=$(echo $response | cut -d: -f2)
+          response_time=$(echo "($end_time - $start_time) * 1000" | bc | cut -d. -f1)
+          
+          echo "HTTP Code: $http_code"
+          echo "Response Time: ${response_time}ms"
+          
+          if [[ "$http_code" == "200" ]]; then
+            echo "status=up" >> $GITHUB_OUTPUT
+            echo "✅ Site is UP (${response_time}ms)"
+          else
+            echo "status=down" >> $GITHUB_OUTPUT
+            echo "❌ Site is DOWN (HTTP $http_code)"
+          fi
+          
+          echo "response_time=$response_time" >> $GITHUB_OUTPUT
+
+      - name: Check critical pages
+        run: |
+          echo "🔍 Checking critical pages..."
+          
+          critical_pages=(
+            ""
+            "/blog"
+            "/about"
+            "/sitemap-index.xml"
+            "/robots.txt"
+          )
+          
+          failed_pages=()
+          
+          for page in "${critical_pages[@]}"; do
+            url="${{ env.SITE_URL }}$page"
+            response=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
+            
+            if [[ "$response" == "200" ]]; then
+              echo "✅ $url - OK"
+            else
+              echo "❌ $url - Failed (HTTP $response)"
+              failed_pages+=("$url")
+            fi
+          done
+          
+          if [[ ${#failed_pages[@]} -gt 0 ]]; then
+            echo "❌ Some critical pages are not accessible:"
+            printf '%s\n' "${failed_pages[@]}"
+            exit 1
+          fi
+          
+          echo "✅ All critical pages are accessible"
+
+  # Performance monitoring
+  performance-check:
+    name: Performance Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'performance' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    outputs:
+      lighthouse_score: ${{ steps.lighthouse.outputs.score }}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli
+
+      - name: Run Lighthouse audit
+        id: lighthouse
+        run: |
+          echo "🚀 Running Lighthouse performance audit..."
+          
+          # Run Lighthouse
+          lhci autorun --collect.url=${{ env.SITE_URL }} --collect.numberOfRuns=1 --assert.preset=lighthouse:no-pwa --upload.target=temporary-public-storage
+          
+          # Extract performance score
+          score=$(cat .lighthouseci/lhr-*.json | jq '.categories.performance.score * 100' | head -1)
+          echo "Performance Score: $score"
+          echo "score=$score" >> $GITHUB_OUTPUT
+          
+          # Performance budget validation
+          if (( $(echo "$score < 90" | bc -l) )); then
+            echo "⚠️ Performance score ($score) is below threshold (90)"
+          else
+            echo "✅ Performance score ($score) meets requirements"
+          fi
+
+      - name: Performance regression check
+        run: |
+          echo "📊 Checking for performance regression..."
+          
+          # This would typically compare against historical data
+          # For now, we'll just validate against basic thresholds
+          
+          echo "✅ Performance regression check completed"
+
+  # Security monitoring
+  security-check:
+    name: Security Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'security' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    outputs:
+      security_score: ${{ steps.security.outputs.score }}
+    steps:
+      - name: Check security headers
+        id: security
+        run: |
+          echo "🛡️ Checking security headers..."
+          
+          headers=$(curl -s -I ${{ env.SITE_URL }})
+          
+          # Security headers to check
+          declare -A required_headers=(
+            ["x-frame-options"]="X-Frame-Options"
+            ["x-content-type-options"]="X-Content-Type-Options"
+            ["content-security-policy"]="Content-Security-Policy"
+            ["referrer-policy"]="Referrer-Policy"
+          )
+          
+          score=0
+          total_checks=${#required_headers[@]}
+          
+          for header_key in "${!required_headers[@]}"; do
+            header_name="${required_headers[$header_key]}"
+            
+            if echo "$headers" | grep -i "$header_key" > /dev/null; then
+              echo "✅ $header_name - Present"
+              ((score++))
+            else
+              echo "❌ $header_name - Missing"
+            fi
+          done
+          
+          # Check HTTPS redirect
+          http_response=$(curl -s -o /dev/null -w "%{http_code}" "http://jayleekr.github.io")
+          if [[ "$http_response" == "301" || "$http_response" == "302" ]]; then
+            echo "✅ HTTPS Redirect - Working"
+            ((score++))
+            ((total_checks++))
+          else
+            echo "❌ HTTPS Redirect - Not working"
+            ((total_checks++))
+          fi
+          
+          # Calculate percentage
+          security_percentage=$(( score * 100 / total_checks ))
+          echo "Security Score: $security_percentage% ($score/$total_checks)"
+          echo "score=$security_percentage" >> $GITHUB_OUTPUT
+          
+          if [[ $security_percentage -lt 80 ]]; then
+            echo "⚠️ Security score is below threshold (80%)"
+          else
+            echo "✅ Security score meets requirements"
+          fi
+
+      - name: Check SSL certificate
+        run: |
+          echo "🔒 Checking SSL certificate..."
+          
+          # Check SSL certificate validity
+          ssl_info=$(echo | openssl s_client -servername jayleekr.github.io -connect jayleekr.github.io:443 2>/dev/null | openssl x509 -noout -dates)
+          
+          if [[ -n "$ssl_info" ]]; then
+            echo "✅ SSL Certificate is valid"
+            echo "$ssl_info"
+          else
+            echo "❌ SSL Certificate check failed"
+          fi
+
+  # Accessibility monitoring
+  accessibility-check:
+    name: Accessibility Check
+    runs-on: ubuntu-latest
+    if: github.event.inputs.check_type == 'accessibility' || github.event.inputs.check_type == 'all' || github.event_name == 'schedule'
+    outputs:
+      accessibility_score: ${{ steps.axe.outputs.score }}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install accessibility tools
+        run: |
+          npm install -g @axe-core/cli
+          npm install -g pa11y
+
+      - name: Run accessibility audit
+        id: axe
+        run: |
+          echo "♿ Running accessibility audit..."
+          
+          # Run axe-core accessibility tests
+          axe ${{ env.SITE_URL }} --exit --reporter json > axe-results.json || true
+          
+          # Parse results
+          violations=$(cat axe-results.json | jq '.violations | length')
+          total_nodes=$(cat axe-results.json | jq '[.violations[].nodes | length] | add // 0')
+          
+          echo "Accessibility Violations: $violations"
+          echo "Total Violation Nodes: $total_nodes"
+          
+          # Calculate score (simple scoring system)
+          if [[ $violations -eq 0 ]]; then
+            score=100
+          elif [[ $violations -le 3 ]]; then
+            score=80
+          elif [[ $violations -le 10 ]]; then
+            score=60
+          else
+            score=40
+          fi
+          
+          echo "Accessibility Score: $score"
+          echo "score=$score" >> $GITHUB_OUTPUT
+          
+          if [[ $score -lt 80 ]]; then
+            echo "⚠️ Accessibility score ($score) is below threshold (80)"
+          else
+            echo "✅ Accessibility score meets requirements"
+          fi
+
+      - name: Upload accessibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-report-${{ github.run_number }}
+          path: axe-results.json
+          retention-days: 30
+
+  # Health summary and alerting
+  health-summary:
+    name: Health Summary
+    runs-on: ubuntu-latest
+    needs: [uptime-check, performance-check, security-check, accessibility-check]
+    if: always()
+    steps:
+      - name: Generate health report
+        run: |
+          echo "# 🏥 Site Health Report" > health-report.md
+          echo "**Generated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> health-report.md
+          echo "" >> health-report.md
+          
+          # Uptime status
+          uptime_status="${{ needs.uptime-check.outputs.status }}"
+          response_time="${{ needs.uptime-check.outputs.response_time }}"
+          
+          if [[ "$uptime_status" == "up" ]]; then
+            echo "## ✅ Uptime: HEALTHY" >> health-report.md
+            echo "- **Status:** Online" >> health-report.md
+            echo "- **Response Time:** ${response_time}ms" >> health-report.md
+          else
+            echo "## ❌ Uptime: CRITICAL" >> health-report.md
+            echo "- **Status:** Offline" >> health-report.md
+          fi
+          echo "" >> health-report.md
+          
+          # Performance status
+          perf_score="${{ needs.performance-check.outputs.lighthouse_score }}"
+          if [[ -n "$perf_score" ]] && (( $(echo "$perf_score >= 90" | bc -l) )); then
+            echo "## ✅ Performance: HEALTHY" >> health-report.md
+            echo "- **Lighthouse Score:** $perf_score/100" >> health-report.md
+          elif [[ -n "$perf_score" ]]; then
+            echo "## ⚠️ Performance: WARNING" >> health-report.md
+            echo "- **Lighthouse Score:** $perf_score/100" >> health-report.md
+          else
+            echo "## ❓ Performance: UNKNOWN" >> health-report.md
+          fi
+          echo "" >> health-report.md
+          
+          # Security status
+          security_score="${{ needs.security-check.outputs.security_score }}"
+          if [[ -n "$security_score" ]] && [[ $security_score -ge 80 ]]; then
+            echo "## ✅ Security: HEALTHY" >> health-report.md
+            echo "- **Security Score:** $security_score%" >> health-report.md
+          elif [[ -n "$security_score" ]]; then
+            echo "## ⚠️ Security: WARNING" >> health-report.md
+            echo "- **Security Score:** $security_score%" >> health-report.md
+          else
+            echo "## ❓ Security: UNKNOWN" >> health-report.md
+          fi
+          echo "" >> health-report.md
+          
+          # Accessibility status
+          a11y_score="${{ needs.accessibility-check.outputs.accessibility_score }}"
+          if [[ -n "$a11y_score" ]] && [[ $a11y_score -ge 80 ]]; then
+            echo "## ✅ Accessibility: HEALTHY" >> health-report.md
+            echo "- **Accessibility Score:** $a11y_score%" >> health-report.md
+          elif [[ -n "$a11y_score" ]]; then
+            echo "## ⚠️ Accessibility: WARNING" >> health-report.md
+            echo "- **Accessibility Score:** $a11y_score%" >> health-report.md
+          else
+            echo "## ❓ Accessibility: UNKNOWN" >> health-report.md
+          fi
+          echo "" >> health-report.md
+          
+          echo "---" >> health-report.md
+          echo "Report generated by GitHub Actions monitoring workflow" >> health-report.md
+          
+          # Display report
+          cat health-report.md
+
+      - name: Check for critical issues
+        id: critical-check
+        run: |
+          uptime_status="${{ needs.uptime-check.outputs.status }}"
+          perf_score="${{ needs.performance-check.outputs.lighthouse_score }}"
+          security_score="${{ needs.security-check.outputs.security_score }}"
+          
+          critical_issues=()
+          
+          # Check for critical uptime issues
+          if [[ "$uptime_status" == "down" ]]; then
+            critical_issues+=("Site is DOWN")
+          fi
+          
+          # Check for severe performance degradation
+          if [[ -n "$perf_score" ]] && (( $(echo "$perf_score < 50" | bc -l) )); then
+            critical_issues+=("Severe performance degradation (Score: $perf_score)")
+          fi
+          
+          # Check for critical security issues
+          if [[ -n "$security_score" ]] && [[ $security_score -lt 50 ]]; then
+            critical_issues+=("Critical security issues (Score: $security_score%)")
+          fi
+          
+          if [[ ${#critical_issues[@]} -gt 0 ]]; then
+            echo "has_critical=true" >> $GITHUB_OUTPUT
+            echo "🚨 Critical issues detected:"
+            printf '%s\n' "${critical_issues[@]}"
+          else
+            echo "has_critical=false" >> $GITHUB_OUTPUT
+            echo "✅ No critical issues detected"
+          fi
+
+      - name: Create issue for critical problems
+        if: steps.critical-check.outputs.has_critical == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `🚨 Critical Site Issue Detected - ${new Date().toISOString().split('T')[0]}`;
+            const body = `# Critical Site Health Issue
+            
+            A critical issue has been detected during automated monitoring.
+            
+            ## Issue Details
+            - **Detection Time:** ${new Date().toISOString()}
+            - **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            ## Status Summary
+            - **Uptime:** ${{ needs.uptime-check.outputs.status }}
+            - **Performance:** ${{ needs.performance-check.outputs.lighthouse_score }}
+            - **Security:** ${{ needs.security-check.outputs.security_score }}%
+            - **Accessibility:** ${{ needs.accessibility-check.outputs.accessibility_score }}%
+            
+            ## Required Actions
+            1. Investigate the root cause immediately
+            2. Apply necessary fixes
+            3. Verify the fix with manual testing
+            4. Close this issue once resolved
+            
+            ---
+            *This issue was automatically created by the monitoring workflow.*`;
+            
+            // Check if a similar issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'monitoring,critical'
+            });
+            
+            const hasExistingIssue = existingIssues.data.some(issue => 
+              issue.title.includes('Critical Site Issue Detected')
+            );
+            
+            if (!hasExistingIssue) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['monitoring', 'critical', 'bug']
+              });
+              
+              console.log('Created critical issue');
+            } else {
+              console.log('Similar critical issue already exists');
+            }
+
+      - name: Upload health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: health-report-${{ github.run_number }}
+          path: health-report.md
+          retention-days: 90

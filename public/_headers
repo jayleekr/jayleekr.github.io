@@ -1,0 +1,82 @@
+# Security Headers for GitHub Pages
+# jayleekr.github.io - Production Security Configuration
+
+# Apply to all files
+/*
+  # Security Headers
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), midi=(), encrypted-media=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=(), ambient-light-sensor=()
+  
+  # Content Security Policy - Strict but allowing necessary resources
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+  
+  # Cache Control - Default
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# Static Assets - Long-term caching
+/assets/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+  
+/_astro/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+# Fonts - Long-term caching
+/fonts/*
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+  
+*.woff
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+  
+*.woff2
+  Cache-Control: public, max-age=31536000, s-maxage=31536000, immutable
+
+# Images - Medium-term caching
+*.png
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  
+*.jpg
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  
+*.jpeg
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  
+*.webp
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  
+*.svg
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  
+*.ico
+  Cache-Control: public, max-age=604800, s-maxage=604800
+
+# HTML files - Short-term caching
+*.html
+  Cache-Control: public, max-age=300, s-maxage=300
+  
+# Dynamic content - No caching
+/api/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  
+/admin/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# RSS and Sitemap - Short-term caching
+/rss.xml
+  Cache-Control: public, max-age=3600, s-maxage=3600
+  
+/sitemap*.xml
+  Cache-Control: public, max-age=3600, s-maxage=3600
+
+# Manifest and service worker - Short-term caching for updates
+/manifest.json
+  Cache-Control: public, max-age=300, s-maxage=300
+  
+/sw.js
+  Cache-Control: public, max-age=0, s-maxage=0, must-revalidate
+
+# Security.txt
+/.well-known/security.txt
+  Cache-Control: public, max-age=86400, s-maxage=86400

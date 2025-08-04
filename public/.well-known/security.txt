@@ -1,0 +1,26 @@
+Contact: https://github.com/jayleekr/jayleekr.github.io/security/advisories/new
+Contact: jayleekr@outlook.com
+Expires: 2025-12-31T23:59:59.000Z
+Acknowledgments: https://github.com/jayleekr/jayleekr.github.io/blob/main/SECURITY.md
+Preferred-Languages: en, ko
+Canonical: https://jayleekr.github.io/.well-known/security.txt
+Policy: https://github.com/jayleekr/jayleekr.github.io/blob/main/SECURITY.md
+
+# Security Policy
+# If you discover a security vulnerability, please report it responsibly.
+# 
+# Scope:
+# - This website (jayleekr.github.io)
+# - Source code in the repository
+# - CI/CD pipeline security
+# 
+# Out of scope:
+# - Third-party dependencies (report to respective maintainers)
+# - GitHub Pages infrastructure
+# - DNS/Domain provider issues
+#
+# Response time: 
+# - Initial response within 48 hours
+# - Patch/mitigation within 7 days for critical issues
+#
+# Thank you for helping keep our site secure!

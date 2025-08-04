@@ -1,0 +1,450 @@
+name: Emergency Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollback_target:
+        description: 'Rollback target'
+        required: true
+        type: choice
+        options:
+        - previous_deployment
+        - specific_commit
+        - emergency_maintenance
+      target_commit:
+        description: 'Target commit SHA (required if rollback_target is specific_commit)'
+        required: false
+        type: string
+      reason:
+        description: 'Reason for rollback'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  deployments: write
+  issues: write
+
+jobs:
+  validate-rollback:
+    name: Validate Rollback Request
+    runs-on: ubuntu-latest
+    outputs:
+      target-commit: ${{ steps.determine-target.outputs.commit }}
+      rollback-reason: ${{ steps.validate.outputs.reason }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 50  # Fetch more history for rollback options
+
+      - name: Validate rollback request
+        id: validate
+        run: |
+          echo "🔍 Validating rollback request..."
+          
+          rollback_target="${{ github.event.inputs.rollback_target }}"
+          target_commit="${{ github.event.inputs.target_commit }}"
+          reason="${{ github.event.inputs.reason }}"
+          
+          # Validate reason is provided
+          if [[ -z "$reason" ]]; then
+            echo "❌ Rollback reason is required"
+            exit 1
+          fi
+          
+          echo "reason=$reason" >> $GITHUB_OUTPUT
+          echo "✅ Rollback request validated"
+
+      - name: Determine rollback target
+        id: determine-target
+        run: |
+          rollback_target="${{ github.event.inputs.rollback_target }}"
+          target_commit="${{ github.event.inputs.target_commit }}"
+          
+          if [[ "$rollback_target" == "specific_commit" ]]; then
+            if [[ -z "$target_commit" ]]; then
+              echo "❌ Target commit is required for specific commit rollback"
+              exit 1
+            fi
+            
+            # Validate commit exists
+            if ! git cat-file -e "$target_commit^{commit}"; then
+              echo "❌ Commit $target_commit does not exist"
+              exit 1
+            fi
+            
+            echo "commit=$target_commit" >> $GITHUB_OUTPUT
+            echo "✅ Rolling back to specific commit: $target_commit"
+            
+          elif [[ "$rollback_target" == "previous_deployment" ]]; then
+            # Get the second most recent commit (previous deployment)
+            previous_commit=$(git log --oneline -n 2 --format="%H" | tail -1)
+            
+            if [[ -z "$previous_commit" ]]; then
+              echo "❌ Cannot find previous deployment commit"
+              exit 1
+            fi
+            
+            echo "commit=$previous_commit" >> $GITHUB_OUTPUT
+            echo "✅ Rolling back to previous deployment: $previous_commit"
+            
+          elif [[ "$rollback_target" == "emergency_maintenance" ]]; then
+            # Create a minimal maintenance page
+            echo "commit=maintenance" >> $GITHUB_OUTPUT
+            echo "✅ Deploying emergency maintenance page"
+            
+          else
+            echo "❌ Invalid rollback target: $rollback_target"
+            exit 1
+          fi
+
+  create-rollback-deployment:
+    name: Create Rollback Deployment
+    runs-on: ubuntu-latest
+    needs: validate-rollback
+    outputs:
+      deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+    steps:
+      - name: Create rollback deployment
+        id: deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production',
+              description: `🔄 Emergency rollback: ${{ needs.validate-rollback.outputs.rollback-reason }}`,
+              auto_merge: false,
+              required_contexts: []
+            });
+            
+            core.setOutput('deployment_id', deployment.data.id);
+            return deployment.data.id;
+
+  execute-rollback:
+    name: Execute Rollback
+    runs-on: ubuntu-latest
+    needs: [validate-rollback, create-rollback-deployment]
+    environment:
+      name: production
+      url: https://jayleekr.github.io
+    steps:
+      - name: Update deployment status (in progress)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.create-rollback-deployment.outputs.deployment-id }},
+              state: 'in_progress',
+              description: 'Rollback in progress...'
+            });
+
+      - name: Checkout target commit
+        if: needs.validate-rollback.outputs.target-commit != 'maintenance'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate-rollback.outputs.target-commit }}
+
+      - name: Create maintenance page
+        if: needs.validate-rollback.outputs.target-commit == 'maintenance'
+        run: |
+          echo "🚧 Creating emergency maintenance page..."
+          
+          mkdir -p dist
+          
+          cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Site Under Maintenance - jayleekr.github.io</title>
+            <style>
+              * { margin: 0; padding: 0; box-sizing: border-box; }
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 20px;
+              }
+              .container {
+                max-width: 600px;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 40px;
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+              }
+              h1 { font-size: 2.5em; margin-bottom: 20px; }
+              p { font-size: 1.2em; margin-bottom: 15px; opacity: 0.9; }
+              .emoji { font-size: 4em; margin-bottom: 20px; }
+              .time { font-size: 0.9em; opacity: 0.7; margin-top: 30px; }
+              .contact {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+              }
+              a { color: #ffd700; text-decoration: none; }
+              a:hover { text-decoration: underline; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="emoji">🚧</div>
+              <h1>Site Under Maintenance</h1>
+              <p>We're currently performing emergency maintenance to ensure the best experience for our users.</p>
+              <p>The site will be back online shortly. Thank you for your patience!</p>
+              
+              <div class="contact">
+                <p>If you need immediate assistance, please contact:</p>
+                <p><a href="mailto:jayleekr@outlook.com">jayleekr@outlook.com</a></p>
+                <p><a href="https://github.com/jayleekr">GitHub: @jayleekr</a></p>
+              </div>
+              
+              <div class="time">
+                Maintenance started: <span id="maintenance-time"></span>
+              </div>
+            </div>
+            
+            <script>
+              document.getElementById('maintenance-time').textContent = new Date().toLocaleString();
+              
+              // Auto-refresh every 5 minutes
+              setTimeout(() => {
+                window.location.reload();
+              }, 300000);
+            </script>
+          </body>
+          </html>
+          EOF
+          
+          # Copy essential files
+          cp -r public/_headers dist/ 2>/dev/null || true
+          cp -r public/.well-known dist/ 2>/dev/null || true
+          cp -r public/robots.txt dist/ 2>/dev/null || true
+          
+          # Create a minimal robots.txt for maintenance
+          cat > dist/robots.txt << 'EOF'
+          User-agent: *
+          Disallow: /
+          
+          # Site under maintenance
+          # Please check back later
+          EOF
+          
+          echo "✅ Emergency maintenance page created"
+
+      - name: Build rollback version
+        if: needs.validate-rollback.outputs.target-commit != 'maintenance'
+        run: |
+          echo "🔄 Building rollback version..."
+          
+          # Check if this is a Node.js project
+          if [[ -f "package.json" ]]; then
+            # Setup Node.js
+            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            
+            # Install dependencies
+            npm ci --production --ignore-scripts
+            
+            # Build the project
+            npm run build
+            
+            # Add rollback indicator
+            echo "{\"rollback\":true,\"target\":\"${{ needs.validate-rollback.outputs.target-commit }}\",\"timestamp\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"}" > dist/rollback-info.json
+          else
+            echo "❌ No package.json found, cannot build project"
+            exit 1
+          fi
+          
+          echo "✅ Rollback version built successfully"
+
+      - name: Deploy rollback
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: |
+            🔄 Emergency Rollback - ${{ needs.validate-rollback.outputs.rollback-reason }}
+            
+            Target: ${{ needs.validate-rollback.outputs.target-commit }}
+            Triggered by: ${{ github.actor }}
+            Reason: ${{ needs.validate-rollback.outputs.rollback-reason }}
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.create-rollback-deployment.outputs.deployment-id }},
+              state: 'success',
+              environment_url: 'https://jayleekr.github.io',
+              description: 'Rollback completed successfully ✅'
+            });
+
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.create-rollback-deployment.outputs.deployment-id }},
+              state: 'failure',
+              description: 'Rollback failed ❌'
+            });
+
+  verify-rollback:
+    name: Verify Rollback
+    runs-on: ubuntu-latest
+    needs: [execute-rollback, create-rollback-deployment]
+    if: always() && needs.execute-rollback.result == 'success'
+    steps:
+      - name: Wait for deployment propagation
+        run: |
+          echo "⏳ Waiting for rollback to propagate..."
+          sleep 30
+
+      - name: Verify rollback deployment
+        run: |
+          echo "🔍 Verifying rollback deployment..."
+          
+          # Check site accessibility
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://jayleekr.github.io/)
+          if [[ "$response" != "200" ]]; then
+            echo "❌ Site not accessible after rollback (HTTP $response)"
+            exit 1
+          fi
+          
+          # Check if rollback info is present (for non-maintenance rollbacks)
+          if [[ "${{ needs.validate-rollback.outputs.target-commit }}" != "maintenance" ]]; then
+            if curl -s https://jayleekr.github.io/rollback-info.json | jq -e '.rollback == true' > /dev/null; then
+              echo "✅ Rollback indicator confirmed"
+            else
+              echo "⚠️ Rollback indicator not found (this may be normal for older commits)"
+            fi
+          fi
+          
+          echo "✅ Rollback verification completed"
+
+      - name: Update deployment status (verified)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: ${{ needs.create-rollback-deployment.outputs.deployment-id }},
+              state: 'success',
+              environment_url: 'https://jayleekr.github.io',
+              description: 'Rollback verified and live! 🔄✅'
+            });
+
+  create-rollback-issue:
+    name: Create Rollback Issue
+    runs-on: ubuntu-latest
+    needs: [validate-rollback, verify-rollback]
+    if: always()
+    steps:
+      - name: Create rollback tracking issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const rollbackSuccess = '${{ needs.verify-rollback.result }}' === 'success';
+            const title = rollbackSuccess 
+              ? `🔄 Emergency Rollback Completed - ${new Date().toISOString().split('T')[0]}`
+              : `🚨 Emergency Rollback Failed - ${new Date().toISOString().split('T')[0]}`;
+            
+            const body = `# Emergency Rollback ${rollbackSuccess ? 'Completed' : 'Failed'}
+            
+            ## Rollback Details
+            - **Trigger:** ${{ github.actor }}
+            - **Reason:** ${{ needs.validate-rollback.outputs.rollback-reason }}
+            - **Target:** ${{ needs.validate-rollback.outputs.target-commit }}
+            - **Timestamp:** ${new Date().toISOString()}
+            - **Status:** ${rollbackSuccess ? '✅ Success' : '❌ Failed'}
+            - **Workflow Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            
+            ## Next Steps
+            ${rollbackSuccess ? `
+            - [ ] Investigate the root cause of the issue that triggered this rollback
+            - [ ] Develop and test a proper fix
+            - [ ] Plan the next deployment
+            - [ ] Update monitoring if needed
+            - [ ] Close this issue once the situation is fully resolved
+            ` : `
+            - [ ] **URGENT:** Investigate why the rollback failed
+            - [ ] Check site status manually
+            - [ ] Consider manual intervention
+            - [ ] Escalate if necessary
+            - [ ] Document lessons learned
+            `}
+            
+            ## Site Status
+            - **URL:** https://jayleekr.github.io
+            - **Expected Status:** ${rollbackSuccess ? 'Should be accessible with rollback version' : 'Status unknown - requires manual check'}
+            
+            ---
+            *This issue was automatically created by the rollback workflow.*`;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: rollbackSuccess 
+                ? ['rollback', 'maintenance', 'ops']
+                : ['rollback', 'critical', 'ops', 'bug']
+            });
+
+  notify-team:
+    name: Notify Team
+    runs-on: ubuntu-latest
+    needs: [validate-rollback, verify-rollback]
+    if: always()
+    steps:
+      - name: Prepare notification
+        run: |
+          rollback_success="${{ needs.verify-rollback.result }}"
+          target_commit="${{ needs.validate-rollback.outputs.target-commit }}"
+          reason="${{ needs.validate-rollback.outputs.rollback-reason }}"
+          
+          if [[ "$rollback_success" == "success" ]]; then
+            echo "status_emoji=✅" >> $GITHUB_ENV
+            echo "status_text=SUCCESS" >> $GITHUB_ENV
+          else
+            echo "status_emoji=❌" >> $GITHUB_ENV
+            echo "status_text=FAILED" >> $GITHUB_ENV
+          fi
+          
+          echo "target_commit=$target_commit" >> $GITHUB_ENV
+          echo "reason=$reason" >> $GITHUB_ENV
+
+      - name: Log rollback completion
+        run: |
+          echo "${{ env.status_emoji }} Emergency Rollback ${{ env.status_text }}"
+          echo "Target: ${{ env.target_commit }}"
+          echo "Reason: ${{ env.reason }}"
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Site: https://jayleekr.github.io"
