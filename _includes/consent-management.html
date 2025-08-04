@@ -1,0 +1,96 @@
+<!--
+  GDPR Compliant Consent Management System
+  Privacy-first analytics and cookie management
+  v1.0 - Created 2025-08-04
+-->
+
+<script>
+(function() {
+  'use strict';
+  
+  // Consent Management Configuration
+  const CONSENT_CONFIG = {
+    // Required for GDPR compliance
+    required_consents: ['necessary'],
+    optional_consents: ['analytics', 'functional', 'performance'],
+    
+    // Cookie settings
+    cookie_name: 'blog_consent_preferences',
+    cookie_duration: 365, // days
+    
+    // UI configuration
+    banner_position: 'bottom',
+    theme: 'auto', // auto, light, dark
+    
+    // Consent categories
+    categories: {
+      necessary: {
+        name: 'Essential Cookies',
+        description: 'Required for basic site functionality and security.',
+        required: true,
+        cookies: ['consent_preferences', 'session_id']
+      },
+      analytics: {
+        name: 'Analytics Cookies', 
+        description: 'Help us understand how visitors use our site to improve user experience.',
+        required: false,
+        cookies: ['_ga', '_ga_*', '_gid', '_gat']
+      },
+      functional: {
+        name: 'Functional Cookies',
+        description: 'Remember your preferences like theme and language settings.',
+        required: false,
+        cookies: ['theme_preference', 'language_preference', 'ab_testing_user_hash']
+      },
+      performance: {
+        name: 'Performance Cookies',
+        description: 'Collect anonymous data about site performance and loading times.',
+        required: false,
+        cookies: ['performance_metrics']
+      }
+    }
+  };
+  
+  // Consent Manager
+  window.ConsentManager = {
+    
+    // Initialize consent management
+    init: function() {
+      this.loadExistingConsent();
+      
+      // Only show banner if consent not given
+      if (!this.hasValidConsent()) {
+        this.showConsentBanner();
+      } else {
+        this.enableAllowedServices();
+      }
+      
+      // Set up settings button
+      this.createSettingsButton();
+    },
+    
+    // Check if user has valid consent
+    hasValidConsent: function() {
+      const consent = this.getStoredConsent();
+      if (!consent) return false;
+      
+      // Check if consent is not expired
+      const consentDate = new Date(consent.timestamp);
+      const expiryDate = new Date(consentDate.getTime() + (CONSENT_CONFIG.cookie_duration * 24 * 60 * 60 * 1000));
+      
+      return new Date() < expiryDate;
+    },
+    
+    // Get stored consent preferences
+    getStoredConsent: function() {
+      try {
+        const consentData = localStorage.getItem(CONSENT_CONFIG.cookie_name);
+        return consentData ? JSON.parse(consentData) : null;
+      } catch (e) {
+        return null;
+      }
+    },
+    
+    // Store consent preferences
+    storeConsent: function(preferences) {
+      const consentData = {\n        preferences: preferences,\n        timestamp: new Date().toISOString(),\n        version: '1.0'\n      };\n      \n      try {\n        localStorage.setItem(CONSENT_CONFIG.cookie_name, JSON.stringify(consentData));\n      } catch (e) {\n        console.warn('Could not store consent preferences');\n      }\n    },\n    \n    // Load existing consent and enable services\n    loadExistingConsent: function() {\n      const consent = this.getStoredConsent();\n      if (consent && consent.preferences) {\n        this.enableServices(consent.preferences);\n      }\n    },\n    \n    // Enable services based on consent\n    enableServices: function(preferences) {\n      // Analytics\n      if (preferences.analytics) {\n        this.enableAnalytics();\n      }\n      \n      // Functional features\n      if (preferences.functional) {\n        this.enableFunctionalFeatures();\n      }\n      \n      // Performance monitoring\n      if (preferences.performance) {\n        this.enablePerformanceMonitoring();\n      }\n      \n      // Update global consent state\n      window.hasAnalyticsConsent = preferences.analytics || false;\n      window.hasFunctionalConsent = preferences.functional || false;\n      window.hasPerformanceConsent = preferences.performance || false;\n    },\n    \n    // Enable analytics services\n    enableAnalytics: function() {\n      // Enable GA4 tracking\n      if (window.gtag) {\n        gtag('consent', 'update', {\n          'analytics_storage': 'granted'\n        });\n      }\n      \n      // Enable A/B testing\n      if (window.ABTesting) {\n        // Re-initialize experiments if needed\n        setTimeout(() => {\n          window.ABTesting.initializeExperiments();\n        }, 100);\n      }\n    },\n    \n    // Enable functional features\n    enableFunctionalFeatures: function() {\n      // Theme preferences, language settings, etc.\n      if (window.gtag) {\n        gtag('consent', 'update', {\n          'functionality_storage': 'granted'\n        });\n      }\n    },\n    \n    // Enable performance monitoring\n    enablePerformanceMonitoring: function() {\n      if (window.gtag) {\n        gtag('consent', 'update', {\n          'performance_storage': 'granted'\n        });\n      }\n    },\n    \n    // Create consent banner\n    showConsentBanner: function() {\n      const banner = document.createElement('div');\n      banner.id = 'consent-banner';\n      banner.className = 'consent-banner';\n      \n      banner.innerHTML = `\n        <div class=\"consent-content\">\n          <div class=\"consent-text\">\n            <h4>🍪 We value your privacy</h4>\n            <p>This blog uses cookies to improve your browsing experience, analyze site traffic, and remember your preferences. By continuing to use this site, you consent to our use of cookies.</p>\n          </div>\n          <div class=\"consent-actions\">\n            <button id=\"consent-accept-all\" class=\"btn btn-primary\">Accept All</button>\n            <button id=\"consent-manage\" class=\"btn btn-secondary\">Manage Preferences</button>\n            <button id=\"consent-decline\" class=\"btn btn-outline\">Decline Optional</button>\n          </div>\n        </div>\n        <button id=\"consent-close\" class=\"consent-close\" aria-label=\"Close\">&times;</button>\n      `;\n      \n      document.body.appendChild(banner);\n      this.addConsentStyles();\n      this.bindConsentEvents();\n    },\n    \n    // Add consent banner styles\n    addConsentStyles: function() {\n      if (document.getElementById('consent-styles')) return;\n      \n      const style = document.createElement('style');\n      style.id = 'consent-styles';\n      style.textContent = `\n        .consent-banner {\n          position: fixed;\n          bottom: 0;\n          left: 0;\n          right: 0;\n          background: var(--card-bg, #fff);\n          border-top: 1px solid var(--border-color, #e9ecef);\n          box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);\n          z-index: 10000;\n          padding: 20px;\n          font-size: 14px;\n          line-height: 1.4;\n        }\n        \n        .consent-content {\n          max-width: 1200px;\n          margin: 0 auto;\n          display: flex;\n          align-items: center;\n          justify-content: space-between;\n          gap: 20px;\n        }\n        \n        .consent-text h4 {\n          margin: 0 0 8px 0;\n          font-size: 16px;\n          color: var(--heading-color, #333);\n        }\n        \n        .consent-text p {\n          margin: 0;\n          color: var(--text-color, #666);\n        }\n        \n        .consent-actions {\n          display: flex;\n          gap: 10px;\n          flex-shrink: 0;\n        }\n        \n        .consent-banner .btn {\n          padding: 8px 16px;\n          border-radius: 4px;\n          font-size: 14px;\n          font-weight: 500;\n          text-decoration: none;\n          cursor: pointer;\n          border: 1px solid transparent;\n          transition: all 0.2s ease;\n        }\n        \n        .consent-banner .btn-primary {\n          background: var(--btn-box-shadow, #007bff);\n          color: white;\n          border-color: var(--btn-box-shadow, #007bff);\n        }\n        \n        .consent-banner .btn-secondary {\n          background: var(--sidebar-bg, #f8f9fa);\n          color: var(--text-color, #333);\n          border-color: var(--border-color, #dee2e6);\n        }\n        \n        .consent-banner .btn-outline {\n          background: transparent;\n          color: var(--text-muted, #6c757d);\n          border-color: var(--border-color, #dee2e6);\n        }\n        \n        .consent-banner .btn:hover {\n          opacity: 0.9;\n          transform: translateY(-1px);\n        }\n        \n        .consent-close {\n          position: absolute;\n          top: 10px;\n          right: 15px;\n          background: none;\n          border: none;\n          font-size: 24px;\n          color: var(--text-muted, #999);\n          cursor: pointer;\n          line-height: 1;\n        }\n        \n        .consent-close:hover {\n          color: var(--text-color, #333);\n        }\n        \n        @media (max-width: 768px) {\n          .consent-content {\n            flex-direction: column;\n            align-items: stretch;\n            text-align: center;\n          }\n          \n          .consent-actions {\n            justify-content: center;\n            flex-wrap: wrap;\n          }\n          \n          .consent-banner .btn {\n            flex: 1;\n            min-width: 120px;\n          }\n        }\n        \n        /* Settings modal */\n        .consent-modal {\n          position: fixed;\n          top: 0;\n          left: 0;\n          right: 0;\n          bottom: 0;\n          background: rgba(0, 0, 0, 0.5);\n          z-index: 10001;\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          padding: 20px;\n        }\n        \n        .consent-modal-content {\n          background: var(--card-bg, #fff);\n          border-radius: 8px;\n          max-width: 600px;\n          width: 100%;\n          max-height: 80vh;\n          overflow-y: auto;\n          padding: 24px;\n        }\n        \n        .consent-category {\n          margin-bottom: 20px;\n          padding: 16px;\n          border: 1px solid var(--border-color, #e9ecef);\n          border-radius: 6px;\n        }\n        \n        .consent-category h5 {\n          margin: 0 0 8px 0;\n          display: flex;\n          align-items: center;\n          justify-content: space-between;\n        }\n        \n        .consent-category p {\n          margin: 0 0 12px 0;\n          color: var(--text-muted, #666);\n          font-size: 13px;\n        }\n        \n        .consent-toggle {\n          position: relative;\n          display: inline-block;\n          width: 50px;\n          height: 24px;\n        }\n        \n        .consent-toggle input {\n          opacity: 0;\n          width: 0;\n          height: 0;\n        }\n        \n        .consent-slider {\n          position: absolute;\n          cursor: pointer;\n          top: 0;\n          left: 0;\n          right: 0;\n          bottom: 0;\n          background-color: #ccc;\n          transition: .4s;\n          border-radius: 24px;\n        }\n        \n        .consent-slider:before {\n          position: absolute;\n          content: \"\";\n          height: 18px;\n          width: 18px;\n          left: 3px;\n          bottom: 3px;\n          background-color: white;\n          transition: .4s;\n          border-radius: 50%;\n        }\n        \n        .consent-toggle input:checked + .consent-slider {\n          background-color: var(--btn-box-shadow, #007bff);\n        }\n        \n        .consent-toggle input:checked + .consent-slider:before {\n          transform: translateX(26px);\n        }\n        \n        .consent-settings-btn {\n          position: fixed;\n          bottom: 20px;\n          left: 20px;\n          background: var(--sidebar-bg, #f8f9fa);\n          border: 1px solid var(--border-color, #dee2e6);\n          border-radius: 20px;\n          padding: 8px 12px;\n          font-size: 12px;\n          color: var(--text-muted, #666);\n          cursor: pointer;\n          z-index: 1000;\n          transition: all 0.2s ease;\n        }\n        \n        .consent-settings-btn:hover {\n          background: var(--card-bg, #fff);\n          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\n        }\n      `;\n      \n      document.head.appendChild(style);\n    },\n    \n    // Bind consent banner events\n    bindConsentEvents: function() {\n      document.getElementById('consent-accept-all').addEventListener('click', () => {\n        this.acceptAll();\n      });\n      \n      document.getElementById('consent-decline').addEventListener('click', () => {\n        this.declineOptional();\n      });\n      \n      document.getElementById('consent-manage').addEventListener('click', () => {\n        this.showPreferencesModal();\n      });\n      \n      document.getElementById('consent-close').addEventListener('click', () => {\n        this.hideConsentBanner();\n      });\n    },\n    \n    // Accept all cookies\n    acceptAll: function() {\n      const preferences = {\n        necessary: true,\n        analytics: true,\n        functional: true,\n        performance: true\n      };\n      \n      this.storeConsent(preferences);\n      this.enableServices(preferences);\n      this.hideConsentBanner();\n      this.enableAllowedServices();\n    },\n    \n    // Decline optional cookies\n    declineOptional: function() {\n      const preferences = {\n        necessary: true,\n        analytics: false,\n        functional: false,\n        performance: false\n      };\n      \n      this.storeConsent(preferences);\n      this.enableServices(preferences);\n      this.hideConsentBanner();\n    },\n    \n    // Show preferences modal\n    showPreferencesModal: function() {\n      const modal = document.createElement('div');\n      modal.id = 'consent-modal';\n      modal.className = 'consent-modal';\n      \n      const existingConsent = this.getStoredConsent();\n      const currentPrefs = existingConsent ? existingConsent.preferences : {\n        necessary: true,\n        analytics: false,\n        functional: false,\n        performance: false\n      };\n      \n      modal.innerHTML = `\n        <div class=\"consent-modal-content\">\n          <h3>Privacy Preferences</h3>\n          <p>Choose which cookies you'd like to allow. You can change these settings at any time.</p>\n          \n          ${Object.keys(CONSENT_CONFIG.categories).map(key => {\n            const category = CONSENT_CONFIG.categories[key];\n            const checked = currentPrefs[key] ? 'checked' : '';\n            const disabled = category.required ? 'disabled' : '';\n            \n            return `\n              <div class=\"consent-category\">\n                <h5>\n                  ${category.name}\n                  <label class=\"consent-toggle\">\n                    <input type=\"checkbox\" ${checked} ${disabled} data-category=\"${key}\">\n                    <span class=\"consent-slider\"></span>\n                  </label>\n                </h5>\n                <p>${category.description}</p>\n                <small>Cookies: ${category.cookies.join(', ')}</small>\n              </div>\n            `;\n          }).join('')}\n          \n          <div class=\"consent-actions\" style=\"margin-top: 24px; text-align: right;\">\n            <button id=\"preferences-cancel\" class=\"btn btn-outline\">Cancel</button>\n            <button id=\"preferences-save\" class=\"btn btn-primary\">Save Preferences</button>\n          </div>\n        </div>\n      `;\n      \n      document.body.appendChild(modal);\n      \n      // Bind modal events\n      document.getElementById('preferences-cancel').addEventListener('click', () => {\n        document.body.removeChild(modal);\n      });\n      \n      document.getElementById('preferences-save').addEventListener('click', () => {\n        this.savePreferences(modal);\n        document.body.removeChild(modal);\n      });\n      \n      // Close on backdrop click\n      modal.addEventListener('click', (e) => {\n        if (e.target === modal) {\n          document.body.removeChild(modal);\n        }\n      });\n    },\n    \n    // Save preferences from modal\n    savePreferences: function(modal) {\n      const preferences = {};\n      \n      modal.querySelectorAll('input[data-category]').forEach(input => {\n        preferences[input.dataset.category] = input.checked;\n      });\n      \n      this.storeConsent(preferences);\n      this.enableServices(preferences);\n      this.hideConsentBanner();\n    },\n    \n    // Hide consent banner\n    hideConsentBanner: function() {\n      const banner = document.getElementById('consent-banner');\n      if (banner) {\n        banner.remove();\n      }\n    },\n    \n    // Create settings button for returning users\n    createSettingsButton: function() {\n      if (!this.hasValidConsent()) return;\n      \n      const settingsBtn = document.createElement('button');\n      settingsBtn.className = 'consent-settings-btn';\n      settingsBtn.innerHTML = '🍪 Privacy';\n      settingsBtn.title = 'Manage cookie preferences';\n      \n      settingsBtn.addEventListener('click', () => {\n        this.showPreferencesModal();\n      });\n      \n      document.body.appendChild(settingsBtn);\n    },\n    \n    // Enable allowed services after consent\n    enableAllowedServices: function() {\n      const consent = this.getStoredConsent();\n      if (!consent) return;\n      \n      // Update gtag consent state\n      if (window.gtag) {\n        gtag('consent', 'default', {\n          'analytics_storage': consent.preferences.analytics ? 'granted' : 'denied',\n          'functionality_storage': consent.preferences.functional ? 'granted' : 'denied',\n          'performance_storage': consent.preferences.performance ? 'granted' : 'denied',\n          'security_storage': 'granted' // Always granted for necessary\n        });\n      }\n    }\n  };\n  \n  // Initialize consent management when DOM is ready\n  document.addEventListener('DOMContentLoaded', function() {\n    // Small delay to ensure other scripts are loaded\n    setTimeout(() => {\n      window.ConsentManager.init();\n    }, 500);\n  });\n  \n})();\n</script>"

@@ -729,7 +729,7 @@
                           'easter-eggs', this.stats[stat].toString());
     }
     
-    showToast(message, duration = 3000) {
+    showToast(message: string, duration: number = 3000) {
       const toast = document.createElement('div');
       toast.textContent = message;
       toast.style.cssText = `

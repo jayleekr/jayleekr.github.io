@@ -53,7 +53,14 @@ layout: compress
     </a>
 
     {% if jekyll.environment == 'production' %}
+      <!-- Analytics Framework -->
+      {% include consent-management.html %}
       {% include google-analytics.html %}
+      {% include analytics-events.html %}
+      {% include ab-testing.html %}
+      {% include performance-analytics.html %}
+      {% include analytics-dashboard.html %}
+      {% include privacy-notice.html %}
     {% endif %}
 
     {% include search-loader.html %}

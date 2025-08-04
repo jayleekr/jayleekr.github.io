@@ -1,0 +1,427 @@
+<!--
+  A/B Testing Framework
+  Statistical experimentation system for blog optimization
+  v1.0 - Created 2025-08-04
+-->
+
+<script>
+(function() {
+  'use strict';
+  
+  // A/B Testing Configuration
+  const AB_TESTING_CONFIG = {
+    // Active experiments
+    experiments: {
+      mobile_navigation: {
+        id: 'mobile_nav_exp_001',
+        name: 'Mobile Navigation Style',
+        enabled: true,
+        traffic_split: 0.5, // 50% split
+        variants: {
+          control: 'hamburger_menu',
+          variant: 'bottom_navigation'
+        },
+        success_metrics: ['navigation_click', 'page_depth', 'session_duration'],
+        page_conditions: ['mobile'] // Only run on mobile
+      },
+      
+      search_visibility: {
+        id: 'search_vis_exp_002', 
+        name: 'Search Box Visibility',
+        enabled: true,
+        traffic_split: 0.5,
+        variants: {
+          control: 'sidebar_only',
+          variant: 'prominent_header'
+        },
+        success_metrics: ['search_usage', 'search_success_rate'],
+        page_conditions: ['all']
+      },
+      
+      about_page_detail: {
+        id: 'about_detail_exp_003',
+        name: 'About Page Detail Level', 
+        enabled: false, // Disabled for now
+        traffic_split: 0.5,
+        variants: {
+          control: 'detailed_about',
+          variant: 'simplified_about'
+        },
+        success_metrics: ['contact_clicks', 'time_on_about_page'],
+        page_conditions: ['/about/', '/tabs/about/']
+      }
+    },
+    
+    // Statistical configuration
+    statistical_config: {
+      min_sample_size: 100,
+      confidence_level: 0.95,
+      min_effect_size: 0.05, // 5% minimum detectable effect
+      max_experiment_duration: 30 // days
+    }
+  };
+  
+  // A/B Testing Engine
+  window.ABTesting = {
+    
+    // User assignment and variant selection
+    assignUserToVariant: function(experimentId) {
+      // Create stable user hash from multiple factors
+      const userHash = this.createUserHash();
+      const experimentHash = this.hashString(experimentId + userHash);
+      
+      return (experimentHash % 100) < 50 ? 'control' : 'variant';
+    },
+    
+    // Create stable user identifier
+    createUserHash: function() {
+      // Try to get existing user hash from localStorage
+      let userHash = localStorage.getItem('ab_testing_user_hash');
+      
+      if (!userHash) {
+        // Create new hash from browser characteristics
+        const fingerprint = [
+          navigator.userAgent,
+          navigator.language,
+          screen.width + 'x' + screen.height,
+          new Date().getTimezoneOffset(),
+          Date.now() // Add some randomness
+        ].join('|');
+        
+        userHash = this.hashString(fingerprint).toString();
+        localStorage.setItem('ab_testing_user_hash', userHash);
+      }
+      
+      return userHash;
+    },
+    
+    // Simple hash function
+    hashString: function(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+      }
+      return Math.abs(hash);
+    },
+    
+    // Check if user should participate in experiment
+    shouldParticipate: function(experiment) {
+      if (!experiment.enabled) return false;
+      
+      // Check page conditions
+      if (experiment.page_conditions && experiment.page_conditions.length > 0) {
+        const currentPath = window.location.pathname;
+        const isMobile = window.innerWidth <= 768;
+        
+        let conditionMet = false;
+        
+        experiment.page_conditions.forEach(condition => {
+          if (condition === 'all') conditionMet = true;
+          else if (condition === 'mobile' && isMobile) conditionMet = true;
+          else if (condition === 'desktop' && !isMobile) conditionMet = true;
+          else if (currentPath.includes(condition)) conditionMet = true;
+        });
+        
+        if (!conditionMet) return false;
+      }
+      
+      // Check traffic split
+      const userHash = this.createUserHash();
+      const participationHash = this.hashString('participation_' + experiment.id + userHash);
+      const participationRandom = (participationHash % 100) / 100;
+      
+      return participationRandom < experiment.traffic_split;
+    },
+    
+    // Initialize experiments for current page
+    initializeExperiments: function() {
+      const activeExperiments = {};
+      
+      Object.keys(AB_TESTING_CONFIG.experiments).forEach(experimentKey => {
+        const experiment = AB_TESTING_CONFIG.experiments[experimentKey];
+        
+        if (this.shouldParticipate(experiment)) {
+          const variant = this.assignUserToVariant(experiment.id);
+          const variantName = experiment.variants[variant];
+          
+          activeExperiments[experimentKey] = {
+            id: experiment.id,
+            name: experiment.name,
+            variant: variant,
+            variantName: variantName
+          };
+          
+          // Apply experiment
+          this.applyExperiment(experimentKey, variant, variantName);
+          
+          // Track assignment in analytics
+          if (window.blogAnalytics && window.gtag) {
+            window.blogAnalytics.setExperimentVariant(experiment.id, variant);
+            
+            gtag('event', 'experiment_assignment', {
+              'experiment_id': experiment.id,
+              'experiment_name': experiment.name,
+              'variant': variant,
+              'variant_name': variantName,
+              'event_category': 'ab_testing'
+            });
+          }
+          
+          console.log(`A/B Test Active: ${experiment.name} -> ${variantName} (${variant})`);
+        }
+      });
+      
+      // Store active experiments for tracking
+      this.activeExperiments = activeExperiments;
+      return activeExperiments;
+    },
+    
+    // Apply specific experiment changes
+    applyExperiment: function(experimentKey, variant, variantName) {
+      switch (experimentKey) {
+        case 'mobile_navigation':
+          this.applyMobileNavigationExperiment(variant);
+          break;
+          
+        case 'search_visibility':
+          this.applySearchVisibilityExperiment(variant);
+          break;
+          
+        case 'about_page_detail':
+          this.applyAboutPageExperiment(variant);
+          break;
+      }
+    },
+    
+    // Mobile Navigation Experiment
+    applyMobileNavigationExperiment: function(variant) {
+      if (window.innerWidth > 768) return; // Only apply on mobile
+      
+      if (variant === 'variant') {
+        // Bottom navigation variant
+        document.body.classList.add('ab-bottom-nav');
+        
+        // Add bottom navigation if it doesn't exist
+        if (!document.querySelector('.mobile-bottom-nav')) {
+          this.createBottomNavigation();
+        }
+      } else {
+        // Control: keep hamburger menu
+        document.body.classList.add('ab-hamburger-nav');
+      }
+    },
+    
+    // Create bottom navigation for mobile experiment
+    createBottomNavigation: function() {
+      const bottomNav = document.createElement('div');
+      bottomNav.className = 'mobile-bottom-nav ab-test-element';
+      bottomNav.innerHTML = `
+        <div class=\"bottom-nav-container\">
+          <a href=\"/\" class=\"nav-item\" data-nav=\"home\">
+            <i class=\"fas fa-home\"></i>
+            <span>Home</span>
+          </a>
+          <a href=\"/tabs/categories/\" class=\"nav-item\" data-nav=\"categories\">
+            <i class=\"fas fa-folder\"></i>
+            <span>Categories</span>
+          </a>
+          <a href=\"/tabs/tags/\" class=\"nav-item\" data-nav=\"tags\">
+            <i class=\"fas fa-tags\"></i>
+            <span>Tags</span>
+          </a>
+          <a href=\"/tabs/about/\" class=\"nav-item\" data-nav=\"about\">
+            <i class=\"fas fa-user\"></i>
+            <span>About</span>
+          </a>
+        </div>
+      `;
+      
+      document.body.appendChild(bottomNav);
+      
+      // Add necessary CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        .mobile-bottom-nav {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: var(--sidebar-bg, #fff);
+          border-top: 1px solid var(--border-color, #eee);
+          z-index: 1000;
+          padding: env(safe-area-inset-bottom);
+        }
+        
+        .bottom-nav-container {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          padding: 10px 0;
+        }
+        
+        .mobile-bottom-nav .nav-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-decoration: none;
+          color: var(--text-color, #333);
+          font-size: 12px;
+          padding: 5px;
+        }
+        
+        .mobile-bottom-nav .nav-item i {
+          font-size: 18px;
+          margin-bottom: 4px;
+        }
+        
+        body.ab-bottom-nav {
+          padding-bottom: 70px;
+        }
+        
+        @media (min-width: 769px) {
+          .mobile-bottom-nav {
+            display: none;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    },
+    
+    // Search Visibility Experiment  
+    applySearchVisibilityExperiment: function(variant) {
+      if (variant === 'variant') {
+        // Prominent header search
+        document.body.classList.add('ab-prominent-search');
+        this.createProminentSearch();
+      } else {
+        // Control: sidebar only
+        document.body.classList.add('ab-sidebar-search');
+      }
+    },
+    
+    // Create prominent search for experiment
+    createProminentSearch: function() {
+      const topbar = document.querySelector('#topbar');
+      if (!topbar) return;
+      
+      const searchContainer = document.createElement('div');
+      searchContainer.className = 'prominent-search ab-test-element';
+      searchContainer.innerHTML = `
+        <div class=\"search-wrapper\">
+          <i class=\"fas fa-search\"></i>
+          <input type=\"text\" id=\"prominent-search-input\" placeholder=\"Search posts...\" />
+        </div>
+      `;
+      
+      topbar.appendChild(searchContainer);
+      
+      // Add CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        .prominent-search {
+          margin: 10px;
+          position: relative;
+        }
+        
+        .prominent-search .search-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+          background: var(--search-bg, #f8f9fa);
+          border: 1px solid var(--border-color, #dee2e6);
+          border-radius: 20px;
+          padding: 8px 15px;
+        }
+        
+        .prominent-search i {
+          color: var(--text-muted, #6c757d);
+          margin-right: 10px;
+        }
+        
+        .prominent-search input {
+          border: none;
+          outline: none;
+          background: transparent;
+          flex: 1;
+          font-size: 14px;
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Connect to existing search functionality
+      const prominentInput = document.getElementById('prominent-search-input');
+      const existingInput = document.getElementById('search-input');
+      
+      if (prominentInput && existingInput) {
+        prominentInput.addEventListener('input', function(e) {
+          existingInput.value = e.target.value;
+          existingInput.dispatchEvent(new Event('input'));
+        });
+      }
+    },
+    
+    // About Page Experiment
+    applyAboutPageExperiment: function(variant) {
+      const aboutContent = document.querySelector('.about-content');
+      if (!aboutContent) return;
+      
+      if (variant === 'variant') {
+        // Simplified version
+        document.body.classList.add('ab-simplified-about');
+        aboutContent.classList.add('simplified-about');
+      } else {
+        // Control: detailed version
+        document.body.classList.add('ab-detailed-about');
+      }
+    },
+    
+    // Track experiment success metrics
+    trackSuccessMetric: function(metricName, value, additionalData = {}) {
+      if (!this.activeExperiments) return;
+      
+      Object.keys(this.activeExperiments).forEach(experimentKey => {
+        const experiment = this.activeExperiments[experimentKey];
+        const configExperiment = AB_TESTING_CONFIG.experiments[experimentKey];
+        
+        if (configExperiment.success_metrics.includes(metricName)) {
+          if (window.gtag) {
+            gtag('event', 'experiment_success_metric', {
+              'experiment_id': experiment.id,
+              'experiment_name': experiment.name,
+              'variant': experiment.variant,
+              'metric_name': metricName,
+              'metric_value': value,
+              'event_category': 'ab_testing',
+              ...additionalData
+            });
+          }
+        }
+      });
+    },
+    
+    // Clean up experiment elements (for SPA navigation)
+    cleanupExperiments: function() {
+      document.querySelectorAll('.ab-test-element').forEach(el => el.remove());
+      document.body.classList.remove(...document.body.classList.values().filter(c => c.startsWith('ab-')));
+    }
+  };
+  
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    window.ABTesting.initializeExperiments();
+    
+    // Set up success metrics tracking
+    document.addEventListener('click', function(e) {
+      // Track navigation clicks
+      if (e.target.closest('a')) {
+        window.ABTesting.trackSuccessMetric('navigation_click', 1, {
+          'link_href': e.target.closest('a').href
+        });
+      }
+    });
+  });
+  
+})();
+</script>

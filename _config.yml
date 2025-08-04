@@ -35,16 +35,63 @@ baseurl: ''
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Asia/Seoul
 
+# Success Metrics Definition
+success_metrics:
+  # Engagement metrics
+  avg_session_duration: 180  # seconds
+  bounce_rate_target: 60     # percentage
+  pages_per_session: 2.5
+  
+  # Content metrics  
+  reading_progress_target: 75  # percentage
+  search_usage_rate: 15        # percentage of sessions
+  
+  # Technical metrics
+  core_web_vitals:
+    lcp_target: 2500  # milliseconds
+    fid_target: 100   # milliseconds  
+    cls_target: 0.1   # score
+  
+  # Conversion metrics
+  contact_rate: 2      # percentage
+  social_share_rate: 5 # percentage
+
 google_analytics:
-  id: 'jabang3@gmail.com'          # Fill with your Google Analytics ID
+  # Legacy Universal Analytics (deprecated)
+  legacy_id: 'jabang3@gmail.com'  # Old format for transition period
+  
+  # Google Analytics 4 (GA4) - REPLACE WITH YOUR GA4 MEASUREMENT ID
+  ga4_id: 'G-XXXXXXXXXX'  # Replace with your actual GA4 Measurement ID
+  
+  # Privacy settings
+  allow_google_signals: false      # Set to true if you want Google Signals
+  allow_ad_personalization_signals: false  # Set to true for ad personalization
+  
+  # Legacy pageviews (deprecated with GA4)
   pv:
-    # The Google Analytics pageviews switch.
-    # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
     enabled: false
-    # the next options only valid when `google_analytics.pv` is enabled.
     proxy_url: ''
     proxy_endpoint: ''
-    cache: false  # pv data local cache, good for the users from GFW area.
+    cache: false
+
+# Analytics and Experimentation Configuration
+analytics:
+  # Core Web Vitals monitoring
+  performance_monitoring: true
+  
+  # A/B Testing experiments
+  experiments:
+    mobile_navigation: true
+    search_visibility: true
+    about_page_detail: false
+  
+  # Privacy compliance
+  gdpr_compliance: true
+  consent_banner: true
+  
+  # Sampling rates (0.1 = 10%, 1.0 = 100%)
+  performance_sampling: 1.0  # 100% for development
+  analytics_sampling: 1.0    # 100% for development
 
 disqus:
   comments: true 
@@ -157,6 +204,10 @@ exclude:
   - docs
   - README.md
   - LICENSE
+  - node_modules
+  - analytics-reports
+  - experiments
+  - performance-data
 
 sitemap_exclude:  # Sitemap will exclude the following items.
   fuzzy:

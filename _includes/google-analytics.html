@@ -1,16 +1,139 @@
 <!--
-  The GA snippet
-  v2.0
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2017-2019 Cotes Chung
-  MIT License
+  Google Analytics 4 (GA4) Implementation
+  Enhanced Analytics & Experimentation Framework
+  v3.0 - Updated 2025-08-04
 -->
+{% if site.google_analytics.ga4_id %}
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics.ga4_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  
+  // Initialize GA4
+  gtag('js', new Date());
+  gtag('config', '{{ site.google_analytics.ga4_id }}', {
+    // Enhanced privacy settings
+    anonymize_ip: true,
+    allow_google_signals: {{ site.google_analytics.allow_google_signals | default: false }},
+    allow_ad_personalization_signals: {{ site.google_analytics.allow_ad_personalization_signals | default: false }},
+    
+    // Enhanced eCommerce (if applicable)
+    send_page_view: true,
+    
+    // Custom parameters
+    custom_map: {
+      'blog_category': 'dimension1',
+      'reading_progress': 'dimension2',
+      'theme_mode': 'dimension3',
+      'search_term': 'dimension4',
+      'user_language': 'dimension5'
+    }
+  });
+  
+  // Enhanced measurement events
+  gtag('config', '{{ site.google_analytics.ga4_id }}', {
+    enhanced_measurement: {
+      scrolls: true,
+      outbound_clicks: true,
+      site_search: true,
+      video_engagement: true,
+      file_downloads: true
+    }
+  });
+  
+  // Blog-specific custom events setup
+  window.blogAnalytics = {
+    // Track reading progress
+    trackReadingProgress: function(percent, postTitle) {
+      gtag('event', 'reading_progress', {
+        'post_title': postTitle,
+        'progress_percent': percent,
+        'event_category': 'engagement',
+        'non_interaction': true
+      });
+    },
+    
+    // Track search usage
+    trackSearch: function(searchTerm, resultCount) {
+      gtag('event', 'search', {
+        'search_term': searchTerm,
+        'result_count': resultCount,
+        'event_category': 'search'
+      });
+    },
+    
+    // Track theme toggle
+    trackThemeToggle: function(newTheme) {
+      gtag('event', 'theme_toggle', {
+        'theme_mode': newTheme,
+        'event_category': 'ui_interaction'
+      });
+    },
+    
+    // Track social sharing
+    trackSocialShare: function(platform, postTitle) {
+      gtag('event', 'share', {
+        'method': platform,
+        'content_type': 'blog_post',
+        'content_id': postTitle,
+        'event_category': 'social'
+      });
+    },
+    
+    // Track PWA install
+    trackPWAInstall: function() {
+      gtag('event', 'pwa_install', {
+        'event_category': 'engagement',
+        'value': 1
+      });
+    },
+    
+    // Track whimsy feature interactions
+    trackWhimsyInteraction: function(featureName) {
+      gtag('event', 'whimsy_interaction', {
+        'feature_name': featureName,
+        'event_category': 'engagement'
+      });
+    },
+    
+    // A/B Testing support
+    setExperimentVariant: function(experimentId, variantId) {
+      gtag('config', '{{ site.google_analytics.ga4_id }}', {
+        'custom_parameters': {
+          'experiment_id': experimentId,
+          'variant_id': variantId
+        }
+      });
+    }
+  };
+  
+  // Auto-track current theme
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+  gtag('event', 'page_view_with_theme', {
+    'theme_mode': currentTheme,
+    'custom_parameter': 'theme_mode'
+  });
+  
+  // Auto-track user language
+  const userLanguage = navigator.language || 'en';
+  gtag('event', 'page_view_with_language', {
+    'user_language': userLanguage,
+    'custom_parameter': 'user_language'
+  });
+  
+</script>
+{% endif %}
+
+{% if site.google_analytics.legacy_id %}
+<!-- Legacy Universal Analytics (Deprecated - for transition period only) -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', '{{ site.google_analytics.id }}', 'auto');
+  ga('create', '{{ site.google_analytics.legacy_id }}', 'auto');
   ga('send', 'pageview');
 </script>
+{% endif %}

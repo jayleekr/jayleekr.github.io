@@ -21,6 +21,8 @@
     "test:lighthouse": "npx lhci autorun",
     "test:percy": "percy exec -- npm run test:e2e",
     "test:all": "npm run test && npm run test:e2e && npm run test:lighthouse",
+    "test:launch": "npm run type-check && npm run test && npm run build",
+    "validate:launch": "node scripts/launch-validation.mjs",
     "audit": "bun audit",
     "audit:fix": "bun audit --fix",
     "deps:update": "bun update",

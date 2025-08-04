@@ -1,0 +1,252 @@
+<!--
+  Enhanced Event Tracking System
+  Blog-specific analytics events for user engagement tracking
+  v1.0 - Created 2025-08-04
+-->
+
+<script>
+(function() {
+  'use strict';
+  
+  // Wait for DOM and analytics to be ready
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Reading Progress Tracking
+    function initReadingProgressTracking() {
+      if (!document.querySelector('.post-content')) return;
+      
+      const content = document.querySelector('.post-content');
+      const postTitle = document.title;
+      const trackingThresholds = [25, 50, 75, 100];
+      const trackedThresholds = [];
+      
+      function calculateReadingProgress() {
+        const contentHeight = content.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset;
+        
+        const progress = Math.round(((scrollTop + windowHeight) / contentHeight) * 100);
+        
+        trackingThresholds.forEach(threshold => {
+          if (progress >= threshold && !trackedThresholds.includes(threshold)) {
+            trackedThresholds.push(threshold);
+            
+            if (window.blogAnalytics) {
+              window.blogAnalytics.trackReadingProgress(threshold, postTitle);
+            }
+          }
+        });
+      }
+      
+      // Throttled scroll listener
+      let scrollTimer;
+      window.addEventListener('scroll', function() {
+        if (scrollTimer) clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(calculateReadingProgress, 100);
+      });
+    }
+    
+    // Search Analytics
+    function initSearchTracking() {
+      const searchInput = document.querySelector('#search-input');
+      const searchResults = document.querySelector('#search-results');
+      
+      if (!searchInput) return;
+      
+      let searchTimer;
+      searchInput.addEventListener('input', function(e) {
+        if (searchTimer) clearTimeout(searchTimer);
+        
+        searchTimer = setTimeout(() => {
+          const searchTerm = e.target.value.trim();
+          if (searchTerm.length >= 3) {
+            // Count results after search completes
+            setTimeout(() => {
+              const resultCount = searchResults ? 
+                searchResults.querySelectorAll('.search-result-item').length : 0;
+              
+              if (window.blogAnalytics) {
+                window.blogAnalytics.trackSearch(searchTerm, resultCount);
+              }
+            }, 500);
+          }
+        }, 1000);
+      });
+    }
+    
+    // Theme Toggle Tracking
+    function initThemeTracking() {
+      const themeToggle = document.querySelector('#mode-toggle');
+      
+      if (!themeToggle) return;
+      
+      themeToggle.addEventListener('click', function() {
+        // Detect new theme after toggle
+        setTimeout(() => {
+          const newTheme = document.documentElement.getAttribute('data-theme') || 
+                          (document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+          
+          if (window.blogAnalytics) {
+            window.blogAnalytics.trackThemeToggle(newTheme);
+          }
+        }, 100);
+      });
+    }
+    
+    // Social Sharing Tracking
+    function initSocialTracking() {
+      document.querySelectorAll('[data-share]').forEach(shareButton => {
+        shareButton.addEventListener('click', function(e) {
+          const platform = e.currentTarget.getAttribute('data-share');
+          const postTitle = document.title;
+          
+          if (window.blogAnalytics) {
+            window.blogAnalytics.trackSocialShare(platform, postTitle);
+          }
+        });
+      });
+      
+      // Also track generic share links
+      document.querySelectorAll('a[href*="twitter.com/intent"], a[href*="facebook.com/sharer"], a[href*="linkedin.com/sharing"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          let platform = 'unknown';
+          const href = e.currentTarget.href;
+          
+          if (href.includes('twitter.com')) platform = 'twitter';
+          else if (href.includes('facebook.com')) platform = 'facebook';
+          else if (href.includes('linkedin.com')) platform = 'linkedin';
+          
+          if (window.blogAnalytics) {
+            window.blogAnalytics.trackSocialShare(platform, document.title);
+          }
+        });
+      });
+    }
+    
+    // PWA Install Tracking
+    function initPWATracking() {
+      let deferredPrompt;
+      
+      window.addEventListener('beforeinstallprompt', (e) => {
+        deferredPrompt = e;
+      });
+      
+      window.addEventListener('appinstalled', (e) => {
+        if (window.blogAnalytics) {
+          window.blogAnalytics.trackPWAInstall();
+        }
+      });
+    }
+    
+    // Navigation Pattern Tracking
+    function initNavigationTracking() {
+      // Track sidebar usage
+      document.querySelectorAll('#sidebar a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          if (window.gtag) {
+            gtag('event', 'sidebar_navigation', {
+              'link_text': e.currentTarget.textContent.trim(),
+              'link_url': e.currentTarget.href,
+              'event_category': 'navigation'
+            });
+          }
+        });
+      });
+      
+      // Track mobile bottom navigation (if exists)
+      document.querySelectorAll('.mobile-nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          if (window.gtag) {
+            gtag('event', 'mobile_navigation', {
+              'nav_item': e.currentTarget.getAttribute('data-nav') || e.currentTarget.textContent.trim(),
+              'event_category': 'navigation'
+            });
+          }
+        });
+      });
+    }
+    
+    // Whimsy Feature Tracking
+    function initWhimsyTracking() {
+      // Track any elements with whimsy attributes
+      document.querySelectorAll('[data-whimsy]').forEach(element => {
+        element.addEventListener('click', function(e) {
+          const featureName = e.currentTarget.getAttribute('data-whimsy');
+          
+          if (window.blogAnalytics) {
+            window.blogAnalytics.trackWhimsyInteraction(featureName);
+          }
+        });
+      });
+      
+      // Track hover effects on special elements
+      document.querySelectorAll('.whimsy-hover, .easter-egg').forEach(element => {
+        element.addEventListener('mouseenter', function(e) {
+          const featureName = e.currentTarget.className.includes('easter-egg') ? 
+            'easter_egg_hover' : 'whimsy_hover';
+          
+          if (window.blogAnalytics) {
+            window.blogAnalytics.trackWhimsyInteraction(featureName);
+          }
+        });
+      });
+    }
+    
+    // External Link Tracking
+    function initExternalLinkTracking() {
+      document.querySelectorAll('a[href^="http"]').forEach(link => {
+        // Skip if it's internal link
+        if (link.hostname === window.location.hostname) return;
+        
+        link.addEventListener('click', function(e) {
+          if (window.gtag) {
+            gtag('event', 'click', {
+              'event_category': 'outbound',
+              'event_label': e.currentTarget.href,
+              'transport_type': 'beacon'
+            });
+          }
+        });
+      });
+    }
+    
+    // Performance Timing Tracking
+    function initPerformanceTracking() {
+      window.addEventListener('load', function() {
+        // Wait a bit for everything to settle
+        setTimeout(() => {
+          if (window.performance && window.performance.timing && window.gtag) {
+            const timing = window.performance.timing;
+            const loadTime = timing.loadEventEnd - timing.navigationStart;
+            const domTime = timing.domContentLoadedEventEnd - timing.navigationStart;
+            
+            gtag('event', 'timing_complete', {
+              'event_category': 'performance',
+              'name': 'load_time',
+              'value': Math.round(loadTime)
+            });
+            
+            gtag('event', 'timing_complete', {
+              'event_category': 'performance', 
+              'name': 'dom_time',
+              'value': Math.round(domTime)
+            });
+          }
+        }, 1000);
+      });
+    }
+    
+    // Initialize all tracking
+    initReadingProgressTracking();
+    initSearchTracking();
+    initThemeTracking();
+    initSocialTracking();
+    initPWATracking();
+    initNavigationTracking();
+    initWhimsyTracking();
+    initExternalLinkTracking();
+    initPerformanceTracking();
+    
+  });
+})();
+</script>

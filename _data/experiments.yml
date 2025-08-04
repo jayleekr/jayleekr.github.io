@@ -1,0 +1,223 @@
+# Experiment Configuration and Results Tracking
+# Analytics and Experimentation Framework for jayleekr.github.io
+# Created: 2025-08-04
+
+active_experiments:
+  mobile_navigation:
+    id: "mobile_nav_exp_001"
+    name: "Mobile Navigation Style"
+    hypothesis: "Bottom navigation will improve mobile user engagement compared to hamburger menu"
+    
+    # Configuration
+    enabled: true
+    traffic_split: 0.5
+    start_date: "2025-08-04"
+    planned_end_date: "2025-09-04"
+    
+    # Variants
+    control:
+      name: "hamburger_menu"
+      description: "Traditional hamburger menu in header"
+      
+    variant:
+      name: "bottom_navigation"
+      description: "Bottom navigation bar with key menu items"
+    
+    # Success metrics
+    primary_metrics:
+      - "navigation_click_rate"
+      - "pages_per_session"
+      - "session_duration"
+    
+    secondary_metrics:
+      - "bounce_rate"
+      - "mobile_engagement_score"
+      
+    # Sample size calculation
+    statistical_config:
+      baseline_conversion: 0.25  # 25% navigation click rate
+      minimum_detectable_effect: 0.05  # 5% improvement
+      statistical_power: 0.8
+      significance_level: 0.05
+      calculated_sample_size: 1564  # per variant
+    
+    # Current status
+    status: "running"
+    participants_control: 0
+    participants_variant: 0
+    
+    # Results (updated as experiment runs)
+    results:
+      last_updated: "2025-08-04"
+      statistical_significance: false
+      winning_variant: null
+      confidence_level: null
+      
+  search_visibility:
+    id: "search_vis_exp_002" 
+    name: "Search Box Visibility"
+    hypothesis: "Prominent header search will increase search usage compared to sidebar-only placement"
+    
+    # Configuration
+    enabled: true
+    traffic_split: 0.5
+    start_date: "2025-08-04"
+    planned_end_date: "2025-09-04"
+    
+    # Variants
+    control:
+      name: "sidebar_only"
+      description: "Search box only in sidebar"
+      
+    variant:
+      name: "prominent_header"
+      description: "Additional prominent search in header"
+    
+    # Success metrics
+    primary_metrics:
+      - "search_usage_rate"
+      - "search_success_rate" 
+      - "searches_per_session"
+    
+    secondary_metrics:
+      - "time_to_first_search"
+      - "search_refinement_rate"
+      
+    # Sample size calculation
+    statistical_config:
+      baseline_conversion: 0.15  # 15% search usage rate
+      minimum_detectable_effect: 0.05  # 5% improvement
+      statistical_power: 0.8
+      significance_level: 0.05
+      calculated_sample_size: 2172  # per variant
+    
+    # Current status
+    status: "running"
+    participants_control: 0
+    participants_variant: 0
+    
+    # Results
+    results:
+      last_updated: "2025-08-04"
+      statistical_significance: false
+      winning_variant: null
+      confidence_level: null
+
+planned_experiments:
+  about_page_detail:
+    id: "about_detail_exp_003"
+    name: "About Page Detail Level"
+    hypothesis: "Simplified about page will increase contact rate by reducing cognitive load"
+    
+    # Configuration
+    enabled: false  # Not yet launched
+    traffic_split: 0.5
+    planned_start_date: "2025-09-01"
+    planned_end_date: "2025-10-01"
+    
+    # Variants
+    control:
+      name: "detailed_about"
+      description: "Current detailed about page with full bio"
+      
+    variant:
+      name: "simplified_about"
+      description: "Streamlined about page focusing on key points"
+    
+    # Success metrics
+    primary_metrics:
+      - "contact_clicks"
+      - "time_on_about_page"
+    
+    secondary_metrics:
+      - "about_to_blog_navigation"
+      - "social_link_clicks"
+      
+    # Sample size calculation
+    statistical_config:
+      baseline_conversion: 0.02  # 2% contact rate
+      minimum_detectable_effect: 0.01  # 1% improvement
+      statistical_power: 0.8
+      significance_level: 0.05
+      calculated_sample_size: 7788  # per variant
+      
+  code_syntax_highlighting:
+    id: "syntax_highlight_exp_004"
+    name: "Code Syntax Highlighting Theme"
+    hypothesis: "Darker syntax theme will improve code readability and reduce eye strain"
+    
+    # Configuration
+    enabled: false
+    traffic_split: 0.5
+    planned_start_date: "2025-09-15"
+    planned_end_date: "2025-10-15"
+    
+    # Variants
+    control:
+      name: "current_theme"
+      description: "Current Rouge syntax highlighting theme"
+      
+    variant:
+      name: "darker_theme"
+      description: "Darker, higher contrast syntax theme"
+    
+    # Success metrics
+    primary_metrics:
+      - "code_block_engagement"
+      - "time_on_technical_posts"
+    
+    secondary_metrics:
+      - "code_copy_clicks"
+      - "technical_post_shares"
+
+# Experiment Results Archive
+completed_experiments: []
+
+# Success Metrics Definitions
+success_metrics_definitions:
+  navigation_click_rate:
+    description: "Percentage of sessions with navigation menu clicks"
+    calculation: "sessions_with_nav_clicks / total_sessions"
+    target: 0.3
+    
+  pages_per_session:
+    description: "Average number of pages viewed per session"
+    calculation: "total_pageviews / total_sessions"
+    target: 2.5
+    
+  session_duration:
+    description: "Average session duration in seconds"
+    calculation: "sum(session_durations) / total_sessions"
+    target: 180
+    
+  search_usage_rate:
+    description: "Percentage of sessions with search activity"
+    calculation: "sessions_with_search / total_sessions"
+    target: 0.15
+    
+  search_success_rate:
+    description: "Percentage of searches leading to content click"
+    calculation: "successful_searches / total_searches"
+    target: 0.6
+    
+  contact_clicks:
+    description: "Number of contact/social link clicks"
+    calculation: "count(contact_link_clicks)"
+    target: "increase"
+    
+  bounce_rate:
+    description: "Percentage of single-page sessions"
+    calculation: "single_page_sessions / total_sessions"
+    target: 0.6  # lower is better
+
+# Statistical Framework
+statistical_framework:
+  significance_threshold: 0.05
+  power_threshold: 0.8
+  minimum_runtime_days: 14
+  maximum_runtime_days: 30
+  minimum_sample_size: 100  # per variant
+  early_stopping_rules:
+    - "statistical_significance_reached"
+    - "maximum_runtime_exceeded"
+    - "minimum_effect_size_not_achievable"

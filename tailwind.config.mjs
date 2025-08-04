@@ -1,6 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: {
+    files: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+    options: {
+      safelist: [
+        // Keep essential classes
+        'prose', 'prose-lg', 'prose-xl',
+        // Theme toggle classes
+        'dark', 'light',
+        // Navigation classes
+        'active', 'current',
+      ]
+    }
+  },
   theme: {
     extend: {
       // Brand Design System Integration
@@ -207,12 +219,12 @@ export default {
           },
         },
       },
-      // Enhanced Font System
+      // Enhanced Font System (removed Noto Sans KR to reduce bundle size)
       fontFamily: {
-        sans: ['Inter', 'Noto Sans KR', 'Atkinson', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'Atkinson', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'SF Mono', 'Monaco', 'Consolas', 'ui-monospace', 'monospace'],
-        display: ['Inter', 'Noto Sans KR', 'system-ui', 'sans-serif'],
-        primary: ['Inter', 'Noto Sans KR', 'Atkinson', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+        primary: ['Inter', 'Atkinson', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       // Enhanced Typography with Fluid Scaling
       fontSize: {
@@ -279,6 +291,7 @@ export default {
         '8': '2rem',
         '9': '2.25rem',
         '10': '2.5rem',
+      },
       // Enhanced Border Radius System
       borderRadius: {
         'none': '0',
@@ -325,7 +338,6 @@ export default {
         'popover': '1060',
         'tooltip': '1070',
         'toast': '1080',
-      },
       },
     },
   },

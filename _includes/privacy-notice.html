@@ -1,0 +1,421 @@
+<!--
+  Privacy Notice for Analytics and Experimentation
+  GDPR-compliant privacy information
+  v1.0 - Created 2025-08-04
+-->
+
+<script>
+(function() {
+  'use strict';
+  
+  // Privacy notice configuration
+  const PRIVACY_CONFIG = {
+    show_privacy_link: true,
+    privacy_policy_url: '/privacy/',
+    contact_email: 'jayleekr0125@gmail.com'
+  };
+  
+  // Privacy notice manager
+  window.PrivacyNotice = {
+    
+    // Create privacy information modal
+    showPrivacyModal: function() {
+      const modal = document.createElement('div');
+      modal.id = 'privacy-modal';
+      modal.className = 'privacy-modal';
+      
+      modal.innerHTML = `
+        <div class="privacy-modal-content">
+          <div class="privacy-header">
+            <h3>🔒 Privacy & Data Usage</h3>
+            <button class="privacy-close">&times;</button>
+          </div>
+          
+          <div class="privacy-body">
+            <h4>What data do we collect?</h4>
+            <ul>
+              <li><strong>Analytics Data:</strong> Page views, time on site, navigation patterns</li>
+              <li><strong>Performance Data:</strong> Page load times, Core Web Vitals metrics</li>
+              <li><strong>Functional Data:</strong> Theme preferences, search queries</li>
+              <li><strong>Technical Data:</strong> Browser type, device info, screen resolution</li>
+            </ul>
+            
+            <h4>How do we use this data?</h4>
+            <ul>
+              <li>Improve blog performance and user experience</li>
+              <li>Understand which content is most valuable to readers</li>
+              <li>Test new features through A/B experiments</li>
+              <li>Fix technical issues and optimize loading times</li>
+            </ul>
+            
+            <h4>Data Processing Legal Basis</h4>
+            <ul>
+              <li><strong>Necessary cookies:</strong> Legitimate interest for site functionality</li>
+              <li><strong>Analytics cookies:</strong> Your consent for usage analysis</li>
+              <li><strong>Functional cookies:</strong> Your consent for enhanced experience</li>
+            </ul>
+            
+            <h4>Third-party Services</h4>
+            <ul>
+              <li><strong>Google Analytics 4:</strong> Website analytics (with IP anonymization)</li>
+              <li><strong>GitHub Pages:</strong> Website hosting and delivery</li>
+            </ul>
+            
+            <h4>Your Rights (GDPR)</h4>
+            <ul>
+              <li>Access your personal data</li>
+              <li>Correct inaccurate data</li>
+              <li>Delete your data (right to be forgotten)</li>
+              <li>Object to data processing</li>
+              <li>Data portability</li>
+              <li>Withdraw consent at any time</li>
+            </ul>
+            
+            <h4>Data Retention</h4>
+            <ul>
+              <li><strong>Analytics data:</strong> 26 months (Google Analytics default)</li>
+              <li><strong>Local storage data:</strong> 365 days or until cleared</li>
+              <li><strong>Performance data:</strong> 90 days for optimization</li>
+            </ul>
+            
+            <h4>Contact & Data Requests</h4>
+            <p>For privacy-related questions or data requests:</p>
+            <p><strong>Email:</strong> <a href="mailto:${PRIVACY_CONFIG.contact_email}">${PRIVACY_CONFIG.contact_email}</a></p>
+            
+            <div class="privacy-actions">
+              <button id="manage-consent" class="btn btn-primary">Manage Cookie Preferences</button>
+              <button id="export-my-data" class="btn btn-secondary">Export My Data</button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      this.addPrivacyModalStyles();
+      this.bindPrivacyModalEvents(modal);
+    },
+    
+    // Add modal styles
+    addPrivacyModalStyles: function() {
+      if (document.getElementById('privacy-modal-styles')) return;
+      
+      const style = document.createElement('style');
+      style.id = 'privacy-modal-styles';
+      style.textContent = `
+        .privacy-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.6);
+          z-index: 10002;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 20px;
+        }
+        
+        .privacy-modal-content {
+          background: var(--card-bg, #fff);
+          border-radius: 8px;
+          max-width: 600px;
+          width: 100%;
+          max-height: 80vh;
+          overflow-y: auto;
+          position: relative;
+        }
+        
+        .privacy-header {
+          padding: 20px 24px;
+          border-bottom: 1px solid var(--border-color, #e9ecef);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: var(--sidebar-bg, #f8f9fa);
+          border-radius: 8px 8px 0 0;
+        }
+        
+        .privacy-header h3 {
+          margin: 0;
+          color: var(--heading-color, #333);
+        }
+        
+        .privacy-close {
+          background: none;
+          border: none;
+          font-size: 24px;
+          color: var(--text-muted, #999);
+          cursor: pointer;
+          line-height: 1;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 4px;
+        }
+        
+        .privacy-close:hover {
+          background: var(--border-color, #e9ecef);
+          color: var(--text-color, #333);
+        }
+        
+        .privacy-body {
+          padding: 24px;
+          color: var(--text-color, #333);
+          line-height: 1.6;
+        }
+        
+        .privacy-body h4 {
+          margin: 20px 0 10px 0;
+          color: var(--heading-color, #333);
+          font-size: 16px;
+        }
+        
+        .privacy-body h4:first-child {
+          margin-top: 0;
+        }
+        
+        .privacy-body ul {
+          margin: 10px 0;
+          padding-left: 20px;
+        }
+        
+        .privacy-body li {
+          margin: 5px 0;
+        }
+        
+        .privacy-actions {
+          margin-top: 24px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+        
+        .privacy-actions .btn {
+          padding: 10px 16px;
+          border-radius: 4px;
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          cursor: pointer;
+          border: 1px solid transparent;
+          transition: all 0.2s ease;
+        }
+        
+        .privacy-actions .btn-primary {
+          background: var(--btn-box-shadow, #007bff);
+          color: white;
+          border-color: var(--btn-box-shadow, #007bff);
+        }
+        
+        .privacy-actions .btn-secondary {
+          background: var(--sidebar-bg, #f8f9fa);
+          color: var(--text-color, #333);
+          border-color: var(--border-color, #dee2e6);
+        }
+        
+        .privacy-actions .btn:hover {
+          opacity: 0.9;
+          transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+          .privacy-modal {
+            padding: 10px;
+          }
+          
+          .privacy-modal-content {
+            max-height: 90vh;
+          }
+          
+          .privacy-header {
+            padding: 15px 20px;
+          }
+          
+          .privacy-body {
+            padding: 20px;
+          }
+          
+          .privacy-actions {
+            flex-direction: column;
+          }
+          
+          .privacy-actions .btn {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      `;
+      
+      document.head.appendChild(style);
+    },
+    
+    // Bind modal events
+    bindPrivacyModalEvents: function(modal) {
+      // Close button
+      modal.querySelector('.privacy-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+      
+      // Close on backdrop click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          document.body.removeChild(modal);
+        }
+      });
+      
+      // Manage consent button
+      modal.querySelector('#manage-consent').addEventListener('click', () => {
+        document.body.removeChild(modal);
+        if (window.ConsentManager) {
+          window.ConsentManager.showPreferencesModal();
+        }
+      });
+      
+      // Export data button
+      modal.querySelector('#export-my-data').addEventListener('click', () => {
+        this.exportUserData();
+      });
+      
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.getElementById('privacy-modal')) {
+          document.body.removeChild(modal);
+        }
+      });
+    },
+    
+    // Export user data (GDPR right to data portability)
+    exportUserData: function() {
+      const userData = {
+        export_date: new Date().toISOString(),
+        export_type: 'user_data_export',
+        
+        // Consent preferences
+        consent_preferences: window.ConsentManager ? 
+          window.ConsentManager.getStoredConsent() : null,
+        
+        // Analytics data
+        analytics_data: window.AnalyticsDashboard ? 
+          window.AnalyticsDashboard.metricsStore : null,
+        
+        // A/B test assignments
+        experiment_assignments: window.ABTesting && window.ABTesting.activeExperiments ? 
+          window.ABTesting.activeExperiments : null,
+        
+        // Performance data
+        performance_data: window.PerformanceAnalytics ? 
+          window.PerformanceAnalytics.getPerformanceSummary() : null,
+        
+        // Browser/device info
+        device_info: {
+          user_agent: navigator.userAgent,
+          language: navigator.language,
+          platform: navigator.platform,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        },
+        
+        // Session info
+        session_info: {
+          session_id: sessionStorage.getItem('analytics_session_id'),
+          current_url: window.location.href,
+          referrer: document.referrer
+        }
+      };
+      
+      // Create and download file
+      const blob = new Blob([JSON.stringify(userData, null, 2)], { 
+        type: 'application/json' 
+      });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `my-blog-data-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      
+      URL.revokeObjectURL(url);
+      
+      // Track export event
+      if (window.gtag) {
+        gtag('event', 'data_export', {
+          'event_category': 'privacy',
+          'method': 'manual_download'
+        });
+      }
+    },
+    
+    // Create privacy settings link
+    createPrivacyLink: function() {
+      if (!PRIVACY_CONFIG.show_privacy_link) return;
+      
+      const privacyLink = document.createElement('div');
+      privacyLink.className = 'privacy-link-container';
+      privacyLink.innerHTML = `
+        <a href="#" id="privacy-info-link" class="privacy-link">
+          🔒 Privacy Info
+        </a>
+      `;
+      
+      // Add styles
+      const style = document.createElement('style');
+      style.textContent = `
+        .privacy-link-container {
+          position: fixed;
+          bottom: 70px;
+          left: 20px;
+          z-index: 1000;
+        }
+        
+        .privacy-link {
+          background: var(--sidebar-bg, #f8f9fa);
+          border: 1px solid var(--border-color, #dee2e6);
+          border-radius: 20px;
+          padding: 6px 10px;
+          font-size: 11px;
+          color: var(--text-muted, #666);
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: inline-block;
+        }
+        
+        .privacy-link:hover {
+          background: var(--card-bg, #fff);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          color: var(--text-color, #333);
+          text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+          .privacy-link-container {
+            bottom: 80px;
+            left: 10px;
+          }
+        }
+      `;
+      
+      document.head.appendChild(style);
+      document.body.appendChild(privacyLink);
+      
+      // Bind click event
+      document.getElementById('privacy-info-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        this.showPrivacyModal();
+      });
+    }
+  };
+  
+  // Initialize privacy notice
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+      window.PrivacyNotice.createPrivacyLink();
+    }, 2000);
+  });
+  
+})();
+</script>
