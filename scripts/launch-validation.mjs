@@ -81,7 +81,7 @@ class LaunchValidator {
       const requiredFiles = [
         'src/pages/index.astro',
         'src/pages/blog/[...slug].astro', 
-        'src/components/Layout.astro',
+        'src/layouts/Layout.astro',
         'src/components/PerformanceMonitor.astro',
         'public/manifest.json',
         'public/sw.js'

@@ -38,7 +38,10 @@ export default defineConfig({
 			lastmod: new Date(),
 			i18n: {
 				defaultLocale: 'en',
-				locales: ['en', 'ko']
+				locales: {
+					en: 'en',
+					ko: 'ko'
+				}
 			}
 		}),
 		astroI18next()
@@ -76,7 +79,6 @@ export default defineConfig({
 		assets: 'assets',
 		inlineStylesheets: 'auto',
 		format: 'directory',
-		split: true, // Enable code splitting for better performance
 		assetsPrefix: isDev ? undefined : '/', // Use CDN prefix in production if needed
 		concurrency: 4 // Optimize build performance
 	},
@@ -108,7 +110,7 @@ export default defineConfig({
 		},
 		// Performance optimizations
 		optimizeDeps: {
-			include: ['astro', '@astrojs/mdx', '@astrojs/sitemap']
+			include: ['@astrojs/mdx', '@astrojs/sitemap']
 		},
 		define: {
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -118,11 +120,5 @@ export default defineConfig({
 	
 	// Output configuration for GitHub Pages
 	output: 'static',
-	adapter: undefined, // Static site, no adapter needed
-	
-	// Experimental features for performance
-	experimental: {
-		optimizeHoistedScript: true,
-		contentCollectionCache: true
-	}
+	adapter: undefined // Static site, no adapter needed
 });
