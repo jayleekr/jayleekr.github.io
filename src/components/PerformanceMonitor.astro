@@ -1,0 +1,237 @@
+---
+// Performance monitoring component for Core Web Vitals
+---
+
+<script is:inline>
+  // Performance monitoring for Core Web Vitals
+  (function() {
+    // Only run in production
+    if (import.meta.env.DEV) return;
+    
+    // Track page load performance
+    function trackPageLoad() {
+      if ('performance' in window && 'getEntriesByType' in performance) {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        if (navigation) {
+          // Send metrics to analytics
+          const metrics = {
+            dns: navigation.domainLookupEnd - navigation.domainLookupStart,
+            tcp: navigation.connectEnd - navigation.connectStart,
+            ttfb: navigation.responseStart - navigation.requestStart,
+            download: navigation.responseEnd - navigation.responseStart,
+            domReady: navigation.domContentLoadedEventEnd - navigation.navigationStart,
+            loadComplete: navigation.loadEventEnd - navigation.navigationStart
+          };
+          
+          // Send to Google Analytics if available
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_load_performance', {
+              custom_map: {
+                metric1: 'dns_time',
+                metric2: 'tcp_time',
+                metric3: 'ttfb',
+                metric4: 'download_time',
+                metric5: 'dom_ready',
+                metric6: 'load_complete'
+              },
+              metric1: Math.round(metrics.dns),
+              metric2: Math.round(metrics.tcp),
+              metric3: Math.round(metrics.ttfb),
+              metric4: Math.round(metrics.download),
+              metric5: Math.round(metrics.domReady),
+              metric6: Math.round(metrics.loadComplete)
+            });
+          }
+        }
+      }
+    }
+    
+    // Track Core Web Vitals with web-vitals library if available
+    function trackWebVitals() {
+      // Import web-vitals dynamically
+      import('https://unpkg.com/web-vitals@3/dist/web-vitals.js')
+        .then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+          // Largest Contentful Paint
+          getLCP((metric) => {
+            console.log('LCP:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'LCP',
+                value: Math.round(metric.value),
+                custom_map: { metric7: 'lcp' },
+                metric7: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // First Input Delay
+          getFID((metric) => {
+            console.log('FID:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'FID',
+                value: Math.round(metric.value),
+                custom_map: { metric8: 'fid' },
+                metric8: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // Cumulative Layout Shift
+          getCLS((metric) => {
+            console.log('CLS:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'CLS',
+                value: Math.round(metric.value * 1000),
+                custom_map: { metric9: 'cls' },
+                metric9: Math.round(metric.value * 1000)
+              });
+            }
+          });
+          
+          // First Contentful Paint
+          getFCP((metric) => {
+            console.log('FCP:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'FCP',
+                value: Math.round(metric.value),
+                custom_map: { metric10: 'fcp' },
+                metric10: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // Time to First Byte
+          getTTFB((metric) => {
+            console.log('TTFB:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'TTFB',
+                value: Math.round(metric.value),
+                custom_map: { metric11: 'ttfb' },
+                metric11: Math.round(metric.value)
+              });
+            }
+          });
+        })
+        .catch((error) => {
+          console.warn('Web Vitals library failed to load:', error);
+        });
+    }
+    
+    // Track resource loading performance
+    function trackResourcePerformance() {
+      if ('performance' in window && 'getEntriesByType' in performance) {
+        const resources = performance.getEntriesByType('resource');
+        
+        // Group resources by type
+        const resourceTypes = {
+          script: [],
+          stylesheet: [],
+          image: [],
+          font: [],
+          other: []
+        };
+        
+        resources.forEach(resource => {
+          const type = resource.initiatorType;
+          if (resourceTypes[type]) {
+            resourceTypes[type].push(resource);
+          } else {
+            resourceTypes.other.push(resource);
+          }
+        });
+        
+        // Calculate average load times by type
+        Object.entries(resourceTypes).forEach(([type, resources]) => {
+          if (resources.length > 0) {
+            const avgDuration = resources.reduce((sum, r) => sum + r.duration, 0) / resources.length;
+            
+            if (typeof gtag !== 'undefined' && avgDuration > 0) {
+              gtag('event', 'resource_performance', {
+                event_category: 'Performance',
+                event_label: `${type}_avg_load_time`,
+                value: Math.round(avgDuration)
+              });
+            }
+          }
+        });
+      }
+    }
+    
+    // Initialize performance monitoring
+    function initPerformanceMonitoring() {
+      // Track page load metrics after load event
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          trackPageLoad();
+          trackResourcePerformance();
+        }, 100);
+      });
+      
+      // Track Web Vitals
+      trackWebVitals();
+      
+      // Track memory usage if available
+      if ('memory' in performance) {
+        setInterval(() => {
+          const memory = performance.memory;
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'memory_usage', {
+              event_category: 'Performance',
+              custom_map: {
+                metric12: 'used_js_heap_size',
+                metric13: 'total_js_heap_size'
+              },
+              metric12: Math.round(memory.usedJSHeapSize / 1048576), // MB
+              metric13: Math.round(memory.totalJSHeapSize / 1048576) // MB
+            });
+          }
+        }, 30000); // Every 30 seconds
+      }
+    }
+    
+    // Start monitoring when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPerformanceMonitoring);
+    } else {
+      initPerformanceMonitoring();
+    }
+    
+    // Error tracking
+    window.addEventListener('error', (event) => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+          description: event.error ? event.error.toString() : event.message,
+          fatal: false,
+          event_category: 'JavaScript Error'
+        });
+      }
+    });
+    
+    // Unhandled promise rejection tracking
+    window.addEventListener('unhandledrejection', (event) => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+          description: event.reason ? event.reason.toString() : 'Unhandled Promise Rejection',
+          fatal: false,
+          event_category: 'Promise Rejection'
+        });
+      }
+    });
+  })();
+</script>
+
+<style>
+  /* Hide component, it's script-only */
+  :host {
+    display: none;
+  }
+</style>

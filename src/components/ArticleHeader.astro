@@ -408,7 +408,7 @@ const estimatedSections = Math.max(3, Math.floor((readingTime || 5) / 2));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.transform = 'translateX(0)';
+          (entry.target as HTMLElement).style.transform = 'translateX(0)';
         }
       });
     }, { threshold: 0.5 });

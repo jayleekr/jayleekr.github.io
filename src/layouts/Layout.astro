@@ -7,6 +7,7 @@ import WhimsyEnhancer from '../components/WhimsyEnhancer.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import LoadingStates from '../components/LoadingStates.astro';
 import SearchModal from '../components/Search/SearchModal.astro';
+import PerformanceMonitor from '../components/PerformanceMonitor.astro';
 
 export interface Props {
   title: string;
@@ -33,6 +34,7 @@ const { title, description, image, noIndex } = Astro.props;
     <WhimsyEnhancer />
     <CommandPalette />
     <LoadingStates />
+    <PerformanceMonitor />
     
     <!-- Desktop Navigation -->
     <DesktopNav />

@@ -153,7 +153,18 @@ const jsonLD = article ? {
 <!-- Icons and Manifest -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
+<link rel="manifest" href="/manifest.json" />
+
+<!-- PWA iOS Meta Tags -->
+<meta name="apple-mobile-web-app-title" content="Jay's Blog" />
+<link rel="apple-touch-icon" sizes="57x57" href="/icon-57x57.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="96x96" href="/icon-96x96.png" />
+<link rel="apple-touch-icon" sizes="128x128" href="/icon-128x128.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="152x152" href="/icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180x180.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
 
 <!-- RSS and Sitemap -->
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -331,6 +342,100 @@ const jsonLD = article ? {
 
 <!-- Web Vitals Performance Monitoring -->
 <WebVitals />
+
+<!-- PWA Service Worker Registration -->
+<script is:inline>
+	// Register service worker for PWA functionality
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', async () => {
+			try {
+				const registration = await navigator.serviceWorker.register('/sw.js');
+				console.log('[PWA] Service Worker registered successfully:', registration.scope);
+				
+				// Handle service worker updates
+				registration.addEventListener('updatefound', () => {
+					const newWorker = registration.installing;
+					if (newWorker) {
+						newWorker.addEventListener('statechange', () => {
+							if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+								// New version available, show update notification
+								if (confirm('새로운 버전이 사용 가능합니다. 지금 업데이트하시겠습니까?')) {
+									newWorker.postMessage({ action: 'skipWaiting' });
+									window.location.reload();
+								}
+							}
+						});
+					}
+				});
+				
+				// Listen for service worker messages
+				navigator.serviceWorker.addEventListener('message', (event) => {
+					if (event.data.action === 'reload') {
+						window.location.reload();
+					}
+				});
+				
+			} catch (error) {
+				console.error('[PWA] Service Worker registration failed:', error);
+			}
+		});
+	}
+	
+	// Install prompt handling
+	let deferredPrompt;
+	window.addEventListener('beforeinstallprompt', (e) => {
+		// Prevent Chrome 67 and earlier from automatically showing the prompt
+		e.preventDefault();
+		// Stash the event so it can be triggered later
+		deferredPrompt = e;
+		
+		// Show install button if not already installed
+		if (!window.matchMedia('(display-mode: standalone)').matches) {
+			showInstallButton();
+		}
+	});
+	
+	function showInstallButton() {
+		// Create install button dynamically
+		const installButton = document.createElement('button');
+		installButton.textContent = '앱 설치';
+		installButton.className = 'fixed bottom-20 right-4 z-50 bg-primary-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-primary-700 transition-colors';
+		installButton.style.display = 'none';
+		
+		// Show button after 5 seconds on mobile
+		if (window.innerWidth < 768) {
+			setTimeout(() => {
+				installButton.style.display = 'block';
+			}, 5000);
+		}
+		
+		installButton.addEventListener('click', async () => {
+			if (deferredPrompt) {
+				// Show the install prompt
+				deferredPrompt.prompt();
+				// Wait for the user to respond to the prompt
+				const { outcome } = await deferredPrompt.userChoice;
+				console.log(`[PWA] User response to the install prompt: ${outcome}`);
+				// Clear the deferredPrompt variable
+				deferredPrompt = null;
+				// Hide the install button
+				installButton.style.display = 'none';
+			}
+		});
+		
+		document.body.appendChild(installButton);
+	}
+	
+	// Handle app installed event
+	window.addEventListener('appinstalled', () => {
+		console.log('[PWA] App was installed successfully');
+		// Hide install button if visible
+		const installButton = document.querySelector('button[style*="bg-primary-600"]');
+		if (installButton) {
+			installButton.style.display = 'none';
+		}
+	});
+</script>
 
 <!-- Code Enhancement Script -->
 <script src="/scripts/code-enhancements.js" defer></script>
