@@ -37,6 +37,7 @@ Develop a world-class developer blog based on successful developer blog case stu
 - Summarize when `workflow_state.md` > 12 K.
 
 ## Changelog
+- 2025-08-05: **✨ BLOG POST UI/UX COMPLETE REDESIGN** - Clean typography-focused layout with optimal 65ch width, mobile TOC, and enhanced readability
 - 2025-08-05: **🆕 BLOG TITLE STYLING FIXES** - Fixed oversized titles breaking layout (text-4xl/5xl/6xl → text-2xl/3xl/4xl-5xl)
 - 2025-08-05: **🎨 BLOG LAYOUT & CODE RENDERING FIXES** - Optimized content width (628px→800-1000px+) and enhanced code block readability
 - 2025-08-04: **📱 PHASE 2 NAVIGATION IMPLEMENTATION** - Mobile bottom nav + desktop always-visible search with responsive layout system

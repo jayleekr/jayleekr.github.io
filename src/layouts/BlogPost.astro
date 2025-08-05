@@ -49,11 +49,11 @@ const currentLang = getLangFromUrl(Astro.url);
 		
 		<ReadingProgress />
 		
-		<main id="main-content" class="min-h-screen">
+		<main id="main-content" class="min-h-screen flex flex-col items-center">
 			<!-- Hero Image (if exists) -->
 			{heroImageSrc && (
-				<div class="relative">
-					<div class="aspect-[21/9] max-h-[400px] overflow-hidden">
+				<div class="relative w-full max-w-7xl mx-auto">
+					<div class="aspect-[21/9] max-h-[400px] 2xl:max-h-[500px] 4xl:max-h-[600px] overflow-hidden rounded-none 2xl:rounded-2xl">
 						<img 
 							src={heroImageSrc} 
 							alt={title}
@@ -65,7 +65,7 @@ const currentLang = getLangFromUrl(Astro.url);
 			)}
 			
 			<!-- Article Container -->
-			<div class="article-container">
+			<div class="article-container w-full">
 				<!-- Main Article Content -->
 				<article class="article-content">
 					<!-- Article Header -->

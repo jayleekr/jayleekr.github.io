@@ -109,6 +109,7 @@ export default {
         'desktop': '1536px', // Desktop
         '2xl': '1680px', // Large desktop
         'wide': '1920px', // Ultra-wide
+        '4xl': '2560px', // 4K displays
       },
       maxWidth: {
         'prose': '65ch', // Optimal reading width (approximately 600-700px)

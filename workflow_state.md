@@ -1,10 +1,10 @@
 # workflow_state.md
-_Last updated: 2025-08-05 10:55 AM KST_
+_Last updated: 2025-08-05 11:48 AM KST_
 
 ## State
 Phase: MAINTENANCE  
 Status: COMPLETED  
-CurrentItem: Blog Title Styling Fixes - Fixed oversized titles and deployed to production
+CurrentItem: Blog Post UI/UX Complete Redesign - Clean typography-focused layout deployed
 
 ## Plan
 ✅ COMPLETED: Phase 1 - Core Infrastructure (Jan 22, 2025)
@@ -134,6 +134,20 @@ User request → restore/show blueprint.
 | 38 | Verify Astro-only build process and architecture | COMPLETED |
 
 ## Log
+2025-08-05 - Blog Post UI/UX Complete Redesign DEPLOYED ✅
+- Implemented clean typography-focused layout with optimal 65ch content width
+- Removed dark background from title area for significantly better readability
+- Created unified responsive layout system replacing complex dual mobile/desktop approach
+- Added mobile-first TOC with floating button and elegant slide-out drawer
+- Enhanced typography hierarchy with proper font sizes and spacing throughout
+- Redesigned category/tag badges with subtle, modern styling
+- Optimized content area with proper margins and responsive behavior
+- Implemented sticky TOC sidebar for desktop screens (1024px+)
+- Improved dark mode contrast across all components
+- Simplified article header with clean meta information display
+- Enhanced social share and footer sections
+- Successfully deployed to GitHub Pages (commit: 693fa4a)
+
 2025-08-05 - Blog Title Styling Fixes DEPLOYED ✅
 - Fixed oversized blog post titles that were breaking layout
 - Reduced title sizes: Mobile (text-4xl→2xl, 5xl→3xl, 6xl→4xl)
