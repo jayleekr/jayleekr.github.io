@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss-styles.xsl" type="text/xsl"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Jay Lee - Tech Blog</title><description>소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다.</description><link>https://jayleekr.github.io/</link><language>ko-KR</language><managingEditor>jayleekr0125@gmail.com (Jay Lee)</managingEditor><webMaster>jayleekr0125@gmail.com (Jay Lee)</webMaster><category>Technology</category><category>Software Development</category><category>DevOps</category><category>Startup</category><category>Career</category><ttl>60</ttl><image><url>https://jayleekr.github.io/favicon.svg</url><title>Jay Lee</title><link>https://jayleekr.github.io/</link></image><item><title>AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (5편 완결) - PRD 방법론으로 새 프로젝트 시작하기</title><link>https://jayleekr.github.io/blog/2025-07-28-prd-methodology/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/2025-07-28-prd-methodology/</guid><description>Gemini 2.5 Pro로 Research를 돌려서 들쭉날쭉한 AI를 더 잘하게 만드는 PRD 작성법과 실제 적용 사례</description><pubDate>Mon, 28 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;Gemini 2.5 Pro로 Research를 돌려서 들쭉날쭉한 AI를 더 잘하게 만드는 PRD 작성법과 실제 적용 사례&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (5편 완결) - PRD 방법론으로 새 프로젝트 시작하기&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/2025-07-28-prd-methodology/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>PRD</category><category>Project</category><category>Planning</category><category>Gemini</category><category>Research</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (4편) - 도구별 프롬프트 전략</title><link>https://jayleekr.github.io/blog/2025-07-27-ai-prompt-strategies/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/2025-07-27-ai-prompt-strategies/</guid><description>Cursor Pro, Claude Code, Gemini CLI 각각에 최적화된 실전 프롬프트 노하우 대공개</description><pubDate>Sun, 27 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;Cursor Pro, Claude Code, Gemini CLI 각각에 최적화된 실전 프롬프트 노하우 대공개&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (4편) - 도구별 프롬프트 전략&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/2025-07-27-ai-prompt-strategies/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>Prompt</category><category>Cursor</category><category>Claude</category><category>Gemini</category><category>ChatGPT</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (3편) - 워크스페이스 운영 실전기</title><link>https://jayleekr.github.io/blog/2025-07-26-ai-workspace-management/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/2025-07-26-ai-workspace-management/</guid><description>5~8개 Cursor 인스턴스를 효율적으로 관리하는 노하우와 Remote SSH vs Native 환경 구성법</description><pubDate>Sat, 26 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;5~8개 Cursor 인스턴스를 효율적으로 관리하는 노하우와 Remote SSH vs Native 환경 구성법&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (3편) - 워크스페이스 운영 실전기&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/2025-07-26-ai-workspace-management/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>Workspace</category><category>Cursor</category><category>SSH</category><category>DevOps</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (2편) - 공통 워크플로우 방법론</title><link>https://jayleekr.github.io/blog/2025-07-25-ai-workflow-common-methods/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/2025-07-25-ai-workflow-common-methods/</guid><description>모든 LLM에게 통하는 6단계 워크플로우 실전 가이드</description><pubDate>Fri, 25 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;모든 LLM에게 통하는 6단계 워크플로우 실전 가이드&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (2편) - 공통 워크플로우 방법론&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 4분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/2025-07-25-ai-workflow-common-methods/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>4</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>Workflow</category><category>Prompt</category><category>Context</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1편)</title><link>https://jayleekr.github.io/blog/2025-07-24-ai-workflow-productivity/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/2025-07-24-ai-workflow-productivity/</guid><description>월 100달러짜리 AI 스택으로 혼돈 속에서 시스템을 찾아가는 여정</description><pubDate>Thu, 24 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;월 100달러짜리 AI 스택으로 혼돈 속에서 시스템을 찾아가는 여정&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI 멀티플렉싱 워크플로우: ADHD급 생산성 향상기 (1편)&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/2025-07-24-ai-workflow-productivity/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>Cursor</category><category>ChatGPT</category><category>Claude</category><category>Gemini</category><category>Workflow</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>AI Multiplexing Workflow: ADHD-Level Productivity Boost (Part 1)</title><link>https://jayleekr.github.io/blog/en/2025-07-24-ai-workflow-productivity/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-07-24-ai-workflow-productivity/</guid><description>Sharing workflow strategies and productivity insights from running multiple AI tools simultaneously</description><pubDate>Thu, 24 Jul 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;Sharing workflow strategies and productivity insights from running multiple AI tools simultaneously&lt;/p&gt;
+					&lt;img src=&quot;[object Object]&quot; alt=&quot;AI Multiplexing Workflow: ADHD-Level Productivity Boost (Part 1)&quot; style=&quot;max-width:100%; height:auto;&quot;&gt;
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 7분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; Tech, AI&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-07-24-ai-workflow-productivity/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><enclosure url="[object Object]" type="image/jpeg"/><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>7</readingTime><category>Tech</category><category>AI</category><category>AI</category><category>Productivity</category><category>Cursor</category><category>ChatGPT</category><category>Claude</category><category>Gemini</category><category>Workflow</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>Automating Dev Environment Setup: Building a DevContainer MCP Bootstrapper</title><link>https://jayleekr.github.io/blog/en/2025-06-25-devcontainer-mcp-bootstrapper/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-06-25-devcontainer-mcp-bootstrapper/</guid><description>![DevContainer MCP Bootstrapper](/assets/img/docker.jpeg)
+
+# Automating Dev Environment Setup: Building a DevContainer MCP Bootstrapper
+
+Hey there! Today I want to talk about this cool project I recently built: the [DevContainer MCP Bootstrapper](https://github.com/jayleekr/devcontainer-mcp-bootstra...</description><pubDate>Wed, 25 Jun 2025 01:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 6분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-06-25-devcontainer-mcp-bootstrapper/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>6</readingTime><category>TechSavvy</category><category>Container</category><category>DevContainer</category><category>MCP</category><category>Docker</category><category>Claude</category><category>AI</category><category>Bootstrap</category><category>Automation</category><category>Development</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기</title><link>https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/</guid><description>![DevContainer MCP Bootstrapper](/assets/img/docker.jpeg)
+
+# 개발환경 부트스트래핑 자동화: DevContainer MCP Bootstrapper 만들기
+
+안녕하세요! 오늘은 최근에 만든 [DevContainer MCP Bootstrapper](https://github.com/jayleekr/devcontainer-mcp-bootstrapper)에 대해서 이야기해보려고 한다. 
+
+Claude MCP(Model Context Protocol) 서버들을 자동으로 설치하고 개발 도구들을 쭉...</description><pubDate>Wed, 25 Jun 2025 01:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 5분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-devcontainer-mcp-bootstrapper/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>5</readingTime><category>TechSavvy</category><category>Container</category><category>DevContainer</category><category>MCP</category><category>Docker</category><category>Claude</category><category>AI</category><category>Bootstrap</category><category>Automation</category><category>Development</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>Installing Claude Code in Existing Linux Containers (Battle-Tested Guide)</title><link>https://jayleekr.github.io/blog/en/2025-06-25-claude-code-installation-guide/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-06-25-claude-code-installation-guide/</guid><description>![Claude Code Installation Guide](/assets/img/claude.jpeg)
+
+# Installing Claude Code in Existing Linux Containers (Battle-Tested Guide)
+
+## Table of Contents
+1. [Claude Code Overview](#claude-code-overview)
+2. [Accessing Running Containers](#accessing-running-containers)
+3. [System Environment Check...</description><pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 4분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-06-25-claude-code-installation-guide/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>4</readingTime><category>TechSavvy</category><category>Container</category><category>Claude</category><category>AI</category><category>Docker</category><category>Linux</category><category>Container</category><category>Node.js</category><category>Installation</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)</title><link>https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/</guid><description>![Claude Code Installation Guide](/assets/img/claude.jpeg)
+
+# 기존 Linux Container에서 Claude Code 설치 가이드 (실제 검증됨)
+
+## 목차
+1. [Claude Code 개요](#claude-code-개요)
+2. [실행 중인 컨테이너에 접속](#실행-중인-컨테이너에-접속)
+3. [시스템 환경 확인](#시스템-환경-확인)
+4. [Node.js 설치 (NVM 권장)](#nodejs-설치-nvm-권장)
+5. [Claude Code 설치](#claude-code-설치)
+...</description><pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 2분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/techsavvy/container/2025-06-25-claude-code-installation-guide/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>2</readingTime><category>TechSavvy</category><category>Container</category><category>Claude</category><category>AI</category><category>Docker</category><category>Linux</category><category>Container</category><category>Node.js</category><category>Installation</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>Wrestling with Linux Capabilities: A Day in the Build System Trenches</title><link>https://jayleekr.github.io/blog/en/2025-03-14-capabilities/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-03-14-capabilities/</guid><description>![Linux Capabilities](/assets/img/linux_capabilities.jpeg)
+
+# Wrestling with Linux Capabilities: A Day in the Build System Trenches
+
+Hey there! Today I want to share an interesting problem I ran into with Linux capabilities in our build system and how I worked through it. 
+
+## 🏗️ Understanding Our ...</description><pubDate>Fri, 14 Mar 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 5분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-03-14-capabilities/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>5</readingTime><category>TechSavvy</category><category>Container</category><category>Linux</category><category>Container</category><category>Capabilities</category><category>Yocto</category><category>Docker</category><category>Security</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>리눅스 capabilities와의 씨름: 빌드 시스템에서 겪은 하루</title><link>https://jayleekr.github.io/blog/techsavvy/container/2025-03-14-capabilities/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/techsavvy/container/2025-03-14-capabilities/</guid><description>![Linux Capabilities](/assets/img/linux_capabilities.jpeg)
+
+# 리눅스 capabilities와의 씨름: 빌드 시스템에서 겪은 하루
+
+안녕하세요! 오늘은 리눅스 capabilities와 관련해서 빌드 시스템에서 마주쳤던 흥미로운 문제와 그 해결 과정을 공유하려고 합니다. 
+
+## 🏗️ CM 구조와 OTA 시스템의 이해
+
+우리 시스템의 Container Manager(CM)는 독특한 구조를 가지고 있습니다. CM은 기본적으로 CAP(Container Application Package)...</description><pubDate>Fri, 14 Mar 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 4분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/techsavvy/container/2025-03-14-capabilities/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>4</readingTime><category>TechSavvy</category><category>Container</category><category>Linux</category><category>Container</category><category>Capabilities</category><category>Yocto</category><category>Docker</category><category>Security</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>Docker in Automotive Embedded Systems: Lessons from the Field (Part 1)</title><link>https://jayleekr.github.io/blog/en/2025-03-05-docker-automotive-embedded-lessons-1/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-03-05-docker-automotive-embedded-lessons-1/</guid><description>![Docker in Automotive Embedded Systems](/assets/img/docker.jpeg)
+
+# Docker in Automotive Embedded Systems: Lessons from the Field (Part 1)
+
+Hey there! I&apos;m starting a new series where I&apos;ll share the various challenges and solutions I&apos;ve encountered while implementing Docker in automotive embedded sy...</description><pubDate>Wed, 05 Mar 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 5분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-03-05-docker-automotive-embedded-lessons-1/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>5</readingTime><category>TechSavvy</category><category>Container</category><category>Docker</category><category>Embedded</category><category>Automotive</category><category>Linux</category><category>Container</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>차량용 임베디드 시스템과 Docker: 현장에서 배운 교훈들 (1)</title><link>https://jayleekr.github.io/blog/techsavvy/container/2025-03-05-docker-automotive-embedded-lessons-1/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/techsavvy/container/2025-03-05-docker-automotive-embedded-lessons-1/</guid><description>![Docker in Automotive Embedded Systems](/assets/img/docker.jpeg)
+
+# 차량용 임베디드 시스템과 Docker: 현장에서 배운 교훈들 (1)
+
+안녕하세요! 오늘부터 차량용 임베디드 시스템에 Docker를 이식하면서 경험한 다양한 도전과 해결책을 시리즈로 공유하려고 합니다. 이 시리즈에서는 실제 현장에서 마주친 문제들과 그 해결 과정을 통해 얻은 교훈을 소개할 예정입니다. 이번 글은 시리즈의 첫 번째 발간물로, Docker 컨테이너와 마운트 포인트 간의 미묘한 상호작용에 관한 이야기입...</description><pubDate>Wed, 05 Mar 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 2분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; TechSavvy, Container&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/techsavvy/container/2025-03-05-docker-automotive-embedded-lessons-1/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>2</readingTime><category>TechSavvy</category><category>Container</category><category>Docker</category><category>Embedded</category><category>Automotive</category><category>Linux</category><category>Container</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>Blog Framework Renewal with Claude 3.7 Sonnet - Done in 1 Hour!</title><link>https://jayleekr.github.io/blog/en/2025-03-04-blog-renewal/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-03-04-blog-renewal/</guid><description># Finally Did It! Blog Framework Renewal
+
+I finally renewed my blog framework that I&apos;ve been putting off for ages! This framework was actually built in 2020, and I&apos;ve just been adding posts here and there, but problems were piling up.
+
+Specifically, I had issues with overlapping content across diffe...</description><pubDate>Mon, 03 Mar 2025 15:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 7분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Daily&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-03-04-blog-renewal/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>7</readingTime><category>DeepThinking</category><category>Daily</category><category>DeepThinking</category><category>GithubPage</category><category>Blog</category><category>AI</category><category>Claude</category><category>LLM</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>2025-03-04 Claude 3.7 Sonnet과 함께한 블로그 프레임워크 리뉴얼</title><link>https://jayleekr.github.io/blog/deepthinking/daily/2025-03-04-blog-renewal/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/deepthinking/daily/2025-03-04-blog-renewal/</guid><description># 드디어 해냈다! 블로그 프레임워크 리뉴얼
+
+정말 오랫동안 손을 못 댔던 블로그 프레임워크를 드디어 리뉴얼했다. 이 프레임워크는 사실 2020년에 만들어놓고 계속 조금씩 글만 올리고 있었는데, 점점 문제가 많아지고 있었다.
+
+특히 내가 작성하는 다양한 카테고리의 글들이 중복되는 문제가 있었고, 날짜 형식도 뒤죽박죽이었다. 매번 &apos;언젠가 시간 날 때 고쳐야지...&apos;라고 생각만 하다가 오늘에야 손을 대게 됐다.
+
+그런데 정말 놀라운 일이 일어났다. 불과 **1시간** 만에 모든 문제를 해결했다! 어떻게 가능했냐고? 바로 **Claud...</description><pubDate>Mon, 03 Mar 2025 15:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Daily&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/deepthinking/daily/2025-03-04-blog-renewal/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>DeepThinking</category><category>Daily</category><category>DeepThinking</category><category>GithubPage</category><category>Blog</category><category>AI</category><category>Claude</category><category>LLM</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>What Makes Me Happy These Days</title><link>https://jayleekr.github.io/blog/en/2025-02-08-daily/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-02-08-daily/</guid><description># A Heart-to-Heart with My Branch Manager
+
+Yesterday I had my regular 1-on-1 meeting with our Korean branch manager, and honestly, these conversations are always something special. Unlike typical corporate 1-on-1s that focus on work goals and performance metrics, our chats dive into the deeper stuff...</description><pubDate>Fri, 28 Feb 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 8분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Daily&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-02-08-daily/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>8</readingTime><category>DeepThinking</category><category>Daily</category><category>DeepThinking</category><category>GithubPage</category><category>Retrospect</category><category>Sonatus</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>2025-02-28 What makes me happy</title><link>https://jayleekr.github.io/blog/deepthinking/daily/2025-02-08-daily/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/deepthinking/daily/2025-02-08-daily/</guid><description># 지사장님과의 1-on-1 대화
+
+어제는 한국 지사장님과 1-on-1 미팅이 있었습니다. 우리 지사장님과의 1-on-1은 항상 특별합니다. 다른 회사의 1-on-1과는 다르게 업무 목표나 성과에 대한 이야기보다는 &quot;삶을 어떻게 살아야 하는가&quot;, &quot;지금 여자친구와의 관계는 어떠한가&quot;, &quot;집안일은 어떠한가&quot; 같은 인간적인 대화가 주를 이룹니다.
+
+지사장님이 항상 존경스러운 부분은 직원들의 일상 속 중요한 부분들, 각자가 무엇을 중요하게 여기는지와 같은 인간의 깊은 부분에 대해 항상 궁금해하시고 그런 부분을 챙겨주시는 점입니다. 인간적...</description><pubDate>Fri, 28 Feb 2025 00:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 3분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Daily&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/deepthinking/daily/2025-02-08-daily/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>3</readingTime><category>DeepThinking</category><category>Daily</category><category>DeepThinking</category><category>GithubPage</category><category>Retrospect</category><category>Sonatus</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>My Awkward Retrospect #1 - Looking Back After 4 Years</title><link>https://jayleekr.github.io/blog/en/2025-02-05-retro-1/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/en/2025-02-05-retro-1/</guid><description># Getting Started: Confession of a Lazy Person
+
+Looking at my previous retrospectives, I see the last ones were from 2021 and 2022. Yeah... I&apos;ve been pretty lazy about this whole reflection thing, haven&apos;t I? 😅 
+
+As a New Year&apos;s resolution for 2025, I&apos;m going to try to write down short records whene...</description><pubDate>Sun, 02 Feb 2025 15:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 9분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Retrospect&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/en/2025-02-05-retro-1/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>9</readingTime><category>DeepThinking</category><category>Retrospect</category><category>DeepThinking</category><category>GithubPage</category><category>Retrospect</category><category>Sonatus</category><category>SDV</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item><item><title>2025-02-05 애매한 Retrospect 1</title><link>https://jayleekr.github.io/blog/deepthinking/retrospect/2025-02-05-retro-1/</link><guid isPermaLink="true">https://jayleekr.github.io/blog/deepthinking/retrospect/2025-02-05-retro-1/</guid><description># 들어가며 : 게으른 나
+
+이전 회고록을 보니 2021년, 2022년이 마지막이더군요. 정말 게으르게 살아왔다는 반성을 하게 됩니다. 이를 대신해, 2025년에는 시간이 날 때마다 짧은 기록이라도 부지런히 남겨보려 합니다.  
+회사인 Sonatus가 믿을 수 없을 정도로 성장하는 것만큼 저 역시 성장했고, 어느덧 입사 5년 차가 되어 갑니다. 4년을 꽉 채운 제 Dell 노트북은 성능이 예전 같지 않고, 4년이면 제 주식도 풀 베스팅이 되는 시점이니 이 시점에서 4년간의 경험을 되돌아보고 싶어집니다.
+
+최근에는 &apos;삶의 본질&apos;에 대...</description><pubDate>Sun, 02 Feb 2025 15:00:00 GMT</pubDate><content:encoded>
+					&lt;p&gt;&lt;/p&gt;
+					
+					&lt;p&gt;&lt;strong&gt;예상 읽기 시간:&lt;/strong&gt; 8분&lt;/p&gt;
+					&lt;p&gt;&lt;strong&gt;카테고리:&lt;/strong&gt; DeepThinking, Retrospect&lt;/p&gt;
+					&lt;p&gt;&lt;a href=&quot;https://jayleekr.github.io/blog/deepthinking/retrospect/2025-02-05-retro-1/&quot;&gt;전체 글 읽기 →&lt;/a&gt;&lt;/p&gt;
+				</content:encoded><source url="https://jayleekr.github.io/rss.xml">Jay Lee - Tech Blog</source><readingTime>8</readingTime><category>DeepThinking</category><category>Retrospect</category><category>DeepThinking</category><category>GithubPage</category><category>Retrospect</category><category>Sonatus</category><category>SDV</category><author>jayleekr0125@gmail.com (Jay Lee)</author></item></channel></rss>

@@ -1,0 +1,16 @@
+{
+  "buildTime": "2025-08-05T01:54:43Z",
+  "commit": "ca2d271",
+  "commitMessage": "fix: Reduce blog post title sizes for better readability
+
+- Adjusted title sizes from text-4xl/5xl/6xl to text-2xl/3xl/4xl on mobile
+- Adjusted title sizes from text-4xl/5xl/6xl to text-3xl/4xl/5xl on desktop
+- Reduced font weight from extrabold to bold for cleaner appearance
+- Adjusted description text sizes and margins for better proportion
+- Fixed prose heading sizes to match new title hierarchy
+
+🤖 Generated with Claude Code
+
+Co-Authored-By: Claude <noreply@anthropic.com>",
+  "deployer": "native-script"
+}

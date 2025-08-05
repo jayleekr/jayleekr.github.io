@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure Status - jayleekr.github.io</title>
+    <meta name="description" content="Real-time infrastructure status and health monitoring for jayleekr.github.io">
+    <meta name="robots" content="noindex, nofollow">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #1e293b;
+        }
+        
+        .header p {
+            color: #64748b;
+            font-size: 1.1em;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .status-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #e2e8f0;
+        }
+        
+        .status-card.healthy {
+            border-left-color: #10b981;
+        }
+        
+        .status-card.warning {
+            border-left-color: #f59e0b;
+        }
+        
+        .status-card.critical {
+            border-left-color: #ef4444;
+        }
+        
+        .status-card.checking {
+            border-left-color: #3b82f6;
+        }
+        
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .status-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+        }
+        
+        .status-indicator.healthy {
+            background: #10b981;
+            animation: pulse-green 2s infinite;
+        }
+        
+        .status-indicator.warning {
+            background: #f59e0b;
+        }
+        
+        .status-indicator.critical {
+            background: #ef4444;
+            animation: pulse-red 1s infinite;
+        }
+        
+        .status-indicator.checking {
+            background: #3b82f6;
+            animation: pulse-blue 1.5s infinite;
+        }
+        
+        .status-details {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .status-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .status-metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            font-weight: 500;
+            color: #475569;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .last-updated {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            color: #64748b;
+        }
+        
+        .refresh-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+        
+        .refresh-button:hover {
+            background: #2563eb;
+        }
+        
+        .refresh-button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        @keyframes pulse-blue {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .error-message {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Infrastructure Status</h1>
+            <p>Real-time monitoring dashboard for jayleekr.github.io</p>
+        </div>
+        
+        <div class="status-grid" id="statusGrid">
+            <!-- Status cards will be populated by JavaScript -->
+        </div>
+        
+        <div class="last-updated">
+            <p>Last updated: <span id="lastUpdated">Checking...</span></p>
+            <button class="refresh-button" onclick="checkAllStatus()" id="refreshButton">
+                Refresh Status
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const SITE_URL = 'https://jayleekr.github.io';
+        
+        // Status check configurations
+        const statusChecks = [
+            {
+                id: 'website',
+                title: 'Website Availability',
+                check: checkWebsiteStatus
+            },
+            {
+                id: 'performance',
+                title: 'Performance Metrics',
+                check: checkPerformanceStatus
+            },
+            {
+                id: 'security',
+                title: 'Security Headers',
+                check: checkSecurityStatus
+            },
+            {
+                id: 'ssl',
+                title: 'SSL Certificate',
+                check: checkSSLStatus
+            }
+        ];
+        
+        // Check website availability
+        async function checkWebsiteStatus() {
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(SITE_URL, { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                const responseTime = Date.now() - startTime;
+                
+                if (response.ok) {
+                    return {
+                        status: 'healthy',
+                        metrics: {
+                            'HTTP Status': response.status,
+                            'Response Time': `${responseTime}ms`,
+                            'Last Check': new Date().toLocaleTimeString()
+                        }
+                    };
+                } else {
+                    return {
+                        status: 'critical',
+                        metrics: {
+                            'HTTP Status': response.status,
+                            'Error': 'Non-200 response',
+                            'Response Time': `${responseTime}ms`
+                        }
+                    };
+                }
+            } catch (error) {
+                return {
+                    status: 'critical',
+                    metrics: {
+                        'Error': error.message,
+                        'Last Attempt': new Date().toLocaleTimeString()
+                    }
+                };
+            }
+        }
+        
+        // Check performance (simplified)
+        async function checkPerformanceStatus() {
+            try {
+                // Simple performance check using Navigation Timing API
+                const navigation = performance.getEntriesByType('navigation')[0];
+                
+                if (navigation) {
+                    const loadTime = navigation.loadEventEnd - navigation.fetchStart;
+                    const status = loadTime < 3000 ? 'healthy' : loadTime < 5000 ? 'warning' : 'critical';
+                    
+                    return {
+                        status: status,
+                        metrics: {
+                            'Page Load Time': `${Math.round(loadTime)}ms`,
+                            'DNS Lookup': `${Math.round(navigation.domainLookupEnd - navigation.domainLookupStart)}ms`,
+                            'Server Response': `${Math.round(navigation.responseEnd - navigation.requestStart)}ms`,
+                            'DOM Ready': `${Math.round(navigation.domContentLoadedEventEnd - navigation.fetchStart)}ms`
+                        }
+                    };
+                }
+                
+                return {
+                    status: 'warning',
+                    metrics: {
+                        'Status': 'Performance data unavailable',
+                        'Note': 'Navigation timing not supported'
+                    }
+                };
+            } catch (error) {
+                return {
+                    status: 'warning',
+                    metrics: {
+                        'Error': 'Performance check failed',
+                        'Details': error.message
+                    }
+                };
+            }
+        }
+        
+        // Check security headers
+        async function checkSecurityStatus() {
+            try {
+                const response = await fetch(SITE_URL, { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                
+                const headers = response.headers;
+                const securityHeaders = {
+                    'Content-Security-Policy': headers.get('content-security-policy') ? '✓' : '✗',
+                    'X-Frame-Options': headers.get('x-frame-options') ? '✓' : '✗',
+                    'X-Content-Type-Options': headers.get('x-content-type-options') ? '✓' : '✗',
+                    'Referrer-Policy': headers.get('referrer-policy') ? '✓' : '✗'
+                };
+                
+                const presentHeaders = Object.values(securityHeaders).filter(v => v === '✓').length;
+                const totalHeaders = Object.keys(securityHeaders).length;
+                const percentage = Math.round((presentHeaders / totalHeaders) * 100);
+                
+                let status = 'critical';
+                if (percentage >= 75) status = 'healthy';
+                else if (percentage >= 50) status = 'warning';
+                
+                return {
+                    status: status,
+                    metrics: {
+                        'Security Score': `${percentage}%`,
+                        ...securityHeaders
+                    }
+                };
+            } catch (error) {
+                return {
+                    status: 'critical',
+                    metrics: {
+                        'Error': 'Security check failed',
+                        'Details': error.message
+                    }
+                };
+            }
+        }
+        
+        // Check SSL status
+        async function checkSSLStatus() {
+            try {
+                const response = await fetch(SITE_URL, { 
+                    method: 'HEAD',
+                    cache: 'no-cache'
+                });
+                
+                const isHTTPS = window.location.protocol === 'https:' || SITE_URL.startsWith('https:');
+                
+                return {
+                    status: isHTTPS ? 'healthy' : 'critical',
+                    metrics: {
+                        'Protocol': isHTTPS ? 'HTTPS' : 'HTTP',
+                        'SSL Enabled': isHTTPS ? 'Yes' : 'No',
+                        'Certificate': isHTTPS ? 'Valid' : 'N/A',
+                        'Last Check': new Date().toLocaleTimeString()
+                    }
+                };
+            } catch (error) {
+                return {
+                    status: 'warning',
+                    metrics: {
+                        'Error': 'SSL check failed',
+                        'Details': error.message
+                    }
+                };
+            }
+        }
+        
+        // Create status card HTML
+        function createStatusCard(check, result) {
+            const statusClass = result ? result.status : 'checking';
+            
+            let metricsHTML = '';
+            if (result && result.metrics) {
+                metricsHTML = Object.entries(result.metrics)
+                    .map(([label, value]) => `
+                        <div class="status-metric">
+                            <span class="metric-label">${label}</span>
+                            <span class="metric-value">${value}</span>
+                        </div>
+                    `).join('');
+            } else {
+                metricsHTML = '<div class="status-metric"><span class="metric-label">Status</span><span class="metric-value">Checking...</span></div>';
+            }
+            
+            return `
+                <div class="status-card ${statusClass}" id="card-${check.id}">
+                    <div class="status-header">
+                        <div class="status-title">${check.title}</div>
+                        <div class="status-indicator ${statusClass}"></div>
+                    </div>
+                    <div class="status-details">
+                        ${metricsHTML}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Update status card
+        function updateStatusCard(check, result) {
+            const card = document.getElementById(`card-${check.id}`);
+            if (card) {
+                card.outerHTML = createStatusCard(check, result);
+            }
+        }
+        
+        // Check all status
+        async function checkAllStatus() {
+            const refreshButton = document.getElementById('refreshButton');
+            refreshButton.disabled = true;
+            refreshButton.textContent = 'Checking...';
+            
+            // Initialize cards
+            const statusGrid = document.getElementById('statusGrid');
+            statusGrid.innerHTML = statusChecks.map(check => createStatusCard(check, null)).join('');
+            
+            // Run checks
+            for (const check of statusChecks) {
+                try {
+                    const result = await check.check();
+                    updateStatusCard(check, result);
+                } catch (error) {
+                    updateStatusCard(check, {
+                        status: 'critical',
+                        metrics: {
+                            'Error': error.message
+                        }
+                    });
+                }
+            }
+            
+            // Update timestamp
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+            
+            refreshButton.disabled = false;
+            refreshButton.textContent = 'Refresh Status';
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAllStatus();
+            
+            // Auto-refresh every 5 minutes
+            setInterval(checkAllStatus, 5 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="ko" data-astro-cid-sckkx6r4> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#3b82f6"><meta name="color-scheme" content="light dark"><!-- Mobile optimizations --><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-touch-fullscreen" content="yes"><meta name="format-detection" content="telephone=no,date=no,email=no,address=no"><!-- Icons and Manifest --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><!-- PWA iOS Meta Tags --><meta name="apple-mobile-web-app-title" content="Jay's Blog"><link rel="apple-touch-icon" sizes="57x57" href="/icon-57x57.png"><link rel="apple-touch-icon" sizes="72x72" href="/icon-72x72.png"><link rel="apple-touch-icon" sizes="96x96" href="/icon-96x96.png"><link rel="apple-touch-icon" sizes="128x128" href="/icon-128x128.png"><link rel="apple-touch-icon" sizes="144x144" href="/icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/icon-180x180.png"><link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png"><!-- RSS and Sitemap --><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Jay Lee - All Posts" href="https://jayleekr.github.io/rss.xml"><link rel="alternate" type="application/rss+xml" title="Jay Lee - English Posts" href="https://jayleekr.github.io/rss/en.xml"><!-- Preload Critical Resources --><link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin><!-- Performance Optimization: Font Loading --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="//github.com"><!-- Canonical URL --><link rel="canonical" href="https://jayleekr.github.io/"><!-- Primary Meta Tags --><title>Jay Lee</title><meta name="title" content="Jay Lee"><meta name="description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="author" content="Jay Lee"><meta name="robots" content="index, follow"><meta name="language" content="ko-KR"><meta name="generator" content="Astro v5.12.3"><!-- Google Search Console Verification --><meta name="google-site-verification" content=""><!-- To be filled with actual verification code when setting up GSC --><!-- Bing Webmaster Tools Verification --><meta name="msvalidate.01" content=""><!-- Yandex Verification --><meta name="yandex-verification" content=""><!-- Enhanced Keywords for articles --><meta name="keywords" content="Jay Lee, Software Engineer, Basketball, Technology, Development, Programming, Blog, Tutorial"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:site_name" content="Jay Lee"><meta property="og:url" content="https://jayleekr.github.io/"><meta property="og:title" content="Jay Lee"><meta property="og:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta property="og:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Jay Lee"><meta property="og:image:type" content="image/jpeg"><meta property="og:locale" content="ko_KR"><meta property="og:locale:alternate" content="en_US"><!-- Article specific Open Graph --><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@jayleekr"><meta name="twitter:creator" content="@jayleekr"><meta name="twitter:url" content="https://jayleekr.github.io/"><meta name="twitter:title" content="Jay Lee"><meta name="twitter:description" content="소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다."><meta name="twitter:image" content="https://jayleekr.github.io/assets/blog-placeholder-1.Bx0Zcyzv.jpg"><meta name="twitter:image:alt" content="Jay Lee"><!-- Enhanced SEO Meta Tags --><meta name="format-detection" content="telephone=no,date=no,email=no,address=no"><meta name="revisit-after" content="7 days"><meta name="distribution" content="global"><meta name="rating" content="general"><meta name="referrer" content="origin-when-cross-origin"><!-- Performance hints --><meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Security headers --><meta http-equiv="X-Content-Type-Options" content="nosniff"><meta http-equiv="X-Frame-Options" content="DENY"><!-- Geo meta tags --><meta name="geo.region" content="KR"><meta name="geo.placename" content="Seoul, South Korea"><!-- Content classification --><meta name="classification" content="Technology Blog"><meta name="category" content="Software Engineering, Basketball, Technology"><!-- Theme Initialization Script (prevents FOUC) --><script>
+	// Check for saved theme preference or default to system preference
+	(function() {
+		function getStoredTheme() {
+			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+				return localStorage.getItem('theme');
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		}
+		
+		const theme = getStoredTheme();
+		
+		if (theme === 'dark') {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+		
+		// Add no-transition class temporarily to prevent animation on page load
+		document.documentElement.classList.add('no-transition');
+		
+		// Remove no-transition class after page load
+		window.addEventListener('load', () => {
+			document.documentElement.classList.remove('no-transition');
+		});
+	})();
+</script><!-- Enhanced JSON-LD Structured Data --><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Jay Lee","description":"소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다.","url":"https://jayleekr.github.io/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://jayleekr.github.io/?search={search_term_string}"},"query-input":"required name=search_term_string"},"author":{"@type":"Person","name":"Jay Lee","url":"https://jayleekr.github.io/","gender":"Male","jobTitle":"Software Engineer","workFor":{"@type":"Organization","name":"Sonatus"},"alumniOf":[{"@type":"CollegeOrUniversity","name":"University Name"}],"knowsAbout":["Software Engineering","Web Development","Basketball","Startup"],"sameAs":["https://github.com/jayleekr","https://linkedin.com/in/jayleekr"]},"publisher":{"@type":"Organization","name":"Jay Lee","url":"https://jayleekr.github.io/","description":"소프트웨어 엔지니어이자 기술 블로거입니다. 개발과 기술에 대한 경험과 인사이트를 공유합니다.","founder":{"@type":"Person","name":"Jay Lee","url":"https://jayleekr.github.io/","gender":"Male","jobTitle":"Software Engineer","workFor":{"@type":"Organization","name":"Sonatus"},"alumniOf":[{"@type":"CollegeOrUniversity","name":"University Name"}],"knowsAbout":["Software Engineering","Web Development","Basketball","Startup"],"sameAs":["https://github.com/jayleekr","https://linkedin.com/in/jayleekr"]},"logo":{"@type":"ImageObject","url":"https://jayleekr.github.io/favicon.svg","width":32,"height":32},"sameAs":["https://github.com/jayleekr","https://linkedin.com/in/jayleekr"]},"inLanguage":["ko-KR","en-US"],"audience":{"@type":"Audience","audienceType":"Software Developers, Basketball Enthusiasts"}}</script><!-- Additional Schema.org markup for breadcrumbs --><!-- Google Analytics --><!-- Development reminder -->
+  <script>
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      console.log('GA4 Analytics: Set GOOGLE_ANALYTICS_ID environment variable to enable tracking');
+    }
+  </script><!-- Advanced Conversion Tracking --><!-- Web Vitals Performance Monitoring --><script>
+  // Web Vitals 측정 및 Google Analytics로 전송
+  function sendToGoogleAnalytics({name, delta, value, id}) {
+    // GA4가 로드되어 있는 경우에만 전송
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, {
+        event_category: 'Web Vitals',
+        event_label: id,
+        value: Math.round(name === 'CLS' ? delta * 1000 : delta),
+        non_interaction: true,
+      });
+    }
+    
+    // 콘솔에도 로그 (개발 환경에서)
+    if (window.location.hostname === 'localhost') {
+      console.log(`${name}: ${value} (delta: ${delta})`);
+    }
+  }
+
+  // Web Vitals 라이브러리를 동적으로 로드
+  async function measureWebVitals() {
+    try {
+      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('https://unpkg.com/web-vitals@3/dist/web-vitals.js');
+      
+      getCLS(sendToGoogleAnalytics);
+      getFID(sendToGoogleAnalytics);
+      getFCP(sendToGoogleAnalytics);
+      getLCP(sendToGoogleAnalytics);
+      getTTFB(sendToGoogleAnalytics);
+    } catch (error) {
+      console.warn('Web Vitals measurement failed:', error);
+    }
+  }
+
+  // 페이지 로드 후 측정 시작
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', measureWebVitals);
+  } else {
+    measureWebVitals();
+  }
+</script><!-- PWA Service Worker Registration --><script>
+	// Register service worker for PWA functionality
+	if ('serviceWorker' in navigator) {
+		window.addEventListener('load', async () => {
+			try {
+				const registration = await navigator.serviceWorker.register('/sw.js');
+				console.log('[PWA] Service Worker registered successfully:', registration.scope);
+				
+				// Handle service worker updates
+				registration.addEventListener('updatefound', () => {
+					const newWorker = registration.installing;
+					if (newWorker) {
+						newWorker.addEventListener('statechange', () => {
+							if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+								// New version available, show update notification
+								if (confirm('새로운 버전이 사용 가능합니다. 지금 업데이트하시겠습니까?')) {
+									newWorker.postMessage({ action: 'skipWaiting' });
+									window.location.reload();
+								}
+							}
+						});
+					}
+				});
+				
+				// Listen for service worker messages
+				navigator.serviceWorker.addEventListener('message', (event) => {
+					if (event.data.action === 'reload') {
+						window.location.reload();
+					}
+				});
+				
+			} catch (error) {
+				console.error('[PWA] Service Worker registration failed:', error);
+			}
+		});
+	}
+	
+	// Install prompt handling
+	let deferredPrompt;
+	window.addEventListener('beforeinstallprompt', (e) => {
+		// Prevent Chrome 67 and earlier from automatically showing the prompt
+		e.preventDefault();
+		// Stash the event so it can be triggered later
+		deferredPrompt = e;
+		
+		// Show install button if not already installed
+		if (!window.matchMedia('(display-mode: standalone)').matches) {
+			showInstallButton();
+		}
+	});
+	
+	function showInstallButton() {
+		// Create install button dynamically
+		const installButton = document.createElement('button');
+		installButton.textContent = '앱 설치';
+		installButton.className = 'fixed bottom-20 right-4 z-50 bg-primary-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-primary-700 transition-colors';
+		installButton.style.display = 'none';
+		
+		// Show button after 5 seconds on mobile
+		if (window.innerWidth < 768) {
+			setTimeout(() => {
+				installButton.style.display = 'block';
+			}, 5000);
+		}
+		
+		installButton.addEventListener('click', async () => {
+			if (deferredPrompt) {
+				// Show the install prompt
+				deferredPrompt.prompt();
+				// Wait for the user to respond to the prompt
+				const { outcome } = await deferredPrompt.userChoice;
+				console.log(`[PWA] User response to the install prompt: ${outcome}`);
+				// Clear the deferredPrompt variable
+				deferredPrompt = null;
+				// Hide the install button
+				installButton.style.display = 'none';
+			}
+		});
+		
+		document.body.appendChild(installButton);
+	}
+	
+	// Handle app installed event
+	window.addEventListener('appinstalled', () => {
+		console.log('[PWA] App was installed successfully');
+		// Hide install button if visible
+		const installButton = document.querySelector('button[style*="bg-primary-600"]');
+		if (installButton) {
+			installButton.style.display = 'none';
+		}
+	});
+</script><!-- Code Enhancement Script --><script src="/scripts/code-enhancements.js" defer></script><!-- Mobile Enhancement Script --><script src="/scripts/mobile-enhancements.js" defer></script><link rel="stylesheet" href="/assets/_slug_.CjWJjBV3.css">
+<style>@supports ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))){header[data-astro-cid-ovr3ijkt]{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}}@supports not ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))){header[data-astro-cid-ovr3ijkt]{background:#fffffff2}.dark[data-astro-cid-ovr3ijkt] header[data-astro-cid-ovr3ijkt]{background:#111827f2}}html{scroll-behavior:smooth}.header-link[data-astro-cid-ovr3ijkt].active{color:rgb(var(--color-primary-600));font-weight:600}.dark[data-astro-cid-ovr3ijkt] .header-link[data-astro-cid-ovr3ijkt].active{color:rgb(var(--color-primary-400))}#desktop-search-button[data-astro-cid-ovr3ijkt]:focus{outline:2px solid rgb(var(--color-primary-500));outline-offset:2px}@media (max-width: 1023px){.search-container[data-astro-cid-ovr3ijkt]{width:200px}}@media (max-width: 767px){header[data-astro-cid-ovr3ijkt]{display:none}}@media (min-width: 768px){nav[data-astro-cid-hpzowadq]{display:none}}@supports (padding-bottom: env(safe-area-inset-bottom)){nav[data-astro-cid-hpzowadq]{padding-bottom:calc(.5rem + env(safe-area-inset-bottom))}}[data-astro-cid-hpzowadq][data-nav-item].active{transform:scale(.95)}[data-astro-cid-hpzowadq][data-nav-item]:active{transform:scale(.95);transition-duration:.1s}[data-astro-cid-xsckm4dd][data-search-results]{scrollbar-width:thin;scrollbar-color:rgb(156 163 175) transparent}[data-astro-cid-xsckm4dd][data-search-results]::-webkit-scrollbar{width:6px}[data-astro-cid-xsckm4dd][data-search-results]::-webkit-scrollbar-track{background:transparent}[data-astro-cid-xsckm4dd][data-search-results]::-webkit-scrollbar-thumb{background-color:#9ca3af;border-radius:3px}[data-astro-cid-xsckm4dd][data-search-results]::-webkit-scrollbar-thumb:hover{background-color:#6b7280}.line-clamp-2[data-astro-cid-xsckm4dd]{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}mark[data-astro-cid-xsckm4dd]{background-color:#fef08a;color:inherit;padding:0 .125rem;border-radius:.125rem}.dark[data-astro-cid-xsckm4dd] mark[data-astro-cid-xsckm4dd]{background-color:#854d0e80}:host[data-astro-cid-kjkazaz7]{display:none}:root{--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px)}@media (max-width: 767px){body{padding-bottom:env(safe-area-inset-bottom,.5rem)}}[data-astro-cid-sckkx6r4]{transition-property:background-color,border-color,color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.2s}.skip-to-content[data-astro-cid-sckkx6r4]{position:absolute;top:-40px;left:6px;background:#3b82f6;color:#fff;padding:8px;border-radius:4px;text-decoration:none;font-weight:600;z-index:100;transition:top .3s}.skip-to-content[data-astro-cid-sckkx6r4]:focus{top:6px}#main-content[data-astro-cid-sckkx6r4]:focus{outline:none}@supports ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))){.mobile-nav[data-astro-cid-sckkx6r4]{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}}
+html{transition:background-color .3s ease,color .3s ease}html *{transition:background-color .3s ease,color .3s ease,border-color .3s ease}html.no-transition *{transition:none!important}@keyframes theme-sparkle{0%{opacity:0;transform:scale(0) translateY(0) rotate(0)}50%{opacity:1;transform:scale(1.2) translateY(-20px) rotate(180deg)}to{opacity:0;transform:scale(.5) translateY(-40px) rotate(360deg)}}
+</style>
+<link rel="stylesheet" href="/assets/_slug_.BKRRd104.css"></head> <body class="bg-white dark:bg-gray-900 transition-colors duration-300 min-h-screen flex flex-col" data-astro-cid-sckkx6r4> <!-- Whimsy Components --> <script type="module" src="/assets/WhimsyEnhancer.astro_astro_type_script_index_0_lang.Dl2tr-lC.js"></script> <div id="command-palette" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-start justify-center pt-[10vh] hidden" data-astro-cid-wozhyvwc> <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 w-full max-w-2xl mx-4 overflow-hidden" data-astro-cid-wozhyvwc> <!-- Header --> <div class="p-4 border-b border-gray-200 dark:border-gray-700" data-astro-cid-wozhyvwc> <div class="relative" data-astro-cid-wozhyvwc> <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-wozhyvwc> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" data-astro-cid-wozhyvwc></path> </svg> <input type="text" id="command-input" placeholder="Type a command or search..." class="w-full pl-10 pr-4 py-3 bg-transparent border-none outline-none text-lg text-gray-800 dark:text-gray-200 placeholder-gray-400" autocomplete="off" spellcheck="false" data-astro-cid-wozhyvwc> <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded" data-astro-cid-wozhyvwc>
+ESC to close
+</div> </div> </div> <!-- Commands List --> <div id="commands-list" class="max-h-96 overflow-y-auto" data-astro-cid-wozhyvwc> <!-- Commands will be populated by JavaScript --> </div> <!-- Footer --> <div class="p-4 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500" data-astro-cid-wozhyvwc> <div class="flex justify-between items-center" data-astro-cid-wozhyvwc> <span data-astro-cid-wozhyvwc>💡 Pro tip: Try typing "konami", "theme", or "stats"</span> <div class="flex gap-2" data-astro-cid-wozhyvwc> <kbd class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-400" data-astro-cid-wozhyvwc>↑↓</kbd> <span data-astro-cid-wozhyvwc>navigate</span> <kbd class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-400" data-astro-cid-wozhyvwc>↵</kbd> <span data-astro-cid-wozhyvwc>select</span> </div> </div> </div> </div> </div>  <script type="module" src="/assets/CommandPalette.astro_astro_type_script_index_0_lang.BCi1HT2P.js"></script> <div class="loading-states-container" data-astro-cid-ls3bsfzx> <!-- Blog Post Skeleton --> <div class="blog-skeleton hidden animate-pulse" data-astro-cid-ls3bsfzx> <div class="max-w-4xl mx-auto px-6" data-astro-cid-ls3bsfzx> <!-- Hero skeleton --> <div class="aspect-[21/9] max-h-[500px] bg-gray-200 dark:bg-gray-700 rounded-lg mb-8 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title skeleton --> <div class="space-y-4 mb-8" data-astro-cid-ls3bsfzx> <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-1/2 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Content skeleton --> <div class="space-y-3 mb-8" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div> <!-- Card Grid Skeleton --> <div class="cards-skeleton hidden" data-astro-cid-ls3bsfzx> <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-6" data-astro-cid-ls3bsfzx> <div class="animate-pulse" style="animation-delay: 0s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div><div class="animate-pulse" style="animation-delay: 0.1s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div><div class="animate-pulse" style="animation-delay: 0.2s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div><div class="animate-pulse" style="animation-delay: 0.30000000000000004s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div><div class="animate-pulse" style="animation-delay: 0.4s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div><div class="animate-pulse" style="animation-delay: 0.5s" data-astro-cid-ls3bsfzx> <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx> <!-- Image placeholder --> <div class="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg mb-4 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Title placeholder --> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <!-- Description placeholder --> <div class="space-y-2 mb-4" data-astro-cid-ls3bsfzx> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Tags placeholder --> <div class="flex gap-2" data-astro-cid-ls3bsfzx> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-16 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20 relative overflow-hidden" data-astro-cid-ls3bsfzx> <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-shimmer" data-astro-cid-ls3bsfzx></div> </div> </div> </div> </div> </div> </div> </div> <!-- Loading Spinners --> <div class="loading-spinners hidden" data-astro-cid-ls3bsfzx> <!-- Coding-themed spinner --> <div class="flex flex-col items-center justify-center p-8" data-astro-cid-ls3bsfzx> <div class="relative w-16 h-16 mb-4" data-astro-cid-ls3bsfzx> <!-- Outer ring --> <div class="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-700" data-astro-cid-ls3bsfzx></div> <!-- Spinning part --> <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-primary-500 animate-spin" data-astro-cid-ls3bsfzx></div> <!-- Inner code symbol --> <div class="absolute inset-0 flex items-center justify-center" data-astro-cid-ls3bsfzx> <svg class="w-6 h-6 text-primary-500 animate-pulse" fill="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path d="M8.293 6.293a1 1 0 011.414 0L12 8.586l2.293-2.293a1 1 0 111.414 1.414L13.414 10l2.293 2.293a1 1 0 01-1.414 1.414L12 11.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 10 8.293 7.707a1 1 0 010-1.414z" data-astro-cid-ls3bsfzx></path> </svg> </div> </div> <div class="text-center" data-astro-cid-ls3bsfzx> <p class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2" data-astro-cid-ls3bsfzx> <span class="typing-dots" data-astro-cid-ls3bsfzx>Loading</span> </p> <p class="text-sm text-gray-500 dark:text-gray-400" id="loading-message" data-astro-cid-ls3bsfzx>
+Preparing something awesome...
+</p> </div> </div> <!-- Minimal spinner --> <div class="minimal-spinner" data-astro-cid-ls3bsfzx> <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-primary-500 rounded-full animate-spin" data-astro-cid-ls3bsfzx></div> </div> <!-- Dots spinner --> <div class="dots-spinner flex gap-1" data-astro-cid-ls3bsfzx> <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms" data-astro-cid-ls3bsfzx></div> <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 100ms" data-astro-cid-ls3bsfzx></div> <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 200ms" data-astro-cid-ls3bsfzx></div> </div> </div> <!-- Error States --> <div class="error-states hidden" data-astro-cid-ls3bsfzx> <!-- Connection Error --> <div class="connection-error text-center p-8" data-astro-cid-ls3bsfzx> <div class="w-20 h-20 mx-auto mb-6 relative" data-astro-cid-ls3bsfzx> <!-- Broken connection icon --> <div class="absolute inset-0 flex items-center justify-center" data-astro-cid-ls3bsfzx> <svg class="w-16 h-16 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" data-astro-cid-ls3bsfzx></path> </svg> </div> <!-- Sad face overlay --> <div class="absolute top-6 left-8 text-red-400 animate-pulse" data-astro-cid-ls3bsfzx>
+😢
+</div> </div> <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2" data-astro-cid-ls3bsfzx>
+Connection Lost
+</h3> <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto" data-astro-cid-ls3bsfzx>
+Looks like you're offline. Don't worry, I'll keep trying to reconnect!
+</p> <button class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105" onclick="window.location.reload()" data-astro-cid-ls3bsfzx> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" data-astro-cid-ls3bsfzx></path> </svg>
+Try Again
+</button> </div> <!-- Server Error --> <div class="server-error text-center p-8" data-astro-cid-ls3bsfzx> <div class="w-20 h-20 mx-auto mb-6 relative" data-astro-cid-ls3bsfzx> <!-- Server icon --> <svg class="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" data-astro-cid-ls3bsfzx></path> </svg> <!-- Error indicator --> <div class="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-bounce" data-astro-cid-ls3bsfzx>
+!
+</div> </div> <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2" data-astro-cid-ls3bsfzx>
+Server Hiccup
+</h3> <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto" data-astro-cid-ls3bsfzx>
+Our servers are having a moment. It happens to the best of us! 🤖
+</p> <div class="flex flex-col sm:flex-row gap-3 justify-center" data-astro-cid-ls3bsfzx> <button class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105" onclick="window.location.reload()" data-astro-cid-ls3bsfzx> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" data-astro-cid-ls3bsfzx></path> </svg>
+Refresh
+</button> <a href="/" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg font-medium transition-all duration-200 hover:scale-105" data-astro-cid-ls3bsfzx> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ls3bsfzx> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" data-astro-cid-ls3bsfzx></path> </svg>
+Go Home
+</a> </div> </div> </div>  <script type="module">class a{constructor(){this.init()}init(){this.setupLoadingMessages(),this.setupNetworkDetection(),this.setupFormEnhancements()}setupLoadingMessages(){const e=["Preparing something awesome...","Loading with style...","Almost there...","Putting pixels in place...","Brewing some code...","Charging the flux capacitor...","Consulting the rubber duck...","Optimizing the magic...","Loading at warp speed...","Just a moment more..."],t=document.getElementById("loading-message");if(t){let r=0;setInterval(()=>{t.textContent=e[r],r=(r+1)%e.length},2e3)}}setupNetworkDetection(){window.addEventListener("online",()=>{this.hideError(),this.showToast("Back online! 🎉","success")}),window.addEventListener("offline",()=>{this.showConnectionError(),this.showToast("Connection lost 📱","warning")})}setupFormEnhancements(){document.querySelectorAll("form").forEach(e=>{e.addEventListener("submit",t=>{const r=e.querySelector('button[type="submit"]');r&&!r.disabled&&this.showButtonLoading(r)})})}showSkeleton(e="blog"){const t=document.querySelector(`.${e}-skeleton`);t&&t.classList.remove("hidden")}hideSkeleton(e="blog"){const t=document.querySelector(`.${e}-skeleton`);t&&t.classList.add("hidden")}showSpinner(e,t="default"){const r=this.createSpinner(t);e&&(e.innerHTML="",e.appendChild(r))}createSpinner(e="default"){const t=document.createElement("div");t.className="flex justify-center items-center p-4";let r="";switch(e){case"minimal":r='<div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-primary-500 rounded-full animate-spin"></div>';break;case"dots":r=`
+            <div class="flex gap-1">
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 100ms"></div>
+              <div class="w-2 h-2 bg-primary-500 rounded-full animate-bounce" style="animation-delay: 200ms"></div>
+            </div>
+          `;break;default:r=`
+            <div class="relative w-8 h-8">
+              <div class="absolute inset-0 rounded-full border-2 border-gray-200 dark:border-gray-700"></div>
+              <div class="absolute inset-0 rounded-full border-2 border-transparent border-t-primary-500 animate-spin"></div>
+            </div>
+          `}return t.innerHTML=r,t}showButtonLoading(e){if(e.dataset.originalText)return;e.dataset.originalText=e.innerHTML,e.disabled=!0;const t='<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>';e.innerHTML=t+"Loading..."}hideButtonLoading(e){e.dataset.originalText&&(e.innerHTML=e.dataset.originalText,e.disabled=!1,delete e.dataset.originalText)}showConnectionError(){const e=document.querySelector(".connection-error");e&&e.classList.remove("hidden")}showServerError(){const e=document.querySelector(".server-error");e&&e.classList.remove("hidden")}hideError(){document.querySelectorAll(".connection-error, .server-error").forEach(t=>t.classList.add("hidden"))}showToast(e,t="info",r=3e3){const s=document.createElement("div"),i={success:"bg-green-500",warning:"bg-yellow-500",error:"bg-red-500",info:"bg-blue-500"};s.className=`fixed bottom-4 right-4 ${i[t]} text-white px-4 py-2 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`,s.textContent=e,document.body.appendChild(s),setTimeout(()=>{s.classList.remove("translate-x-full")},100),setTimeout(()=>{s.classList.add("translate-x-full"),setTimeout(()=>{s.parentNode&&s.parentNode.removeChild(s)},300)},r)}}const o=new a;window.LoadingStates={showSkeleton:n=>o.showSkeleton(n),hideSkeleton:n=>o.hideSkeleton(n),showSpinner:(n,e)=>o.showSpinner(n,e),showButtonLoading:n=>o.showButtonLoading(n),hideButtonLoading:n=>o.hideButtonLoading(n),showConnectionError:()=>o.showConnectionError(),showServerError:()=>o.showServerError(),hideError:()=>o.hideError(),showToast:(n,e,t)=>o.showToast(n,e,t)};</script> <script>
+  // Performance monitoring for Core Web Vitals
+  (function() {
+    // Only run in production
+    if (import.meta.env.DEV) return;
+    
+    // Track page load performance
+    function trackPageLoad() {
+      if ('performance' in window && 'getEntriesByType' in performance) {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        if (navigation) {
+          // Send metrics to analytics
+          const metrics = {
+            dns: navigation.domainLookupEnd - navigation.domainLookupStart,
+            tcp: navigation.connectEnd - navigation.connectStart,
+            ttfb: navigation.responseStart - navigation.requestStart,
+            download: navigation.responseEnd - navigation.responseStart,
+            domReady: navigation.domContentLoadedEventEnd - navigation.navigationStart,
+            loadComplete: navigation.loadEventEnd - navigation.navigationStart
+          };
+          
+          // Send to Google Analytics if available
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_load_performance', {
+              custom_map: {
+                metric1: 'dns_time',
+                metric2: 'tcp_time',
+                metric3: 'ttfb',
+                metric4: 'download_time',
+                metric5: 'dom_ready',
+                metric6: 'load_complete'
+              },
+              metric1: Math.round(metrics.dns),
+              metric2: Math.round(metrics.tcp),
+              metric3: Math.round(metrics.ttfb),
+              metric4: Math.round(metrics.download),
+              metric5: Math.round(metrics.domReady),
+              metric6: Math.round(metrics.loadComplete)
+            });
+          }
+        }
+      }
+    }
+    
+    // Track Core Web Vitals with web-vitals library if available
+    function trackWebVitals() {
+      // Defer web-vitals import to avoid blocking page load
+      setTimeout(() => {
+        import('https://unpkg.com/web-vitals@3/dist/web-vitals.js')
+          .then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+          // Largest Contentful Paint
+          getLCP((metric) => {
+            console.log('LCP:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'LCP',
+                value: Math.round(metric.value),
+                custom_map: { metric7: 'lcp' },
+                metric7: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // First Input Delay
+          getFID((metric) => {
+            console.log('FID:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'FID',
+                value: Math.round(metric.value),
+                custom_map: { metric8: 'fid' },
+                metric8: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // Cumulative Layout Shift
+          getCLS((metric) => {
+            console.log('CLS:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'CLS',
+                value: Math.round(metric.value * 1000),
+                custom_map: { metric9: 'cls' },
+                metric9: Math.round(metric.value * 1000)
+              });
+            }
+          });
+          
+          // First Contentful Paint
+          getFCP((metric) => {
+            console.log('FCP:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'FCP',
+                value: Math.round(metric.value),
+                custom_map: { metric10: 'fcp' },
+                metric10: Math.round(metric.value)
+              });
+            }
+          });
+          
+          // Time to First Byte
+          getTTFB((metric) => {
+            console.log('TTFB:', metric);
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'web_vitals', {
+                event_category: 'Performance',
+                event_label: 'TTFB',
+                value: Math.round(metric.value),
+                custom_map: { metric11: 'ttfb' },
+                metric11: Math.round(metric.value)
+              });
+            }
+          });
+          })
+          .catch((error) => {
+            console.warn('Web Vitals library failed to load:', error);
+          });
+      }, 1000); // Load after 1 second to avoid blocking
+    }
+    
+    // Track resource loading performance
+    function trackResourcePerformance() {
+      if ('performance' in window && 'getEntriesByType' in performance) {
+        const resources = performance.getEntriesByType('resource');
+        
+        // Group resources by type
+        const resourceTypes = {
+          script: [],
+          stylesheet: [],
+          image: [],
+          font: [],
+          other: []
+        };
+        
+        resources.forEach(resource => {
+          const type = resource.initiatorType;
+          if (resourceTypes[type]) {
+            resourceTypes[type].push(resource);
+          } else {
+            resourceTypes.other.push(resource);
+          }
+        });
+        
+        // Calculate average load times by type
+        Object.entries(resourceTypes).forEach(([type, resources]) => {
+          if (resources.length > 0) {
+            const avgDuration = resources.reduce((sum, r) => sum + r.duration, 0) / resources.length;
+            
+            if (typeof gtag !== 'undefined' && avgDuration > 0) {
+              gtag('event', 'resource_performance', {
+                event_category: 'Performance',
+                event_label: `${type}_avg_load_time`,
+                value: Math.round(avgDuration)
+              });
+            }
+          }
+        });
+      }
+    }
+    
+    // Initialize performance monitoring
+    function initPerformanceMonitoring() {
+      // Track page load metrics after load event
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          trackPageLoad();
+          trackResourcePerformance();
+        }, 100);
+      });
+      
+      // Track Web Vitals
+      trackWebVitals();
+      
+      // Track memory usage if available
+      if ('memory' in performance) {
+        setInterval(() => {
+          const memory = performance.memory;
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'memory_usage', {
+              event_category: 'Performance',
+              custom_map: {
+                metric12: 'used_js_heap_size',
+                metric13: 'total_js_heap_size'
+              },
+              metric12: Math.round(memory.usedJSHeapSize / 1048576), // MB
+              metric13: Math.round(memory.totalJSHeapSize / 1048576) // MB
+            });
+          }
+        }, 30000); // Every 30 seconds
+      }
+    }
+    
+    // Start monitoring when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPerformanceMonitoring);
+    } else {
+      initPerformanceMonitoring();
+    }
+    
+    // Error tracking
+    window.addEventListener('error', (event) => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+          description: event.error ? event.error.toString() : event.message,
+          fatal: false,
+          event_category: 'JavaScript Error'
+        });
+      }
+    });
+    
+    // Unhandled promise rejection tracking
+    window.addEventListener('unhandledrejection', (event) => {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+          description: event.reason ? event.reason.toString() : 'Unhandled Promise Rejection',
+          fatal: false,
+          event_category: 'Promise Rejection'
+        });
+      }
+    });
+  })();
+</script>  <!-- Desktop Navigation --> <header class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 hidden md:block" data-astro-cid-ovr3ijkt> <nav class="max-w-7xl mx-auto px-6 lg:px-8" data-astro-cid-ovr3ijkt> <div class="flex justify-between items-center h-16" data-astro-cid-ovr3ijkt> <!-- Logo and Brand --> <div class="flex items-center" data-astro-cid-ovr3ijkt> <a href="/" class="flex items-center gap-3 group" aria-label="Home" data-astro-cid-ovr3ijkt> <svg class="w-10 h-10 transition-transform group-hover:scale-110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Jay Lee Logo"> <!-- Background circle --> <circle cx="50" cy="50" r="45" class="fill-primary-500 dark:fill-primary-400"></circle> <!-- J letter --> <path d="M 35 25 L 35 60 Q 35 75 50 75 Q 65 75 65 60 L 65 40" class="stroke-white dark:stroke-gray-900" stroke-width="6" stroke-linecap="round" fill="none"></path> <!-- L letter (overlapping) --> <path d="M 40 35 L 40 65 L 60 65" class="stroke-white dark:stroke-gray-900 opacity-80" stroke-width="5" stroke-linecap="round" fill="none"></path> <!-- Decorative dot --> <circle cx="70" cy="30" r="4" class="fill-white dark:fill-gray-900"></circle> </svg> <span class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors" data-astro-cid-ovr3ijkt> Jay Lee </span> </a> </div> <!-- Center Navigation Links --> <div class="hidden lg:flex items-center space-x-8" data-astro-cid-ovr3ijkt> <a href="/" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-primary-600 dark:text-primary-400 border-primary-500 font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium" data-astro-cid-ovr3ijkt="true"> 홈 </a> <a href="/about" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium" data-astro-cid-ovr3ijkt="true"> 소개 </a> <a href="/blog" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium" data-astro-cid-ovr3ijkt="true"> Blog </a> <a href="/categories" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 px-3 py-2 rounded-lg transition-colors font-medium" data-astro-cid-ovr3ijkt="true"> 
+Categories
+ </a> </div> <!-- Right Side: Search + Actions --> <div class="flex items-center gap-4" data-astro-cid-ovr3ijkt> <!-- Always Visible Search --> <div class="relative hidden md:block" data-astro-cid-ovr3ijkt> <div class="relative" data-astro-cid-ovr3ijkt> <button id="desktop-search-button" class="flex items-center gap-3 w-72 h-10 px-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-primary-300 dark:hover:border-primary-600 transition-colors group" aria-label="검색 열기" aria-expanded="false" data-astro-cid-ovr3ijkt> <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-ovr3ijkt> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" data-astro-cid-ovr3ijkt></path> </svg> <span class="text-gray-500 dark:text-gray-400 text-sm" data-astro-cid-ovr3ijkt> 검색... </span> <div class="ml-auto flex items-center gap-1" data-astro-cid-ovr3ijkt> <kbd class="hidden sm:inline-flex items-center px-2 py-1 text-xs font-medium text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded" data-astro-cid-ovr3ijkt>
+⌘K
+</kbd> </div> </button> </div> </div> <!-- Mobile Navigation Links (for tablet) --> <div class="lg:hidden flex items-center gap-4" data-astro-cid-ovr3ijkt> <a href="/" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-primary-600 dark:text-primary-400 border-primary-500 font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" data-astro-cid-ovr3ijkt="true"> 홈 </a> <a href="/blog" class="px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors border-b-2 border-transparent hover:border-primary-500 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" data-astro-cid-ovr3ijkt="true"> Blog </a> </div> <!-- Theme Toggle --> <button id="theme-toggle" data-testid="theme-toggle" type="button" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 transition-all duration-200 hover:scale-110 hover:rotate-12 whimsy-button" aria-label="Toggle between light and dark mode" aria-pressed="false" title="Toggle theme (current: light)" role="switch" data-astro-cid-x3pjskd3> <!-- Sun icon (visible in dark mode) --> <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-astro-cid-x3pjskd3> <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" data-astro-cid-x3pjskd3></path> </svg> <!-- Moon icon (visible in light mode) --> <svg id="theme-toggle-light-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-astro-cid-x3pjskd3> <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" data-astro-cid-x3pjskd3></path> </svg> </button> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const n=document.getElementById("theme-toggle"),r=document.getElementById("theme-toggle-dark-icon"),i=document.getElementById("theme-toggle-light-icon");function s(e){const t=document.createElement("div");t.setAttribute("aria-live","polite"),t.setAttribute("aria-atomic","true"),t.className="sr-only",t.textContent=e,document.body.appendChild(t),setTimeout(()=>{document.body.removeChild(t)},1e3)}if(!n||!r||!i)return;function m(){return typeof localStorage<"u"&&localStorage.getItem("theme")?localStorage.getItem("theme")||"light":window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}function a(e){e==="dark"?(document.documentElement.classList.add("dark"),i?.classList.add("hidden"),r?.classList.remove("hidden"),n?.setAttribute("aria-pressed","true"),n?.setAttribute("title","Switch to light mode (current: dark)"),n?.setAttribute("aria-label","Switch to light mode")):(document.documentElement.classList.remove("dark"),i?.classList.remove("hidden"),r?.classList.add("hidden"),n?.setAttribute("aria-pressed","false"),n?.setAttribute("title","Switch to dark mode (current: light)"),n?.setAttribute("aria-label","Switch to dark mode")),typeof localStorage<"u"&&localStorage.setItem("theme",e),s(e==="dark"?"Dark mode enabled":"Light mode enabled")}const l=m();a(l);function h(e,t){const o=e.getBoundingClientRect(),u=t==="dark"?"🌙":"☀️";for(let c=0;c<8;c++)setTimeout(()=>{const d=document.createElement("div");d.textContent=u,d.style.cssText=`
+						position: fixed;
+						left: ${o.left+o.width/2+(Math.random()-.5)*60}px;
+						top: ${o.top+o.height/2+(Math.random()-.5)*60}px;
+						font-size: 16px;
+						pointer-events: none;
+						z-index: 9999;
+						animation: theme-sparkle 1.5s ease-out forwards;
+					`,document.body.appendChild(d),setTimeout(()=>{d.parentNode&&d.parentNode.removeChild(d)},1500)},c*100)}n.addEventListener("click",()=>{const t=(document.documentElement.classList.contains("dark")?"dark":"light")==="dark"?"light":"dark";a(t),h(n,t)}),n.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();const o=(document.documentElement.classList.contains("dark")?"dark":"light")==="dark"?"light":"dark";a(o)}}),typeof window<"u"&&window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{localStorage.getItem("theme")||a(e.matches?"dark":"light")})});</script>  <!-- Language Switcher --> <div class="relative"> <button id="language-switcher" class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors" aria-expanded="false" aria-haspopup="true"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path> </svg> <span>한국어</span> <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path> </svg> </button> <div id="language-menu" class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 invisible opacity-0 transition-all duration-200 z-50"> <a href="/en/" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"> English </a> </div> </div> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("language-switcher"),t=document.getElementById("language-menu");e&&t&&(e.addEventListener("click",()=>{const i=e.getAttribute("aria-expanded")==="true";e.setAttribute("aria-expanded",(!i).toString()),i?t.classList.add("invisible","opacity-0"):t.classList.remove("invisible","opacity-0")}),document.addEventListener("click",i=>{!e.contains(i.target)&&!t.contains(i.target)&&(e.setAttribute("aria-expanded","false"),t.classList.add("invisible","opacity-0"))}))});</script> </div> </div> </nav> </header> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const t=document.getElementById("desktop-search-button");t&&(t.addEventListener("click",()=>{const e=document.getElementById("search-modal");if(e)e.classList.remove("hidden"),e.focus();else{const n=document.querySelector("[data-search-modal]");n&&n.classList.remove("hidden")}}),document.addEventListener("keydown",e=>{(e.metaKey||e.ctrlKey)&&e.key==="k"&&(e.preventDefault(),t.click()),e.key==="/"&&!e.target.matches("input, textarea, [contenteditable]")&&(e.preventDefault(),t.click())}))});</script>  <!-- Main Content with mobile bottom navigation spacing --> <main id="main-content" class="flex-1 mb-20 md:mb-0" data-astro-cid-sckkx6r4>   <section class="py-20 px-4 text-center"> <div class="max-w-4xl mx-auto"> <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent"> Welcome to Jay&#39;s small world </h1> <h2 class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8"> Learner, Giver, Hooper </h2> <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-10"> hero.description </p> <div class="flex flex-col sm:flex-row justify-center gap-4"> <a href="/about" class="whimsy-button ripple px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all duration-200 font-semibold hover:scale-105 hover:shadow-lg"> 소개 </a> <a href="/blog" class="whimsy-button ripple px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 font-semibold hover:scale-105 hover:shadow-lg"> 블로그 보기 </a> </div> </div> </section>  <section class="py-16 px-4"> <div class="max-w-4xl mx-auto"> <div class="flex justify-between items-center mb-12"> <h2 class="text-2xl md:text-3xl font-bold">최근 글</h2> <a href="/blog" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold"> 전체 보기 →
+</a> </div> <div class="grid gap-6 md:gap-8"> <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-all duration-200 float-on-hover"> <div class="flex flex-col gap-4"> <div class="flex-1"> <h3 class="text-xl font-bold mb-2"> <a href="/blog/collaboration/toyprojects/2019-04-17-toyproject1/" class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"> 토이 프로젝트 #1 </a> </h3> <p class="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">  </p> <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500"> <time datetime="2019-04-17T03:00:00.000Z"> Apr 17, 2019 </time> <div class="flex gap-2 flex-wrap"> <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> ToyProjects </span><span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> C# </span> </div> </div> </div> </div> </article><article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-all duration-200 float-on-hover"> <div class="flex flex-col gap-4"> <div class="flex-1"> <h3 class="text-xl font-bold mb-2"> <a href="/blog/en/2019-04-17-toy-project-youtube-downloader/" class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"> Toy Project #1 </a> </h3> <p class="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">  </p> <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500"> <time datetime="2019-04-17T03:00:00.000Z"> Apr 17, 2019 </time> <div class="flex gap-2 flex-wrap"> <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> ToyProjects </span><span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> C# </span> </div> </div> </div> </div> </article><article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-all duration-200 float-on-hover"> <div class="flex flex-col gap-4"> <div class="flex-1"> <h3 class="text-xl font-bold mb-2"> <a href="/blog/en/2020-09-11-creating-github-blog/" class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"> Creating a Blog with GitHub Pages </a> </h3> <p class="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">  </p> <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500"> <time datetime="2020-09-11T05:10:00.000Z"> Sep 11, 2020 </time> <div class="flex gap-2 flex-wrap"> <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> TechSavvy </span><span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs"> Github </span> </div> </div> </div> </div> </article> </div> </div> </section>  </main> <!-- Footer --> <footer class="bg-gray-900 dark:bg-gray-950 text-gray-300 dark:text-gray-400" data-astro-cid-sz7xmlte> <div class="max-w-6xl mx-auto px-4 py-12" data-astro-cid-sz7xmlte> <div class="grid grid-cols-1 md:grid-cols-4 gap-8" data-astro-cid-sz7xmlte> <!-- About Section --> <div class="md:col-span-2" data-astro-cid-sz7xmlte> <h3 class="text-lg font-semibold text-white mb-4" data-astro-cid-sz7xmlte> Jay Lee의 기술 블로그 </h3> <div class="flex items-center gap-4" data-astro-cid-sz7xmlte> <a href="https://github.com/jayleekr" target="_blank" rel="noopener" class="social-link" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>GitHub</span> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" data-astro-cid-sz7xmlte> <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="https://linkedin.com/in/jayleekr" target="_blank" rel="noopener" class="social-link" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>LinkedIn</span> <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" data-astro-cid-sz7xmlte> <path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd" data-astro-cid-sz7xmlte></path> </svg> </a> <a href="mailto:jayleekr0125@gmail.com" class="social-link" data-astro-cid-sz7xmlte> <span class="sr-only" data-astro-cid-sz7xmlte>Email</span> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-sz7xmlte> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" data-astro-cid-sz7xmlte></path> </svg> </a> </div> </div> <!-- Quick Links --> <div data-astro-cid-sz7xmlte> <h3 class="text-lg font-semibold text-white mb-4" data-astro-cid-sz7xmlte>
+Quick Links
+</h3> <ul class="space-y-2 text-sm" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/blog" class="footer-link" data-astro-cid-sz7xmlte>Blog</a></li> <li data-astro-cid-sz7xmlte><a href="/about" class="footer-link" data-astro-cid-sz7xmlte>About</a></li> <li data-astro-cid-sz7xmlte><a href="/projects" class="footer-link" data-astro-cid-sz7xmlte>Projects</a></li> <li data-astro-cid-sz7xmlte><a href="/contact" class="footer-link" data-astro-cid-sz7xmlte>Contact</a></li> </ul> </div> <!-- RSS & Subscribe --> <div data-astro-cid-sz7xmlte> <h3 class="text-lg font-semibold text-white mb-4" data-astro-cid-sz7xmlte>
+Subscribe
+</h3> <ul class="space-y-2 text-sm" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte> <a href="/rss.xml" class="footer-link flex items-center gap-2" target="_blank" rel="noopener" data-astro-cid-sz7xmlte> <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20" data-astro-cid-sz7xmlte> <path d="M3.429 2.786c0.456 0 0.829 0.372 0.829 0.829s-0.372 0.829-0.829 0.829c-0.456 0-0.829-0.372-0.829-0.829s0.372-0.829 0.829-0.829zM3.429 7.143c3.304 0 5.976 2.672 5.976 5.976h1.659c0-4.220-3.415-7.635-7.635-7.635v1.659zM3.429 11.5c1.382 0 2.5 1.118 2.5 2.5h1.659c0-2.293-1.866-4.159-4.159-4.159v1.659z" data-astro-cid-sz7xmlte></path> </svg>
+RSS Feed
+</a> </li> <li data-astro-cid-sz7xmlte> <a href="/rss/en.xml" class="footer-link flex items-center gap-2" target="_blank" rel="noopener" data-astro-cid-sz7xmlte> <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20" data-astro-cid-sz7xmlte> <path d="M3.429 2.786c0.456 0 0.829 0.372 0.829 0.829s-0.372 0.829-0.829 0.829c-0.456 0-0.829-0.372-0.829-0.829s0.372-0.829 0.829-0.829zM3.429 7.143c3.304 0 5.976 2.672 5.976 5.976h1.659c0-4.220-3.415-7.635-7.635-7.635v1.659zM3.429 11.5c1.382 0 2.5 1.118 2.5 2.5h1.659c0-2.293-1.866-4.159-4.159-4.159v1.659z" data-astro-cid-sz7xmlte></path> </svg>
+English RSS
+</a> </li> </ul> </div> </div> <div class="border-t border-gray-800 dark:border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center" data-astro-cid-sz7xmlte> <p class="text-sm" data-astro-cid-sz7xmlte>
+&copy; 2025 Jay Lee. All rights reserved.
+</p> <div class="flex items-center gap-4 mt-4 md:mt-0 text-sm" data-astro-cid-sz7xmlte> <span class="text-gray-500" data-astro-cid-sz7xmlte> 제작: </span> <a href="https://astro.build" target="_blank" rel="noopener" class="footer-link" data-astro-cid-sz7xmlte>Astro</a> <span class="text-gray-600" data-astro-cid-sz7xmlte>•</span> <a href="https://tailwindcss.com" target="_blank" rel="noopener" class="footer-link" data-astro-cid-sz7xmlte>Tailwind CSS</a> </div> </div> </div> </footer>  <!-- Mobile Bottom Navigation --> <nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-700 z-50 md:hidden" style="padding-bottom: env(safe-area-inset-bottom, 0.5rem);" role="navigation" aria-label="Mobile Navigation" data-astro-cid-hpzowadq> <div class="flex justify-around items-center h-20 max-w-sm mx-auto px-4" data-astro-cid-hpzowadq> <a href="/" class="flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 min-w-[56px] min-h-[56px] text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20" aria-label="홈" aria-current="page" data-nav-item="home" data-astro-cid-hpzowadq> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" data-astro-cid-hpzowadq></path> </svg>  <span class="text-xs font-medium leading-none" data-astro-cid-hpzowadq>홈</span> </a><a href="/blog" class="flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 min-w-[56px] min-h-[56px] text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800" aria-label="Blog" data-nav-item="blog" data-astro-cid-hpzowadq>  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" data-astro-cid-hpzowadq></path> </svg> <span class="text-xs font-medium leading-none" data-astro-cid-hpzowadq>Blog</span> </a><button id="mobile-search-button" class="flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 min-w-[56px] min-h-[56px] text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800" aria-label="검색" data-nav-item="search" data-astro-cid-hpzowadq> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" data-astro-cid-hpzowadq></path> </svg> <span class="text-xs font-medium leading-none" data-astro-cid-hpzowadq>검색</span> </button><button id="mobile-theme-toggle" class="flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 min-w-[56px] min-h-[56px] text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800" aria-label="테마" data-nav-item="theme" data-astro-cid-hpzowadq> <svg class="w-6 h-6 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" data-astro-cid-hpzowadq></path> </svg> <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" data-astro-cid-hpzowadq></path> </svg> <span class="text-xs font-medium leading-none" data-astro-cid-hpzowadq>테마</span> </button><button id="mobile-language-toggle" class="flex flex-col items-center gap-1 p-2 rounded-xl transition-all duration-200 min-w-[56px] min-h-[56px] text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800" aria-label="언어" data-nav-item="language" data-astro-cid-hpzowadq> <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-hpzowadq> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" data-astro-cid-hpzowadq></path> </svg> <span class="text-xs font-medium leading-none" data-astro-cid-hpzowadq>KO</span> </button> </div> </nav> <!-- Add padding to body to account for fixed bottom nav --> <script type="module">document.addEventListener("DOMContentLoaded",()=>{window.innerWidth<768&&(document.body.style.paddingBottom="5rem"),window.addEventListener("resize",()=>{window.innerWidth<768?document.body.style.paddingBottom="5rem":document.body.style.paddingBottom="0"})});</script>  <!-- Search Modal --> <!-- Search Modal --><div id="search-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="search-title" data-search-modal data-astro-cid-xsckm4dd> <!-- Backdrop --> <div class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm transition-opacity" data-search-backdrop aria-hidden="true" data-astro-cid-xsckm4dd></div> <!-- Modal Content --> <div class="fixed inset-0 overflow-y-auto" data-astro-cid-xsckm4dd> <div class="flex min-h-full items-start justify-center p-4 pt-16 sm:p-6 sm:pt-24" data-astro-cid-xsckm4dd> <div class="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-2xl transition-all" data-astro-cid-xsckm4dd> <!-- Search Header --> <div class="relative" data-astro-cid-xsckm4dd> <div class="flex items-center px-6 py-4 border-b border-gray-200 dark:border-gray-700" data-astro-cid-xsckm4dd> <!-- Search Icon --> <svg class="w-6 h-6 text-gray-400 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xsckm4dd> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" data-astro-cid-xsckm4dd></path> </svg> <!-- Search Input --> <input type="text" id="search-input" class="flex-1 bg-transparent border-0 text-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-0" placeholder="검색어를 입력하세요..." autocomplete="off" spellcheck="false" data-search-input data-astro-cid-xsckm4dd> <!-- Close Button --> <button type="button" class="ml-4 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-search-close aria-label="검색 닫기" data-astro-cid-xsckm4dd> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xsckm4dd> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" data-astro-cid-xsckm4dd></path> </svg> </button> </div> <!-- Search Shortcuts --> <div class="px-6 py-3 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700" data-astro-cid-xsckm4dd> <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400" data-astro-cid-xsckm4dd> <div class="flex items-center gap-2" data-astro-cid-xsckm4dd> <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs" data-astro-cid-xsckm4dd>
+↑↓
+</kbd> <span data-astro-cid-xsckm4dd>탐색</span> </div> <div class="flex items-center gap-2" data-astro-cid-xsckm4dd> <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs" data-astro-cid-xsckm4dd>
+↵
+</kbd> <span data-astro-cid-xsckm4dd>선택</span> </div> <div class="flex items-center gap-2" data-astro-cid-xsckm4dd> <kbd class="px-2 py-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded text-xs" data-astro-cid-xsckm4dd>
+ESC
+</kbd> <span data-astro-cid-xsckm4dd>닫기</span> </div> </div> </div> </div> <!-- Search Results --> <div class="max-h-96 overflow-y-auto" data-search-results data-astro-cid-xsckm4dd> <!-- Loading State --> <div class="hidden px-6 py-8 text-center" data-search-loading data-astro-cid-xsckm4dd> <div class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400" data-astro-cid-xsckm4dd> <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" data-astro-cid-xsckm4dd> <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" data-astro-cid-xsckm4dd></circle> <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" data-astro-cid-xsckm4dd></path> </svg> <span data-astro-cid-xsckm4dd>검색 중...</span> </div> </div> <!-- Empty State --> <div class="px-6 py-8 text-center" data-search-empty data-astro-cid-xsckm4dd> <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xsckm4dd> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" data-astro-cid-xsckm4dd></path> </svg> <p class="text-gray-600 dark:text-gray-400 mb-2" data-astro-cid-xsckm4dd> 검색어를 입력해주세요 </p> <p class="text-sm text-gray-500 dark:text-gray-500" data-astro-cid-xsckm4dd> 포스트, 카테고리, 태그를 검색할 수 있습니다 </p> </div> <!-- No Results State --> <div class="hidden px-6 py-8 text-center" data-search-no-results data-astro-cid-xsckm4dd> <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-cid-xsckm4dd> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0120 12c0-4.411-3.589-8-8-8s-8 3.589-8 8c0 1.76.57 3.384 1.535 4.708L2 21l4.292-3.465A7.952 7.952 0 0012 20c4.411 0 8-3.589 8-8h-8z" data-astro-cid-xsckm4dd></path> </svg> <p class="text-gray-600 dark:text-gray-400 mb-2" data-astro-cid-xsckm4dd> <span data-search-query data-astro-cid-xsckm4dd></span>에 대한 검색 결과가 없습니다
+</p> <p class="text-sm text-gray-500 dark:text-gray-500" data-astro-cid-xsckm4dd> 다른 검색어를 시도해보세요 </p> </div> <!-- Results Container --> <div class="hidden" data-search-results-list data-astro-cid-xsckm4dd> <!-- Results will be inserted here by JavaScript --> </div> </div> <!-- Search Footer --> <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700" data-astro-cid-xsckm4dd> <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400" data-astro-cid-xsckm4dd> <div class="flex items-center gap-4" data-astro-cid-xsckm4dd> <span data-astro-cid-xsckm4dd>정확한 검색을 위해 공백으로 구분하세요</span> </div> <div class="flex items-center gap-2" data-astro-cid-xsckm4dd> <span data-astro-cid-xsckm4dd>검색 제공:</span> <span class="font-medium text-primary-600 dark:text-primary-400" data-astro-cid-xsckm4dd>Astro</span> </div> </div> </div> </div> </div> </div> </div> <script type="module" src="/assets/SearchModal.astro_astro_type_script_index_0_lang.BXaWAdrg.js"></script>  <!-- Mobile Bottom Navigation Integration Script --> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const a=document.getElementById("mobile-search-button"),n=document.querySelector("[data-search-modal]")||document.getElementById("search-modal");a&&n&&a.addEventListener("click",()=>{n.classList.remove("hidden");const e=n.querySelector('input[type="search"]');e&&setTimeout(()=>e.focus(),100)});const c=document.getElementById("mobile-theme-toggle"),s=document.getElementById("theme-toggle");c&&s&&c.addEventListener("click",()=>{s.click()});const d=document.getElementById("mobile-language-toggle"),i=document.querySelector(".language-switcher button")||document.querySelector("[data-language-toggle]");d&&i&&d.addEventListener("click",()=>{i.click()});const m=document.getElementById("desktop-search-button");m&&n&&m.addEventListener("click",()=>{n.classList.remove("hidden");const e=n.querySelector('input[type="search"]');e&&setTimeout(()=>e.focus(),100)});const r=window.location.pathname;if(document.querySelectorAll("[data-nav-item]").forEach(e=>{const t=e.getAttribute("href");if(t&&t!=="#search"&&t!=="#theme"&&t!=="#language"){let o=!1;t==="/"||t==="/en"?o=r===t:o=r.startsWith(t),o&&(e.classList.add("text-primary-600","dark:text-primary-400","bg-primary-50","dark:bg-primary-900/20"),e.setAttribute("aria-current","page"))}}),window.innerWidth<768){const e=getComputedStyle(document.documentElement).getPropertyValue("--safe-area-inset-bottom")||"0px",t=document.getElementById("main-content");t&&(t.style.paddingBottom=`calc(5rem + ${e})`)}window.addEventListener("resize",()=>{const e=document.getElementById("main-content");if(e)if(window.innerWidth<768){const t=getComputedStyle(document.documentElement).getPropertyValue("--safe-area-inset-bottom")||"0px";e.style.paddingBottom=`calc(5rem + ${t})`,e.classList.add("mb-20"),e.classList.remove("md:mb-0")}else e.style.paddingBottom="0",e.classList.remove("mb-20"),e.classList.add("md:mb-0")})});</script>  </body> </html>
