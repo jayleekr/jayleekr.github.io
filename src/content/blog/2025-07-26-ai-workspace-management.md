@@ -19,29 +19,24 @@ readingTime: "9분"
 
 제가 현재 **5~8개의 Cursor 인스턴스**를 동시에 돌리면서 각각의 프로젝트를 어떻게 관리하는지, Remote SSH와 Native 환경을 어떻게 구성하는지 노하우를 전수해드릴게요!
 
-## 🏗️ 현재 워크스페이스 구성 현황
+## ️ 현재 워크스페이스 구성 현황
 
 ### 실시간 스냅샷 (지금 이 순간 ㅋㅋ)
 
 ```
 🖥️  MacBook Pro M2 Max (64GB RAM) - 메인 머신
 ├── 📡 Remote SSH 기반 (4-5개)
-│   ├── 🔴 Production Code Server (AWS EC2)
-│   ├── 🟡 Build Server 1 (Docker 환경)
-│   ├── 🟠 Build Server 2 (QA 환경)  
-│   ├── 🔵 Test Environment (Staging)
-│   └── 🟣 Client Demo Server (필요시)
+│  ├── 🔴 Production Code Server (AWS EC2)
+│  ├── 🟡 Build Server 1 (Docker 환경)
+│  ├── 🟠 Build Server 2 (QA 환경)  │  ├── 🔵 Test Environment (Staging)
+│  └── 🟣 Client Demo Server (필요시)
 │
-└── 💻 Native 기반 (3-4개)
-    ├── 📝 Blog/Documentation 
-    ├── 🎓 강의자료 (CPS 3기)
-    ├── 🧪 실험용 프로젝트
-    └── 📋 Config/Scripts 관리
+└── 💻 Native 기반 (3-4개)  ├── 📝 Blog/Documentation  ├── 🎓 강의자료 (CPS 3기)  ├── 🧪 실험용 프로젝트  └── 📋 Config/Scripts 관리
 ```
 
 **진짜 지금도 8개가 떠있어요 ㅋㅋ** 윈도우 관리가 진짜 ADHD 수준...
 
-## 🌐 Remote SSH vs Native: 언제 뭘 쓸까?
+## Remote SSH vs Native: 언제 뭘 쓸까?
 
 ### Remote SSH를 쓰는 경우
 
@@ -53,15 +48,15 @@ readingTime: "9분"
 - **지속적으로 실행**되어야 하는 서비스들
 
 **장점:**
-- 💪 **높은 성능**: 서버 스펙을 마음껏 활용
-- 🔄 **연속성**: 연결이 끊어져도 작업 지속
-- 👥 **팀 협업**: 동일한 환경에서 작업
-- 🛡️ **보안**: 민감한 코드가 로컬에 없음
+- **높은 성능**: 서버 스펙을 마음껏 활용
+- **연속성**: 연결이 끊어져도 작업 지속
+- **팀 협업**: 동일한 환경에서 작업
+- ️ **보안**: 민감한 코드가 로컬에 없음
 
 **단점:**
-- 🐌 **네트워크 의존성**: 인터넷 없으면 GG
-- 💸 **비용**: 서버 운영비
-- ⚙️ **초기 설정 복잡**
+- **네트워크 의존성**: 인터넷 없으면 GG
+- **비용**: 서버 운영비
+- ️ **초기 설정 복잡**
 
 ### Native를 쓰는 경우
 
@@ -73,15 +68,15 @@ readingTime: "9분"
 - **Config 파일**들 관리
 
 **장점:**
-- ⚡ **빠른 반응속도**: 로컬이라 지연 없음
-- 📡 **오프라인 가능**: 인터넷 없어도 작업
-- 🎮 **직관적**: 바로바로 확인 가능
+- **빠른 반응속도**: 로컬이라 지연 없음
+- **오프라인 가능**: 인터넷 없어도 작업
+- **직관적**: 바로바로 확인 가능
 
 **단점:**
-- 🔋 **배터리 소모**: 로컬 리소스 사용
-- 🚫 **협업 제한**: 혼자만 접근 가능
+- **배터리 소모**: 로컬 리소스 사용
+- **협업 제한**: 혼자만 접근 가능
 
-## 🛠️ Remote SSH 환경 구성 실전
+## ️ Remote SSH 환경 구성 실전
 
 ### 1. 서버 준비 및 기본 설정
 
@@ -89,12 +84,10 @@ readingTime: "9분"
 ```bash
 # Production Code Server (AWS EC2 t3.xlarge)
 - CPU: 4 vCPU
-- RAM: 16GB  
-- Storage: 100GB SSD
+- RAM: 16GB  - Storage: 100GB SSD
 - 용도: 메인 개발, Production 배포
 
-# Build Server (AWS EC2 c5.2xlarge)  
-- CPU: 8 vCPU
+# Build Server (AWS EC2 c5.2xlarge)  - CPU: 8 vCPU
 - RAM: 16GB
 - Storage: 200GB SSD
 - 용도: Docker 빌드, CI/CD 파이프라인
@@ -136,27 +129,12 @@ echo "설정 완료! 재로그인 후 Docker 사용 가능"
 **VS Code/Cursor SSH Config (~/.ssh/config):**
 ```bash
 # Production Server
-Host prod-server
-    HostName your-prod-server-ip
-    User ubuntu
-    IdentityFile ~/.ssh/your-prod-key.pem
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
+Host prod-server  HostName your-prod-server-ip  User ubuntu  IdentityFile ~/.ssh/your-prod-key.pem  ServerAliveInterval 60  ServerAliveCountMax 3
 
-# Build Server  
-Host build-server
-    HostName your-build-server-ip
-    User ubuntu
-    IdentityFile ~/.ssh/your-build-key.pem
-    ServerAliveInterval 60
-    ServerAliveCountMax 3
+# Build Server  Host build-server  HostName your-build-server-ip  User ubuntu  IdentityFile ~/.ssh/your-build-key.pem  ServerAliveInterval 60  ServerAliveCountMax 3
 
 # Test Environment
-Host test-server
-    HostName your-test-server-ip
-    User ubuntu
-    IdentityFile ~/.ssh/your-test-key.pem
-    ServerAliveInterval 60
+Host test-server  HostName your-test-server-ip  User ubuntu  IdentityFile ~/.ssh/your-test-key.pem  ServerAliveInterval 60
 ```
 
 **Cursor에서 연결하기:**
@@ -171,11 +149,11 @@ Host test-server
 
 ```bash
 # 1. 프로젝트 Context 파일 준비
-📁 ~/projects/service-interface-mock/
+~/projects/service-interface-mock/
 ├── .ai-context/
-│   ├── server-config.md      # 서버 환경 정보
-│   ├── deployment.md         # 배포 관련 정보
-│   └── remote-workflow.md    # Remote 작업 가이드
+│  ├── server-config.md  # 서버 환경 정보
+│  ├── deployment.md  # 배포 관련 정보
+│  └── remote-workflow.md  # Remote 작업 가이드
 └── ...
 ```
 
@@ -199,13 +177,12 @@ Host test-server
 - 로그: ~/logs/
 - Config: ~/config/
 
-## 네트워크 설정  
-- HTTP: 8080
+## 네트워크 설정  - HTTP: 8080
 - HTTPS: 8443
 - DB: 5432 (PostgreSQL)
 ```
 
-## 💻 Native 환경 구성 실전
+## Native 환경 구성 실전
 
 ### 1. 로컬 개발환경 최적화
 
@@ -225,37 +202,34 @@ npm install -g @astrojs/cli  # 블로그용
 
 **모든 워크스페이스는 Git Repo 기반:**
 ```bash
-📁 ~/CodeWorkspace/
+~/CodeWorkspace/
 ├── 🏢 company-projects/
-│   ├── service-interface-mock/    # 메인 프로덕트
-│   ├── client-demo-app/          # 클라이언트 데모
-│   └── internal-tools/           # 내부 도구들
+│  ├── service-interface-mock/  # 메인 프로덕트
+│  ├── client-demo-app/  # 클라이언트 데모
+│  └── internal-tools/  # 내부 도구들
 │
 ├── 📝 content-creation/
-│   ├── jayleekr.github.io/       # 블로그
-│   ├── cps-lectures/             # 강의 자료
-│   └── tech-writing/             # 기술 글쓰기
+│  ├── jayleekr.github.io/  # 블로그
+│  ├── cps-lectures/  # 강의 자료
+│  └── tech-writing/  # 기술 글쓰기
 │
 ├── 🧪 experiments/
-│   ├── ai-experiments/           # AI 실험
-│   ├── new-tech-trials/          # 새 기술 테스트
-│   └── quick-prototypes/         # 빠른 프로토타입
+│  ├── ai-experiments/  # AI 실험
+│  ├── new-tech-trials/  # 새 기술 테스트
+│  └── quick-prototypes/  # 빠른 프로토타입
 │
-└── ⚙️ dotfiles-and-configs/
-    ├── cursor-settings/          # Cursor 설정
-    ├── ai-context-templates/     # AI Context 템플릿
-    └── automation-scripts/       # 자동화 스크립트
+└── ⚙️ dotfiles-and-configs/  ├── cursor-settings/  # Cursor 설정  ├── ai-context-templates/  # AI Context 템플릿  └── automation-scripts/  # 자동화 스크립트
 ```
 
 ### 3. Native에서 AI 활용 특화 팁
 
 **문서 작업시 폴더 구조:**
 ```bash
-📁 jayleekr.github.io/
+jayleekr.github.io/
 ├── .ai-context/
-│   ├── blog-style-guide.md      # 블로그 톤 가이드
-│   ├── content-templates.md     # 컨텐츠 템플릿
-│   └── seo-guidelines.md        # SEO 가이드라인
+│  ├── blog-style-guide.md  # 블로그 톤 가이드
+│  ├── content-templates.md  # 컨텐츠 템플릿
+│  └── seo-guidelines.md  # SEO 가이드라인
 ├── src/content/blog/
 └── ...
 ```
@@ -281,7 +255,7 @@ npm install -g @astrojs/cli  # 블로그용
 - 생산성 향상을 원하는 엔지니어들
 ```
 
-## 🔄 워크스페이스 전환 및 관리 팁
+## 워크스페이스 전환 및 관리 팁
 
 ### 1. 빠른 전환을 위한 단축키 설정
 
@@ -303,11 +277,11 @@ npm install -g @astrojs/cli  # 블로그용
 **프로젝트별 독립성 유지:**
 ```bash
 # 각 워크스페이스마다
-├── README.md                 # 프로젝트 개요
-├── .ai-context/             # AI 컨텍스트 문서들
-├── .cursor/                 # Cursor 설정
-├── docs/                    # 프로젝트 문서
-└── scripts/                 # 자동화 스크립트
+├── README.md  # 프로젝트 개요
+├── .ai-context/  # AI 컨텍스트 문서들
+├── .cursor/  # Cursor 설정
+├── docs/  # 프로젝트 문서
+└── scripts/  # 자동화 스크립트
 ```
 
 **시작할 때 체크리스트:**
@@ -333,7 +307,7 @@ npm install -g @astrojs/cli  # 블로그용
 - **가벼운 작업**은 Native에서 (문서 작성 등)
 - **주기적으로** 사용하지 않는 워크스페이스 정리
 
-## 🔧 자동화 스크립트로 효율성 극대화
+## 자동화 스크립트로 효율성 극대화
 
 ### 1. 워크스페이스 빠른 시작 스크립트
 
@@ -343,29 +317,21 @@ npm install -g @astrojs/cli  # 블로그용
 
 PROJECT_NAME=$1
 
-if [ -z "$PROJECT_NAME" ]; then
-    echo "사용법: ./start-workspace.sh <프로젝트명>"
-    echo "예시: ./start-workspace.sh service-interface-mock"
-    exit 1
+if [ -z "$PROJECT_NAME" ]; then  echo "사용법: ./start-workspace.sh <프로젝트명>"  echo "예시: ./start-workspace.sh service-interface-mock"  exit 1
 fi
 
 # 프로젝트 경로
 PROJECT_PATH="~/CodeWorkspace/$PROJECT_NAME"
 
 # 디렉토리 존재 확인
-if [ ! -d "$PROJECT_PATH" ]; then
-    echo "프로젝트가 존재하지 않습니다: $PROJECT_PATH"
-    exit 1
+if [ ! -d "$PROJECT_PATH" ]; then  echo "프로젝트가 존재하지 않습니다: $PROJECT_PATH"  exit 1
 fi
 
 # Cursor로 프로젝트 열기
 cursor "$PROJECT_PATH"
 
 # AI Context 파일이 있다면 미리 준비
-if [ -f "$PROJECT_PATH/.ai-context/project-config.md" ]; then
-    echo "AI Context 준비됨: $PROJECT_NAME"
-    # 필요하면 클립보드에 복사
-    # cat "$PROJECT_PATH/.ai-context/project-config.md" | pbcopy
+if [ -f "$PROJECT_PATH/.ai-context/project-config.md" ]; then  echo "AI Context 준비됨: $PROJECT_NAME"  # 필요하면 클립보드에 복사  # cat "$PROJECT_PATH/.ai-context/project-config.md" | pbcopy
 fi
 
 echo "워크스페이스 시작됨: $PROJECT_NAME"
@@ -381,18 +347,7 @@ SERVERS=("prod-server" "build-server" "test-server")
 
 echo "🔍 서버 상태 체크 중..."
 
-for server in "${SERVERS[@]}"; do
-    echo -n "📡 $server: "
-    
-    if ssh -o ConnectTimeout=5 -o BatchMode=yes $server 'exit' 2>/dev/null; then
-        echo "✅ 연결 가능"
-        
-        # 기본 상태 정보
-        echo "   - $(ssh $server 'uptime | cut -d"," -f1')"
-        echo "   - $(ssh $server 'df -h / | tail -1 | awk "{print \"Disk: \" \$5 \" used\"}"')"
-    else
-        echo "❌ 연결 불가"
-    fi
+for server in "${SERVERS[@]}"; do  echo -n "📡 $server: "  if ssh -o ConnectTimeout=5 -o BatchMode=yes $server 'exit' 2>/dev/null; then  echo "✅ 연결 가능"  # 기본 상태 정보  echo "  - $(ssh $server 'uptime | cut -d"," -f1')"  echo "  - $(ssh $server 'df -h / | tail -1 | awk "{print \"Disk: \" \$5 \" used\"}"')"  else  echo "❌ 연결 불가"  fi
 done
 ```
 
@@ -403,9 +358,7 @@ done
 #!/bin/bash
 
 # 현재 작업 디렉토리 확인
-if [ ! -d ".ai-context" ]; then
-    echo "AI Context 디렉토리가 없습니다."
-    exit 1
+if [ ! -d ".ai-context" ]; then  echo "AI Context 디렉토리가 없습니다."  exit 1
 fi
 
 # Git 상태 확인하여 current-tasks.md 업데이트
@@ -419,7 +372,7 @@ echo "" >> .ai-context/current-tasks.md
 echo "AI Context 업데이트 완료"
 ```
 
-## 📊 실제 사용 패턴 분석
+## 실제 사용 패턴 분석
 
 ### 하루 워크플로우 예시
 
@@ -449,20 +402,19 @@ echo "AI Context 업데이트 완료"
 ### 월간 워크스페이스 사용량 분석
 
 ```
-📊 Cursor 인스턴스 사용 빈도 (지난 한달):
+Cursor 인스턴스 사용 빈도 (지난 한달):
 
 1. 🔴 Production Code (60%) - 가장 많이 사용
-2. 📝 Blog/Documentation (20%) - 꾸준히 사용  
-3. 🟡 Build Server (15%) - 필요할 때만
+2. 📝 Blog/Documentation (20%) - 꾸준히 사용  3. 🟡 Build Server (15%) - 필요할 때만
 4. 🧪 실험용 (5%) - 주말이나 저녁에
 
-💡 인사이트:
+인사이트:
 - Remote SSH가 75%, Native가 25% 비율
 - Production 관련 작업이 대부분
 - 문서화 작업도 상당한 비중
 ```
 
-## 🔚 마무리하며...
+## 마무리하며...
 
 이렇게 **5~8개의 워크스페이스를 동시에 관리**하는 건 처음에는 정말 복잡했는데, 지금은 이게 없으면 일이 안 될 정도로 익숙해졌어요.
 

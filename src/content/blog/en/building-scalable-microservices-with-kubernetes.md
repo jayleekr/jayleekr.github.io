@@ -34,20 +34,19 @@ When we decided to adopt microservices, the first thing we did was figure out "h
 
 **How we first split them** (looking back, it was really the wrong approach):
 ```
-❌ database-service (everything DB-related)
-❌ api-service (everything API-related)
-❌ auth-service (authentication-related)  
-❌ notification-service (notification-related)
+database-service (everything DB-related)
+api-service (everything API-related)
+auth-service (authentication-related)  notification-service (notification-related)
 ```
 
 After using this for a few months, it was really frustrating. To add one feature, we had to modify multiple services simultaneously, and ultimately had to deploy them together repeatedly.
 
 **So we changed it to this** (business-centered approach):
 ```
-✅ vehicle-management (everything about vehicle management)
-✅ trip-analytics (trip analysis-related)
-✅ user-profiles (user profiles)
-✅ billing-payments (payment-related)
+vehicle-management (everything about vehicle management)
+trip-analytics (trip analysis-related)
+user-profiles (user profiles)
+billing-payments (payment-related)
 ```
 
 After making this change, each team could develop independently. It made a really big difference!
@@ -56,59 +55,20 @@ After making this change, each team could develop independently. It made a reall
 
 ```typescript
 // Domain decomposition for autonomous driving platform
-interface DomainBoundaries {
-  vehicleFleet: {
-    responsibilities: ['vehicle registration', 'status monitoring', 'firmware management'];
-    dataOwnership: ['vehicles', 'sensors', 'diagnostics'];
-    apis: ['/vehicles', '/fleet/status', '/diagnostics'];
-  };
-  
-  tripManagement: {
-    responsibilities: ['trip creation', 'route optimization', 'real-time tracking'];
-    dataOwnership: ['trips', 'routes', 'locations'];
-    apis: ['/trips', '/routes', '/tracking'];
-  };
-  
-  userExperience: {
-    responsibilities: ['user interface', 'notifications', 'feedback'];
-    dataOwnership: ['users', 'preferences', 'feedback'];
-    apis: ['/users', '/notifications', '/feedback'];
-  };
+interface DomainBoundaries {  vehicleFleet: {  responsibilities: ['vehicle registration', 'status monitoring', 'firmware management'];  dataOwnership: ['vehicles', 'sensors', 'diagnostics'];  apis: ['/vehicles', '/fleet/status', '/diagnostics'];  };  tripManagement: {  responsibilities: ['trip creation', 'route optimization', 'real-time tracking'];  dataOwnership: ['trips', 'routes', 'locations'];  apis: ['/trips', '/routes', '/tracking'];  };  userExperience: {  responsibilities: ['user interface', 'notifications', 'feedback'];  dataOwnership: ['users', 'preferences', 'feedback'];  apis: ['/users', '/notifications', '/feedback'];  };
 }
 ```
 
-### 📊 Data consistency strategy
+### Data consistency strategy
 
 #### Implementing event sourcing pattern
 
 ```typescript
 // Event-based data synchronization
-interface DomainEvent {
-  eventId: string;
-  aggregateId: string;
-  eventType: string;
-  timestamp: Date;
-  version: number;
-  data: any;
+interface DomainEvent {  eventId: string;  aggregateId: string;  eventType: string;  timestamp: Date;  version: number;  data: any;
 }
 
-class VehicleEventHandler {
-  async handleTripCompleted(event: DomainEvent) {
-    const { tripId, vehicleId, mileage, fuelConsumption } = event.data;
-    
-    // 1. Vehicle Service: Update vehicle status
-    await this.vehicleService.updateMileage(vehicleId, mileage);
-    
-    // 2. Analytics Service: Store trip data
-    await this.analyticsService.recordTripData({
-      tripId, vehicleId, mileage, fuelConsumption
-    });
-    
-    // 3. Billing Service: Publish billing calculation event  
-    await this.eventPublisher.publish('billing.calculate', {
-      tripId, mileage, userId: event.data.userId
-    });
-  }
+class VehicleEventHandler {  async handleTripCompleted(event: DomainEvent) {  const { tripId, vehicleId, mileage, fuelConsumption } = event.data;  // 1. Vehicle Service: Update vehicle status  await this.vehicleService.updateMileage(vehicleId, mileage);  // 2. Analytics Service: Store trip data  await this.analyticsService.recordTripData({  tripId, vehicleId, mileage, fuelConsumption  });  // 3. Billing Service: Publish billing calculation event  await this.eventPublisher.publish('billing.calculate', {  tripId, mileage, userId: event.data.userId  });  }
 }
 ```
 
@@ -116,54 +76,22 @@ class VehicleEventHandler {
 
 ```yaml
 # trip-booking-saga.yml
-saga:
-  name: "TripBookingSaga"
-  steps:
-    - service: "user-service"
-      action: "reserve-credits"
-      compensate: "release-credits"
-      
-    - service: "vehicle-service"  
-      action: "reserve-vehicle"
-      compensate: "release-vehicle"
-      
-    - service: "trip-service"
-      action: "create-trip"
-      compensate: "cancel-trip"
-      
-    - service: "notification-service"
-      action: "send-confirmation"
-      compensate: "send-cancellation"
+saga:  name: "TripBookingSaga"  steps:  - service: "user-service"  action: "reserve-credits"  compensate: "release-credits"  - service: "vehicle-service"  action: "reserve-vehicle"  compensate: "release-vehicle"  - service: "trip-service"  action: "create-trip"  compensate: "cancel-trip"  - service: "notification-service"  action: "send-confirmation"  compensate: "send-cancellation"
 ```
 
 ## Kubernetes cluster configuration
 
-### 🏗️ Infrastructure architecture
+### ️ Infrastructure architecture
 
 ```yaml
 # cluster-architecture.yml
 apiVersion: v1
 kind: ConfigMap
-metadata:
-  name: cluster-config
-data:
-  # Production cluster configuration
-  nodes: |
-    master-nodes: 3 (HA configuration)
-    worker-nodes: 12 (auto-scaling)
-    
-  resources:
-    cpu: "48 cores per node"
-    memory: "192GB per node"
-    storage: "2TB NVMe SSD"
-    
-  networking:
-    cni: "Calico"
-    service-mesh: "Istio"
-    ingress: "NGINX + Cert-Manager"
+metadata:  name: cluster-config
+data:  # Production cluster configuration  nodes: |  master-nodes: 3 (HA configuration)  worker-nodes: 12 (auto-scaling)  resources:  cpu: "48 cores per node"  memory: "192GB per node"  storage: "2TB NVMe SSD"  networking:  cni: "Calico"  service-mesh: "Istio"  ingress: "NGINX + Cert-Manager"
 ```
 
-### 📦 Service-specific deployment configuration
+### Service-specific deployment configuration
 
 #### 1. High availability service (Vehicle Management)
 
@@ -171,74 +99,13 @@ data:
 # vehicle-service-deployment.yml
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: vehicle-service
-  labels:
-    app: vehicle-service
-    version: v2.1.3
-spec:
-  replicas: 5
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 2
-      maxUnavailable: 1
-  selector:
-    matchLabels:
-      app: vehicle-service
-  template:
-    metadata:
-      labels:
-        app: vehicle-service
-        version: v2.1.3
-    spec:
-      containers:
-      - name: vehicle-service
-        image: myregistry/vehicle-service:v2.1.3
-        ports:
-        - containerPort: 8080
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: db-credentials
-              key: url
-        - name: REDIS_URL
-          valueFrom:
-            configMapKeyRef:
-              name: cache-config
-              key: redis-url
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 5
+metadata:  name: vehicle-service  labels:  app: vehicle-service  version: v2.1.3
+spec:  replicas: 5  strategy:  type: RollingUpdate  rollingUpdate:  maxSurge: 2  maxUnavailable: 1  selector:  matchLabels:  app: vehicle-service  template:  metadata:  labels:  app: vehicle-service  version: v2.1.3  spec:  containers:  - name: vehicle-service  image: myregistry/vehicle-service:v2.1.3  ports:  - containerPort: 8080  env:  - name: DATABASE_URL  valueFrom:  secretKeyRef:  name: db-credentials  key: url  - name: REDIS_URL  valueFrom:  configMapKeyRef:  name: cache-config  key: redis-url  resources:  requests:  memory: "512Mi"  cpu: "250m"  limits:  memory: "1Gi"  cpu: "500m"  livenessProbe:  httpGet:  path: /health  port: 8080  initialDelaySeconds: 30  periodSeconds: 10  readinessProbe:  httpGet:  path: /ready  port: 8080  initialDelaySeconds: 15  periodSeconds: 5
 ---
 apiVersion: v1
 kind: Service
-metadata:
-  name: vehicle-service
-spec:
-  selector:
-    app: vehicle-service
-  ports:
-  - port: 80
-    targetPort: 8080
-  type: ClusterIP
+metadata:  name: vehicle-service
+spec:  selector:  app: vehicle-service  ports:  - port: 80  targetPort: 8080  type: ClusterIP
 ```
 
 #### 2. HPA (Horizontal Pod Autoscaler) configuration
@@ -247,56 +114,18 @@ spec:
 # vehicle-service-hpa.yml
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
-metadata:
-  name: vehicle-service-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: vehicle-service
-  minReplicas: 3
-  maxReplicas: 20
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 80
-  - type: Pods
-    pods:
-      metric:
-        name: requests_per_second
-      target:
-        type: AverageValue
-        averageValue: "100"
+metadata:  name: vehicle-service-hpa
+spec:  scaleTargetRef:  apiVersion: apps/v1  kind: Deployment  name: vehicle-service  minReplicas: 3  maxReplicas: 20  metrics:  - type: Resource  resource:  name: cpu  target:  type: Utilization  averageUtilization: 70  - type: Resource  resource:  name: memory  target:  type: Utilization  averageUtilization: 80  - type: Pods  pods:  metric:  name: requests_per_second  target:  type: AverageValue  averageValue: "100"
 ```
 
 ## Lessons learned from operational experience
 
-### 💡 Success factors
+### Success factors
 
 #### 1. Team structure and organizational alignment
 
 ```mermaid
-graph TD
-    A[Product Team] --> B[Domain Team 1: Vehicle]
-    A --> C[Domain Team 2: Trip]
-    A --> D[Domain Team 3: User]
-    
-    B --> E[Backend Developer]
-    B --> F[DevOps Engineer]  
-    B --> G[QA Engineer]
-    
-    H[Platform Team] --> I[Infrastructure]
-    H --> J[Monitoring]
-    H --> K[Security]
+graph TD  A[Product Team] --> B[Domain Team 1: Vehicle]  A --> C[Domain Team 2: Trip]  A --> D[Domain Team 3: User]  B --> E[Backend Developer]  B --> F[DevOps Engineer]  B --> G[QA Engineer]  H[Platform Team] --> I[Infrastructure]  H --> J[Monitoring]  H --> K[Security]
 ```
 
 **Leveraging Conway's Law**: Recognizing that organizational structure determines architecture and designing intentionally
@@ -305,19 +134,7 @@ graph TD
 
 ```typescript
 // Gradual transition with Strangler Fig pattern
-class LegacyTripService {
-  async createTrip(tripData: TripData): Promise<Trip> {
-    // Branch between new/old systems with feature flags
-    if (this.featureFlag.isEnabled('NEW_TRIP_SERVICE', tripData.userId)) {
-      return this.newTripService.createTrip(tripData);
-    } else {
-      return this.legacyCreateTrip(tripData);
-    }
-  }
-  
-  private async legacyCreateTrip(tripData: TripData): Promise<Trip> {
-    // Existing monolithic logic
-  }
+class LegacyTripService {  async createTrip(tripData: TripData): Promise<Trip> {  // Branch between new/old systems with feature flags  if (this.featureFlag.isEnabled('NEW_TRIP_SERVICE', tripData.userId)) {  return this.newTripService.createTrip(tripData);  } else {  return this.legacyCreateTrip(tripData);  }  }  private async legacyCreateTrip(tripData: TripData): Promise<Trip> {  // Existing monolithic logic  }
 }
 ```
 
@@ -325,34 +142,11 @@ class LegacyTripService {
 
 ```typescript
 // Consider metric collection from code writing time
-class PaymentService {
-  async processPayment(payment: Payment): Promise<PaymentResult> {
-    const timer = this.metrics.startTimer('payment_processing_duration');
-    
-    try {
-      this.metrics.increment('payment_attempts_total', {
-        payment_method: payment.method,
-        amount_range: this.getAmountRange(payment.amount)
-      });
-      
-      const result = await this.paymentGateway.charge(payment);
-      
-      this.metrics.increment('payment_success_total');
-      return result;
-      
-    } catch (error) {
-      this.metrics.increment('payment_failure_total', {
-        error_type: error.constructor.name
-      });
-      throw error;
-    } finally {
-      timer.end();
-    }
-  }
+class PaymentService {  async processPayment(payment: Payment): Promise<PaymentResult> {  const timer = this.metrics.startTimer('payment_processing_duration');  try {  this.metrics.increment('payment_attempts_total', {  payment_method: payment.method,  amount_range: this.getAmountRange(payment.amount)  });  const result = await this.paymentGateway.charge(payment);  this.metrics.increment('payment_success_total');  return result;  } catch (error) {  this.metrics.increment('payment_failure_total', {  error_type: error.constructor.name  });  throw error;  } finally {  timer.end();  }  }
 }
 ```
 
-### 🚨 Lessons learned from failures
+### Lessons learned from failures
 
 #### 1. The trap of too-small services
 
@@ -360,18 +154,11 @@ class PaymentService {
 
 ```typescript
 // ❌ Over-granular services
-interface MicroServices {
-  userIdService: 'generates user IDs';
-  userNameService: 'manages user names'; 
-  userEmailService: 'handles user emails';
-  userPhoneService: 'manages phone numbers';
+interface MicroServices {  userIdService: 'generates user IDs';  userNameService: 'manages user names';  userEmailService: 'handles user emails';  userPhoneService: 'manages phone numbers';
 }
 
 // ✅ Right-sized services
-interface RightSizedServices {
-  userManagementService: 'complete user lifecycle';
-  authenticationService: 'login, logout, tokens';
-  profileService: 'user preferences, settings';
+interface RightSizedServices {  userManagementService: 'complete user lifecycle';  authenticationService: 'login, logout, tokens';  profileService: 'user preferences, settings';
 }
 ```
 
@@ -389,43 +176,13 @@ Distributed but still tightly coupled systems:
 
 ```typescript
 // Ensure service compatibility with contract testing
-describe('Vehicle Service Contract', () => {
-  it('should return vehicle data in expected format', async () => {
-    const pact = new Pact({
-      consumer: 'trip-service',
-      provider: 'vehicle-service'
-    });
-    
-    await pact
-      .given('vehicle exists')
-      .uponReceiving('a request for vehicle data')
-      .withRequest({
-        method: 'GET',
-        path: '/vehicles/123'
-      })
-      .willRespondWith({
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-          id: like('123'),
-          status: like('available'),
-          location: {
-            lat: like(37.5665),
-            lng: like(126.9780)
-          }
-        }
-      });
-      
-    const vehicle = await vehicleClient.getVehicle('123');
-    expect(vehicle).toHaveProperty('id');
-    expect(vehicle).toHaveProperty('status');
-  });
+describe('Vehicle Service Contract', () => {  it('should return vehicle data in expected format', async () => {  const pact = new Pact({  consumer: 'trip-service',  provider: 'vehicle-service'  });  await pact  .given('vehicle exists')  .uponReceiving('a request for vehicle data')  .withRequest({  method: 'GET',  path: '/vehicles/123'  })  .willRespondWith({  status: 200,  headers: { 'Content-Type': 'application/json' },  body: {  id: like('123'),  status: like('available'),  location: {  lat: like(37.5665),  lng: like(126.9780)  }  }  });  const vehicle = await vehicleClient.getVehicle('123');  expect(vehicle).toHaveProperty('id');  expect(vehicle).toHaveProperty('status');  });
 });
 ```
 
 ## Performance measurement and continuous improvement
 
-### 📊 Key performance indicators (KPIs)
+### Key performance indicators (KPIs)
 
 #### Technical metrics
 
@@ -442,31 +199,16 @@ describe('Vehicle Service Contract', () => {
 - **Response time**: P95 500ms → 150ms
 - **Concurrent users**: Can handle 10,000 → 100,000 users
 
-### 🔄 Continuous improvement process
+### Continuous improvement process
 
 ```yaml
 # Monthly retrospective process
-retrospective:
-  what_went_well:
-    - "Minimized failures with canary deployment"
-    - "Quick problem identification with monitoring dashboard"
-    
-  what_needs_improvement:
-    - "Resolve cross-team dependencies"
-    - "Expand test automation coverage"
-    
-  action_items:
-    - name: "Expand event-based communication"
-      owner: "architecture-team"
-      due_date: "2025-02-28"
-    - name: "Achieve 80% E2E test coverage"  
-      owner: "qa-team"
-      due_date: "2025-02-15"
+retrospective:  what_went_well:  - "Minimized failures with canary deployment"  - "Quick problem identification with monitoring dashboard"  what_needs_improvement:  - "Resolve cross-team dependencies"  - "Expand test automation coverage"  action_items:  - name: "Expand event-based communication"  owner: "architecture-team"  due_date: "2025-02-28"  - name: "Achieve 80% E2E test coverage"  owner: "qa-team"  due_date: "2025-02-15"
 ```
 
 ## What's next
 
-### 🚀 Next steps roadmap
+### Next steps roadmap
 
 #### Q1 2025: Platform Engineering enhancement
 - **Developer Portal** implementation (Backstage-based)
@@ -485,7 +227,7 @@ retrospective:
 
 ## Practical application guide
 
-### ✅ Step-by-step checklist
+### Step-by-step checklist
 
 #### Design phase
 - [ ] Clearly define domain boundaries
@@ -493,8 +235,7 @@ retrospective:
 - [ ] Decide communication patterns (sync/async)
 - [ ] Plan failure scenarios
 
-#### Development phase  
-- [ ] API versioning strategy
+#### Development phase  - [ ] API versioning strategy
 - [ ] Standardize logging/metrics
 - [ ] Write contract tests
 - [ ] Apply security policies

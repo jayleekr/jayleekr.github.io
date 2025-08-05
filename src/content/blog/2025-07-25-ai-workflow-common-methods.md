@@ -19,23 +19,10 @@ readingTime: "8분"
 
 이 방법론은 제가 **AI 강의를 매주 하면서** + **실제 업무에서 매일 적용하면서** 다듬어진 것들이라, 어떤 AI 도구를 쓰든 상관없이 적용할 수 있습니다.
 
-## 🎯 6단계 워크플로우 전체 구조
+## 6단계 워크플로우 전체 구조
 
 ```mermaid
-graph LR
-    A["1️⃣ Context Window<br/>새로 열기"] --> B["2️⃣ 정리된 Context<br/>제공하기"]
-    B --> C["3️⃣ 답변 포맷<br/>생각하게 하기"] 
-    C --> D["4️⃣ 명확한<br/>Request"]
-    D --> E["5️⃣ Feedback<br/>과정"]
-    E --> F["6️⃣ Context 문서<br/>업데이트"]
-    F -.-> A
-    
-    style A fill:#e1f5fe
-    style B fill:#e8f5e8
-    style C fill:#f3e5f5
-    style D fill:#ffebee
-    style E fill:#fffde7
-    style F fill:#fce4ec
+graph LR  A["1️⃣ Context Window<br/>새로 열기"] --> B["2️⃣ 정리된 Context<br/>제공하기"]  B --> C["3️⃣ 답변 포맷<br/>생각하게 하기"]  C --> D["4️⃣ 명확한<br/>Request"]  D --> E["5️⃣ Feedback<br/>과정"]  E --> F["6️⃣ Context 문서<br/>업데이트"]  F -.-> A  style A fill:#e1f5fe  style B fill:#e8f5e8  style C fill:#f3e5f5  style D fill:#ffebee  style E fill:#fffde7  style F fill:#fce4ec
 ```
 
 경험상 **어떤 AI든 상관없이** 이 방식으로 일을 시키면 훨씬 좋은 결과가 나옵니다. 이제 각 단계를 실제 예시와 함께 자세히 살펴보겠습니다!
@@ -77,12 +64,7 @@ AI: 죄송합니다. 어떤 TypeScript 설정을 말씀하시는 건지...?
 ```
 코드 리뷰해줘.
 
-class UserService {
-  constructor(private db: Database) {}
-  
-  async createUser(userData: any) {
-    return this.db.users.create(userData);
-  }
+class UserService {  constructor(private db: Database) {}  async createUser(userData: any) {  return this.db.users.create(userData);  }
 }
 ```
 
@@ -130,8 +112,7 @@ class UserService {
 ```
 다음 형태로 답변해줘:
 1. 문제점 3가지
-2. 해결방안 3가지  
-3. 코드 예시
+2. 해결방안 3가지  3. 코드 예시
 ```
 
 **✅ 사고하게 만드는 방식:**
@@ -200,13 +181,12 @@ AI들이 들쭉날쭉하는 이유 중 하나가 **프로젝트 맥락을 매번
 ### 제가 관리하는 Context 문서들
 
 ```
-📁 .ai-context/
-├── project-config.md          # 프로젝트 기본 정보
-├── tech-stack.md             # 기술 스택 상세 정보  
-├── coding-standards.md       # 코딩 컨벤션
-├── current-tasks.md          # 현재 진행 중인 작업들
-├── common-issues.md          # 자주 발생하는 이슈들
-└── prompt-templates.md       # 자주 쓰는 프롬프트 모음
+.ai-context/
+├── project-config.md  # 프로젝트 기본 정보
+├── tech-stack.md  # 기술 스택 상세 정보  ├── coding-standards.md  # 코딩 컨벤션
+├── current-tasks.md  # 현재 진행 중인 작업들
+├── common-issues.md  # 자주 발생하는 이슈들
+└── prompt-templates.md  # 자주 쓰는 프롬프트 모음
 ```
 
 ### project-config.md 예시
@@ -238,11 +218,10 @@ AI들이 들쭉날쭉하는 이유 중 하나가 **프로젝트 맥락을 매번
 ### 업데이트 시점
 
 - **새로운 요구사항 추가될 때**
-- **기술 스택 변경될 때**  
-- **반복되는 질문이 생길 때**
+- **기술 스택 변경될 때**  - **반복되는 질문이 생길 때**
 - **프로젝트 방향성이 바뀔 때**
 
-## 🚀 실전 적용 사례
+## 실전 적용 사례
 
 ### 전체 워크플로우 적용 예시
 
@@ -293,14 +272,13 @@ rate limiting도 고려해야 할 것 같아.
 - 다음: rate limiting 미들웨어 구현
 ```
 
-## 💡 각 AI 도구별 적용 팁
+## 각 AI 도구별 적용 팁
 
 ### Cursor Pro에서
 - **프로젝트 전체 맥락**을 Chat에서 제공
 - **파일 단위**로 구체적인 요청
 
-### Claude Code에서  
-- **복잡한 로직**은 단계별로 나누어서
+### Claude Code에서  - **복잡한 로직**은 단계별로 나누어서
 - **3시간 제한** 고려해서 핵심만 집중
 
 ### Gemini에서
@@ -311,11 +289,9 @@ rate limiting도 고려해야 할 것 같아.
 - **감정노동** 관련 작업에도 이 구조 적용
 - **이메일 작성**시 Context = 상대방 정보 + 목적
 
-## 🔚 마무리하며...
+## 마무리하며...
 
-이 6단계 워크플로우는 **어떤 AI든 상관없이** 적용할 수 있는 범용적인 방법론입니다. 
-
-가장 중요한 건 **AI를 단순한 답변 기계로 쓰지 말고**, **함께 생각하는 파트너로 활용**하는 것입니다.
+이 6단계 워크플로우는 **어떤 AI든 상관없이** 적용할 수 있는 범용적인 방법론입니다.  가장 중요한 건 **AI를 단순한 답변 기계로 쓰지 말고**, **함께 생각하는 파트너로 활용**하는 것입니다.
 
 다음 3편에서는 **워크스페이스 운영 실전기**를 다뤄보겠습니다. 실제로 5~8개의 Cursor 인스턴스를 어떻게 효율적으로 관리하는지, Remote SSH vs Native 환경을 어떻게 구성하는지 상세히 공유할 예정입니다!
 

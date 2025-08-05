@@ -19,13 +19,13 @@ readingTime: "10분"
 
 이건 진짜 **몇 개월간 시행착오**를 거쳐서 정리한 것들이라, 바로 써먹으실 수 있을 거예요. 각 도구의 특성에 맞는 프롬프트 패턴들을 실제 예시와 함께 공유해드릴게요!
 
-## 🔵 Cursor Pro: 메인 코딩 환경 마스터하기
+## Cursor Pro: 메인 코딩 환경 마스터하기
 
 ### Cursor의 특성 이해하기
 
 **Cursor는 코드 컨텍스트를 가장 잘 이해하는** AI 도구입니다. 파일 전체를 보면서 작업하기 때문에, 다른 도구들과는 다른 접근이 필요해요.
 
-### 🎯 Cursor 특화 프롬프트 패턴
+### Cursor 특화 프롬프트 패턴
 
 #### 1. 프로젝트 전체 맥락 활용 패턴
 
@@ -33,8 +33,7 @@ readingTime: "10분"
 ```
 이 함수 리팩토링해줘
 
-function getUserData(id: string) {
-  // 복잡한 로직...
+function getUserData(id: string) {  // 복잡한 로직...
 }
 ```
 
@@ -45,8 +44,7 @@ function getUserData(id: string) {
 
 특히 다음을 고려해서:
 1. src/types/ 폴더의 User 타입 정의 활용
-2. src/utils/errorHandler.ts의 에러 처리 패턴 적용  
-3. 다른 service 파일들과 일관된 구조로 변경
+2. src/utils/errorHandler.ts의 에러 처리 패턴 적용  3. 다른 service 파일들과 일관된 구조로 변경
 
 @getUserData 함수 위치 표시
 ```
@@ -68,11 +66,7 @@ function getUserData(id: string) {
 - TypeScript 타입 안정성 최우선
 
 Product 타입은 다음과 같아:
-interface Product {
-  id: string;
-  name: string;
-  price: number;
-  // ... 기타 필드
+interface Product {  id: string;  name: string;  price: number;  // ... 기타 필드
 }
 ```
 
@@ -94,7 +88,7 @@ interface Product {
 각 항목별로 구체적인 개선사항과 이유를 제시해줘.
 ```
 
-### 🔧 Cursor Chat vs Inline Edit 활용법
+### Cursor Chat vs Inline Edit 활용법
 
 #### Chat에서 쓰는 프롬프트 (복잡한 설계)
 
@@ -126,9 +120,7 @@ interface Product {
 
 ### Claude Code의 특성과 한계
 
-**3시간마다 Usage 리셋**되는 Claude Code... 비싸게 주고도 이런 제약이 있어서 진짜 전략적으로 써야 해요. 
-
-### 💡 Usage 효율성 극대화 패턴
+**3시간마다 Usage 리셋**되는 Claude Code... 비싸게 주고도 이런 제약이 있어서 진짜 전략적으로 써야 해요.  ### Usage 효율성 극대화 패턴
 
 #### 1. 한 번에 최대한 많이 뽑아내기
 
@@ -149,8 +141,7 @@ interface Product {
 
 **요청사항 (한 번에 모두):**
 1. 🔧 리팩토링: 함수별 단일 책임 원칙 적용
-2. 🧪 테스트: Jest 기반 유닛 테스트 작성  
-3. 📝 문서화: JSDoc + README 업데이트
+2. 🧪 테스트: Jest 기반 유닛 테스트 작성  3. 📝 문서화: JSDoc + README 업데이트
 4. 🔒 타입: 더 엄격한 TypeScript 타입 정의
 5. 🚀 성능: 불필요한 DB 쿼리 최적화
 
@@ -160,10 +151,9 @@ interface Product {
 #### 2. 복잡한 로직은 Claude Code에 몰아주기
 
 **Claude Code가 특히 잘하는 것들:**
-- 🧠 **복잡한 비즈니스 로직** 설계
-- 🏗️ **아키텍처 설계** 및 패턴 적용  
-- 🔍 **코드 리뷰** 및 품질 분석
-- 📚 **문서화** 및 가이드 작성
+- **복잡한 비즈니스 로직** 설계
+- ️ **아키텍처 설계** 및 패턴 적용  - **코드 리뷰** 및 품질 분석
+- **문서화** 및 가이드 작성
 
 **실제 제가 Claude Code에 맡기는 작업:**
 ```
@@ -193,20 +183,19 @@ interface Product {
 
 **제가 쓰는 Claude Code 시간 관리:**
 ```
-🌅 오전 (9-12시): 새로운 기능 설계
+오전 (9-12시): 새로운 기능 설계
 - 복잡한 아키텍처 설계
 - 새 프로젝트 구조 설계
 
-🌞 오후 (13-15시): 기존 코드 개선  
-- 레거시 코드 리팩토링
+오후 (13-15시): 기존 코드 개선  - 레거시 코드 리팩토링
 - 성능 최적화
 
-🌆 저녁 (18-20시): 문서화 및 정리
+저녁 (18-20시): 문서화 및 정리
 - API 문서 자동 생성
 - 프로젝트 가이드 작성
 ```
 
-### 🚀 Claude Code 전용 프롬프트 템플릿
+### Claude Code 전용 프롬프트 템플릿
 
 ```markdown
 # Claude Code 전용 대화 시작 템플릿
@@ -219,8 +208,7 @@ interface Product {
 
 ## 이번 세션 목표
 - [ ] 주요 작업 1
-- [ ] 주요 작업 2  
-- [ ] 주요 작업 3
+- [ ] 주요 작업 2  - [ ] 주요 작업 3
 
 ## 제약사항
 - 기존 API 호환성 유지
@@ -237,13 +225,13 @@ interface Product {
 [구체적 요청 시작]
 ```
 
-## 🔴 Gemini CLI: 문서화 자동화 마스터
+## Gemini CLI: 문서화 자동화 마스터
 
 ### Gemini의 강력한 문서화 능력
 
 **진짜 Gemini 2.5 Pro는 문서화가 기똥차요.** 특히 CLI에서 쓰면 더 편합니다.
 
-### 📝 Gemini CLI 설치 및 설정
+### Gemini CLI 설치 및 설정
 
 ```bash
 # Gemini CLI 설치
@@ -256,7 +244,7 @@ export GEMINI_API_KEY="your-api-key"
 echo 'export GEMINI_API_KEY="your-api-key"' >> ~/.bashrc
 ```
 
-### 🎯 문서화 특화 프롬프트 패턴
+### 문서화 특화 프롬프트 패턴
 
 #### 1. API 문서 자동 생성
 
@@ -271,8 +259,7 @@ $(cat src/controllers/userController.ts)
 **생성할 문서 형태:**
 1. 📋 엔드포인트 개요 테이블
 2. 🔧 각 엔드포인트 상세 (Request/Response)
-3. 📝 사용 예시 (curl + JavaScript)  
-4. ⚠️ 에러 응답 정의
+3. 📝 사용 예시 (curl + JavaScript)  4. ⚠️ 에러 응답 정의
 5. 🔒 인증 요구사항
 
 **포맷**: OpenAPI 3.0 spec + 한국어 설명
@@ -289,8 +276,7 @@ gemini "
 **프로젝트 구조:**
 $(tree -I 'node_modules|.git' -L 3)
 
-**package.json 정보:**  
-$(cat package.json)
+**package.json 정보:**  $(cat package.json)
 
 **주요 설정 파일들:**
 $(cat tsconfig.json)
@@ -298,8 +284,7 @@ $(cat .env.example)
 
 **생성할 README 섹션:**
 1. 🎯 프로젝트 개요 및 특징
-2. ⚡ Quick Start 가이드  
-3. 🏗️ 아키텍처 설명
+2. ⚡ Quick Start 가이드  3. 🏗️ 아키텍처 설명
 4. 🔧 설치 및 설정 방법
 5. 📝 API 사용법
 6. 🧪 테스트 실행 방법
@@ -322,8 +307,7 @@ $(cat src/utils/complexAlgorithm.ts)
 **주석 요구사항:**
 1. 📝 함수 목적 및 동작 원리 설명
 2. 📋 모든 매개변수 타입 및 설명
-3. 🔄 반환값 타입 및 설명  
-4. ⚠️ 발생 가능한 예외사항
+3. 🔄 반환값 타입 및 설명  4. ⚠️ 발생 가능한 예외사항
 5. 📖 사용 예시 코드
 6. 🔗 관련 함수/문서 링크
 
@@ -331,7 +315,7 @@ $(cat src/utils/complexAlgorithm.ts)
 "
 ```
 
-### 🔄 Gemini CLI 자동화 스크립트
+### Gemini CLI 자동화 스크립트
 
 **docs-update.sh:**
 ```bash
@@ -348,8 +332,7 @@ $(cat src/controllers/*.ts | head -200)
 변경된 엔드포인트만 반영하고, 기존 문서 구조는 유지해줘.
 " > docs/api-temp.md
 
-# 2. README 업데이트  
-echo "📋 README 업데이트 중..."
+# 2. README 업데이트  echo "📋 README 업데이트 중..."
 gemini "
 현재 README.md:
 $(cat README.md)
@@ -366,17 +349,11 @@ echo "📊 문서 변경사항 검토..."
 echo "API 문서 변경사항:"
 diff docs/api.md docs/api-temp.md || true
 
-echo "README 변경사항:"  
-diff README.md README-temp.md || true
+echo "README 변경사항:"  diff README.md README-temp.md || true
 
 read -p "변경사항을 적용하시겠습니까? (y/n): " confirm
-if [ "$confirm" = "y" ]; then
-    mv docs/api-temp.md docs/api.md
-    mv README-temp.md README.md
-    echo "✅ 문서 업데이트 완료"
-else
-    rm docs/api-temp.md README-temp.md
-    echo "❌ 변경사항 취소됨"
+if [ "$confirm" = "y" ]; then  mv docs/api-temp.md docs/api.md  mv README-temp.md README.md  echo "✅ 문서 업데이트 완료"
+else  rm docs/api-temp.md README-temp.md  echo "❌ 변경사항 취소됨"
 fi
 ```
 
@@ -386,7 +363,7 @@ fi
 
 **고객 대응이나 이메일 작성**에서 ChatGPT만큼 좋은 게 없어요. 감정적인 뉘앙스를 잘 이해하고 적절한 톤으로 응답해줍니다.
 
-### 💼 비즈니스 커뮤니케이션 프롬프트
+### 비즈니스 커뮤니케이션 프롬프트
 
 #### 1. 고객 이메일 응답
 
@@ -424,14 +401,13 @@ fi
 **정리 요구사항**:
 1. 📋 주요 논의사항 (우선순위별)
 2. ✅ 결정된 사항들
-3. 📋 액션 아이템 (담당자, 마감일 포함)  
-4. ❓ 추후 논의 필요 사항
+3. 📋 액션 아이템 (담당자, 마감일 포함)  4. ❓ 추후 논의 필요 사항
 5. 📅 다음 미팅 일정
 
 **톤**: 팀 내부용, 간결하고 명확하게
 ```
 
-## 🔧 도구 간 연계 활용 패턴
+## 도구 간 연계 활용 패턴
 
 ### 협업 워크플로우
 
@@ -440,33 +416,26 @@ fi
 #### 패턴 1: 설계 → 구현 → 문서화
 
 ```
-1. 🟣 Claude Code: 전체 아키텍처 설계
-   "마이크로서비스 아키텍처 설계해줘"
+1. 🟣 Claude Code: 전체 아키텍처 설계  "마이크로서비스 아키텍처 설계해줘"
 
-2. 🔵 Cursor Pro: 실제 코드 구현  
-   "Claude가 설계한 구조를 바탕으로 UserService 구현"
+2. 🔵 Cursor Pro: 실제 코드 구현  "Claude가 설계한 구조를 바탕으로 UserService 구현"
 
-3. 🔴 Gemini CLI: 문서화
-   "구현된 코드를 분석해서 API 문서 생성"
+3. 🔴 Gemini CLI: 문서화  "구현된 코드를 분석해서 API 문서 생성"
 
-4. 🟢 ChatGPT: 사용자 가이드
-   "기술 문서를 일반 사용자용 가이드로 변환"
+4. 🟢 ChatGPT: 사용자 가이드  "기술 문서를 일반 사용자용 가이드로 변환"
 ```
 
 #### 패턴 2: 문제 해결 → 소통 → 정리
 
 ```
-1. 🔵 Cursor Pro: 버그 분석 및 수정
-   "이 에러 로그 분석해서 원인 찾고 수정해줘"
+1. 🔵 Cursor Pro: 버그 분석 및 수정  "이 에러 로그 분석해서 원인 찾고 수정해줘"
 
-2. 🟢 ChatGPT: 고객 응답 작성
-   "버그 수정 완료를 고객에게 알리는 이메일 작성"
+2. 🟢 ChatGPT: 고객 응답 작성  "버그 수정 완료를 고객에게 알리는 이메일 작성"
 
-3. 🔴 Gemini CLI: 포스트모템 문서
-   "이번 이슈의 포스트모템 문서 작성"
+3. 🔴 Gemini CLI: 포스트모템 문서  "이번 이슈의 포스트모템 문서 작성"
 ```
 
-## 📊 효과 측정 및 개선
+## 효과 측정 및 개선
 
 ### 프롬프트 성능 추적
 
@@ -478,8 +447,7 @@ fi
 각 응답에 대해 1-5점으로 평가:
 
 1. **정확성** (1-5): 요청한 내용을 정확히 수행했는가?
-2. **완성도** (1-5): 추가 요청 없이 바로 사용 가능한가?  
-3. **효율성** (1-5): 최소한의 프롬프트로 최대 결과를 얻었는가?
+2. **완성도** (1-5): 추가 요청 없이 바로 사용 가능한가?  3. **효율성** (1-5): 최소한의 프롬프트로 최대 결과를 얻었는가?
 4. **일관성** (1-5): 비슷한 요청에서 일관된 품질인가?
 
 **목표**: 모든 항목 평균 4점 이상 유지
@@ -489,15 +457,12 @@ fi
 
 **월간 리뷰 프로세스:**
 1. **사용 빈도** 높은 프롬프트 패턴 정리
-2. **실패 사례** 분석 및 개선 방안 도출  
-3. **새로운 패턴** 실험 및 검증
+2. **실패 사례** 분석 및 개선 방안 도출  3. **새로운 패턴** 실험 및 검증
 4. **팀 공유** 및 피드백 수집
 
-## 🔚 마무리하며...
+## 마무리하며...
 
-이렇게 **각 AI 도구별로 최적화된 프롬프트 전략**을 정리해봤습니다. 
-
-핵심은 **각 도구의 특성을 이해하고 그에 맞는 프롬프트를 쓰는 것**입니다. Cursor는 코드 컨텍스트를, Claude는 복잡한 사고를, Gemini는 문서화를, ChatGPT는 커뮤니케이션을 각각 잘하니까요.
+이렇게 **각 AI 도구별로 최적화된 프롬프트 전략**을 정리해봤습니다.  핵심은 **각 도구의 특성을 이해하고 그에 맞는 프롬프트를 쓰는 것**입니다. Cursor는 코드 컨텍스트를, Claude는 복잡한 사고를, Gemini는 문서화를, ChatGPT는 커뮤니케이션을 각각 잘하니까요.
 
 마지막 5편에서는 **PRD 방법론으로 새 프로젝트 시작하기**를 다뤄보겠습니다. Gemini로 Research를 돌려서 들쭉날쭉한 AI를 더 잘하게 만드는 PRD 작성법과 실제 적용 사례를 공유할 예정입니다!
 
