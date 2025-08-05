@@ -17,7 +17,7 @@ A personal technical blog built with Astro, migrated from Jekyll. This blog focu
 - ✅ **Accessibility**: WCAG 2.1 AA compliant
 - ✅ **Responsive Design**: Mobile-first approach with Tailwind CSS
 - ✅ **Multi-language**: Korean and English content support
-- ✅ **Automated Deployment**: GitHub Actions CI/CD pipeline
+- ✅ **Native Deployment**: Direct GitHub Pages deployment (no Actions required)
 - ✅ **Content Collections**: Organized blog posts with categories and tags
 - ✅ **RSS Feed**: Automatic RSS feed generation
 - ✅ **Sitemap**: SEO-friendly sitemap generation
@@ -48,6 +48,7 @@ A personal technical blog built with Astro, migrated from Jekyll. This blog focu
 | `npm run build`           | Build production site to `./dist/`              |
 | `npm run preview`         | Preview build locally before deploying          |
 | `npm run test`            | Run tests and linting                           |
+| `./deploy-native.sh`      | Deploy directly to GitHub Pages (immediate)     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`|
 
 ## Content Management
