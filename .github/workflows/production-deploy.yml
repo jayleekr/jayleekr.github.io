@@ -1,9 +1,7 @@
 name: Production Deployment
 
 on:
-  push:
-    branches: [master, main]
-  workflow_dispatch:
+  workflow_dispatch: # Manual trigger only - using native GitHub Pages instead
     inputs:
       environment:
         description: 'Environment to deploy to'
