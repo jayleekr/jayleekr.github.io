@@ -1,0 +1,88 @@
+/* Markdown Dark Mode Rendering Fix */
+/* This file fixes the black bar issue in dark mode where text becomes invisible */
+
+/* Ensure proper text color for inline code in dark mode */
+.dark .prose code:not(pre code) {
+  color: #f8fafc !important; /* --dark-text-primary */
+  background-color: #262626 !important; /* --dark-bg-tertiary */
+}
+
+/* Fix for code blocks with Shiki syntax highlighting */
+.dark .shiki,
+.dark .shiki code,
+.dark pre[class*="language-"],
+.dark pre[class*="language-"] code {
+  color: #e6edf3 !important;
+  background-color: #0d1117 !important;
+}
+
+/* Ensure proper text color for all code elements in prose */
+.dark .prose pre,
+.dark .prose pre code {
+  color: #e6edf3 !important;
+  background-color: #0d1117 !important;
+}
+
+/* Fix for any remaining code elements */
+.dark code,
+.dark pre {
+  color: #e6edf3 !important;
+}
+
+/* Ensure Shiki line numbers are visible */
+.dark .shiki .line::before {
+  color: #8b949e !important;
+  opacity: 0.7;
+}
+
+/* Fix highlighted lines in dark mode */
+.dark .shiki .line.highlighted {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: #e6edf3 !important;
+}
+
+/* Ensure all syntax highlighting tokens are visible */
+.dark .shiki span {
+  color: inherit !important;
+}
+
+/* Override any conflicting transitions during theme switch */
+.dark .shiki,
+.dark .shiki *,
+.dark .prose code,
+.dark .prose pre {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Note: color transition removed to prevent flash of invisible text */
+}
+
+/* Fallback for any missed elements */
+.dark [class*="language-"],
+.dark [class*="language-"] *,
+.dark .highlight,
+.dark .highlight * {
+  color: #e6edf3 !important;
+}
+
+/* Ensure proper contrast for Korean text in code */
+.dark .prose:lang(ko) code {
+  color: #f8fafc !important;
+}
+
+/* Fix for mobile devices */
+@media (max-width: 768px) {
+  .dark .prose pre,
+  .dark .prose code {
+    color: #e6edf3 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dark .prose code,
+  .dark .prose pre code,
+  .dark .shiki code {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    border: 1px solid #ffffff !important;
+  }
+}
