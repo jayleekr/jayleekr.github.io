@@ -4,8 +4,10 @@
 :root {
   --blog-max-width: 1400px;
   --content-max-width: 65ch;
+  --content-wide-max-width: none;
   --sidebar-width: 300px;
-  --toc-width: 250px;
+  --toc-width: 280px;
+  --toc-fixed-width: 320px;
   
   /* Typography Scale */
   --text-xs: 0.75rem;
@@ -91,44 +93,75 @@
 /* Large desktop optimization */
 @media (min-width: 1400px) {
   .article-container {
-    grid-template-columns: var(--sidebar-width) 1fr var(--toc-width);
+    grid-template-columns: var(--toc-width) 1fr;
     gap: var(--space-16);
+    max-width: none;
+    padding: var(--space-12) var(--space-8);
   }
   
   .toc-sidebar {
-    order: 3;
+    order: 1;
+  }
+  
+  .article-content {
+    max-width: 90ch;
   }
 }
 
 /* Ultra-wide screen optimization (2K+ displays) */
 @media (min-width: 1920px) {
   .article-container {
-    max-width: 1600px;
-    grid-template-columns: var(--toc-width) 1fr var(--toc-width);
+    max-width: none;
+    grid-template-columns: var(--toc-fixed-width) 1fr;
     gap: var(--space-20);
     padding: var(--space-16) var(--space-12);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding-left: var(--space-12);
+    padding-right: var(--space-12);
   }
   
   .article-content {
-    max-width: 70ch;
+    max-width: var(--content-wide-max-width);
+    padding-right: var(--space-20);
+  }
+  
+  .toc-sidebar {
+    position: fixed;
+    left: var(--space-12);
+    top: 8rem;
+    width: var(--toc-fixed-width);
+    max-height: calc(100vh - 12rem);
+    z-index: 30;
   }
 }
 
 /* Fullscreen/4K display optimization */
 @media (min-width: 2560px) {
   .article-container {
-    max-width: 1800px;
-    grid-template-columns: 350px 1fr 350px;
+    max-width: none;
+    grid-template-columns: var(--toc-fixed-width) 1fr;
     gap: var(--space-24);
     padding: var(--space-20) var(--space-16);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding-left: var(--space-16);
+    padding-right: var(--space-16);
   }
   
   .article-content {
-    max-width: 75ch;
+    max-width: var(--content-wide-max-width);
+    padding-right: var(--space-24);
   }
   
   .toc-sidebar {
+    position: fixed;
+    left: var(--space-16);
+    top: 8rem;
+    width: var(--toc-fixed-width);
+    max-height: calc(100vh - 12rem);
     padding: var(--space-8);
+    z-index: 30;
   }
 }
 
@@ -139,6 +172,22 @@
   width: 100%;
   justify-self: center;
   align-self: start;
+}
+
+/* Wide screen content adjustments */
+@media (min-width: 1400px) {
+  .article-content {
+    margin: 0;
+    justify-self: start;
+  }
+  
+  /* Ensure article container takes full width on large screens */
+  .article-container {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    padding-left: max(var(--space-8), calc((100vw - 1400px) / 2 + var(--space-8)));
+    padding-right: max(var(--space-8), calc((100vw - 1400px) / 2 + var(--space-8)));
+  }
 }
 
 /* Article Header - Clean Typography */
@@ -317,6 +366,26 @@
 
 .dark .prose-container {
   color: rgb(var(--gray-300));
+}
+
+/* Wide screen prose adjustments */
+@media (min-width: 1920px) {
+  .prose-container {
+    font-size: var(--text-xl);
+    line-height: 1.8;
+  }
+  
+  /* Add some structure to very wide content */
+  .prose-container > * {
+    max-width: 120ch;
+  }
+  
+  /* But allow images, tables, and code blocks to use full width */
+  .prose-container img,
+  .prose-container table,
+  .prose-container pre {
+    max-width: none;
+  }
 }
 
 /* Prose Headings */
@@ -637,17 +706,28 @@
   }
 }
 
+/* Transition to wide screen TOC positioning */
+@media (min-width: 1400px) and (max-width: 1919px) {
+  .toc-sidebar {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
 /* Enhanced TOC styling for ultra-wide screens */
 @media (min-width: 1920px) {
   .toc-sidebar {
-    background: rgb(var(--gray-50) / 0.8);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgb(var(--gray-200) / 0.6);
+    background: rgb(var(--gray-50) / 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgb(var(--gray-200) / 0.8);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   }
   
   .dark .toc-sidebar {
-    background: rgb(var(--gray-800) / 0.3);
-    border-color: rgb(var(--gray-700) / 0.5);
+    background: rgb(var(--gray-800) / 0.6);
+    border-color: rgb(var(--gray-700) / 0.8);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 }
 

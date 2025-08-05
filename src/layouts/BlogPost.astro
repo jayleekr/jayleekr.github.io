@@ -16,6 +16,7 @@ import CommandPalette from '../components/CommandPalette.astro';
 import LoadingStates from '../components/LoadingStates.astro';
 import { getLangFromUrl } from '../utils/i18n';
 import '../styles/blog-layout.css';
+import '../styles/blog-wide-layout.css';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
@@ -66,6 +67,19 @@ const currentLang = getLangFromUrl(Astro.url);
 			
 			<!-- Article Container -->
 			<div class="article-container w-full">
+				<!-- Desktop TOC Sidebar (Left Side for Wide Screens) -->
+				<aside class="toc-sidebar">
+					<h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+						{currentLang === 'ko' ? '목차' : 'Table of Contents'}
+					</h3>
+					<EnhancedTOC 
+						content={content}
+						maxDepth={3}
+						showNumbers={false}
+						className=""
+					/>
+				</aside>
+				
 				<!-- Main Article Content -->
 				<article class="article-content">
 					<!-- Article Header -->
@@ -199,19 +213,6 @@ const currentLang = getLangFromUrl(Astro.url);
 						</div>
 					</footer>
 				</article>
-				
-				<!-- Desktop TOC Sidebar -->
-				<aside class="toc-sidebar">
-					<h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
-						{currentLang === 'ko' ? '목차' : 'Table of Contents'}
-					</h3>
-					<EnhancedTOC 
-						content={content}
-						maxDepth={3}
-						showNumbers={false}
-						className=""
-					/>
-				</aside>
 			</div>
 			
 			<!-- Mobile TOC Toggle -->
