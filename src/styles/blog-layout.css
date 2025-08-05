@@ -365,7 +365,7 @@
 }
 
 .dark .prose-container {
-  color: rgb(var(--gray-300));
+  color: var(--text-secondary);
 }
 
 /* Wide screen prose adjustments */
@@ -404,7 +404,7 @@
 .dark .prose-container h2,
 .dark .prose-container h3,
 .dark .prose-container h4 {
-  color: rgb(var(--gray-100));
+  color: var(--text-primary);
 }
 
 .prose-container h1 {
@@ -449,7 +449,7 @@
 }
 
 .dark .prose-container > p:first-of-type {
-  color: rgb(var(--gray-200));
+  color: var(--text-primary);
 }
 
 /* Prose Links */
@@ -462,7 +462,7 @@
 }
 
 .dark .prose-container a {
-  color: rgb(var(--primary-400));
+  color: var(--interactive-primary);
 }
 
 .prose-container a:hover {
@@ -471,7 +471,7 @@
 }
 
 .dark .prose-container a:hover {
-  color: rgb(var(--primary-300));
+  color: var(--interactive-primary-hover);
 }
 
 /* Prose Lists */
@@ -496,8 +496,9 @@
 }
 
 .dark .prose-container code {
-  background-color: rgb(var(--gray-800));
-  color: rgb(var(--gray-100));
+  background-color: var(--bg-code-elevated);
+  color: var(--code-text);
+  border-color: var(--border-primary);
 }
 
 /* Prose Pre/Code Blocks */
@@ -511,8 +512,8 @@
 }
 
 .dark .prose-container pre {
-  background-color: rgb(var(--gray-900));
-  border-color: rgb(var(--gray-700));
+  background-color: var(--code-bg);
+  border-color: var(--border-primary);
 }
 
 .prose-container pre code {
@@ -531,8 +532,9 @@
 }
 
 .dark .prose-container blockquote {
-  background-color: rgb(var(--gray-800) / 0.5);
-  border-left-color: rgb(var(--primary-400));
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(96, 165, 250, 0.02) 100%);
+  border-left-color: var(--interactive-primary);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Prose Images */

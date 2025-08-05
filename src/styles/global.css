@@ -4,6 +4,9 @@
 /* Import code highlighting styles */
 @import './code-highlight.css';
 
+/* Import enhanced dark mode styles */
+@import './dark-mode-enhancements.css';
+
 /* Import Google Fonts for better readability with optimized loading */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
