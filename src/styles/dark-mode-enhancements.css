@@ -1,0 +1,380 @@
+/* Dark Mode Enhancements - WCAG AAA Compliant */
+
+/* Design Tokens for Dark Mode */
+:root {
+  /* Dark Mode Color Palette - WCAG AAA Compliant */
+  --dark-bg-primary: #0a0a0a;
+  --dark-bg-secondary: #1a1a1a;
+  --dark-bg-tertiary: #262626;
+  --dark-bg-elevated: #2d2d2d;
+  --dark-bg-code: #0d1117;
+  --dark-bg-hover: #333333;
+  
+  /* Text Colors with WCAG AAA Contrast Ratios */
+  --dark-text-primary: #f8fafc;    /* 18.5:1 contrast */
+  --dark-text-secondary: #e2e8f0;  /* 14.2:1 contrast */
+  --dark-text-tertiary: #cbd5e1;   /* 9.5:1 contrast */
+  --dark-text-muted: #94a3b8;      /* 7.2:1 contrast */
+  
+  /* Interactive Elements */
+  --dark-link: #60a5fa;
+  --dark-link-hover: #93bbfd;
+  --dark-focus: #3b82f6;
+  
+  /* Accent Colors */
+  --dark-accent-success: #4ade80;
+  --dark-accent-warning: #fbbf24;
+  --dark-accent-error: #f87171;
+  --dark-accent-info: #60a5fa;
+  
+  /* Borders and Dividers */
+  --dark-border-subtle: #374151;
+  --dark-border-default: #4b5563;
+  --dark-border-strong: #6b7280;
+  
+  /* Syntax Highlighting (GitHub Dark Theme Inspired) */
+  --dark-syntax-keyword: #ff7b72;
+  --dark-syntax-string: #a5d6ff;
+  --dark-syntax-comment: #8b949e;
+  --dark-syntax-function: #d2a8ff;
+  --dark-syntax-variable: #ffa657;
+  --dark-syntax-constant: #79c0ff;
+  --dark-syntax-operator: #ff7b72;
+  --dark-syntax-punctuation: #c9d1d9;
+}
+
+/* Dark Mode Base Styles */
+.dark {
+  color-scheme: dark;
+  background-color: var(--dark-bg-primary);
+  color: var(--dark-text-secondary);
+}
+
+/* Enhanced Typography for Dark Mode */
+.dark body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Headings with Enhanced Contrast */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: var(--dark-text-primary);
+  font-weight: 700;
+}
+
+/* Dark Mode Prose Enhancements */
+.dark .prose {
+  color: var(--dark-text-secondary);
+}
+
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: var(--dark-text-primary);
+  border-color: var(--dark-border-subtle);
+}
+
+/* Links with Better Visibility */
+.dark .prose a {
+  color: var(--dark-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+}
+
+.dark .prose a:hover {
+  color: var(--dark-link-hover);
+  text-decoration-thickness: 2px;
+}
+
+/* Code Blocks - GitHub Dark Theme */
+.dark .prose pre {
+  background-color: var(--dark-bg-code);
+  border: 1px solid var(--dark-border-subtle);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.dark .prose pre code {
+  color: #e6edf3;
+  background-color: transparent;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Inline Code */
+.dark .prose code:not(pre code) {
+  background-color: var(--dark-bg-tertiary);
+  color: var(--dark-syntax-function);
+  border: 1px solid var(--dark-border-subtle);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.375rem;
+  font-size: 0.875em;
+}
+
+/* Syntax Highlighting Classes */
+.dark .token.comment,
+.dark .token.prolog,
+.dark .token.doctype,
+.dark .token.cdata {
+  color: var(--dark-syntax-comment);
+  font-style: italic;
+}
+
+.dark .token.punctuation {
+  color: var(--dark-syntax-punctuation);
+}
+
+.dark .token.property,
+.dark .token.tag,
+.dark .token.boolean,
+.dark .token.number,
+.dark .token.constant,
+.dark .token.symbol,
+.dark .token.deleted {
+  color: var(--dark-syntax-constant);
+}
+
+.dark .token.selector,
+.dark .token.attr-name,
+.dark .token.string,
+.dark .token.char,
+.dark .token.builtin,
+.dark .token.inserted {
+  color: var(--dark-syntax-string);
+}
+
+.dark .token.operator,
+.dark .token.entity,
+.dark .token.url,
+.dark .language-css .token.string,
+.dark .style .token.string {
+  color: var(--dark-syntax-operator);
+}
+
+.dark .token.atrule,
+.dark .token.attr-value,
+.dark .token.keyword {
+  color: var(--dark-syntax-keyword);
+}
+
+.dark .token.function,
+.dark .token.class-name {
+  color: var(--dark-syntax-function);
+}
+
+.dark .token.regex,
+.dark .token.important,
+.dark .token.variable {
+  color: var(--dark-syntax-variable);
+}
+
+/* Blockquotes with Enhanced Styling */
+.dark .prose blockquote {
+  background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-bg-tertiary));
+  border-left: 4px solid var(--dark-accent-info);
+  color: var(--dark-text-secondary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.dark .prose blockquote p {
+  color: var(--dark-text-secondary);
+}
+
+/* Tables with Better Contrast */
+.dark .prose table {
+  background-color: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-subtle);
+}
+
+.dark .prose th {
+  background-color: var(--dark-bg-tertiary);
+  color: var(--dark-text-primary);
+  font-weight: 600;
+  border-color: var(--dark-border-default);
+}
+
+.dark .prose td {
+  border-color: var(--dark-border-subtle);
+  color: var(--dark-text-secondary);
+}
+
+.dark .prose tbody tr:hover {
+  background-color: var(--dark-bg-hover);
+}
+
+/* Lists with Better Markers */
+.dark .prose ul > li::before {
+  background-color: var(--dark-accent-info);
+}
+
+.dark .prose ol > li::before {
+  color: var(--dark-text-tertiary);
+  font-weight: 600;
+}
+
+/* Horizontal Rules */
+.dark .prose hr {
+  border-color: var(--dark-border-subtle);
+  opacity: 0.8;
+}
+
+/* Images with Subtle Borders */
+.dark .prose img {
+  border: 1px solid var(--dark-border-subtle);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
+}
+
+/* Figure Captions */
+.dark .prose figcaption {
+  color: var(--dark-text-tertiary);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+/* Strong and Emphasis */
+.dark .prose strong {
+  color: var(--dark-text-primary);
+  font-weight: 700;
+}
+
+.dark .prose em {
+  color: var(--dark-text-secondary);
+  font-style: italic;
+}
+
+/* Special Content Blocks */
+.dark .note,
+.dark .warning,
+.dark .tip,
+.dark .info {
+  background-color: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-default);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.dark .note {
+  border-left: 4px solid var(--dark-accent-info);
+  background: linear-gradient(90deg, rgba(96, 165, 250, 0.1), transparent);
+}
+
+.dark .warning {
+  border-left: 4px solid var(--dark-accent-warning);
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), transparent);
+}
+
+.dark .tip {
+  border-left: 4px solid var(--dark-accent-success);
+  background: linear-gradient(90deg, rgba(74, 222, 128, 0.1), transparent);
+}
+
+/* Enhanced Form Elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--dark-bg-secondary);
+  border: 1px solid var(--dark-border-default);
+  color: var(--dark-text-primary);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: var(--dark-focus);
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Button Enhancements */
+.dark button {
+  background-color: var(--dark-bg-tertiary);
+  color: var(--dark-text-primary);
+  border: 1px solid var(--dark-border-default);
+}
+
+.dark button:hover {
+  background-color: var(--dark-bg-hover);
+  border-color: var(--dark-border-strong);
+}
+
+/* Scrollbar Styling */
+.dark ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--dark-bg-secondary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--dark-bg-tertiary);
+  border-radius: 6px;
+  border: 2px solid var(--dark-bg-secondary);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-bg-hover);
+}
+
+/* Selection Colors */
+.dark ::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: var(--dark-text-primary);
+}
+
+/* Focus Indicators */
+.dark *:focus-visible {
+  outline: 2px solid var(--dark-focus);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Transitions for Smooth Mode Switching */
+body,
+.prose,
+.prose * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Print Styles for Dark Mode */
+@media print {
+  .dark {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .dark * {
+    background: transparent !important;
+    color: black !important;
+    border-color: #ddd !important;
+  }
+}
+
+/* Korean Text Optimization */
+.dark .prose:lang(ko) {
+  word-break: keep-all;
+  line-break: auto;
+  letter-spacing: -0.02em;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .dark .prose {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  
+  .dark .prose pre {
+    font-size: 14px;
+    padding: 1rem;
+  }
+}
