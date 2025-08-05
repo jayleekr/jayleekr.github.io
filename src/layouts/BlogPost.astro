@@ -247,11 +247,11 @@ const currentLang = getLangFromUrl(Astro.url);
 				
 				<!-- Desktop/Laptop Layout (LG and above) -->
 				<div class="hidden lg:block">
-					<!-- Full-width container with proper centering -->
-					<div class="relative w-full">
-						<!-- TOC Sidebar - Fixed position for better control -->
-						<aside class="fixed left-6 top-24 w-64 h-[calc(100vh-8rem)] z-30 hidden xl:block">
-							<div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 max-h-full overflow-y-auto shadow-lg">
+					<!-- Responsive container with optimal content width -->
+					<div class="relative w-full max-w-7xl mx-auto px-6 lg:px-8">
+						<!-- TOC Sidebar - Fixed position, only on ultra-wide screens (1920px+) -->
+						<aside class="fixed left-8 top-24 w-64 h-[calc(100vh-8rem)] z-30 hidden 2xl:block">
+							<div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 max-h-full overflow-y-auto shadow-lg">
 								<h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
 									{currentLang === 'ko' ? '목차' : 'Table of Contents'}
 								</h3>
@@ -264,10 +264,10 @@ const currentLang = getLangFromUrl(Astro.url);
 							</div>
 						</aside>
 
-						<!-- Main content area - centered with proper margins -->
-						<div class="max-w-4xl mx-auto px-6 xl:px-8">
-							<!-- Add left margin on XL+ screens to account for fixed TOC -->
-							<div class="xl:ml-72">
+						<!-- Main content area - optimized for readability -->
+						<div class="lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
+							<!-- Content with responsive margins -->
+							<div class="2xl:ml-72">
 								<article class="py-16">
 									<!-- Article Header -->
 									<header class="mb-16">
@@ -336,8 +336,8 @@ const currentLang = getLangFromUrl(Astro.url);
 										)}
 									</header>
 						
-									<!-- Article Content with optimal reading width -->
-									<div class="prose prose-lg xl:prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
+									<!-- Article Content with improved readability and contrast -->
+									<div class="prose prose-lg xl:prose-xl 2xl:prose-2xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-800 dark:prose-p:text-gray-200 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:text-gray-900 dark:prose-code:text-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-50 dark:prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-700 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
 										<slot />
 									</div>
 						
@@ -412,9 +412,9 @@ const currentLang = getLangFromUrl(Astro.url);
 							</div>
 						</div>
 
-						<!-- Reading Progress Sidebar - Fixed position on ultra-wide screens -->
-						<aside class="fixed right-6 top-24 w-48 hidden 2xl:block z-30">
-							<div class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-lg">
+						<!-- Reading Progress Sidebar - Only on ultra-wide screens -->
+						<aside class="fixed right-8 top-24 w-48 hidden 2xl:block z-30">
+							<div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-lg">
 								<h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 border-b border-gray-200 dark:border-gray-700 pb-2">
 									{currentLang === 'ko' ? '읽기 진행률' : 'Reading Progress'}
 								</h4>
@@ -450,14 +450,15 @@ const currentLang = getLangFromUrl(Astro.url);
 				theme: 'default',
 				themeVariables: {
 					primaryColor: '#3b82f6',
-					primaryTextColor: '#1f2937',
-					primaryBorderColor: '#d1d5db',
-					lineColor: '#6b7280',
+					primaryTextColor: '#111827',
+					primaryBorderColor: '#9ca3af',
+					lineColor: '#4b5563',
 					sectionBkgColor: '#f9fafb',
 					altSectionBkgColor: '#ffffff',
-					gridColor: '#e5e7eb',
-					secondaryColor: '#f3f4f6',
-					tertiaryColor: '#ffffff'
+					gridColor: '#d1d5db',
+					secondaryColor: '#e5e7eb',
+					tertiaryColor: '#ffffff',
+					fontFamily: 'Inter, system-ui, sans-serif'
 				}
 			};
 
@@ -466,13 +467,14 @@ const currentLang = getLangFromUrl(Astro.url);
 				themeVariables: {
 					primaryColor: '#60a5fa',
 					primaryTextColor: '#f9fafb',
-					primaryBorderColor: '#4b5563',
-					lineColor: '#9ca3af',
+					primaryBorderColor: '#6b7280',
+					lineColor: '#d1d5db',
 					sectionBkgColor: '#1f2937',
 					altSectionBkgColor: '#111827',
-					gridColor: '#374151',
+					gridColor: '#4b5563',
 					secondaryColor: '#374151',
-					tertiaryColor: '#1f2937'
+					tertiaryColor: '#1f2937',
+					fontFamily: 'Inter, system-ui, sans-serif'
 				}
 			};
 

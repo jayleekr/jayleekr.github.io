@@ -150,23 +150,26 @@ strong, b {
 	color: var(--text-primary);
 }
 
-/* Code styling with better fonts */
+/* Code styling with better fonts and contrast */
 code {
-	@apply px-2 py-0.5 text-sm bg-gray-100 dark:bg-gray-800 rounded;
-	@apply border border-gray-200 dark:border-gray-700;
-	font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+	@apply px-2 py-1 text-sm bg-gray-100 dark:bg-gray-800 rounded;
+	@apply border border-gray-200 dark:border-gray-600;
+	@apply text-gray-900 dark:text-gray-100;
+	font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
 	font-weight: 500;
-	font-size: 0.85em;
+	font-size: 0.875em;
 }
 
 pre {
 	@apply p-6 rounded-lg overflow-x-auto my-8;
-	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700;
+	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600;
+	@apply text-gray-900 dark:text-gray-100;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 pre code {
 	@apply p-0 bg-transparent border-0;
+	@apply text-gray-800 dark:text-gray-200;
 	font-size: 0.875rem;
 	line-height: 1.7;
 }
@@ -406,14 +409,21 @@ a:not(.no-underline):hover {
 }
 
 .prose code {
-	@apply bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-sm;
-	@apply border border-gray-200 dark:border-gray-700;
+	@apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm;
+	@apply border border-gray-200 dark:border-gray-600;
+	@apply text-gray-900 dark:text-gray-100;
 	font-weight: 500;
+	font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
+}
+
+.prose pre {
+	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600;
+	@apply text-gray-800 dark:text-gray-200;
 }
 
 .prose pre code {
 	@apply bg-transparent border-0 p-0;
-	color: inherit;
+	@apply text-gray-800 dark:text-gray-200;
 	font-weight: 400;
 }
 
@@ -562,7 +572,7 @@ a:not(.no-underline):hover {
 /* Tablet: 768px - 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
 	.prose {
-		max-width: 70ch !important;
+		max-width: 75ch !important;
 		font-size: 1.0625rem;
 		line-height: 1.75;
 	}
@@ -577,19 +587,19 @@ a:not(.no-underline):hover {
 /* Small Laptop: 1024px - 1279px */
 @media (min-width: 1024px) and (max-width: 1279px) {
 	.prose {
-		max-width: 75ch !important;
+		max-width: 80ch !important;
 		font-size: 1.125rem;
 		line-height: 1.75;
 	}
 	
-	/* Single column layout for optimal reading */
+	/* Optimized single column layout */
 	main { @apply px-8 py-12; }
 }
 
-/* Standard Laptop: 1280px - 1365px */
+/* Standard Laptop: 1280px - 1365px (Most laptops) */
 @media (min-width: 1280px) and (max-width: 1365px) {
 	.prose {
-		max-width: 78ch !important;
+		max-width: 85ch !important;
 		font-size: 1.125rem;
 		line-height: 1.75;
 	}
@@ -598,7 +608,7 @@ a:not(.no-underline):hover {
 /* Large Laptop: 1366px - 1535px */
 @media (min-width: 1366px) and (max-width: 1535px) {
 	.prose {
-		max-width: 80ch !important;
+		max-width: 90ch !important;
 		font-size: 1.1875rem;
 		line-height: 1.7;
 	}
@@ -607,7 +617,7 @@ a:not(.no-underline):hover {
 /* Desktop: 1536px - 1679px */
 @media (min-width: 1536px) and (max-width: 1679px) {
 	.prose {
-		max-width: 82ch !important;
+		max-width: 95ch !important;
 		font-size: 1.1875rem;
 		line-height: 1.7;
 	}
@@ -616,7 +626,7 @@ a:not(.no-underline):hover {
 /* Large Desktop: 1680px - 1919px */
 @media (min-width: 1680px) and (max-width: 1919px) {
 	.prose {
-		max-width: 85ch !important;
+		max-width: 100ch !important;
 		font-size: 1.25rem;
 		line-height: 1.7;
 	}
@@ -625,7 +635,7 @@ a:not(.no-underline):hover {
 /* Ultra-wide: 1920px+ */
 @media (min-width: 1920px) {
 	.prose {
-		max-width: 88ch !important;
+		max-width: 105ch !important;
 		font-size: 1.25rem;
 		line-height: 1.7;
 	}
@@ -726,6 +736,65 @@ a:not(.no-underline):hover {
 	transition: none !important;
 }
 
+/* Mermaid diagram improvements */
+.mermaid-diagram {
+	@apply flex justify-center items-center my-8 p-4;
+	@apply bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-600;
+	min-height: 200px;
+}
+
+.mermaid-diagram svg {
+	max-width: 100% !important;
+	height: auto !important;
+	background: transparent !important;
+}
+
+/* Improve Mermaid text contrast in dark mode */
+.dark .mermaid-diagram .node text,
+.dark .mermaid-diagram .edgeLabel text,
+.dark .mermaid-diagram .cluster text {
+	fill: #f9fafb !important;
+}
+
+.dark .mermaid-diagram .node rect,
+.dark .mermaid-diagram .node polygon {
+	stroke: #6b7280 !important;
+	fill: #374151 !important;
+}
+
+.dark .mermaid-diagram .edgePath .path {
+	stroke: #d1d5db !important;
+}
+
+.dark .mermaid-diagram .arrowheadPath {
+	fill: #d1d5db !important;
+	stroke: #d1d5db !important;
+}
+
+/* Light mode Mermaid improvements */
+.mermaid-diagram .node text,
+.mermaid-diagram .edgeLabel text,
+.mermaid-diagram .cluster text {
+	fill: #111827 !important;
+	font-weight: 500 !important;
+}
+
+.mermaid-diagram .node rect,
+.mermaid-diagram .node polygon {
+	stroke: #4b5563 !important;
+	fill: #f3f4f6 !important;
+}
+
+.mermaid-diagram .edgePath .path {
+	stroke: #4b5563 !important;
+	stroke-width: 2px !important;
+}
+
+.mermaid-diagram .arrowheadPath {
+	fill: #4b5563 !important;
+	stroke: #4b5563 !important;
+}
+
 /* Print styles */
 @media print {
 	body {
@@ -739,6 +808,22 @@ a:not(.no-underline):hover {
 	
 	.no-print {
 		display: none !important;
+	}
+	
+	/* Print-friendly Mermaid diagrams */
+	.mermaid-diagram {
+		@apply border border-gray-400;
+		background: white !important;
+	}
+	
+	.mermaid-diagram svg {
+		background: white !important;
+	}
+	
+	.mermaid-diagram .node text,
+	.mermaid-diagram .edgeLabel text,
+	.mermaid-diagram .cluster text {
+		fill: black !important;
 	}
 }
 
@@ -831,14 +916,18 @@ a:not(.no-underline):hover {
 	/* Code blocks on mobile */
 	.prose pre {
 		@apply p-4;
-		font-size: 0.875rem; /* Explicit size instead of text-sm */
+		font-size: 0.875rem;
 		max-width: calc(100vw - 2rem);
 		overflow-x: auto;
 		-webkit-overflow-scrolling: touch;
+		@apply bg-gray-50 dark:bg-gray-900;
+		@apply text-gray-800 dark:text-gray-200;
 	}
 	
 	.prose code {
-		font-size: 0.9em; /* Increased from 0.85em for better readability */
-		word-break: break-word; /* Changed from break-all to break-word */
+		font-size: 0.875em;
+		word-break: break-word;
+		@apply text-gray-900 dark:text-gray-100;
+		@apply bg-gray-100 dark:bg-gray-800;
 	}
 }
