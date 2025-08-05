@@ -1,10 +1,10 @@
 # workflow_state.md
-_Last updated: 2025-08-05 10:45 AM KST_
+_Last updated: 2025-08-05 10:55 AM KST_
 
 ## State
 Phase: MAINTENANCE  
 Status: COMPLETED  
-CurrentItem: Blog Layout and Code Rendering Fixes - Successfully deployed to GitHub Pages
+CurrentItem: Blog Title Styling Fixes - Fixed oversized titles and deployed to production
 
 ## Plan
 ✅ COMPLETED: Phase 1 - Core Infrastructure (Jan 22, 2025)
@@ -134,6 +134,15 @@ User request → restore/show blueprint.
 | 38 | Verify Astro-only build process and architecture | COMPLETED |
 
 ## Log
+2025-08-05 - Blog Title Styling Fixes DEPLOYED ✅
+- Fixed oversized blog post titles that were breaking layout
+- Reduced title sizes: Mobile (text-4xl→2xl, 5xl→3xl, 6xl→4xl)
+- Reduced title sizes: Desktop (text-4xl→3xl, 5xl→4xl, 6xl→5xl)  
+- Changed font weight from extrabold to bold for cleaner appearance
+- Adjusted description text sizes and margins for better proportion
+- Fixed prose heading sizes to match new title hierarchy
+- Successfully deployed to GitHub Pages (commit: ca2d271)
+
 2025-08-05 - Blog Layout and Code Rendering Fixes DEPLOYED ✅
 - Fixed narrow blog content width issue: increased from 628px to 800-1000px+ on laptop/desktop screens
 - Optimized responsive design: TOC sidebar now only appears on ultra-wide screens (2xl+)

@@ -15,6 +15,7 @@ import WhimsyEnhancer from '../components/WhimsyEnhancer.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import LoadingStates from '../components/LoadingStates.astro';
 import { getLangFromUrl } from '../utils/i18n';
+import '../styles/blog-layout.css';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	categories?: string[];
@@ -38,7 +39,7 @@ const currentLang = getLangFromUrl(Astro.url);
 		<BaseHead title={title} description={description} image={heroImageSrc} />
 	</head>
 
-	<body class="bg-white dark:bg-gray-900 transition-colors duration-300" data-categories={categories ? JSON.stringify(categories) : '[]'}>
+	<body class="bg-white dark:bg-gray-900 transition-colors duration-300">
 		<!-- Whimsy Components -->
 		<WhimsyEnhancer />
 		<CommandPalette />
@@ -49,10 +50,10 @@ const currentLang = getLangFromUrl(Astro.url);
 		<ReadingProgress />
 		
 		<main id="main-content" class="min-h-screen">
-			<!-- Hero Section -->
+			<!-- Hero Image (if exists) -->
 			{heroImageSrc && (
 				<div class="relative">
-					<div class="aspect-[21/9] max-h-[500px] overflow-hidden">
+					<div class="aspect-[21/9] max-h-[400px] overflow-hidden">
 						<img 
 							src={heroImageSrc} 
 							alt={title}
@@ -63,124 +64,86 @@ const currentLang = getLangFromUrl(Astro.url);
 				</div>
 			)}
 			
-			<!-- Content Container -->
-			<div class="w-full">
-				<!-- Floating TOC Button (Mobile/Tablet) -->
-				<button 
-					id="toc-toggle-mobile" 
-					class="fixed bottom-6 right-6 lg:hidden z-40 w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
-					aria-label="Toggle table of contents"
-				>
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
-					</svg>
-				</button>
-				
-				<!-- Table of Contents Overlay (Mobile/Tablet) -->
-				<div id="toc-overlay-mobile" class="fixed inset-0 bg-black/50 z-30 lg:hidden hidden">
-					<div class="fixed right-0 top-0 h-full w-80 max-w-[80vw] bg-white dark:bg-gray-900 shadow-xl transform translate-x-full transition-transform duration-300">
-						<div class="p-6">
-							<div class="flex items-center justify-between mb-6">
-								<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-									{currentLang === 'ko' ? '목차' : 'Table of Contents'}
-								</h3>
-								<button id="toc-close-mobile" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-									</svg>
-								</button>
-							</div>
-							<EnhancedTOC 
-								content={content}
-								maxDepth={3}
-								showNumbers={false}
-								className=""
-							/>
+			<!-- Article Container -->
+			<div class="article-container">
+				<!-- Main Article Content -->
+				<article class="article-content">
+					<!-- Article Header -->
+					<header class="article-header">
+						<!-- Meta Information -->
+						<div class="article-meta">
+							<FormattedDate date={pubDate} />
+							{content && (
+								<>
+									<span class="meta-separator">•</span>
+									<ReadingTime content={content} />
+								</>
+							)}
+							{updatedDate && (
+								<>
+									<span class="meta-separator">•</span>
+									<span>{currentLang === 'ko' ? '수정됨' : 'Updated'}: <FormattedDate date={updatedDate} /></span>
+								</>
+							)}
+							{lang && (
+								<>
+									<span class="meta-separator">•</span>
+									<span class="lang-badge">{lang}</span>
+								</>
+							)}
 						</div>
-					</div>
-				</div>
-				
-				<!-- Mobile/Tablet Layout (Below LG) -->
-				<div class="lg:hidden">
-					<article class="py-16 max-w-prose mx-auto px-4 sm:px-6">
-						<!-- Article Header -->
-						<header class="mb-16">
-							<!-- Meta Information -->
-							<div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-8 font-medium">
-								<FormattedDate date={pubDate} />
-								{content && (
-									<>
-										<span class="text-gray-300 dark:text-gray-600">•</span>
-										<ReadingTime content={content} />
-									</>
-								)}
-								{updatedDate && (
-									<>
-										<span class="text-gray-300 dark:text-gray-600">•</span>
-										<span>Updated: <FormattedDate date={updatedDate} /></span>
-									</>
-								)}
-								{lang && (
-									<>
-										<span class="text-gray-300 dark:text-gray-600">•</span>
-										<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-semibold uppercase tracking-wide">
-											{lang}
-										</span>
-									</>
-								)}
-							</div>
-							
-							<!-- Title -->
-							<h1 class="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight text-gray-900 dark:text-gray-100 mb-6">
-								{title}
-							</h1>
-							
-							<!-- Description -->
-							{description && (
-								<p class="text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-8">
-									{description}
-								</p>
-							)}
-							
-							<!-- Categories and Tags -->
-							{(categories || tags) && (
-								<div class="space-y-4">
-									{categories && categories.length > 0 && (
-										<div class="flex flex-wrap items-center gap-3">
-											<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Categories</span>
-											{categories.map((category) => (
-												<span class="px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium border border-primary-200 dark:border-primary-800 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
-													{category}
-												</span>
-											))}
-										</div>
-									)}
-									
-									{tags && tags.length > 0 && (
-										<div class="flex flex-wrap items-center gap-3">
-											<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Tags</span>
-											{tags.map((tag) => (
-												<span class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-													#{tag}
-												</span>
-											))}
-										</div>
-									)}
-								</div>
-							)}
-						</header>
 						
-						<!-- Article Content -->
-						<div class="prose prose-lg md:prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-800 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
-							<slot />
-						</div>
-					
-						<!-- Social Share -->
-						<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
-							<div class="text-center mb-6">
-								<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
-								<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
+						<!-- Title -->
+						<h1 class="article-title">{title}</h1>
+						
+						<!-- Description -->
+						{description && (
+							<p class="article-description">{description}</p>
+						)}
+						
+						<!-- Categories and Tags -->
+						{(categories || tags) && (
+							<div class="article-taxonomy">
+								{categories && categories.length > 0 && (
+									<div class="categories-section">
+										<span class="taxonomy-label">{currentLang === 'ko' ? '카테고리' : 'Categories'}</span>
+										<div class="taxonomy-items">
+											{categories.map((category) => (
+												<a href={`/blog?category=${category}`} class="category-badge">
+													{category}
+												</a>
+											))}
+										</div>
+									</div>
+								)}
+								
+								{tags && tags.length > 0 && (
+									<div class="tags-section">
+										<span class="taxonomy-label">{currentLang === 'ko' ? '태그' : 'Tags'}</span>
+										<div class="taxonomy-items">
+											{tags.map((tag) => (
+												<a href={`/blog?tag=${tag}`} class="tag-badge">
+													#{tag}
+												</a>
+											))}
+										</div>
+									</div>
+								)}
 							</div>
+						)}
+					</header>
+					
+					<!-- Article Content -->
+					<div class="prose-container">
+						<slot />
+					</div>
+					
+					<!-- Article Footer -->
+					<footer class="article-footer">
+						<!-- Social Share -->
+						<div class="social-share-section">
+							<h3>{currentLang === 'ko' ? '이 글 공유하기' : 'Share this article'}</h3>
+							<p>{currentLang === 'ko' ? '도움이 되셨나요? 다른 분들께도 공유해주세요' : 'Found this helpful? Share it with your network'}</p>
 							<SocialShare 
 								title={title}
 								description={description || ''}
@@ -189,256 +152,139 @@ const currentLang = getLangFromUrl(Astro.url);
 								showLabels={true}
 							/>
 						</div>
-					
+						
 						<!-- Related Posts -->
-						<div class="mt-16">
-							<RelatedPosts 
-								currentPostId={Astro.params.slug || ''}
-								currentCategories={categories}
-								currentTags={tags}
-								maxPosts={3}
-							/>
-						</div>
-					
-						<!-- Newsletter Subscription -->
-						<div class="mt-20 mb-16">
+						<RelatedPosts 
+							currentPostId={Astro.params.slug || ''}
+							currentCategories={categories}
+							currentTags={tags}
+							maxPosts={3}
+						/>
+						
+						<!-- Newsletter -->
+						<div class="mt-12 mb-12">
 							<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
 								<Newsletter variant="inline" />
 							</div>
 						</div>
-					
-						<!-- Comments Section -->
-						<div class="mt-16">
+						
+						<!-- Comments -->
+						<div class="mt-12">
 							<div class="text-center mb-8">
-								<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
-								<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
+								<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+									{currentLang === 'ko' ? '댓글 남기기' : 'Join the Discussion'}
+								</h3>
+								<p class="text-gray-600 dark:text-gray-400">
+									{currentLang === 'ko' ? '여러분의 생각을 들려주세요' : 'Share your thoughts and connect with other readers'}
+								</p>
 							</div>
 							<Comments />
 						</div>
-					
-						<!-- Article Footer -->
-						<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700">
-							<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
-								<a 
-									href="/blog" 
-									class="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-all duration-200 hover:scale-105"
-								>
-									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-									</svg>
-									Back to Blog
-								</a>
-								
-								<div class="flex items-center gap-6">
-									<button 
-										onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-										class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-									>
-										<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-										</svg>
-										Back to top
-									</button>
-								</div>
-							</div>
-						</footer>
-					</article>
-				</div>
-				
-				<!-- Desktop/Laptop Layout (LG and above) -->
-				<div class="hidden lg:block">
-					<!-- Responsive container with optimal content width -->
-					<div class="relative w-full max-w-7xl mx-auto px-6 lg:px-8">
-						<!-- TOC Sidebar - Fixed position, only on ultra-wide screens (1920px+) -->
-						<aside class="fixed left-8 top-24 w-64 h-[calc(100vh-8rem)] z-30 hidden 2xl:block">
-							<div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 max-h-full overflow-y-auto shadow-lg">
-								<h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
-									{currentLang === 'ko' ? '목차' : 'Table of Contents'}
-								</h3>
-								<EnhancedTOC 
-									content={content}
-									maxDepth={3}
-									showNumbers={false}
-									className=""
-								/>
-							</div>
-						</aside>
-
-						<!-- Main content area - optimized for readability -->
-						<div class="lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">
-							<!-- Content with responsive margins -->
-							<div class="2xl:ml-72">
-								<article class="py-16">
-									<!-- Article Header -->
-									<header class="mb-16">
-										<!-- Meta Information -->
-										<div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-8 font-medium">
-											<FormattedDate date={pubDate} />
-											{content && (
-												<>
-													<span class="text-gray-300 dark:text-gray-600">•</span>
-													<ReadingTime content={content} />
-												</>
-											)}
-											{updatedDate && (
-												<>
-													<span class="text-gray-300 dark:text-gray-600">•</span>
-													<span>Updated: <FormattedDate date={updatedDate} /></span>
-												</>
-											)}
-											{lang && (
-												<>
-													<span class="text-gray-300 dark:text-gray-600">•</span>
-													<span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs font-semibold uppercase tracking-wide">
-														{lang}
-													</span>
-												</>
-											)}
-										</div>
+						
+						<!-- Navigation -->
+						<div class="mt-16 flex flex-col sm:flex-row justify-between items-center gap-6">
+							<a href="/blog" class="back-to-blog">
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+								</svg>
+								{currentLang === 'ko' ? '블로그로 돌아가기' : 'Back to Blog'}
+							</a>
 							
-										<!-- Title -->
-										<h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight text-gray-900 dark:text-gray-100 mb-6">
-											{title}
-										</h1>
-										
-										<!-- Description -->
-										{description && (
-											<p class="text-lg lg:text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-8">
-												{description}
-											</p>
-										)}
-										
-										<!-- Categories and Tags -->
-										{(categories || tags) && (
-											<div class="space-y-4">
-												{categories && categories.length > 0 && (
-													<div class="flex flex-wrap items-center gap-3">
-														<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Categories</span>
-														{categories.map((category) => (
-															<span class="px-4 py-2 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg text-sm font-medium border border-primary-200 dark:border-primary-800 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
-																{category}
-															</span>
-														))}
-													</div>
-												)}
-												
-												{tags && tags.length > 0 && (
-													<div class="flex flex-wrap items-center gap-3">
-														<span class="text-sm font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Tags</span>
-														{tags.map((tag) => (
-															<span class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-																#{tag}
-															</span>
-														))}
-													</div>
-												)}
-											</div>
-										)}
-									</header>
-						
-									<!-- Article Content with improved readability and contrast -->
-									<div class="prose prose-lg xl:prose-xl dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-lg prose-p:leading-relaxed prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:font-medium prose-strong:text-gray-900 dark:prose-strong:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:text-gray-900 dark:prose-code:text-gray-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-medium prose-pre:bg-gray-50 dark:prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-200 dark:prose-pre:border-gray-700 prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:my-8">
-										<slot />
-									</div>
-						
-									<!-- Social Share -->
-									<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
-										<div class="text-center mb-6">
-											<h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Share this article</h3>
-											<p class="text-sm text-gray-600 dark:text-gray-400">Found this helpful? Share it with your network</p>
-										</div>
-										<SocialShare 
-											title={title}
-											description={description || ''}
-											url={Astro.url.pathname}
-											hashtags={tags || []}
-											showLabels={true}
-										/>
-									</div>
-					
-									<!-- Related Posts -->
-									<div class="mt-16">
-										<RelatedPosts 
-											currentPostId={Astro.params.slug || ''}
-											currentCategories={categories}
-											currentTags={tags}
-											maxPosts={3}
-										/>
-									</div>
-					
-									<!-- Newsletter Subscription -->
-									<div class="mt-20 mb-16">
-										<div class="bg-gradient-to-r from-primary-50 to-blue-50 dark:from-primary-900/20 dark:to-blue-900/20 rounded-2xl p-8 border border-primary-100 dark:border-primary-800">
-											<Newsletter variant="inline" />
-										</div>
-									</div>
-					
-									<!-- Comments Section -->
-									<div class="mt-16">
-										<div class="text-center mb-8">
-											<h3 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Join the Discussion</h3>
-											<p class="text-gray-600 dark:text-gray-400">Share your thoughts and connect with other readers</p>
-										</div>
-										<Comments />
-									</div>
-					
-									<!-- Article Footer -->
-									<footer class="mt-20 pt-12 border-t border-gray-200 dark:border-gray-700">
-										<div class="flex flex-col sm:flex-row justify-between items-center gap-6">
-											<a 
-												href="/blog" 
-												class="inline-flex items-center gap-3 px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-all duration-200 hover:scale-105"
-											>
-												<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-												</svg>
-												Back to Blog
-											</a>
-											
-											<div class="flex items-center gap-6">
-												<button 
-													onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-													class="inline-flex items-center gap-2 px-4 py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium"
-												>
-													<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
-													</svg>
-													Back to top
-												</button>
-											</div>
-										</div>
-									</footer>
-								</article>
-							</div>
+							<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="scroll-to-top">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+								</svg>
+								{currentLang === 'ko' ? '맨 위로' : 'Back to top'}
+							</button>
 						</div>
-
-						<!-- Reading Progress Sidebar - Only on ultra-wide screens -->
-						<aside class="fixed right-8 top-24 w-48 hidden 2xl:block z-30">
-							<div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm rounded-lg border border-gray-200 dark:border-gray-700 p-4 shadow-lg">
-								<h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 border-b border-gray-200 dark:border-gray-700 pb-2">
-									{currentLang === 'ko' ? '읽기 진행률' : 'Reading Progress'}
-								</h4>
-								<div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
-									<div id="sidebar-progress-bar" class="bg-primary-600 dark:bg-primary-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-								</div>
-								<div class="text-xs text-gray-500 dark:text-gray-400 text-center">
-									<span id="sidebar-progress-text">0%</span>
-								</div>
-							</div>
-						</aside>
+					</footer>
+				</article>
+				
+				<!-- Desktop TOC Sidebar -->
+				<aside class="toc-sidebar">
+					<h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+						{currentLang === 'ko' ? '목차' : 'Table of Contents'}
+					</h3>
+					<EnhancedTOC 
+						content={content}
+						maxDepth={3}
+						showNumbers={false}
+						className=""
+					/>
+				</aside>
+			</div>
+			
+			<!-- Mobile TOC Toggle -->
+			<button 
+				id="mobile-toc-toggle"
+				class="mobile-toc-toggle"
+				aria-label="Toggle table of contents"
+			>
+				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16"/>
+				</svg>
+			</button>
+			
+			<!-- Mobile TOC Drawer -->
+			<div id="mobile-toc-drawer" class="mobile-toc-drawer">
+				<div class="mobile-toc-content">
+					<div class="mobile-toc-header">
+						<h3>{currentLang === 'ko' ? '목차' : 'Table of Contents'}</h3>
+						<button id="mobile-toc-close" aria-label="Close table of contents">
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+							</svg>
+						</button>
 					</div>
+					<EnhancedTOC 
+						content={content}
+						maxDepth={3}
+						showNumbers={false}
+						className=""
+					/>
 				</div>
-		</div>
+			</div>
 		</main>
+		
 		<Footer />
 		
-		<!-- Console Welcome Message -->
+		<!-- Mobile TOC JavaScript -->
 		<script>
-			// Fun console messages for developers
-			console.log('%c🚀 Welcome to jayleekr.github.io! 🚀', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
-			console.log('%c💡 Pro tip: Try Cmd/Ctrl + K for the command palette!', 'color: #10b981; font-size: 14px;');
-			console.log('%c🎮 Easter egg: Type "//" anywhere or try the Konami code!', 'color: #f59e0b; font-size: 14px;');
-			console.log('%c🛠️ Built with Astro + Tailwind CSS + lots of ❤️', 'color: #8b5cf6; font-size: 14px;');
+			document.addEventListener('DOMContentLoaded', () => {
+				const toggleBtn = document.getElementById('mobile-toc-toggle');
+				const drawer = document.getElementById('mobile-toc-drawer');
+				const closeBtn = document.getElementById('mobile-toc-close');
+				
+				if (toggleBtn && drawer && closeBtn) {
+					// Open drawer
+					toggleBtn.addEventListener('click', () => {
+						drawer.classList.add('open');
+						document.body.style.overflow = 'hidden';
+					});
+					
+					// Close drawer
+					const closeDrawer = () => {
+						drawer.classList.remove('open');
+						document.body.style.overflow = '';
+					};
+					
+					closeBtn.addEventListener('click', closeDrawer);
+					
+					// Close on backdrop click
+					drawer.addEventListener('click', (e) => {
+						if (e.target === drawer) {
+							closeDrawer();
+						}
+					});
+					
+					// Close on escape key
+					document.addEventListener('keydown', (e) => {
+						if (e.key === 'Escape' && drawer.classList.contains('open')) {
+							closeDrawer();
+						}
+					});
+				}
+			});
 		</script>
 		
 		<!-- Mermaid Script -->
@@ -497,108 +343,37 @@ const currentLang = getLangFromUrl(Astro.url);
 					flowchart: {
 						htmlLabels: true,
 						useMaxWidth: true,
-						diagramPadding: 8
-					},
-					sequence: {
-						diagramMarginX: 50,
-						diagramMarginY: 10,
-						actorMargin: 50,
-						width: 150,
-						height: 65,
-						boxMargin: 10,
-						boxTextMargin: 5,
-						noteMargin: 10,
-						messageMargin: 35,
-						mirrorActors: true,
-						bottomMarginAdj: 1,
-						useMaxWidth: true,
-						rightAngles: false,
-						showSequenceNumbers: false
-					},
-					gantt: {
-						numberSectionStyles: 4,
-						axisFormat: '%m/%d/%Y',
-						topAxis: false
+						rankSpacing: 50,
+						nodeSpacing: 30,
+						curve: 'basis'
 					}
 				});
+
+				// Find and render all mermaid diagrams
+				const mermaidElements = document.querySelectorAll('.mermaid');
+				if (mermaidElements.length > 0) {
+					mermaid.run({
+						querySelector: '.mermaid'
+					}).catch(console.error);
+				}
 			}
 
-			function renderMermaidDiagrams() {
-				// Find all code blocks with mermaid content - check multiple selectors
-				const codeBlocks = document.querySelectorAll('pre code.language-mermaid, pre code[class*="mermaid"], pre code');
-				console.log(`Found ${codeBlocks.length} code blocks to check for Mermaid`);
-				
-				codeBlocks.forEach(async (codeBlock) => {
-					const preElement = codeBlock.parentElement;
-					if (!preElement) return;
-					
-					const content = codeBlock.textContent || '';
-					const className = codeBlock.className || '';
-					
-					// Check if this is a mermaid diagram by class name or content
-					const isMermaidByClass = className.includes('mermaid') || className.includes('language-mermaid');
-					const isMermaidByContent = content.trim().match(/^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|gitgraph)/);
-					
-					console.log(`Code block - class: "${className}", content start: "${content.trim().substring(0, 50)}...", isMermaid: ${isMermaidByClass || isMermaidByContent}`);
-					
-					if (isMermaidByClass || isMermaidByContent) {
-						try {
-							// Create a new mermaid container
-							const mermaidContainer = document.createElement('div');
-							mermaidContainer.className = 'mermaid-diagram my-8 flex justify-center';
-							mermaidContainer.id = `mermaid-${Math.random().toString(36).substring(2, 11)}`;
-							mermaidContainer.style.background = 'transparent';
-							
-							// Render the diagram
-							const { svg } = await mermaid.render(mermaidContainer.id + '-svg', content);
-							mermaidContainer.innerHTML = svg;
-							
-							// Apply responsive styles
-							const svgElement = mermaidContainer.querySelector('svg');
-							if (svgElement) {
-								svgElement.style.maxWidth = '100%';
-								svgElement.style.height = 'auto';
-								svgElement.removeAttribute('width');
-								svgElement.removeAttribute('height');
-							}
-							
-							// Replace the pre element with the mermaid container
-							preElement.parentNode?.replaceChild(mermaidContainer, preElement);
-						} catch (error) {
-							console.error('Error rendering Mermaid diagram:', error);
-							const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-							const errorDiv = document.createElement('div');
-							errorDiv.className = 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 text-red-700 dark:text-red-400 my-8';
-							errorDiv.innerHTML = `
-								<p class="font-medium">Error rendering diagram</p>
-								<p class="text-sm mt-1">${errorMessage}</p>
-							`;
-							preElement.parentNode?.replaceChild(errorDiv, preElement);
-						}
-					}
-				});
-			}
+			// Initialize on load
+			initializeMermaid();
 
-			function handleThemeChange() {
-				// Re-initialize and re-render when theme changes
-				initializeMermaid();
-				renderMermaidDiagrams();
-			}
-
-			// Initialize on page load
-			document.addEventListener('DOMContentLoaded', () => {
-				initializeMermaid();
-				renderMermaidDiagrams();
-			});
-
-			// Listen for theme changes
+			// Re-initialize on theme change
 			const observer = new MutationObserver((mutations) => {
 				mutations.forEach((mutation) => {
 					if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-						const target = mutation.target;
-						if (target === document.documentElement) {
-							handleThemeChange();
-						}
+						// Clear existing mermaid state
+						const mermaidElements = document.querySelectorAll('.mermaid[data-processed="true"]');
+						mermaidElements.forEach(el => {
+							el.removeAttribute('data-processed');
+							el.innerHTML = el.getAttribute('data-mermaid-original') || el.innerHTML;
+						});
+						
+						// Re-initialize with new theme
+						initializeMermaid();
 					}
 				});
 			});
@@ -608,96 +383,10 @@ const currentLang = getLangFromUrl(Astro.url);
 				attributeFilter: ['class']
 			});
 
-			// Clean up observer when page unloads
-			window.addEventListener('beforeunload', () => {
-				observer.disconnect();
+			// Store original mermaid content
+			document.querySelectorAll('.mermaid').forEach(el => {
+				el.setAttribute('data-mermaid-original', el.innerHTML);
 			});
-		</script>
-
-		<!-- Reading Progress and Mobile TOC Scripts -->
-		<script is:inline>
-			// Reading progress bar
-			function updateReadingProgress() {
-				const article = document.getElementById('main-content');
-				const progressBar = document.getElementById('reading-progress-bar');
-				const sidebarProgressBar = document.getElementById('sidebar-progress-bar');
-				
-				if (!article) return;
-				
-				const articleTop = article.offsetTop;
-				const articleHeight = article.offsetHeight;
-				const windowTop = window.pageYOffset;
-				const windowHeight = window.innerHeight;
-				
-				const progress = Math.min(
-					Math.max((windowTop - articleTop + windowHeight * 0.1) / (articleHeight - windowHeight * 0.8), 0),
-					1
-				);
-				
-				const progressPercent = `${progress * 100}%`;
-				
-				if (progressBar) {
-					progressBar.style.width = progressPercent;
-				}
-				
-				if (sidebarProgressBar) {
-					sidebarProgressBar.style.width = progressPercent;
-				}
-			}
-			
-			// Mobile TOC functionality
-			function initMobileTOC() {
-				const toggleBtn = document.getElementById('toc-toggle-mobile');
-				const overlay = document.getElementById('toc-overlay-mobile');
-				const closeBtn = document.getElementById('toc-close-mobile');
-				const sidebar = overlay?.querySelector('.fixed');
-				
-				if (!toggleBtn || !overlay || !closeBtn || !sidebar) return;
-				
-				function openTOC() {
-					overlay.classList.remove('hidden');
-					document.body.style.overflow = 'hidden';
-					setTimeout(() => {
-						sidebar.classList.remove('translate-x-full');
-					}, 10);
-				}
-				
-				function closeTOC() {
-					sidebar.classList.add('translate-x-full');
-					document.body.style.overflow = '';
-					setTimeout(() => {
-						overlay.classList.add('hidden');
-					}, 300);
-				}
-				
-				toggleBtn.addEventListener('click', openTOC);
-				closeBtn.addEventListener('click', closeTOC);
-				overlay.addEventListener('click', (e) => {
-					if (e.target === overlay) closeTOC();
-				});
-				
-				// Close on escape key
-				document.addEventListener('keydown', (e) => {
-					if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-						closeTOC();
-					}
-				});
-			}
-			
-			// Legacy Mermaid processing function (now handled by CDN script above)
-			function processMermaidDiagrams() {
-				// No longer needed - Mermaid processing is handled by the CDN script above
-			}
-			
-			// Initialize on page load
-			document.addEventListener('DOMContentLoaded', () => {
-				updateReadingProgress();
-				initMobileTOC();
-				processMermaidDiagrams();
-			});
-			
-			// Update progress on scroll
-			window.addEventListener('scroll', updateReadingProgress, { passive: true });
 		</script>
 	</body>
 </html>

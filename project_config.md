@@ -37,7 +37,8 @@ Develop a world-class developer blog based on successful developer blog case stu
 - Summarize when `workflow_state.md` > 12 K.
 
 ## Changelog
-- 2025-08-05: **🎨 BLOG LAYOUT & CODE RENDERING FIXES DEPLOYED** - Optimized content width (628px→800-1000px+) and enhanced code block readability, live on GitHub Pages
+- 2025-08-05: **🆕 BLOG TITLE STYLING FIXES** - Fixed oversized titles breaking layout (text-4xl/5xl/6xl → text-2xl/3xl/4xl-5xl)
+- 2025-08-05: **🎨 BLOG LAYOUT & CODE RENDERING FIXES** - Optimized content width (628px→800-1000px+) and enhanced code block readability
 - 2025-08-04: **📱 PHASE 2 NAVIGATION IMPLEMENTATION** - Mobile bottom nav + desktop always-visible search with responsive layout system
 - 2025-08-01: **🔍 BLOG LAYOUT ROOT CAUSE ANALYSIS** - Deep investigation revealing content-first principle violation (628px vs 700-800px optimal)
 - 2025-01-24: **🏗️ ARCHITECTURE IMPROVEMENT PHASE 1** - Started architecture simplification based on Senior Architect recommendations
