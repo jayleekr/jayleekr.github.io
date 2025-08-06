@@ -1,0 +1,168 @@
+/* Markdown Dark Mode Rendering Fix */
+/* This file fixes the black bar issue in dark mode where text becomes invisible */
+
+/* Ensure proper text color for inline code in dark mode */
+.dark .prose code:not(pre code) {
+  color: #f8fafc !important; /* --dark-text-primary */
+  background-color: #262626 !important; /* --dark-bg-tertiary */
+}
+
+/* Fix for code blocks with Shiki syntax highlighting */
+.dark .shiki,
+.dark .shiki code,
+.dark pre[class*="language-"],
+.dark pre[class*="language-"] code {
+  color: #e6edf3 !important;
+  background-color: #0d1117 !important;
+}
+
+/* Ensure proper text color for all code elements in prose */
+.dark .prose pre,
+.dark .prose pre code {
+  color: #e6edf3 !important;
+  background-color: #0d1117 !important;
+}
+
+/* Fix for any remaining code elements */
+.dark code,
+.dark pre {
+  color: #e6edf3 !important;
+}
+
+/* Ensure Shiki line numbers are visible */
+.dark .shiki .line::before {
+  color: #8b949e !important;
+  opacity: 0.7;
+}
+
+/* Fix highlighted lines in dark mode */
+.dark .shiki .line.highlighted {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: #e6edf3 !important;
+}
+
+/* Ensure all syntax highlighting tokens are visible */
+.dark .shiki span {
+  color: inherit !important;
+}
+
+/* Override any conflicting transitions during theme switch */
+.dark .shiki,
+.dark .shiki *,
+.dark .prose code,
+.dark .prose pre {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Note: color transition removed to prevent flash of invisible text */
+}
+
+/* Fallback for any missed elements */
+.dark [class*="language-"],
+.dark [class*="language-"] *,
+.dark .highlight,
+.dark .highlight * {
+  color: #e6edf3 !important;
+}
+
+/* Ensure proper contrast for Korean text in code */
+.dark .prose:lang(ko) code {
+  color: #f8fafc !important;
+}
+
+/* Fix for mobile devices */
+@media (max-width: 768px) {
+  .dark .prose pre,
+  .dark .prose code {
+    color: #e6edf3 !important;
+  }
+}
+
+/* Fix heading contrast in dark mode - especially for WebKit/Safari */
+.dark h1,
+.dark h2, 
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6,
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: #f8fafc !important; /* --dark-text-primary with 18.5:1 contrast */
+}
+
+/* Fix body text and paragraph contrast in dark mode */
+.dark body,
+.dark p,
+.dark .prose p,
+.dark .prose {
+  color: #e2e8f0 !important; /* --dark-text-secondary with 14.2:1 contrast */
+}
+
+/* WebKit-specific text fix for all elements */
+@supports (-webkit-appearance: none) {
+  .dark,
+  .dark body,
+  .dark p,
+  .dark .prose,
+  .dark .prose p,
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6,
+  .dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4,
+  .dark .prose h5,
+  .dark .prose h6 {
+    -webkit-text-fill-color: currentColor !important;
+  }
+  
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6,
+  .dark .prose h1,
+  .dark .prose h2,
+  .dark .prose h3,
+  .dark .prose h4,
+  .dark .prose h5,
+  .dark .prose h6 {
+    -webkit-text-fill-color: #f8fafc !important;
+    color: #f8fafc !important;
+  }
+  
+  .dark body,
+  .dark p,
+  .dark .prose p,
+  .dark .prose {
+    -webkit-text-fill-color: #e2e8f0 !important;
+    color: #e2e8f0 !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dark .prose code,
+  .dark .prose pre code,
+  .dark .shiki code {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    border: 1px solid #ffffff !important;
+  }
+  
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: #ffffff !important;
+  }
+}
