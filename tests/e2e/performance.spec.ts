@@ -360,9 +360,10 @@ test.describe('Performance Tests (Core Web Vitals)', () => {
   })
 
   test.describe('Progressive Enhancement', () => {
-    test('should work with JavaScript disabled', async ({ page, context }) => {
-      // Disable JavaScript
-      await context.setJavaScriptEnabled(false)
+    test('should work with JavaScript disabled', async ({ browser }) => {
+      // Create a new context with JavaScript disabled
+      const context = await browser.newContext({ javaScriptEnabled: false })
+      const page = await context.newPage()
       
       await page.goto('/')
       await page.waitForLoadState('domcontentloaded')
@@ -389,6 +390,9 @@ test.describe('Performance Tests (Core Web Vitals)', () => {
           expect(page.url()).toContain(href)
         }
       }
+      
+      // Clean up
+      await context.close()
     })
 
     test('should enhance progressively with JavaScript', async ({ page }) => {
