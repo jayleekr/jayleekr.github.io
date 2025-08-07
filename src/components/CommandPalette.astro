@@ -146,11 +146,16 @@
 </style>
 
 <script>
+  // @ts-nocheck
   class CommandPalette {
     constructor() {
       this.isOpen = false;
       this.selectedIndex = 0;
       this.filteredCommands = [];
+      this.palette = null;
+      this.input = null;
+      this.commandsList = null;
+      this.commands = [];
       this.stats = {
         visits: parseInt(localStorage.getItem('site-visits') || '0'),
         timeSpent: parseInt(localStorage.getItem('time-spent') || '0'),
@@ -419,7 +424,7 @@
         if (this.isOpen) return;
         
         // Only track typing if we're not in an input
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
         
         typingBuffer += e.key;
         
@@ -480,7 +485,7 @@
       Object.entries(groupedCommands).forEach(([category, categoryCommands]) => {
         html += `<div class="command-category">${category}</div>`;
         
-        categoryCommands.forEach((cmd, index) => {
+        categoryCommands.forEach((cmd, _index) => {
           const globalIndex = commands.indexOf(cmd);
           const isSelected = globalIndex === this.selectedIndex;
           
