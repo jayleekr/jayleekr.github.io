@@ -1,0 +1,51 @@
+---
+title: "Bash 배열 다루기"
+author: "Jay Lee"
+pubDate: "2020-11-17 00:00:01"
+categories: ["TechSavvy", "Bash"]
+tags: ["TechSavvy", "ProgrammingLanguage", "Bash"]
+---
+
+
+## array(list)
+
+Bash에서는 괄호를 사용하여 배열을 표현할 수 있습니다.
+내부 구분자는 스페이스바입니다 - 정말 간단하죠!
+
+``` sh
+$ cat array_ex.sh
+#!/bin/bash
+lists=("a" b "c")
+echo ${lists[1]}
+echo ${lists[0]}
+echo ${lists[3]}
+echo ${lists[2]}
+$ sh array_ex.sh
+b
+a
+
+c
+```
+
+3개의 요소(인덱스 0, 1, 2)만 있으므로 `lists[3]`은 비어 있는 값을 반환합니다. Bash는 불평하지 않고 그냥 아무것도 주지 않는데, 이는 실제로 조건 검사에 꽤 유용합니다.
+
+아래 예제와 같이 슬라이싱도 지원됩니다:
+
+``` sh
+lists=("V0.1.0" "V1.0.0")
+echo "[1] : "${lists[1]}
+echo "[0] : "${lists[0]}
+echo "[3] : "${lists[3]}
+echo "[-1] : "${lists[-1]}
+
+selected=${lists[-1]}
+echo "selected : "$selected
+``` 
+
+음수 인덱싱 `[-1]`은 정말 멋집니다 - Python처럼 마지막 요소를 제공합니다! 이렇게 하면 배열 길이를 계산하지 않고도 가장 최근 버전이나 마지막 항목을 매우 쉽게 가져올 수 있습니다.
+
+프로 팁: Bash에서 배열을 다룰 때는 항상 0부터 시작하는 인덱스이고 공백으로 구분된다는 것을 기억하세요. 쉼표로 구분된 값이 필요하다면 별도로 처리하거나 다른 접근 방식을 사용해야 합니다.
+
+## 부록. 참고자료
+
+- 일반: [http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)

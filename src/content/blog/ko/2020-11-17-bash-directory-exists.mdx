@@ -1,0 +1,223 @@
+---
+title: "Bash: 디렉토리 존재 여부 확인하는 방법"
+author: "Jay Lee"
+pubDate: "2020-11-17 00:00:01"
+categories: ["TechSavvy", "Bash"]
+tags: ["TechSavvy", "ProgrammingLanguage", "Bash"]
+---
+
+## 문제
+
+디렉토리를 사용하기 전에 존재하는지 확인해야 하나요? Bash에서 제대로 하는 방법을 알려드립니다!
+
+## 기본 디렉토리 확인
+
+```bash
+#!/bin/bash
+
+test_dir_exist(){
+    set -e 
+    if [ -e "/home/jayleekr/workspace/00_codes/05_info_archive" ]; then
+        echo "DIR Exist"
+        exit 1
+    fi
+}
+
+test_fail(){
+    echo "test_fail"
+}
+
+test_dir_exist
+```
+
+실행 결과:
+```bash
+$ ./directory_ex.sh
+DIR Exist
+```
+
+## 더 나은 접근 방법
+
+### 1. 디렉토리 전용 확인을 위한 -d 사용
+```bash
+#!/bin/bash
+
+check_directory() {
+    local dir_path="$1"
+    
+    if [ -d "$dir_path" ]; then
+        echo "✅ 디렉토리 '$dir_path' 존재함"
+        return 0
+    else
+        echo "❌ 디렉토리 '$dir_path' 존재하지 않음"
+        return 1
+    fi
+}
+
+# 사용법
+check_directory "/home/user/workspace"
+```
+
+### 2. 디렉토리가 없으면 생성하기
+```bash
+#!/bin/bash
+
+ensure_directory() {
+    local dir_path="$1"
+    
+    if [ ! -d "$dir_path" ]; then
+        echo "디렉토리 생성 중: $dir_path"
+        mkdir -p "$dir_path"
+    else
+        echo "디렉토리가 이미 존재합니다: $dir_path"
+    fi
+}
+
+# 사용법
+ensure_directory "/tmp/my_project/logs"
+```
+
+### 3. 여러 디렉토리 확인하기
+```bash
+#!/bin/bash
+
+check_multiple_dirs() {
+    local dirs=("$@")
+    local all_exist=true
+    
+    for dir in "${dirs[@]}"; do
+        if [ ! -d "$dir" ]; then
+            echo "❌ 없음: $dir"
+            all_exist=false
+        else
+            echo "✅ 발견: $dir"
+        fi
+    done
+    
+    if [ "$all_exist" = true ]; then
+        echo "🎉 모든 디렉토리가 존재합니다!"
+        return 0
+    else
+        echo "💥 일부 디렉토리가 없습니다!"
+        return 1
+    fi
+}
+
+# 사용법
+check_multiple_dirs "/tmp" "/home" "/var/log" "/nonexistent"
+```
+
+## 다양한 테스트 연산자
+
+파일과 디렉토리를 테스트하는 다양한 방법들:
+
+```bash
+# -e: 존재함 (파일 또는 디렉토리)
+[ -e "/path" ] && echo "/path에 무언가 존재함"
+
+# -f: 일반 파일 존재
+[ -f "/path/file.txt" ] && echo "파일 존재함"
+
+# -d: 디렉토리 존재
+[ -d "/path/dir" ] && echo "디렉토리 존재함"
+
+# -r: 읽기 가능
+[ -r "/path" ] && echo "읽기 가능"
+
+# -w: 쓰기 가능
+[ -w "/path" ] && echo "쓰기 가능"
+
+# -x: 실행 가능
+[ -x "/path" ] && echo "실행 가능"
+```
+
+## 실용적인 예제
+
+### 1. 백업 스크립트
+```bash
+#!/bin/bash
+
+BACKUP_DIR="/backup/$(date +%Y%m%d)"
+
+if [ ! -d "$BACKUP_DIR" ]; then
+    echo "백업 디렉토리 생성 중: $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR"
+fi
+
+echo "백업 위치: $BACKUP_DIR"
+# 여기에 백업 명령어 추가...
+```
+
+### 2. 프로젝트 설정
+```bash
+#!/bin/bash
+
+setup_project() {
+    local project_name="$1"
+    local project_dirs=("$project_name/src" "$project_name/tests" "$project_name/docs")
+    
+    for dir in "${project_dirs[@]}"; do
+        if [ ! -d "$dir" ]; then
+            echo "생성 중: $dir"
+            mkdir -p "$dir"
+        fi
+    done
+    
+    echo "프로젝트 구조 생성 완료: $project_name"
+}
+
+# 사용법
+setup_project "my_awesome_app"
+```
+
+### 3. 로그 순환 확인
+```bash
+#!/bin/bash
+
+LOG_DIR="/var/log/myapp"
+ARCHIVE_DIR="/var/log/myapp/archive"
+
+if [ -d "$LOG_DIR" ]; then
+    echo "로그 디렉토리 존재함"
+    
+    # 필요시 아카이브 디렉토리 생성
+    [ ! -d "$ARCHIVE_DIR" ] && mkdir -p "$ARCHIVE_DIR"
+    
+    # 로그 순환
+    find "$LOG_DIR" -name "*.log" -mtime +7 -exec mv {} "$ARCHIVE_DIR" \;
+else
+    echo "로그 디렉토리를 찾을 수 없음: $LOG_DIR"
+    exit 1
+fi
+```
+
+## 프로 팁
+
+1. **항상 변수를 따옴표로 감싸기**: `[ -d "$dir" ]` (O), `[ -d $dir ]` (X)
+2. **디렉토리에는 -d 사용**: -e보다 더 구체적
+3. **경로의 공백 처리**: 따옴표로 공백으로부터 보호
+4. **종료 코드가 중요**: 스크립팅을 위해 의미 있는 종료 코드 반환
+5. **상위 디렉토리 생성**: `mkdir -p`를 사용하여 중첩된 디렉토리 생성
+
+## 흔한 실수
+
+```bash
+# ❌ 이렇게 하지 마세요
+if [ -d $HOME/my dir ]; then  # 공백으로 인해 오류 발생!
+
+# ✅ 대신 이렇게 하세요
+if [ -d "$HOME/my dir" ]; then  # 올바르게 따옴표 처리
+
+# ❌ 이렇게 하지 마세요
+if [ -e "$dir" ]; then  # 파일일 수도 있음!
+
+# ✅ 디렉토리 확인은 이렇게
+if [ -d "$dir" ]; then  # 구체적으로 디렉토리 확인
+```
+
+## 참고자료
+
+- 일반: [Bash Beginners Guide](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)
+- 테스트 연산자: `man test` 또는 `help test`
+
+*디렉토리 확인은 기본 중의 기본입니다 - 올바르게 사용하면 스크립트가 훨씬 견고해집니다! 🚀*
