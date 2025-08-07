@@ -284,8 +284,8 @@ const description = lang === 'ko'
             else if (cps > 3) points = 2;
             
             score += points;
-            scoreEl.textContent = score;
-            cpsEl.textContent = cps;
+            if (scoreEl) scoreEl.textContent = score.toString();
+            if (cpsEl) cpsEl.textContent = cps.toString();
             
             // Visual feedback
             gameBtn.style.transform = 'scale(0.95)';
