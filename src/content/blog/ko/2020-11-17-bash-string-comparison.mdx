@@ -1,0 +1,27 @@
+---
+title: "Bash if문에서 문자열 비교"
+author: "Jay Lee"
+pubDate: "2020-11-17 00:00:01"
+categories: ["TechSavvy", "Bash"]
+tags: ["TechSavvy", "ProgrammingLanguage", "Bash"]
+---
+
+## Bash "if"를 사용한 문자열 비교
+
+"=="와 "!="는 문자열 비교의 경우에만 사용할 수 있습니다.
+
+``` sh
+if [ "$STRING" == "abc" ];then
+    echo "STRING은 abc입니다!"
+fi 
+
+또는
+
+if [ "$STRING" = "abc" ];then
+    echo "STRING은 abc입니다!"
+fi 
+```
+
+## 부록. 참고자료
+
+- 일반: [http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)
