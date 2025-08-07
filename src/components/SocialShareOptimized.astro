@@ -444,8 +444,8 @@ const fullImageUrl = new URL(ogImageUrl, Astro.site).toString();
 
     private trackShare(platform: string): void {
       // Google Analytics 4
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'share', {
+      if (typeof (window as any).gtag !== 'undefined') {
+        (window as any).gtag('event', 'share', {
           method: platform,
           content_type: 'article',
           item_id: this.shareData.url
@@ -453,8 +453,8 @@ const fullImageUrl = new URL(ogImageUrl, Astro.site).toString();
       }
 
       // Custom analytics
-      if (typeof plausible !== 'undefined') {
-        plausible('Share', { props: { platform: platform } });
+      if (typeof (window as any).plausible !== 'undefined') {
+        (window as any).plausible('Share', { props: { platform: platform } });
       }
     }
   }
