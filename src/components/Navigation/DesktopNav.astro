@@ -134,7 +134,7 @@ const lang = getLangFromUrl(Astro.url);
         }
         
         // Also support '/' key
-        if (e.key === '/' && !e.target.matches('input, textarea, [contenteditable]')) {
+        if (e.key === '/' && !(e.target as Element)?.matches('input, textarea, [contenteditable]')) {
           e.preventDefault();
           searchButton.click();
         }

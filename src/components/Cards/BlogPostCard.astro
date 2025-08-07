@@ -269,15 +269,15 @@ const descriptionSizes = {
         if (navigator.share) {
           try {
             await navigator.share({
-              title: postTitle,
+              title: postTitle || '',
               url: window.location.origin + postUrl
             });
           } catch (err) {
             console.log('Error sharing:', err);
             // Add subtle shake animation on error
-            button.style.animation = 'shake 0.5s ease-in-out';
+            (button as HTMLElement).style.animation = 'shake 0.5s ease-in-out';
             setTimeout(() => {
-              button.style.animation = '';
+              (button as HTMLElement).style.animation = '';
             }, 500);
           }
         } else {
@@ -287,14 +287,14 @@ const descriptionSizes = {
             // Show feedback with celebration
             const originalHTML = button.innerHTML;
             button.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
-            button.style.animation = 'success-bounce 0.6s ease-in-out';
+            (button as HTMLElement).style.animation = 'success-bounce 0.6s ease-in-out';
             
             // Create success sparkles
             createMiniSparkles(button);
             
             setTimeout(() => {
               button.innerHTML = originalHTML;
-              button.style.animation = '';
+              (button as HTMLElement).style.animation = '';
             }, 2000);
           } catch (err) {
             console.error('Failed to copy URL:', err);
@@ -305,7 +305,7 @@ const descriptionSizes = {
   });
   
   // Mini sparkles function for success feedback
-  function createMiniSparkles(element) {
+  function createMiniSparkles(element: HTMLElement) {
     const rect = element.getBoundingClientRect();
     const sparkleCount = 5;
     

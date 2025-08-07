@@ -311,7 +311,7 @@ const estimatedReadingTime = readingTime || `${Math.max(1, Math.ceil(title.lengt
         if (span) {
           span.textContent = 'Copied!';
           setTimeout(() => {
-            span.textContent = originalText;
+            span.textContent = originalText || 'Share';
           }, 2000);
         }
       } catch (err) {
