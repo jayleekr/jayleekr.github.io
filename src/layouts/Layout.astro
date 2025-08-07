@@ -65,7 +65,7 @@ const { title, description, image, noIndex } = Astro.props;
             searchModal.classList.remove('hidden');
             const searchInput = searchModal.querySelector('input[type="search"]');
             if (searchInput) {
-              setTimeout(() => searchInput.focus(), 100);
+              setTimeout(() => (searchInput as HTMLElement).focus(), 100);
             }
           });
         }
@@ -87,7 +87,7 @@ const { title, description, image, noIndex } = Astro.props;
         
         if (mobileLanguageBtn && desktopLanguageBtn) {
           mobileLanguageBtn.addEventListener('click', () => {
-            desktopLanguageBtn.click();
+            (desktopLanguageBtn as HTMLElement).click();
           });
         }
         
@@ -98,7 +98,7 @@ const { title, description, image, noIndex } = Astro.props;
             searchModal.classList.remove('hidden');
             const searchInput = searchModal.querySelector('input[type="search"]');
             if (searchInput) {
-              setTimeout(() => searchInput.focus(), 100);
+              setTimeout(() => (searchInput as HTMLElement).focus(), 100);
             }
           });
         }

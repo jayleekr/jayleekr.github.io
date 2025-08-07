@@ -18,6 +18,7 @@ interface Props {
 	modifiedTime?: Date;
 	tags?: string[];
 	author?: string;
+	noIndex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -30,7 +31,8 @@ const {
 	publishedTime,
 	modifiedTime,
 	tags = [],
-	author = 'Jay Lee'
+	author = 'Jay Lee',
+	noIndex = false
 } = Astro.props;
 
 // Get image URL, handle both string and ImageMetadata

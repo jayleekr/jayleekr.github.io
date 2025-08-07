@@ -304,7 +304,7 @@ const description = lang === 'ko'
         // Update robot speech periodically
         function updateRobotSpeech() {
           if (robotSpeech) {
-            const messages = speechMessages[lang] || speechMessages.en;
+            const messages = speechMessages[lang as keyof typeof speechMessages] || speechMessages.en;
             const randomMessage = messages[Math.floor(Math.random() * messages.length)];
             robotSpeech.textContent = randomMessage;
           }
@@ -341,7 +341,7 @@ const description = lang === 'ko'
         if (quickSearch) {
           quickSearch.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-              const query = quickSearch.value.trim();
+              const query = (quickSearch as HTMLInputElement).value.trim();
               if (query) {
                 // Redirect to search or home with query parameter
                 window.location.href = `/?search=${encodeURIComponent(query)}`;
