@@ -286,8 +286,8 @@ const { showInHeader = true, showFloating = false, estimatedReadTime } = Astro.p
     const { milestone } = customEvent.detail;
     
     // Google Analytics 4
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'reading_progress', {
+    if (typeof (window as any).gtag !== 'undefined') {
+      (window as any).gtag('event', 'reading_progress', {
         milestone: milestone,
         page_title: document.title,
         page_location: window.location.href
