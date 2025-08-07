@@ -12,7 +12,7 @@ globalThis.ResizeObserver = class MockedResizeObserver {
 Object.defineProperty(globalThis, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation(query => {
-    const matches = {
+    const matchesMap: Record<string, boolean> = {
       '(max-width: 320px)': false,
       '(max-width: 768px)': false,
       '(max-width: 1024px)': false,
@@ -20,7 +20,8 @@ Object.defineProperty(globalThis, 'matchMedia', {
       '(min-width: 1024px)': true,
       '(prefers-color-scheme: dark)': false,
       '(prefers-reduced-motion: reduce)': false,
-    }[query] || false
+    }
+    const matches = matchesMap[query as string] || false
     
     return {
       matches,
@@ -77,7 +78,9 @@ Object.defineProperty(globalThis, 'sessionStorage', {
 })
 
 // Mock IntersectionObserver for lazy loading and scroll animations
-globalThis.IntersectionObserver = class MockedIntersectionObserver {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const globalThis_ = globalThis as any
+globalThis_.IntersectionObserver = class MockedIntersectionObserver {
   observe = vi.fn()
   unobserve = vi.fn()
   disconnect = vi.fn()
@@ -135,7 +138,7 @@ export const mockViewport = (width: number, height: number) => {
   
   // Update matchMedia mocks based on viewport
   globalThis.matchMedia = vi.fn().mockImplementation(query => {
-    const matches = {
+    const matchesMap: Record<string, boolean> = {
       '(max-width: 320px)': width <= 320,
       '(max-width: 768px)': width <= 768,
       '(max-width: 1024px)': width <= 1024,
@@ -143,7 +146,8 @@ export const mockViewport = (width: number, height: number) => {
       '(min-width: 1024px)': width >= 1024,
       '(prefers-color-scheme: dark)': false,
       '(prefers-reduced-motion: reduce)': false,
-    }[query] || false
+    }
+    const matches = matchesMap[query as string] || false
     
     return {
       matches,
