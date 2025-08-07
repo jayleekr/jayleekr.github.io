@@ -280,7 +280,7 @@ const lang = getLangFromUrl(Astro.url);
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         this.open();
-      } else if (e.key === '/' && !e.target?.matches('input, textarea, [contenteditable]')) {
+      } else if (e.key === '/' && !(e.target as Element)?.matches('input, textarea, [contenteditable]')) {
         e.preventDefault();
         this.open();
       } else if (e.key === 'Escape' && !this.modal.classList.contains('hidden')) {

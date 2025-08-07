@@ -290,7 +290,7 @@ const descriptionSizes = {
             (button as HTMLElement).style.animation = 'success-bounce 0.6s ease-in-out';
             
             // Create success sparkles
-            createMiniSparkles(button);
+            createMiniSparkles(button as HTMLElement);
             
             setTimeout(() => {
               button.innerHTML = originalHTML;

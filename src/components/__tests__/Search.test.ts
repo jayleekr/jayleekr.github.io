@@ -119,7 +119,8 @@ describe('Search Functionality', () => {
       }
 
       closeButton?.addEventListener('click', closeModal)
-      closeButton?.click()
+      const closeButtonElement = closeButton as HTMLElement
+      closeButtonElement?.click()
 
       expect(modal).toHaveClass('hidden')
     })
@@ -136,7 +137,8 @@ describe('Search Functionality', () => {
       }
 
       backdrop?.addEventListener('click', closeModal)
-      backdrop?.click()
+      const backdropElement = backdrop as HTMLElement
+      backdropElement?.click()
 
       expect(modal).toHaveClass('hidden')
     })
@@ -423,7 +425,8 @@ describe('Search Functionality', () => {
       }
 
       result?.addEventListener('click', handleResultClick)
-      result?.click()
+      const resultElement = result as HTMLElement
+      resultElement?.click()
 
       expect(clickedUrl).toBe('/blog/test-1')
     })
