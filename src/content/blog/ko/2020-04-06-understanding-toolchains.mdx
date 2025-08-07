@@ -1,0 +1,117 @@
+---
+title: "크로스 개발을 위한 툴체인 이해하기"
+author: "Jay Lee"
+pubDate: "2021-04-06 00:00:00"
+categories: ["TechSavvy", "EmbeddedLinux"]
+tags: ["Blogging", "Linux", "AGL", "EmbeddedLinux", "OpenEmbedded", "Yocto", "CrossDevelopment", "GCC", "GDB", "Toolchain"]
+---
+
+## 툴체인이란 무엇인가?
+
+툴체인(Toolchain)은 말 그대로 크로스 개발을 위한 도구들의 모음입니다.
+
+![Desktop View](/assets/img/01-Toolchain/1.png)
+Ref: Linux Foundation 2020 Conference   
+
+위 그림에서 보듯이 GNU 툴체인은 크게 컴파일러, binutils, C 라이브러리, GDB 디버거로 나뉩니다.
+
+- 컴파일러: 호스트 개발 환경에서 타겟 아키텍처로 컴파일하기 위한 도구
+- binutils: 컴파일된 객체를 제어하기 위한 어셈블러, 링커 등
+- C 라이브러리: POSIX 및 리눅스 커널 인터페이스
+- GDB: GNU 디버거
+
+## 툴체인 구하기
+
+![Desktop View](/assets/img/01-Toolchain/2.png)
+Ref: Linux Foundation 2020 Conference   
+
+위 그림에서 보듯이 툴체인은 주로 칩 제조업체에서 제공합니다. 또는 Linaro 같은 유명한 서드파티에서 다운로드하거나, Yocto Project 같은 빌드 시스템을 사용해서 편리하게 얻을 수 있습니다.
+
+## 툴체인 프리픽스
+
+![Desktop View](/assets/img/01-Toolchain/3.png)
+Ref: Linux Foundation 2020 Conference   
+
+위 그림을 통해 툴체인의 명명 규칙을 살펴보겠습니다.
+
+"-"로 구분되며 "아키텍처-벤더-커널-OS" 순서로 이름이 지어집니다.
+
+## ARM 툴체인의 툴체인 프리픽스
+
+![Desktop View](/assets/img/01-Toolchain/4.png)
+Ref: Linux Foundation 2020 Conference   
+
+위에서 툴체인 명명이 OS로 끝난다고 했는데요. 여기에 추가로 ABI(Application Binary Interface)가 붙습니다.
+
+이는 타겟 OS가 애플리케이션 간에 바이너리 데이터를 교환하는 방법에 대한 규칙을 알려줍니다.
+
+- 데이터 타입과 정렬 방법
+- 함수 호출 시 인수와 결과를 위한 레지스터 교환 방법
+- 시스템 콜을 만드는 방법
+- 프로그램 코드 시작과 데이터를 초기화하는 방법
+- 파일 교환 방법 (ELF 등)
+
+위 그림에서 보듯이 구식(또는 더 이상 사용되지 않는) ABI는 OS 뒤의 접미사를 생략합니다. 이는 32비트 ARM 아키텍처를 지원하던 시대에 사용되었습니다.
+
+EABI(Embedded ABI)부터는 임베디드 환경(ARM, PowerPC, MIPS 등)에서 64비트 아키텍처를 지원하기 위해 만들어졌습니다.
+
+eabi만 사용하면 softfloat이고, hf를 붙여서 eabihf로 만들면 hardfloat이 됩니다. 차이점은 다음과 같습니다:
+
+- softfloat
+    - FP 명령어를 생성하지 않음; GCC가 컴파일 시 라이브러리의 함수로 준비함
+- hardfloat
+    - FP 명령어를 에뮬레이트함
+
+    > ARM과 같은 CPU는 계산을 할 수 있습니다. 대부분의 프로그램에서 이러한 계산의 대부분은 전자적으로 매우 간단한 "정수"(integer) 타입입니다.
+    일부 프로그램은 "부동 소수점" 계산도 수행하며, 이러한 프로그램은 부동 소수점 계산을 수행할 하드웨어가 없는 CPU에서도 작동할 것으로 예상됩니다. 이러한 경우 이러한 계산은 운영 체제에 의해 정수 계산을 사용하여 이러한 계산을 수행하는 계산 루틴 라이브러리로 자동으로 라우팅됩니다. 예를 들어 2/3과 같은 간단한 나눗셈은 수백 개의 정수 계산으로 수행됩니다. 이를 "소프트웨어 부동 소수점 계산" 또는 짧게 "소프트 플로트"라고 합니다.
+    하지만 ARM 칩에는 하드웨어에서 직접 부동 소수점 계산을 수행할 수 있는 CPU가 있습니다!
+    이는 훨씬 더 빠르게 수행됩니다. 하드웨어의 부동 소수점 계산은 정수 계산만큼 빠르기 때문입니다. 하드웨어 부동 소수점 계산은 "하드 플로트"로 축약됩니다.
+    과거에는 라즈베리 파이의 운영 체제가 CPU가 부동 소수점 계산을 할 수 있다는 것을 "알지 못했기" 때문에 모든 부동 소수점 계산이 소프트웨어 라이브러리를 사용하여 수행되었습니다. 최신 OS에서는 파이의 하드 플로트 기능을 "인식"하고 사용하기 시작했으며, 이는 많은 부동 소수점 계산을 사용하는 프로그램에서 매우 큰 속도 향상을 의미합니다.
+
+## 툴체인 Sysroot
+
+![Desktop View](/assets/img/01-Toolchain/5.png)
+Ref: Linux Foundation 2020 Conference   
+
+Sysroot는 타겟 환경에 실제로 존재할 rootfs를 의미합니다.
+
+![Desktop View](/assets/img/01-Toolchain/6.png)
+Linux rootfs
+
+> 루트 파일 시스템(샘플 오류 메시지에서 rootfs라고 명명됨)은 Linux의 가장 기본적인 구성 요소입니다. 루트 파일 시스템에는 전체 Linux 시스템을 지원하는 데 필요한 모든 것이 포함되어 있습니다. 여기에는 모든 애플리케이션, 구성, 장치, 데이터 등이 포함됩니다. 루트 파일 시스템이 없으면 Linux 시스템을 실행할 수 없습니다.
+
+![Desktop View](/assets/img/01-Toolchain/7.png)
+Ref: Linux Foundation 2020 Conference   
+
+그 타겟 환경의 모든 것이 필요한 것은 아닙니다 - 크로스 개발을 위해서는 일부만 필요합니다.
+
+예를 들어, 라이브러리와 헤더 파일입니다.
+
+### 툴체인이 포함하는 것
+
+![Desktop View](/assets/img/01-Toolchain/8.png)
+Ref: Linux Foundation 2020 Conference   
+
+## 예시
+
+라즈베리 파이를 타겟으로 개발한다고 가정해봅시다.
+
+![Desktop View](/assets/img/01-Toolchain/9.png)
+Ref: Linux Foundation 2020 Conference   
+
+> 요즘은 SBC(Single Board Computer)라고 부르며 불과 10년 전으로 돌아가도 컴퓨터라고 불러도 부끄럽지 않을 성능을 가지고 있습니다. 하지만 임베디드 기기는 여전히 임베디드 기기입니다 - 우리의 호스트 컴퓨터 성능과는 비교가 안 되고, 기기의 목표가 PC를 대체하는 것도 아니죠? 여기서 약간 주제를 벗어났네요. 하하;;
+
+라즈베리 파이 3B 모델의 공식 툴체인은 다음 6개입니다:
+
+- arm-bcm2708hardfp-linux-gnueabi
+- arm-bcm2708-linux-gnueabi
+- arm-linux-gnueabihf
+- arm-rpi-4.9.3-linux-gnueabihf
+- gcc-linaro-arm-linux-gnueabihf-raspbian
+- gcc-linaro-arm-linux-gnueabihf-raspbian-x64
+
+이 이름들에서 공통 패턴이 보이시나요?
+
+이 시퀀스를 보통 Triple이라고 부릅니다.
+
+요즘은 \<arch>-\<vendor>-\<kernel>-\<os>가 기본 규칙이며, 여기저기서 약간씩 수정하는 것 같습니다. (이 부분은 더 연구가 필요합니다.)
