@@ -63,6 +63,10 @@ Thumbs.db
 # Testing
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
+test-results.json
+.last-run.json
 
 # Logs
 logs/
