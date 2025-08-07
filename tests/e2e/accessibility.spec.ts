@@ -127,8 +127,9 @@ test.describe('Accessibility Tests (WCAG Compliance)', () => {
         await page.keyboard.press('Space')
         
         // Should still be accessible after interactions
+        const themeToggleSelector = 'button[aria-label*="theme"], button[id*="theme"], .theme-toggle'
         const accessibilityScanResults = await new AxeBuilder({ page })
-          .include(themeToggle)
+          .include(themeToggleSelector)
           .analyze()
         
         expect(accessibilityScanResults.violations).toEqual([])
