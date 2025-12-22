@@ -278,30 +278,38 @@ const jsonLD = article ? {
 <!-- Theme Initialization Script (prevents FOUC) -->
 <script is:inline>
 	// Check for saved theme preference or default to system preference
-	(function() {
-		function getStoredTheme() {
-			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-				return localStorage.getItem('theme');
-			}
-			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	function getStoredTheme() {
+		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+			return localStorage.getItem('theme');
 		}
-		
+		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+	}
+
+	function applyTheme() {
 		const theme = getStoredTheme();
-		
+
 		if (theme === 'dark') {
 			document.documentElement.classList.add('dark');
 		} else {
 			document.documentElement.classList.remove('dark');
 		}
-		
-		// Add no-transition class temporarily to prevent animation on page load
-		document.documentElement.classList.add('no-transition');
-		
-		// Remove no-transition class after page load
-		window.addEventListener('load', () => {
-			document.documentElement.classList.remove('no-transition');
-		});
-	})();
+	}
+
+	// Apply theme immediately on page load
+	applyTheme();
+
+	// Add no-transition class temporarily to prevent animation on page load
+	document.documentElement.classList.add('no-transition');
+
+	// Remove no-transition class after page load
+	window.addEventListener('load', () => {
+		document.documentElement.classList.remove('no-transition');
+	});
+
+	// Re-apply theme after view transitions (for Astro's client-side navigation)
+	document.addEventListener('astro:page-load', () => {
+		applyTheme();
+	});
 </script>
 
 <!-- Enhanced JSON-LD Structured Data -->

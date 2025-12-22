@@ -37,7 +37,7 @@
 }
 
 /* Dark Mode */
-[data-theme="dark"] {
+.dark {
   --bg: #121212;
   --text: #e5e5e5;
   --text-secondary: #888888;

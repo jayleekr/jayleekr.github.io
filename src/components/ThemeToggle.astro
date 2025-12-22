@@ -21,7 +21,11 @@
 
   // Set theme
   function setTheme(theme: string) {
-    html.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('theme', theme);
     }
@@ -38,7 +42,7 @@
 
   // Toggle on click
   toggle?.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
+    const current = html.classList.contains('dark') ? 'dark' : 'light';
     const next = current === 'dark' ? 'light' : 'dark';
     setTheme(next);
   });
