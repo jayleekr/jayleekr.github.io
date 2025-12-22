@@ -1,13 +1,13 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '../../../layouts/BlogPost.astro';
+import PostLayout from '../../../layouts/PostLayout.astro';
 import { render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => {
     return data.lang === 'en';
   });
-  
+
   return posts.map((post) => ({
     params: { slug: post.id.replace('en/', '') },
     props: post,
@@ -20,6 +20,6 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BlogPost {...post.data} content={post.body}>
+<PostLayout frontmatter={post.data}>
   <Content />
-</BlogPost>
+</PostLayout>
