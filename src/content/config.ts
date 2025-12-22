@@ -16,11 +16,6 @@ const blog = defineCollection({
 		layout: z.string().optional(),
 		permalink: z.string().optional(),
 		lang: z.enum(['ko', 'en']).default('ko'),
-		// Translation links for multilingual posts
-		translations: z.object({
-			ko: z.string().optional(),
-			en: z.string().optional(),
-		}).optional(),
 	}),
 });
 

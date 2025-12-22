@@ -8,7 +8,6 @@ interface Props {
     title: string;
     pubDate: Date;
     description?: string;
-    translations?: { ko?: string; en?: string };
     lang?: 'ko' | 'en';
   };
 }
@@ -29,10 +28,6 @@ const formattedDate = new Date(frontmatter.pubDate).toLocaleDateString('en-US', 
       <h1>{frontmatter.title}</h1>
       <div class="meta">
         <time>{formattedDate}</time>
-        <LanguageSwitcher
-          translations={frontmatter.translations}
-          currentLang={currentLang}
-        />
       </div>
     </header>
 
