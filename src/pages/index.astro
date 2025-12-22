@@ -1,100 +1,14 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Author from '../components/Author.astro';
+import PostList from '../components/PostList.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
-import { getLangFromUrl, t } from '../utils/i18n';
-
-const lang = getLangFromUrl(Astro.url);
-const posts = (await getCollection('blog')).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
-);
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<!-- Hero Section -->
-	<section class="py-20 px-4 text-center">
-		<div class="max-w-4xl mx-auto">
-			<h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent">
-				{t("hero.title", lang)}
-			</h1>
-			<h2 class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
-				{t("hero.subtitle", lang)}
-			</h2>
-			{t("hero.description", lang) && (
-				<p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-10">
-					{t("hero.description", lang)}
-				</p>
-			)}
-			<div class="flex flex-col sm:flex-row justify-center gap-4">
-				<a 
-					href="/about" 
-					class="whimsy-button ripple px-8 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all duration-200 font-semibold hover:scale-105 hover:shadow-lg"
-				>
-					{t("navigation.about", lang)}
-				</a>
-				<a 
-					href="/blog" 
-					class="whimsy-button ripple px-8 py-3 border-2 border-primary-600 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-200 font-semibold hover:scale-105 hover:shadow-lg"
-				>
-					{t("common.viewBlog", lang)}
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- Recent Posts Section -->
-	<section class="py-16 px-4">
-		<div class="max-w-4xl mx-auto">
-			<div class="flex justify-between items-center mb-12">
-				<h2 class="text-2xl md:text-3xl font-bold">{t("home.recentPosts", lang)}</h2>
-				<a 
-					href="/blog" 
-					class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold"
-				>
-					{t("common.viewAll", lang)} →
-				</a>
-			</div>
-			
-			{posts.length > 0 ? (
-				<div class="grid gap-6 md:gap-8">
-					{posts.slice(0, 3).map((post) => (
-						<article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-all duration-200 float-on-hover">
-							<div class="flex flex-col gap-4">
-								<div class="flex-1">
-									<h3 class="text-xl font-bold mb-2">
-										<a 
-											href={`/blog/${post.id}/`}
-											class="text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-										>
-											{post.data.title}
-										</a>
-									</h3>
-									<p class="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">
-										{post.data.description}
-									</p>
-									<div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-500">
-										<FormattedDate date={post.data.pubDate} />
-										{post.data.tags && post.data.tags.length > 0 && (
-											<div class="flex gap-2 flex-wrap">
-												{post.data.tags.slice(0, 2).map((tag) => (
-													<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-xs">
-														{tag}
-													</span>
-												))}
-											</div>
-										)}
-									</div>
-								</div>
-							</div>
-						</article>
-					))}
-				</div>
-			) : (
-				<div class="text-center py-12">
-					<p class="text-gray-600 dark:text-gray-400 text-lg">{t("blog.noPosts", lang)}</p>
-				</div>
-			)}
-		</div>
-	</section>
-</Layout>
+<BaseLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+>
+  <Author />
+  <PostList />
+</BaseLayout>

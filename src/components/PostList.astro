@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import PostItem from './PostItem.astro';
+
+// Get all blog posts, sorted by date (newest first)
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  );
+---
+
+<div class="post-list">
+  {sortedPosts.map(post => (
+    <PostItem
+      title={post.data.title}
+      date={new Date(post.data.pubDate).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}
+      description={post.data.description}
+      url={`/blog/${post.id}`}
+    />
+  ))}
+</div>
+
+<style>
+  .post-list {
+    max-width: var(--content-max-width);
+  }
+</style>

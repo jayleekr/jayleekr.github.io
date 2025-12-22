@@ -1,0 +1,59 @@
+---
+const author = {
+  name: 'Jay Lee',
+  avatar: '/images/avatar.jpg',
+  bio: 'Software Engineer · Learner, Giver, Hooper',
+  links: {
+    github: 'https://github.com/jayleekr',
+    linkedin: 'https://linkedin.com/in/jayleekr',
+  }
+};
+---
+
+<div class="author">
+  <img src={author.avatar} alt={author.name} class="avatar" />
+  <div class="info">
+    <h1>{author.name}</h1>
+    <p>{author.bio}</p>
+    <div class="links">
+      <a href={author.links.github}>GitHub</a>
+      <a href={author.links.linkedin}>LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .author {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: var(--section-gap);
+    padding-bottom: var(--section-gap);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+  }
+
+  .info h1 {
+    font-size: var(--text-lg);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .info p {
+    color: var(--text-secondary);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .links a {
+    margin-right: 1rem;
+    color: var(--link);
+    text-decoration: none;
+  }
+
+  .links a:hover {
+    color: var(--link-hover);
+  }
+</style>

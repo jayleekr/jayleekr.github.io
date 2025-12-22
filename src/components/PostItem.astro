@@ -1,0 +1,49 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  description?: string;
+  url: string;
+}
+
+const { title, date, description, url } = Astro.props;
+---
+
+<article class="post-item">
+  <h2>
+    <a href={url}>{title}</a>
+  </h2>
+  <time>{date}</time>
+  {description && <p>{description}</p>}
+</article>
+
+<style>
+  .post-item {
+    margin-bottom: var(--post-gap);
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  h2 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  h2 a:hover {
+    color: var(--link);
+  }
+
+  time {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin: 0.5rem 0 0 0;
+  }
+</style>
