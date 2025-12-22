@@ -46,15 +46,11 @@ export default defineConfig({
 		}),
 		astroI18next()
 	],
-	
+
 	markdown: {
 		syntaxHighlight: 'shiki',
 		shikiConfig: {
-			theme: 'one-dark-pro',
-			themes: {
-				light: 'one-light',
-				dark: 'one-dark-pro'
-			},
+			theme: 'github-dark-dimmed', // Single minimal dark theme
 			wrap: true
 		},
 		remarkPlugins: [], // remarkMermaid disabled for CI compatibility

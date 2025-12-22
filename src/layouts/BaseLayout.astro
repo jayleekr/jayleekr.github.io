@@ -1,0 +1,86 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { ViewTransitions } from 'astro:transitions';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const { title, description, image, noIndex } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image}
+      noIndex={noIndex}
+    />
+    <ViewTransitions />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/" class="logo">Jay Lee's Blog</a>
+        <ThemeToggle />
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer>
+      <p>© {new Date().getFullYear()} Jay Lee</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--section-gap);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text);
+    transition: color 0.2s ease;
+  }
+
+  .logo:hover {
+    color: var(--link);
+  }
+
+  footer {
+    margin-top: calc(var(--section-gap) * 2);
+    padding-top: var(--section-gap);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  footer p {
+    margin: 0;
+  }
+</style>
