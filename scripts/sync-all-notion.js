@@ -20,6 +20,7 @@ import { createWriteStream } from 'fs';
 import https from 'https';
 import http from 'http';
 import { slugify, getSlugReadability } from './utils/slugify.js';
+import { formatContentReadability, getContentReadability } from './utils/format-content.js';
 
 dotenv.config();
 
@@ -356,6 +357,9 @@ async function convertPage(page) {
     // MDX 호환성을 위한 sanitization
     content = sanitizeMDXContent(content);
 
+    // 콘텐츠 가독성 향상 (빈 줄, 헤더 간격 등)
+    content = formatContentReadability(content);
+
     // 이미지 다운로드 및 경로 업데이트
     console.log('   🖼️  이미지 처리 중...');
     content = await processImages(content, dateStr);
@@ -372,7 +376,6 @@ lastEditedTime: "${lastEditedDate.toISOString()}"
 categories: ["${category.split('/')[0]}", "${category.split('/')[1]}"]
 tags: ${JSON.stringify(tags)}
 ---
-
 `;
 
     const mdxContent = frontmatter + content;
@@ -384,10 +387,16 @@ tags: ${JSON.stringify(tags)}
     // URL 가독성 체크
     const readability = getSlugReadability(slug);
     if (readability.readabilityScore < 80) {
-      console.log(`   📊 가독성: ${readability.readabilityScore}/100 (${readability.recommendation})`);
+      console.log(`   📊 URL 가독성: ${readability.readabilityScore}/100 (${readability.recommendation})`);
       if (readability.hasKorean) {
         console.log(`   ⚠️  한글 포함: URL 인코딩 발생 가능 → 영문 slug 사용 권장`);
       }
+    }
+
+    // 콘텐츠 가독성 체크
+    const contentReadability = getContentReadability(content);
+    if (contentReadability.readabilityScore < 80) {
+      console.log(`   📝 콘텐츠 가독성: ${contentReadability.readabilityScore}/100 (여백: ${contentReadability.blankLineRatio})`);
     }
 
     // 출력 경로
