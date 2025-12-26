@@ -10,7 +10,24 @@
 - None (previous task completed)
 
 ### Recently Completed ✅
-1. **SEO Description Automation** (2025-12-26)
+1. **Blog Content Quality Improvements (Priority 1)** (2025-12-26)
+   - Deleted 3 extremely short posts (4-30 words):
+     - `2025-12-11-20251211-r3.mdx` (4 words)
+     - `2025-12-11-20251211-claude-code.mdx` (10 words)
+     - `2025-12-22-20251222-postmortem-2025.mdx` (30 words)
+   - Merged 9 Bash posts into comprehensive guide (400+ lines):
+     - Created: `2020-11-17-bash-essential-commands.mdx`
+     - Comprehensive coverage: strings, arrays, control flow, text processing, utilities
+     - Includes practical examples and best practices section
+   - **Results**:
+     - Reduced post count: 101 → 90 posts
+     - Improved average content quality
+     - Better SEO (authoritative guide vs fragmented posts)
+     - Enhanced user experience (all Bash info in one place)
+   - **Commits**:
+     - `ac033b8` - Priority 1 content quality improvements
+
+2. **SEO Description Automation** (2025-12-26)
    - Created `scripts/add-seo-descriptions.js` automated description generator
    - Added SEO-friendly descriptions to 94 out of 101 blog posts
    - Descriptions extracted from first 2-3 sentences (max 160 chars)
@@ -26,7 +43,7 @@
    - **Commits**:
      - `9c9df54` - SEO description automation and bulk update
 
-2. **Content Readability Improvements** (2025-12-26)
+3. **Content Readability Improvements** (2025-12-26)
    - Created `scripts/utils/format-content.js` formatting utility
    - Implemented multi-line header support with `[\s\S]*?` regex patterns
    - Added intelligent spacing around headers, paragraphs, and lists
@@ -39,7 +56,7 @@
      - `e0ac54a` - Core formatting feature implementation
      - `7a4cc08` - Applied formatting to all blog posts
 
-3. **URL Readability Fixes** (Prior to current session)
+4. **URL Readability Fixes** (Prior to current session)
    - Removed Korean characters from URLs using slugify module
    - All blog post URLs now use clean English slugs
 
@@ -80,27 +97,23 @@
    - **Reference**: `docs/SEO-Critical-Issues.md`
 
 ### 🟡 High Priority (Content Quality)
-2. **Extremely Short Posts** (7 posts identified)
-   - Delete or expand posts with <20 words
-   - Merge 7 Bash posts into comprehensive guide
-   - **Reference**: `docs/Blog-Analysis-Report.md` Priority 1
-
-3. **Add Headers to Unstructured Posts** (24 posts)
+2. **Add Headers to Unstructured Posts** (21 posts remaining)
    - Add minimum 2-3 headers to posts without structure
    - Focus on DeepThinking/Daily category first (15 posts)
    - **Reference**: `docs/Blog-Analysis-Report.md` Priority 2
 
 ### 🟢 Medium Priority
-4. **Split Oversized Posts** (3 posts over 8,000 lines)
+3. **Split Oversized Posts** (3 posts over 8,000 lines)
    - `ai-stuff.mdx` (22,796 lines) → split by date/topic
    - `subagent-workflow.mdx` (10,193 lines) → section-based split
    - `workflow-from-agents-repo.mdx` (8,518 lines) → topic-based split
 
-5. **Bing Webmaster Tools Registration**
+4. **Bing Webmaster Tools Registration**
    - Add meta tag to line 212 in BaseHead.astro
    - Register at https://www.bing.com/webmasters
 
 ### ✅ Completed Today
+- Priority 1 content quality improvements (deleted 3 short posts, merged 9 Bash posts)
 - SEO descriptions added to 94 posts
 - Content readability formatting applied
 - URL slugification completed
