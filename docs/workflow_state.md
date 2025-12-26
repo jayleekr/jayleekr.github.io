@@ -26,6 +26,9 @@
      - Enhanced user experience (all Bash info in one place)
    - **Commits**:
      - `ac033b8` - Priority 1 content quality improvements
+     - `bbea670` - Fixed YAML parsing error in pdr.mdx
+     - `c4536c0` - Fixed YAML parsing error in page-1.mdx
+   - **Deployment**: ✅ Successfully deployed (run 20521586688)
 
 2. **SEO Description Automation** (2025-12-26)
    - Created `scripts/add-seo-descriptions.js` automated description generator
@@ -121,22 +124,24 @@
 ## GitHub Actions Tracking
 
 ### Recent Deployment ✅
-- **PR #5**: Content readability improvements merged to master
-- **Workflow**: Deploy to GitHub Pages
-- **Status**: ✅ Success (2025-12-26 18:14 KST)
-- **Trigger**: Merge to master branch
+- **Commit**: `c4536c0` - Priority 1 improvements + YAML fixes
+- **Workflow**: Deploy to GitHub Pages (run 20521586688)
+- **Status**: ✅ Success (2025-12-26 20:24 KST)
+- **Trigger**: Push to master branch
 - **Build Steps**:
   1. ✅ Checkout code
   2. ✅ Setup Node.js 20
   3. ✅ Install dependencies
-  4. ✅ Build with Astro
+  4. ✅ Build with Astro (91 pages)
   5. ✅ Upload artifact
   6. ✅ Deploy to GitHub Pages
+- **Build Time**: 1m 18s
+- **Pages Generated**: 91 (reduced from 101)
 
 ### Deployment History
-- **Latest**: PR #5 - Content readability improvements (Success)
-- **Previous**: Korean translations 23-28 (Success)
-- **Note**: Test Suite workflow has failures (not blocking deployment)
+- **Latest**: Priority 1 content quality improvements (Success - 3 commits)
+- **Previous**: PR #5 - Content readability improvements (Success)
+- **Note**: Test Suite workflow has warnings (not blocking deployment)
 
 ### Monitoring Commands
 ```bash
