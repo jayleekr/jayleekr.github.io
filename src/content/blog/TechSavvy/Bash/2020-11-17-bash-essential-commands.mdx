@@ -1,0 +1,447 @@
+---
+title: "Bash Essential Commands Cheat Sheet"
+author: "Jay Lee"
+pubDate: "2020-11-17 00:00:01"
+categories: ["TechSavvy", "Bash"]
+tags: ["TechSavvy", "ProgrammingLanguage", "Bash", "CheatSheet"]
+description: "Comprehensive Bash scripting guide covering essential commands, utilities, and best practices for shell programming. Includes sed, eval, arrays, string operations, and more."
+---
+
+Bash scripting을 위한 필수 명령어와 유틸리티를 정리한 종합 가이드입니다. 실무에서 자주 사용하는 패턴들을 예제와 함께 설명합니다.
+
+## Table of Contents
+- [1. String Operations](#1-string-operations)
+- [2. Arrays and Lists](#2-arrays-and-lists)
+- [3. Control Flow](#3-control-flow)
+- [4. Text Processing](#4-text-processing)
+- [5. Script Utilities](#5-script-utilities)
+- [6. Practical Examples](#6-practical-examples)
+
+---
+
+## 1. String Operations
+
+### String Comparison
+
+`==` and `!=` operators are used for string comparison in Bash.
+
+```sh
+if [ "$STRING" == "abc" ]; then
+    echo "STRING is abc!"
+fi
+
+# or use single = (POSIX compatible)
+if [ "$STRING" = "abc" ]; then
+    echo "STRING is abc!"
+fi
+```
+
+**Best Practices**:
+- Always quote variables: `"$STRING"` instead of `$STRING`
+- Use `==` for readability, `=` for POSIX compliance
+- Use `!=` for inequality checks
+
+---
+
+## 2. Arrays and Lists
+
+Bash supports arrays using parentheses with space-separated elements.
+
+### Array Declaration and Access
+
+```sh
+#!/bin/bash
+
+# Array declaration
+lists=("a" b "c")
+
+# Access elements (0-indexed)
+echo ${lists[1]}  # b
+echo ${lists[0]}  # a
+echo ${lists[2]}  # c
+
+# Negative indexing (from end)
+echo ${lists[-1]}  # Last element
+```
+
+### Array Slicing
+
+```sh
+lists=("V0.1.0" "V1.0.0" "V2.0.0")
+
+echo "[0] : "${lists[0]}   # V0.1.0
+echo "[1] : "${lists[1]}   # V1.0.0
+echo "[-1] : "${lists[-1]} # V2.0.0 (last element)
+
+# Select last element
+selected=${lists[-1]}
+echo "selected : "$selected
+```
+
+**Key Points**:
+- Space is the delimiter (not comma)
+- Use `${array[index]}` syntax for element access
+- Negative indices work from the end of the array
+
+---
+
+## 3. Control Flow
+
+### For Loops
+
+For loops in Bash can iterate over lists, command outputs, or ranges.
+
+```sh
+# Iterate over list
+for item in "item1" "item2" "item3"; do
+    echo $item
+done
+
+# Iterate over command output
+for file in $(ls *.txt); do
+    echo "Processing $file"
+done
+
+# C-style for loop
+for ((i=0; i<10; i++)); do
+    echo "Number: $i"
+done
+```
+
+### And/Or Operators
+
+Bash supports logical operators for command chaining.
+
+```sh
+# AND operator (&&) - execute second command only if first succeeds
+command1 && command2
+
+# OR operator (||) - execute second command only if first fails
+command1 || command2
+
+# Example: Create directory and cd into it
+mkdir mydir && cd mydir
+
+# Example: Try command, fallback if it fails
+some_command || echo "Command failed!"
+```
+
+### Directory/File Existence Check
+
+```sh
+#!/bin/bash
+
+test_dir_exist() {
+    set -e
+    if [ -e "/path/to/directory" ]; then
+        echo "DIR Exist"
+        exit 1
+    fi
+}
+
+test_dir_exist
+```
+
+**Existence Test Operators**:
+- `-e`: Exists (file or directory)
+- `-f`: Exists and is a regular file
+- `-d`: Exists and is a directory
+- `-r`: Exists and is readable
+- `-w`: Exists and is writable
+- `-x`: Exists and is executable
+
+---
+
+## 4. Text Processing
+
+### sed - Stream Editor
+
+sed is the legendary text stream editor that every Bash scripter uses repeatedly.
+
+```sh
+# Basic substitution
+echo "hello world" | sed 's/world/universe/'
+
+# Replace in file
+sed -i 's/old/new/g' file.txt
+
+# Delete lines matching pattern
+sed '/pattern/d' file.txt
+
+# Print specific lines
+sed -n '5,10p' file.txt  # Print lines 5-10
+```
+
+**Common sed Patterns**:
+```sh
+# Replace with delimiter other than /
+sed 's:old:new:g'  # Using : as delimiter
+
+# Multiple replacements
+sed -e 's/foo/bar/g' -e 's/baz/qux/g' file.txt
+
+# In-place edit with backup
+sed -i.bak 's/old/new/g' file.txt
+```
+
+### eval - Execute String as Command
+
+`eval` executes string arguments as shell commands. Useful for dynamic command construction.
+
+```sh
+#!/bin/bash
+
+# Construct command as string
+cmd="ls -la"
+eval $cmd
+
+# Dynamic variable assignment
+var_name="MY_VAR"
+eval ${var_name}="some_value"
+echo $MY_VAR  # Output: some_value
+```
+
+**Warning**: Be careful with `eval` - it can execute arbitrary code. Never use with untrusted input!
+
+---
+
+## 5. Script Utilities
+
+### set Command
+
+The `set` command controls shell behavior and script execution options.
+
+#### set -e (Exit on Error)
+
+When `set -e` is active, the script exits immediately if any command returns non-zero exit code.
+
+```sh
+#!/bin/bash
+set -e
+
+# Script will exit if this command fails
+some_command
+
+# This won't execute if above command failed
+echo "Previous command succeeded"
+```
+
+#### set -x (Debug Mode)
+
+`set -x` enables verbose mode, printing each command before execution.
+
+```sh
+#!/bin/bash
+set -x
+
+echo "hello"  # Will print: + echo hello
+cd /tmp       # Will print: + cd /tmp
+```
+
+#### Exit Codes
+
+Unix convention: 0 = success, 1-255 = error codes
+
+```sh
+#!/bin/bash
+
+echo "hello"
+exit 100
+
+# Check exit code
+$ sh test.sh
+hello
+$ echo $?
+100
+```
+
+**Useful set Options**:
+- `set -e`: Exit on error
+- `set -u`: Exit on undefined variable
+- `set -x`: Print commands before execution
+- `set -o pipefail`: Pipe fails if any command fails
+- `set -euxo pipefail`: Strict mode (recommended for production scripts)
+
+---
+
+## 6. Practical Examples
+
+### Get IP Address
+
+Extract IP address from network interface:
+
+```sh
+#!/bin/bash
+
+# For interface eth0
+IPADDR=$(ifconfig eth0 | grep inet | head -1 | sed 's/\:/ /' | awk '{print $2}')
+echo $IPADDR
+# Output: 172.17.0.3
+```
+
+**Modern Alternative** (using `ip` command):
+```sh
+IPADDR=$(ip addr show eth0 | grep 'inet ' | awk '{print $2}' | cut -d/ -f1)
+echo $IPADDR
+```
+
+### Combined Example: Directory Processing
+
+```sh
+#!/bin/bash
+set -euo pipefail
+
+# Configuration
+TARGET_DIR="/path/to/process"
+BACKUP_DIR="/path/to/backup"
+
+# Check if directory exists
+if [ ! -d "$TARGET_DIR" ]; then
+    echo "Error: Target directory does not exist"
+    exit 1
+fi
+
+# Create backup if doesn't exist
+mkdir -p "$BACKUP_DIR" || { echo "Failed to create backup dir"; exit 1; }
+
+# Process files
+for file in "$TARGET_DIR"/*.txt; do
+    if [ -f "$file" ]; then
+        # Backup original
+        cp "$file" "$BACKUP_DIR/" && echo "Backed up: $file"
+
+        # Process file
+        sed -i 's/old_text/new_text/g' "$file" && echo "Processed: $file"
+    fi
+done
+
+echo "All files processed successfully!"
+```
+
+### Error Handling Pattern
+
+```sh
+#!/bin/bash
+
+# Function with error handling
+process_file() {
+    local file=$1
+
+    if [ ! -f "$file" ]; then
+        echo "Error: File $file not found" >&2
+        return 1
+    fi
+
+    # Process file
+    cat "$file" | some_command || {
+        echo "Error processing $file" >&2
+        return 1
+    }
+
+    return 0
+}
+
+# Main script
+for file in *.txt; do
+    process_file "$file" || echo "Failed to process $file, continuing..."
+done
+```
+
+---
+
+## Best Practices
+
+### 1. Always Quote Variables
+```sh
+# Bad
+if [ -f $FILE ]; then
+
+# Good
+if [ -f "$FILE" ]; then
+```
+
+### 2. Use set -euo pipefail for Safety
+```sh
+#!/bin/bash
+set -euo pipefail
+# Script will exit on:
+# - Any command failure (-e)
+# - Undefined variables (-u)
+# - Pipe failures (-o pipefail)
+```
+
+### 3. Use Functions for Reusability
+```sh
+#!/bin/bash
+
+check_file() {
+    local file=$1
+    [ -f "$file" ] && echo "File exists" || echo "File not found"
+}
+
+check_file "/etc/passwd"
+```
+
+### 4. Handle Errors Explicitly
+```sh
+# Check command success
+if ! command_that_might_fail; then
+    echo "Command failed, handling error..."
+    exit 1
+fi
+
+# Or use ||
+command_that_might_fail || handle_error
+```
+
+### 5. Use Local Variables in Functions
+```sh
+my_function() {
+    local temp_var="value"  # Won't pollute global namespace
+    echo "$temp_var"
+}
+```
+
+---
+
+## Quick Reference
+
+### Common Operators
+| Operator | Description | Example |
+|----------|-------------|---------|
+| `==` / `=` | String equality | `[ "$a" == "$b" ]` |
+| `!=` | String inequality | `[ "$a" != "$b" ]` |
+| `-eq` | Numeric equality | `[ $a -eq $b ]` |
+| `-ne` | Numeric inequality | `[ $a -ne $b ]` |
+| `-lt` | Less than | `[ $a -lt $b ]` |
+| `-gt` | Greater than | `[ $a -gt $b ]` |
+| `-e` | File exists | `[ -e "$file" ]` |
+| `-f` | Is regular file | `[ -f "$file" ]` |
+| `-d` | Is directory | `[ -d "$dir" ]` |
+
+### Special Variables
+| Variable | Description |
+|----------|-------------|
+| `$0` | Script name |
+| `$1, $2, ...` | Positional parameters |
+| `$#` | Number of parameters |
+| `$@` | All parameters as separate words |
+| `$*` | All parameters as single word |
+| `$?` | Exit status of last command |
+| `$$` | Process ID of current shell |
+| `$!` | Process ID of last background command |
+
+---
+
+## Appendix: References
+
+- General: [Bash Beginners Guide](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)
+- Advanced: [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/)
+- sed: [GNU sed Manual](https://www.gnu.org/software/sed/manual/sed.html)
+- ShellCheck: [ShellCheck - Shell script analysis tool](https://www.shellcheck.net/)
+
+---
+
+**Last Updated**: 2020-11-17
+**Author**: Jay Lee
+**Tags**: Bash, Shell Scripting, Linux, Unix, Command Line, CheatSheet
