@@ -12,9 +12,9 @@
 node scripts/test-seo.js
 ```
 
-**Current Status**: 28/39 tests passed (72%) ✅
-- 1 expected failure (sitemap generated during build)
-- 10 warnings (verification codes needed after deployment)
+**Current Status**: 32/43 tests passed (74%) ✅
+- 0 failures
+- 11 warnings (verification codes needed after deployment)
 
 ---
 
@@ -33,7 +33,7 @@ npm run preview
 node scripts/test-seo.js
 ```
 
-**Expected**: 37/39 tests pass (only verification code warnings)
+**Expected**: 37/43 tests pass (only verification code and optional enhancement warnings)
 
 ### 2. Verify Key Files
 
@@ -111,7 +111,7 @@ Test all posts preview correctly:
 
 ## 📊 What's Being Tested
 
-### ✅ Passing Tests (28/39)
+### ✅ Passing Tests (32/43)
 
 **File Structure** (4/5):
 - ✅ robots.txt exists
@@ -125,6 +125,13 @@ Test all posts preview correctly:
 - ✅ Allow rules present
 - ✅ Build files disallowed
 - ✅ Crawl-delay configured
+
+**Sitemap** (4/5):
+- ✅ Valid XML declaration
+- ✅ Sitemap index structure
+- ✅ Contains URLs
+- ✅ Found in dist/ directory
+- ⚠️  No lastmod dates (optional)
 
 **Meta Tags** (12/17):
 - ✅ All essential meta tags present
@@ -150,19 +157,20 @@ Test all posts preview correctly:
 - ⚠️  Compression (GitHub Pages handles)
 - ⚠️  Prefetch (optional)
 
-### ⚠️  Warnings (10)
+### ⚠️  Warnings (11)
 
 Most warnings are post-deployment tasks:
-1. Sitemap not built yet → `npm run build`
-2-4. Verification codes → Add after deployment
-5. Language tags → Optional (Korean default)
-6. Content type → Works without explicit declaration
-7-8. Image optimization → Optional enhancement
-9-10. Performance config → GitHub Pages handles
+1. Sitemap not built yet (in public/) → `npm run build` generates to dist/
+2. No lastmod dates in sitemap → Optional enhancement
+3-5. Verification codes → Add after deployment
+6. Language tags → Optional (Korean default)
+7. Content type → Works without explicit declaration
+8-9. Image optimization → Optional enhancement
+10-11. Performance config → GitHub Pages handles
 
-### ❌ Critical Issues (0 before build, 1 during dev)
+### ❌ Critical Issues (0)
 
-- Sitemap missing → **Expected** (generated during `npm run build`)
+All critical SEO requirements are met after build! 🎉
 
 ---
 
