@@ -37,6 +37,7 @@ Develop a world-class developer blog based on successful developer blog case stu
 - Summarize when `workflow_state.md` > 12 K.
 
 ## Changelog
+- 2025-12-26: **🔗 URL READABILITY MODULE** - Fixed Korean character URL encoding with smart slug generation (slugify.js utility module)
 - 2025-12-26: **📚 NOTION INTEGRATION DOCUMENTATION** - Complete system architecture documentation (Architecture.md, PRD.md, Plan.md updates)
 - 2025-08-05: **✨ BLOG POST UI/UX COMPLETE REDESIGN** - Clean typography-focused layout with optimal 65ch width, mobile TOC, and enhanced readability
 - 2025-08-05: **🆕 BLOG TITLE STYLING FIXES** - Fixed oversized titles breaking layout (text-4xl/5xl/6xl → text-2xl/3xl/4xl-5xl)

@@ -1,5 +1,23 @@
 # workflow_state.md
-_Last updated: 2025-12-26 10:30 PM KST_
+_Last updated: 2025-12-26_
+
+## Latest Completion
+
+2025-12-26 - URL Readability Module COMPLETED ✅
+- **Problem Solved**: Korean characters in URLs causing URL encoding (%EC%9D%B8%EC%88%98)
+- **Module Created**: scripts/utils/slugify.js (340 lines)
+  - Smart slug generation extracting English words from mixed titles
+  - Date-based fallback for Korean-only titles
+  - Readability scoring (0-100) with validation
+- **Integration**: Updated scripts/sync-all-notion.js
+  - Replaced sanitizeFilename() with slugify()
+  - Real-time readability warnings during sync
+- **Testing**: scripts/test-slugify.js (10 comprehensive test cases)
+- **Results**: 10/100 → 100/100 readability for mixed Korean/English titles
+- **Examples**:
+  - "Anthropic Bun 인수" → `anthropic-bun`
+  - "GitHub Copilot 사용법" → `github-copilot`
+  - "한글 제목만" → `post-2025-12-11` (fallback)
 
 ## State
 Phase: DOCUMENTATION

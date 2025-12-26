@@ -19,6 +19,7 @@ import path from 'path';
 import { createWriteStream } from 'fs';
 import https from 'https';
 import http from 'http';
+import { slugify, getSlugReadability } from './utils/slugify.js';
 
 dotenv.config();
 
@@ -80,6 +81,7 @@ function categorizeContent(title, content) {
 
 /**
  * 페이지 제목에서 파일명 생성
+ * @deprecated Use slugify() from utils/slugify.js instead for better URL readability
  */
 function sanitizeFilename(title) {
   return title
@@ -375,9 +377,18 @@ tags: ${JSON.stringify(tags)}
 
     const mdxContent = frontmatter + content;
 
-    // 파일명 생성
-    const sanitizedTitle = sanitizeFilename(title);
-    const filename = `${dateStr}-${sanitizedTitle}.mdx`;
+    // 파일명 생성 (readable URL-safe slug)
+    const slug = slugify(title, dateStr);
+    const filename = `${dateStr}-${slug}.mdx`;
+
+    // URL 가독성 체크
+    const readability = getSlugReadability(slug);
+    if (readability.readabilityScore < 80) {
+      console.log(`   📊 가독성: ${readability.readabilityScore}/100 (${readability.recommendation})`);
+      if (readability.hasKorean) {
+        console.log(`   ⚠️  한글 포함: URL 인코딩 발생 가능 → 영문 slug 사용 권장`);
+      }
+    }
 
     // 출력 경로
     const outputDir = path.join(process.cwd(), 'src/content/blog', category);
