@@ -1,0 +1,9 @@
+# Node.js scripts folder - console usage is required
+scripts/
+
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
