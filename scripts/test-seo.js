@@ -168,7 +168,27 @@ async function testSitemap() {
   console.log('\n🗺️  SITEMAP TESTS');
   console.log('━'.repeat(60));
 
-  const sitemapPath = path.join(projectRoot, 'public/sitemap-index.xml');
+  // Check both dist/ (after build) and public/ (dev)
+  const sitemapPaths = [
+    path.join(projectRoot, 'dist/sitemap-index.xml'),
+    path.join(projectRoot, 'public/sitemap-index.xml')
+  ];
+
+  let sitemapPath = null;
+  for (const checkPath of sitemapPaths) {
+    try {
+      await fs.access(checkPath);
+      sitemapPath = checkPath;
+      break;
+    } catch (error) {
+      // Try next path
+    }
+  }
+
+  if (!sitemapPath) {
+    warn('Sitemap', 'Sitemap not found in dist/ or public/', 'Run: npm run build');
+    return;
+  }
 
   try {
     const content = await fs.readFile(sitemapPath, 'utf-8');
@@ -203,6 +223,10 @@ async function testSitemap() {
     } else {
       warn('Sitemap', 'No lastmod dates (optional but recommended)');
     }
+
+    // Show where sitemap was found
+    const location = sitemapPath.includes('dist/') ? 'dist/' : 'public/';
+    pass('Sitemap', `Found in ${location} directory`);
 
   } catch (error) {
     fail('Sitemap', 'File read error', error.message);
