@@ -628,6 +628,42 @@ npm run build       # Build verification
 - GitHub Actions workflow
 - Image processing pipeline
 
+### 10.3 Codebase Cleanup (2025-12-26)
+
+**Completed:** 2025-12-26
+**Impact:**
+- Removed ~44KB+ dead code (unused components)
+- Archived Jekyll legacy files to `.archive/`
+- Improved robots.txt documentation
+- Enhanced BaseHead SEO comments
+
+**Components Removed:**
+- `ReadingProgress.astro` (148 lines) - Unused
+- `EnhancedReadingProgress.astro` (296 lines) - Unused duplicate
+- `SearchModal.astro` (18.6KB) - Unused search UI
+- `CommandPalette.astro` (24.5KB) - Unused command interface
+- `Search/` directory - Empty after component removal
+
+**Files Archived:**
+- Jekyll configuration files → `.archive/jekyll-legacy/`
+  - `Gemfile`, `Gemfile.lock`, `_config.yml`, `.jekyll-metadata`
+- Old Jekyll posts → `.archive/old-posts/`
+  - Entire `_posts/` directory (superseded by `/src/content/blog/`)
+
+**Scripts Removed:**
+- `launch-validation.js` - Stub superseded by `.mjs` version
+
+**SEO Improvements:**
+- Updated `robots.txt` last modified date (2025-01-22 → 2025-12-26)
+- Added documentation for `/_astro/` crawling rule
+- Enhanced BaseHead.astro verification code comments with setup URLs
+- Verified RSS stylesheet exists (`rss-styles.xsl` - 5.3KB)
+
+**Preserved Files:**
+- `.nojekyll` - Kept (disables GitHub's Jekyll processing)
+- All Astro components and layouts
+- All active scripts and utilities
+
 ---
 
 ## 11. Current Metrics
@@ -680,11 +716,19 @@ Bundle Size:
 
 ### 12.2 Technical Debt
 
+**Completed (2025-12-26):**
+- ✅ Remove unused ReadingProgress components
+- ✅ Remove unused Search/Command components
+- ✅ Archive Jekyll legacy files
+- ✅ Update robots.txt documentation
+- ✅ Verify SEO meta tag configuration
+
 **Low Priority:**
 - Consolidate all blog posts to use PostLayout
 - Remove legacy layout backwards compatibility
 - Optimize image formats (WebP conversion)
 - Implement lazy loading for images
+- Fill in search engine verification codes (Google, Bing, Yandex)
 
 ---
 
