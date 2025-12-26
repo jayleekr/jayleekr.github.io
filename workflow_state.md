@@ -134,6 +134,23 @@ User request → restore/show blueprint.
 | 38 | Verify Astro-only build process and architecture | COMPLETED |
 
 ## Log
+2025-12-26 - Codebase Cleanup & GitHub Actions Optimization COMPLETED ✅
+- **Dead Code Removal**: ~44KB+ unused components deleted
+  - ReadingProgress.astro (148 lines), EnhancedReadingProgress.astro (296 lines)
+  - SearchModal.astro (18.6KB), CommandPalette.astro (24.5KB)
+  - Search/ directory removed
+- **Legacy File Archival**: Jekyll remnants moved to .archive/
+  - Configuration files: Gemfile, _config.yml, .jekyll-metadata
+  - Old posts: 52 files from _posts/ → .archive/old-posts/
+- **GitHub Actions Simplified**: Removed 5.5KB of workflows
+  - test.yml deleted (comprehensive test suite - excessive)
+  - notion-sync.yml deleted (local-only workflow)
+  - Only deploy.yml retained (essential)
+- **SEO Improvements**: robots.txt updated, BaseHead.astro enhanced
+- **Documentation**: Architecture.md updated with cleanup history
+- **Commits**: 8977e8a (cleanup), 2dec355 (workflows)
+- **Status**: Pushed to GitHub, ready for PR merge
+
 2025-12-26 - Notion Integration Documentation COMPLETED ✅
 - Created comprehensive Architecture.md (959 lines, 14 sections) documenting entire system
 - Updated PRD.md with Notion CMS integration section (smart updates, image processing, CLI commands)
