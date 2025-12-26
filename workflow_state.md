@@ -1,10 +1,28 @@
 # workflow_state.md
-_Last updated: 2025-08-05 11:48 AM KST_
+_Last updated: 2025-12-26_
+
+## Latest Completion
+
+2025-12-26 - URL Readability Module COMPLETED ✅
+- **Problem Solved**: Korean characters in URLs causing URL encoding (%EC%9D%B8%EC%88%98)
+- **Module Created**: scripts/utils/slugify.js (340 lines)
+  - Smart slug generation extracting English words from mixed titles
+  - Date-based fallback for Korean-only titles
+  - Readability scoring (0-100) with validation
+- **Integration**: Updated scripts/sync-all-notion.js
+  - Replaced sanitizeFilename() with slugify()
+  - Real-time readability warnings during sync
+- **Testing**: scripts/test-slugify.js (10 comprehensive test cases)
+- **Results**: 10/100 → 100/100 readability for mixed Korean/English titles
+- **Examples**:
+  - "Anthropic Bun 인수" → `anthropic-bun`
+  - "GitHub Copilot 사용법" → `github-copilot`
+  - "한글 제목만" → `post-2025-12-11` (fallback)
 
 ## State
-Phase: MAINTENANCE  
-Status: COMPLETED  
-CurrentItem: Blog Post UI/UX Complete Redesign - Clean typography-focused layout deployed
+Phase: DOCUMENTATION
+Status: COMPLETED
+CurrentItem: Notion Integration Documentation - Architecture.md, PRD.md, Plan.md updated with comprehensive system documentation
 
 ## Plan
 ✅ COMPLETED: Phase 1 - Core Infrastructure (Jan 22, 2025)
@@ -134,6 +152,33 @@ User request → restore/show blueprint.
 | 38 | Verify Astro-only build process and architecture | COMPLETED |
 
 ## Log
+2025-12-26 - Codebase Cleanup & GitHub Actions Optimization COMPLETED ✅
+- **Dead Code Removal**: ~44KB+ unused components deleted
+  - ReadingProgress.astro (148 lines), EnhancedReadingProgress.astro (296 lines)
+  - SearchModal.astro (18.6KB), CommandPalette.astro (24.5KB)
+  - Search/ directory removed
+- **Legacy File Archival**: Jekyll remnants moved to .archive/
+  - Configuration files: Gemfile, _config.yml, .jekyll-metadata
+  - Old posts: 52 files from _posts/ → .archive/old-posts/
+- **GitHub Actions Simplified**: Removed 5.5KB of workflows
+  - test.yml deleted (comprehensive test suite - excessive)
+  - notion-sync.yml deleted (local-only workflow)
+  - Only deploy.yml retained (essential)
+- **SEO Improvements**: robots.txt updated, BaseHead.astro enhanced
+- **Documentation**: Architecture.md updated with cleanup history
+- **Commits**: 8977e8a (cleanup), 2dec355 (workflows)
+- **Status**: Pushed to GitHub, ready for PR merge
+
+2025-12-26 - Notion Integration Documentation COMPLETED ✅
+- Created comprehensive Architecture.md (959 lines, 14 sections) documenting entire system
+- Updated PRD.md with Notion CMS integration section (smart updates, image processing, CLI commands)
+- Updated Plan.md with completion summary (7-day timeline, git history, achievements)
+- Fixed broken images issue: restarted Astro dev server to pick up new static files
+- Documented: Content pipeline, category classification, image download workflow
+- Migration stats: 65 Notion posts, 10 images, smart update detection implemented
+- All changes committed to feature/ultra-minimal-refactoring branch (commit: a7b699b)
+- Ready for GitHub push and pull request creation
+
 2025-08-05 - Blog Post UI/UX Complete Redesign DEPLOYED ✅
 - Implemented clean typography-focused layout with optimal 65ch content width
 - Removed dark background from title area for significantly better readability

@@ -1,0 +1,17 @@
+<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="80" cy="80" r="80" fill="#2563eb"/>
+
+  <!-- Initials -->
+  <text
+    x="80"
+    y="80"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="64"
+    font-weight="600"
+    fill="white"
+    text-anchor="middle"
+    dominant-baseline="central">
+    JL
+  </text>
+</svg>

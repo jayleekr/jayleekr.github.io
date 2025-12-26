@@ -1,0 +1,78 @@
+---
+title: "2025.07.31 Hackathon Lesson Learnt "
+author: "Jay Lee"
+pubDate: "2025-08-01T08:13:00.000Z"
+lastEditedTime: "2025-08-01T08:15:00.000Z"
+categories: ["Collaboration", "ToyProjects"]
+tags: ["Collaboration","Project"]
+---
+
+
+We finished an internal AI hackathon.
+
+
+The theme of the hackathon was to increase productivity in our work by using AI.
+
+
+Actually, since I had already been using VS Code Copilot for about two years, then switched to Cursor early this year, and have been using Claude Code Max from the beginning of its release, I’ve felt—though I can’t be sure—that my productivity has increased a lot.
+
+
+Intuitively, I thought the DORA metrics, which are developer productivity indicators, must have improved, but it was unclear by how much. And since we don’t check DORA metrics internally, it was very difficult to present the result of “increased productivity” to the audience.
+
+
+So, after thinking about it, I ended up assuming that there is roughly a positive correlation between the number of tokens used by certain developers when using AI and their productivity, and decided to build a developer token usage tracking dashboard for managers, tech leads, and directors.
+
+
+Given the nature of capitalism, business will move toward optimal efficiency, and if the assumption that AI can increase productivity is true, then the number of tokens should also have some correlation. From that thought experiment—whether higher-level business logic redesign would eventually be necessary—this topic was born.
+
+
+I took the role of leader, and had the participants each pay $100 for Claude Code (sorry for the forced sale… haha).
+
+
+That’s because I convinced them that the only way to code this project quickly was to use vibe coding. My mistake was spending too much time in the persuasion process introducing the latest CC features (like Super Claude, Subagents, etc.).
+
+
+If we had only focused on the hackathon theme, we probably would have finished much faster. But in that process, these smart engineers absorbed things quickly, and in their own areas, it seems like they internalized at least a bit of a methodology for using AI agents like CC to assign and manage work. Maybe that was the bigger contribution I made to the company… or maybe not… haha.
+
+
+They are all outstanding engineers, but while using Cursor/Copilot + LLMs (ChatGPT, Claude, Grok) as assistant tools was the way they approached work before, now they experienced something different: seeing work in a bigger scope, breaking it down more granularly, dealing with longer contexts, designing Todo lists or action items, and delegating work to agents like Tester, Designer, Developer, or DevOps, then getting results, reflecting feedback, and continuing the workflow. It might have been the first experience of acquiring this new paradigm of working.
+
+
+The biggest problem we faced during the hackathon was the endless bottlenecks caused by workflow changes.
+
+
+Even if each engineer used only one agent and worked in a single repository, so many conflicts occurred, and resolving them alone consumed a lot of tokens. When working alone, even if conflicts occurred, they were small, and since we didn’t design many protection rules for the main branch or CI/CD pipelines, the overall cost was small.
+
+
+But once we added protection rules for main, tests designed through TDD ran in GitHub Actions CICD, and CC monitored them, the tokens consumed were far higher than those used in actual code development (at least, that’s how it felt).
+
+
+Even if we designed the project’s [CLAUDE.md](http://claude.md/) well and included rules everyone should follow in the common repo, sometimes those rules weren’t fully followed within the context window. When we designed it to even update CLAUDE.md with new rules upon feedback, subagents each tried to change it, and multiplied by the number of engineers, this created bottlenecks of huge scale.
+
+
+In the end, on the first day, achieving project goals was out of the question, and the four of us just used up all the tokens waiting for bottlenecks to resolve.
+
+
+What accelerated this even more was when I used Claude Squad during breaks.
+
+
+Claude Squad is based on tmux, and splits a workspace into worktree-based file paths, so one user can run multiple Claude Code instances on a single project.
+
+
+I ran a total of six Claude Code instances, and with subagents running inside each, the overall working speed seemed fast, but about 80% of the time was spent resolving bottlenecks.
+
+
+It feels like we’ve moved from Prompt Engineering → Context Engineering → now into what should really be called Agent Engineering.
+
+
+Unless we define the workflow between two subagents properly, whether with Claude Squad or with multiple people working on the same project, it just won’t work. If most of the time is spent waiting for bottlenecks… well.
+
+
+In the end, we went in circles and decided that one person (me) would have my CC do the development, while the others periodically synced the repo, used tools like Playwright MCP to derive UI/UX improvements, and then provided me feedback as Markdown files, which I would turn into action items for CC again.
+
+
+And once we deleted all the GitHub Action CICD steps, issue creation, and pull request steps, the development speed increased dramatically.
+
+
+Now I think—if we could apply DORA-like measurements here and measure KPIs for each methodology, we might be able to find even better models. That’s the thought I leave as I wrap up this long note.
+

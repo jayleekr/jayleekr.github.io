@@ -93,6 +93,20 @@ export default [
     },
   },
   {
+    files: ['scripts/**/*.{js,mjs}'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
     ignores: [
       'dist/',
       'node_modules/',
@@ -100,6 +114,7 @@ export default [
       'backup*/',
       '_site/',
       'vendor/',
+      'scripts/',
     ],
   },
 ];

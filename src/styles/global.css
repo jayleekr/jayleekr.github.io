@@ -1,939 +1,277 @@
-/* Import design tokens first */
-@import './design-tokens.css';
-
-/* Import code highlighting styles */
-@import './code-highlight.css';
-
-/* Import enhanced dark mode styles */
-@import './dark-mode-enhancements.css';
-
-/* Import markdown dark mode fix - must come after other imports for specificity */
-@import './markdown-dark-mode-fix.css';
-
-/* Import Google Fonts for better readability with optimized loading */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
-/* Korean font support - removed as unused (saving 93KB) */
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap'); */
+/* Ultra-Minimal Design System - Overreacted.io Inspired */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Legacy theme variables for backward compatibility */
+/* ========================================
+   CSS Variables - Design Tokens
+   ======================================== */
+
 :root {
-	/* Map legacy variables to design tokens */
-	--accent: var(--interactive-primary);
-	--accent-dark: var(--interactive-primary-hover);
-	--bg-primary: var(--bg-primary);
-	--bg-secondary: var(--bg-secondary);
-	--text-primary: var(--text-primary);
-	--text-secondary: var(--text-secondary);
-	--border-color: var(--border-primary);
+  /* Colors - Light Mode (Default) */
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #666666;
+  --link: #0070f3;
+  --link-hover: #0051cc;
+  --code-bg: #f5f5f5;
+  --border: #e5e5e5;
+
+  /* Typography */
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+
+  /* Spacing */
+  --content-max-width: 680px;
+  --content-padding: 24px;
+  --post-gap: 48px;
+  --section-gap: 32px;
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1.125rem;   /* 18px */
+  --text-lg: 1.5rem;       /* 24px */
+  --text-xl: 2rem;         /* 32px */
 }
 
-/* Dark theme handled by design-tokens.css */
-
-/* Keep Atkinson font as fallback */
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
+/* Dark Mode */
+.dark {
+  --bg: #121212;
+  --text: #e5e5e5;
+  --text-secondary: #888888;
+  --link: #58a6ff;
+  --link-hover: #79b8ff;
+  --code-bg: #1e1e1e;
+  --border: #333333;
 }
 
-/* Base styles with improved typography */
+/* ========================================
+   Base Styles - Minimal Reset
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
-	@apply scroll-smooth;
-	font-size: 16px;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-	@apply transition-colors duration-300;
-	font-family: var(--font-primary);
-	font-feature-settings: 'kern' on, 'liga' on, 'calt' on;
-	letter-spacing: var(--tracking-normal);
-	word-spacing: 0.05em;
-	color: var(--text-primary);
-	background: linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary));
-	font-size: var(--text-base);
-	line-height: var(--leading-relaxed);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--text);
+  background-color: var(--bg);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--content-padding);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-main {
-	@apply max-w-3xl mx-auto;
-	padding: var(--space-12) var(--space-4);
-}
+/* ========================================
+   Typography - Minimal Hierarchy
+   ======================================== */
 
-@media (min-width: 768px) {
-	main {
-		padding-left: var(--space-6);
-		padding-right: var(--space-6);
-	}
-}
-
-@media (min-width: 1024px) {
-	main {
-		padding-left: var(--space-8);
-		padding-right: var(--space-8);
-	}
-}
-
-/* Typography with improved hierarchy using design tokens */
 h1, h2, h3, h4, h5, h6 {
-	font-family: var(--font-display);
-	font-weight: var(--font-weight-bold);
-	color: var(--text-primary);
-	letter-spacing: var(--tracking-tight);
-	line-height: var(--leading-tight);
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 2rem 0 1rem 0;
 }
 
-h1 { 
-	font-size: var(--text-5xl);
-	margin-bottom: var(--space-6);
-	font-weight: var(--font-weight-extrabold);
-	letter-spacing: var(--tracking-tighter);
+h1 {
+  font-size: var(--text-xl);
+  margin-top: 0;
 }
-h2 { 
-	font-size: var(--text-4xl);
-	margin-bottom: var(--space-5);
-	font-weight: var(--font-weight-bold);
+
+h2 {
+  font-size: var(--text-lg);
 }
-h3 { 
-	font-size: var(--text-3xl);
-	margin-bottom: var(--space-4);
-	font-weight: var(--font-weight-semibold);
-}
-h4 { 
-	font-size: var(--text-2xl);
-	margin-bottom: var(--space-3);
-	font-weight: var(--font-weight-semibold);
-}
-h5 { 
-	font-size: var(--text-xl);
-	margin-bottom: var(--space-3);
-	font-weight: var(--font-weight-medium);
-}
-h6 { 
-	font-size: var(--text-lg);
-	margin-bottom: var(--space-2);
-	font-weight: var(--font-weight-medium);
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
 p {
-	margin-bottom: var(--space-6);
-	color: var(--text-secondary);
-	line-height: var(--leading-relaxed);
-	word-wrap: break-word;
-	hyphens: auto;
+  margin: 1rem 0;
+  color: var(--text);
+  line-height: 1.7;
 }
 
 a {
-	color: var(--interactive-primary);
-	transition: var(--transition-colors);
-	text-decoration: underline;
-	text-decoration-thickness: 2px;
-	text-underline-offset: 2px;
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-	color: var(--interactive-primary-hover);
+  color: var(--link-hover);
 }
 
 strong, b {
-	font-weight: var(--font-weight-bold);
-	color: var(--text-primary);
+  font-weight: 600;
+  color: var(--text);
 }
 
-/* Code styling with better fonts and contrast */
-code {
-	@apply px-2 py-1 text-sm bg-gray-100 dark:bg-gray-800 rounded;
-	@apply border border-gray-200 dark:border-gray-600;
-	@apply text-gray-900 dark:text-gray-100;
-	font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
-	font-weight: 500;
-	font-size: 0.875em;
+em, i {
+  font-style: italic;
 }
 
-pre {
-	@apply p-6 rounded-lg overflow-x-auto my-8;
-	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600;
-	@apply text-gray-900 dark:text-gray-100;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
+/* ========================================
+   Lists - Minimal Styling
+   ======================================== */
 
-pre code {
-	@apply p-0 bg-transparent border-0;
-	@apply text-gray-800 dark:text-gray-200;
-	font-size: 0.875rem;
-	line-height: 1.7;
-}
-
-/* Quote styling with better emphasis */
-blockquote {
-	@apply border-l-4 border-primary-500 pl-6 py-4 my-8;
-	@apply bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50 dark:to-transparent;
-	@apply rounded-r-lg;
-	quotes: "\201C""\201D""\2018""\2019";
-}
-
-blockquote p {
-	@apply text-lg leading-relaxed text-gray-800 dark:text-gray-200; /* Improved contrast */
-	font-style: italic;
-	font-weight: 400;
-}
-
-blockquote p:first-child::before {
-	content: open-quote;
-	@apply text-3xl text-primary-500 mr-2;
-	font-weight: 700;
-	line-height: 0;
-	vertical-align: -0.4em;
-}
-
-/* Table styling */
-table {
-	@apply w-full border-collapse border border-gray-200 dark:border-gray-700 rounded-lg;
-}
-
-th, td {
-	@apply border border-gray-200 dark:border-gray-700 px-4 py-2;
-}
-
-th {
-	@apply bg-gray-50 dark:bg-gray-800 font-semibold;
-}
-
-/* Image styling */
-img {
-	@apply max-w-full h-auto rounded-lg shadow-sm;
-}
-
-/* Form elements */
-input, textarea {
-	@apply text-base border border-gray-300 dark:border-gray-600;
-	@apply bg-white dark:bg-gray-800 rounded-md px-3 py-2;
-	@apply focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
-}
-
-textarea {
-	@apply w-full resize-y;
-}
-
-/* HR styling */
-hr {
-	@apply border-0 border-t border-gray-200 dark:border-gray-700 my-8;
-}
-
-/* Utility classes */
-.sr-only {
-	@apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-/* List styling */
 ul, ol {
-	@apply mb-6 pl-6;
-}
-
-ul {
-	list-style-type: disc;
-}
-
-ol {
-	list-style-type: decimal;
+  margin: 1rem 0;
+  padding-left: 2rem;
 }
 
 li {
-	@apply mb-2 leading-relaxed;
+  margin: 0.5rem 0;
+  line-height: 1.7;
 }
 
-li > ul, li > ol {
-	@apply mt-2 mb-2;
+/* ========================================
+   Code Blocks - Minimal Design
+   ======================================== */
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--text);
 }
 
-/* Link styling */
-a:not(.no-underline) {
-	@apply text-primary-600 dark:text-primary-400;
-	@apply underline decoration-2 underline-offset-2 decoration-primary-300 dark:decoration-primary-600;
-	@apply hover:decoration-primary-600 dark:hover:decoration-primary-400;
-	@apply transition-all duration-200;
+pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
 }
 
-a:not(.no-underline):hover {
-	@apply text-primary-700 dark:text-primary-300;
+pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.7;
 }
 
-/* Dark mode toggle */
-.theme-toggle {
-	@apply p-2 rounded-full bg-gray-100 dark:bg-gray-800;
-	@apply hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors;
+/* ========================================
+   Blockquotes - Simple Style
+   ======================================== */
+
+blockquote {
+  border-left: 4px solid var(--border);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
 }
 
-/* Prose improvements for blog posts with better spacing */
-.prose {
-	@apply text-gray-800 dark:text-gray-200; /* Improved contrast */
-	font-size: 1.125rem;
-	line-height: 1.75;
-	/* Optimal reading width constraints */
-	max-width: 65ch !important;
-	margin-left: auto;
-	margin-right: auto;
+/* ========================================
+   Horizontal Rule
+   ======================================== */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
 }
 
-/* Desktop typography improvements */
-@media (min-width: 1280px) {
-	.prose {
-		font-size: 1.1875rem; /* 19px */
-		line-height: 1.7;
-	}
-	
-	.prose h1 { 
-		font-size: 2.75rem; /* 44px */
-		line-height: 1.1;
-	}
-	
-	.prose h2 { 
-		font-size: 2.25rem; /* 36px */
-		line-height: 1.2;
-	}
-	
-	.prose h3 { 
-		font-size: 1.875rem; /* 30px */
-		line-height: 1.3;
-	}
+/* ========================================
+   Images - Responsive
+   ======================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
 }
 
-/* Large desktop optimizations */
-@media (min-width: 1536px) {
-	.prose {
-		font-size: 1.25rem; /* 20px */
-		line-height: 1.7;
-	}
+/* ========================================
+   Tables - Minimal Style
+   ======================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-	@apply text-gray-900 dark:text-gray-100 font-bold;
-	scroll-margin-top: 5rem;
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
 }
 
-.prose h1 { 
-	font-size: clamp(2rem, 1.5rem + 2.5vw, 3rem);
-	@apply mb-8 mt-12;
-	font-weight: 800;
-	letter-spacing: -0.025em;
-}
-.prose h2 { 
-	font-size: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
-	@apply mb-6 mt-12 pb-3 border-b-2 border-gray-200 dark:border-gray-700;
-	font-weight: 700;
-}
-.prose h3 { 
-	font-size: clamp(1.25rem, 1.125rem + 0.625vw, 1.75rem);
-	@apply mb-4 mt-10;
-	font-weight: 600;
-}
-.prose h4 { 
-	font-size: clamp(1.125rem, 1.0625rem + 0.3125vw, 1.375rem);
-	@apply mb-3 mt-8;
-	font-weight: 600;
+th {
+  background: var(--code-bg);
+  font-weight: 600;
 }
 
-.prose p {
-	@apply mb-6 leading-relaxed;
-	text-align: left; /* Changed from justify for better readability on mobile */
-	word-spacing: normal;
-}
+/* ========================================
+   Utilities - Focus & Selection
+   ======================================== */
 
-/* Improve first paragraph (lead) */
-.prose > p:first-of-type {
-	@apply text-xl leading-relaxed text-gray-800 dark:text-gray-200;
-	font-weight: 400;
-}
-
-.prose ul, .prose ol {
-	@apply mb-6 pl-6;
-}
-
-.prose li {
-	@apply mb-3 leading-relaxed;
-}
-
-.prose li::marker {
-	@apply text-primary-600 dark:text-primary-400;
-	font-weight: 600;
-}
-
-.prose blockquote {
-	@apply border-l-4 border-primary-500 pl-6 pr-6 py-6 my-10;
-	@apply bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50 dark:to-transparent;
-	@apply rounded-r-xl shadow-sm;
-}
-
-.prose blockquote p {
-	@apply mb-0 text-lg text-gray-800 dark:text-gray-200; /* Improved contrast */
-	font-style: italic;
-	line-height: 1.7;
-}
-
-.prose blockquote cite {
-	@apply block mt-4 text-sm text-gray-700 dark:text-gray-300; /* Improved contrast */
-	font-style: normal;
-	font-weight: 500;
-}
-
-.prose blockquote cite::before {
-	content: "— ";
-}
-
-.prose pre {
-	@apply bg-gray-900 dark:bg-gray-950 rounded-xl p-6 overflow-x-auto my-8;
-	@apply border border-gray-700 shadow-lg;
-	position: relative;
-}
-
-/* Add language label to code blocks */
-.prose pre[data-language]::before {
-	content: attr(data-language);
-	@apply absolute top-2 right-2 text-xs text-gray-400;
-	@apply px-2 py-1 bg-gray-800 rounded;
-	font-family: 'Inter', sans-serif;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-}
-
-.prose code {
-	@apply bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm;
-	@apply border border-gray-200 dark:border-gray-600;
-	@apply text-gray-900 dark:text-gray-100;
-	font-weight: 500;
-	font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Monaco', monospace;
-}
-
-.prose pre {
-	@apply bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600;
-	@apply text-gray-800 dark:text-gray-200;
-}
-
-.prose pre code {
-	@apply bg-transparent border-0 p-0;
-	@apply text-gray-800 dark:text-gray-200;
-	font-weight: 400;
-}
-
-.prose img {
-	@apply rounded-lg shadow-lg my-10 mx-auto max-w-full;
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.prose img:hover {
-	transform: scale(1.02);
-	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Image captions */
-.prose img + em {
-	@apply block text-center text-sm text-gray-700 dark:text-gray-300 mt-2 mb-8; /* Improved contrast */
-	font-style: normal;
-}
-
-.prose table {
-	@apply w-full border-collapse my-6;
-}
-
-.prose th {
-	@apply bg-gray-100 dark:bg-gray-800 font-semibold p-3 text-left;
-	@apply border border-gray-300 dark:border-gray-600;
-}
-
-.prose td {
-	@apply p-3 border border-gray-300 dark:border-gray-600;
-}
-
-.prose a {
-	@apply text-primary-600 dark:text-primary-400;
-	@apply underline decoration-2 underline-offset-2 decoration-primary-300 dark:decoration-primary-600;
-	@apply hover:decoration-primary-600 dark:hover:decoration-primary-400;
-	@apply transition-all duration-200;
-	word-break: break-word;
-}
-
-.prose a:hover {
-	@apply text-primary-700 dark:text-primary-300;
-}
-
-/* External link indicator */
-.prose a[href^="http"]:not([href*="jayleekr.github.io"])::after {
-	content: "↗";
-	@apply ml-1 text-xs align-super text-gray-600 dark:text-gray-400; /* Improved contrast */
-}
-
-.prose strong {
-	@apply font-bold text-gray-900 dark:text-gray-100;
-}
-
-.prose em {
-	@apply italic;
-}
-
-/* Selection styling */
-::selection {
-	@apply bg-primary-200 dark:bg-primary-800 text-gray-900 dark:text-gray-100;
-}
-
-/* Focus styles for accessibility with touch support */
 :focus {
-	@apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
 }
 
-/* Touch device optimizations */
-@media (hover: none) and (pointer: coarse) {
-	/* Remove hover effects on touch devices */
-	*:hover {
-		transition: none;
-	}
-	
-	/* Larger tap targets */
-	button, a, input, select, textarea, [role="button"], [tabindex] {
-		min-height: 48px;
-		min-width: 48px;
-	}
-	
-	/* Improve button feedback on touch */
-	button:active, [role="button"]:active {
-		transform: scale(0.98);
-		transition: transform 0.1s ease;
-	}
+::selection {
+  background: var(--link);
+  color: var(--bg);
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-	:root {
-		--border-color: black;
-		--text-primary: black;
-		--bg-primary: white;
-	}
-	
-	.dark {
-		--border-color: white;
-		--text-primary: white;
-		--bg-primary: black;
-	}
-	
-	button, a {
-		@apply border-2;
-	}
+/* ========================================
+   Accessibility - Screen Reader Only
+   ======================================== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* Reduced motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-	* {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-		scroll-behavior: auto !important;
-	}
-	
-	.no-motion {
-		transform: none !important;
-	}
-}
+/* ========================================
+   Mobile Responsive - Content First
+   ======================================== */
 
-/* Skip to content link with mobile optimization */
-.skip-to-content {
-	@apply absolute left-0 top-0 bg-primary-600 text-white px-6 py-3 rounded-br-lg;
-	@apply transform -translate-y-full focus:translate-y-0;
-	@apply transition-transform duration-200 font-medium;
-	@apply min-h-[48px] min-w-[48px] flex items-center justify-center;
-	z-index: 100;
-}
-
-/* Mobile specific utilities */
-.touch-pan-x {
-	touch-action: pan-x;
-}
-
-.touch-pan-y {
-	touch-action: pan-y;
-}
-
-.touch-manipulation {
-	touch-action: manipulation;
-}
-
-/* Enhanced responsive breakpoints for content-first design */
-
-/* Tablet: 768px - 1023px */
-@media (min-width: 768px) and (max-width: 1023px) {
-	.prose {
-		max-width: 75ch !important;
-		font-size: 1.0625rem;
-		line-height: 1.75;
-	}
-	
-	h1 { font-size: clamp(2.5rem, 2.25rem + 1.25vw, 3.5rem); }
-	h2 { font-size: clamp(2rem, 1.875rem + 0.625vw, 2.5rem); }
-	h3 { font-size: clamp(1.5rem, 1.4375rem + 0.3125vw, 1.75rem); }
-	
-	main { @apply px-6 py-10; }
-}
-
-/* Small Laptop: 1024px - 1279px */
-@media (min-width: 1024px) and (max-width: 1279px) {
-	.prose {
-		max-width: 80ch !important;
-		font-size: 1.125rem;
-		line-height: 1.75;
-	}
-	
-	/* Optimized single column layout */
-	main { @apply px-8 py-12; }
-}
-
-/* Standard Laptop: 1280px - 1365px (Most laptops) */
-@media (min-width: 1280px) and (max-width: 1365px) {
-	.prose {
-		max-width: 85ch !important;
-		font-size: 1.125rem;
-		line-height: 1.75;
-	}
-}
-
-/* Large Laptop: 1366px - 1535px */
-@media (min-width: 1366px) and (max-width: 1535px) {
-	.prose {
-		max-width: 90ch !important;
-		font-size: 1.1875rem;
-		line-height: 1.7;
-	}
-}
-
-/* Desktop: 1536px - 1679px */
-@media (min-width: 1536px) and (max-width: 1679px) {
-	.prose {
-		max-width: 95ch !important;
-		font-size: 1.1875rem;
-		line-height: 1.7;
-	}
-}
-
-/* Large Desktop: 1680px - 1919px */
-@media (min-width: 1680px) and (max-width: 1919px) {
-	.prose {
-		max-width: 100ch !important;
-		font-size: 1.25rem;
-		line-height: 1.7;
-	}
-}
-
-/* Ultra-wide: 1920px+ */
-@media (min-width: 1920px) {
-	.prose {
-		max-width: 105ch !important;
-		font-size: 1.25rem;
-		line-height: 1.7;
-	}
-}
-
-/* Content-first layout improvements */
-@media (min-width: 1280px) {
-	/* Optimized reading width for laptops */
-	.content-optimized {
-		max-width: 800px;
-		margin: 0 auto;
-	}
-}
-
-/* Responsive grid layouts */
-@media (min-width: 1024px) {
-	/* Single column for small laptops */
-	.responsive-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-}
-
-/* Enhanced layout for standard laptops */
-@media (min-width: 1280px) {
-	.responsive-grid {
-		grid-template-columns: 200px 1fr;
-		gap: 2rem;
-	}
-}
-
-@media (min-width: 1536px) {
-	.responsive-grid {
-		grid-template-columns: 220px 1fr;
-		gap: 2.5rem;
-	}
-}
-
-/* Ultra-wide screens with 3-column layout */
-@media (min-width: 1920px) {
-	.responsive-grid {
-		grid-template-columns: 240px 1fr 180px;
-		gap: 3rem;
-	}
-}
-
-/* Text optimization for better readability */
-.prose p {
-	text-align: left; /* Changed from justify for better readability */
-	hyphens: auto;
-	-webkit-hyphens: auto;
-	-moz-hyphens: auto;
-	word-break: break-word;
-	overflow-wrap: break-word;
-}
-
-/* Simplified prose width calculation to prevent conflicts */
-/* Removed conflicting max-width calculations that were causing layout issues */
-
-/* Better spacing for lists in prose */
-.prose ul li, .prose ol li {
-	margin-bottom: 0.5rem;
-}
-
-.prose ul li:last-child, .prose ol li:last-child {
-	margin-bottom: 0;
-}
-
-/* Prevent text selection on UI elements */
-.no-select {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	user-select: none;
-}
-
-/* Safe area handling for devices with notches */
-@supports (padding: max(0px)) {
-	.safe-area-inset-top {
-		padding-top: max(1rem, env(safe-area-inset-top));
-	}
-	
-	.safe-area-inset-bottom {
-		padding-bottom: max(1rem, env(safe-area-inset-bottom));
-	}
-	
-	.safe-area-inset-left {
-		padding-left: max(1rem, env(safe-area-inset-left));
-	}
-	
-	.safe-area-inset-right {
-		padding-right: max(1rem, env(safe-area-inset-right));
-	}
-}
-
-/* Smooth transitions */
-.no-transition * {
-	transition: none !important;
-}
-
-/* Mermaid diagram improvements */
-.mermaid-diagram {
-	@apply flex justify-center items-center my-8 p-4;
-	@apply bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-600;
-	min-height: 200px;
-}
-
-.mermaid-diagram svg {
-	max-width: 100% !important;
-	height: auto !important;
-	background: transparent !important;
-}
-
-/* Improve Mermaid text contrast in dark mode */
-.dark .mermaid-diagram .node text,
-.dark .mermaid-diagram .edgeLabel text,
-.dark .mermaid-diagram .cluster text {
-	fill: #f9fafb !important;
-}
-
-.dark .mermaid-diagram .node rect,
-.dark .mermaid-diagram .node polygon {
-	stroke: #6b7280 !important;
-	fill: #374151 !important;
-}
-
-.dark .mermaid-diagram .edgePath .path {
-	stroke: #d1d5db !important;
-}
-
-.dark .mermaid-diagram .arrowheadPath {
-	fill: #d1d5db !important;
-	stroke: #d1d5db !important;
-}
-
-/* Light mode Mermaid improvements */
-.mermaid-diagram .node text,
-.mermaid-diagram .edgeLabel text,
-.mermaid-diagram .cluster text {
-	fill: #111827 !important;
-	font-weight: 500 !important;
-}
-
-.mermaid-diagram .node rect,
-.mermaid-diagram .node polygon {
-	stroke: #4b5563 !important;
-	fill: #f3f4f6 !important;
-}
-
-.mermaid-diagram .edgePath .path {
-	stroke: #4b5563 !important;
-	stroke-width: 2px !important;
-}
-
-.mermaid-diagram .arrowheadPath {
-	fill: #4b5563 !important;
-	stroke: #4b5563 !important;
-}
-
-/* Print styles */
-@media print {
-	body {
-		@apply text-black bg-white;
-		font-size: 12pt;
-	}
-	
-	.prose {
-		@apply max-w-none;
-	}
-	
-	.no-print {
-		display: none !important;
-	}
-	
-	/* Print-friendly Mermaid diagrams */
-	.mermaid-diagram {
-		@apply border border-gray-400;
-		background: white !important;
-	}
-	
-	.mermaid-diagram svg {
-		background: white !important;
-	}
-	
-	.mermaid-diagram .node text,
-	.mermaid-diagram .edgeLabel text,
-	.mermaid-diagram .cluster text {
-		fill: black !important;
-	}
-}
-
-/* Mobile-first responsive design with touch optimization */
 @media (max-width: 768px) {
-	html {
-		font-size: 16px; /* Changed from 15px to prevent iOS zoom */
-		/* Improve touch scrolling */
-		-webkit-overflow-scrolling: touch;
-		scroll-behavior: smooth;
-	}
-	
-	body {
-		@apply text-base;
-		word-spacing: normal;
-		/* Improve touch interactions */
-		-webkit-tap-highlight-color: transparent;
-		user-select: text;
-		-webkit-user-select: text;
-	}
-	
-	main {
-		@apply px-4 py-8;
-	}
-	
-	/* Touch-friendly sizing */
-	h1 { @apply text-3xl mb-4; }
-	h2 { @apply text-2xl mb-3; }
-	h3 { @apply text-xl mb-3; }
-	
-	/* Ensure mobile prose doesn't conflict with layout */
-	.prose {
-		max-width: calc(100vw - 2rem) !important;
-	}
-	
-	/* Improve readability on mobile */
-	.prose {
-		font-size: 1rem;
-		line-height: 1.75; /* Increased from 1.65 for better readability */
-	}
-	
-	.prose h1 { @apply text-3xl mb-6 mt-8; }
-	.prose h2 { @apply text-2xl mb-4 mt-8; }
-	.prose h3 { @apply text-xl mb-3 mt-6; }
-	
-	.prose p {
-		text-align: left;
-		word-break: break-word;
-		hyphens: auto;
-	}
-	
-	.prose > p:first-of-type {
-		@apply text-lg;
-	}
-	
-	/* Touch-friendly buttons */
-	button, a {
-		min-height: 48px; /* Increased from 44px for better accessibility */
-		min-width: 48px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-	}
-	
-	/* Improve form elements on mobile */
-	input, textarea, select {
-		@apply text-base;
-		/* Prevent zoom on iOS */
-		font-size: 16px !important;
-		min-height: 48px; /* Increased for better touch targets */
-	}
-	
-	/* Better spacing for mobile */
-	.prose ul, .prose ol {
-		@apply pl-5;
-	}
-	
-	.prose blockquote {
-		@apply pl-4 pr-4 py-4 mx-0;
-	}
-	
-	/* Mobile-specific image handling */
-	.prose img {
-		max-width: calc(100vw - 2rem);
-		height: auto;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	
-	/* Code blocks on mobile */
-	.prose pre {
-		@apply p-4;
-		font-size: 0.875rem;
-		max-width: calc(100vw - 2rem);
-		overflow-x: auto;
-		-webkit-overflow-scrolling: touch;
-		@apply bg-gray-50 dark:bg-gray-900;
-		@apply text-gray-800 dark:text-gray-200;
-	}
-	
-	.prose code {
-		font-size: 0.875em;
-		word-break: break-word;
-		@apply text-gray-900 dark:text-gray-100;
-		@apply bg-gray-100 dark:bg-gray-800;
-	}
+  body {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  pre {
+    font-size: 0.8125rem;
+  }
 }

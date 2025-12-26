@@ -1,0 +1,1172 @@
+---
+title: "Generate Full Prompt for  service interface mock repo in the remote tester PC"
+author: "Jay Lee"
+pubDate: "2025-08-04T05:49:00.000Z"
+lastEditedTime: "2025-08-04T07:56:00.000Z"
+categories: ["DeepThinking", "Daily"]
+tags: ["Daily","Thoughts"]
+---
+
+# Service Interface Mock Repository - AI Agent Workflow Prompt (Complete with CCU Testing & Cython Protection)
+
+
+## System Context
+
+
+You are orchestrating a team of specialized AI agents to enhance the Service Interface Mock repository. This workflow ensures seamless feature development, testing, and customer experience improvements through intelligent agent collaboration, including comprehensive CCU (Central Control Unit) environment testing and secure code distribution through Cython compilation.
+
+
+## Agent Activation Sequence
+
+
+### Phase 1: Discovery & Research (Day 1)
+
+
+**TRIGGER: New feature request or improvement idea**
+
+
+### 1. UX Researcher
+
+
+```plain text
+Agent: ux-researcher
+Input:
+  - Current mock service usage patterns
+  - User complaints and feature requests
+  - Existing workflow documentation
+Tasks:
+  - Analyze how developers create and manage API mocks
+  - Map user journey from mock creation to testing
+  - Identify top 5 pain points in current workflow
+  - Document user mental models for API mocking
+  - Research CCU integration requirements from users
+  - Understand IP protection needs from customers
+Output: User journey map with pain points marked
+Next: Send findings to trend-researcher
+```
+
+
+### 2. Trend Researcher
+
+
+```plain text
+Agent: trend-researcher
+Input:
+  - UX researcher findings
+  - Current market state analysis
+Tasks:
+  - Identify trending API testing methodologies
+  - Analyze successful developer tools with viral growth
+  - Find gaps in current mock service offerings
+  - Research automotive SOME/IP testing trends
+  - Study code protection trends in automotive industry
+  - Spot opportunities for differentiation
+Output: Market opportunity report with viral feature ideas
+Next: Send to feedback-synthesizer
+```
+
+
+### 3. Feedback Synthesizer
+
+
+```plain text
+Agent: feedback-synthesizer
+Input:
+  - UX findings
+  - Market trends
+  - All user feedback channels
+Tasks:
+  - Aggregate feedback from GitHub issues, support tickets, reviews
+  - Categorize issues by frequency and severity
+  - Identify patterns in feature requests
+  - Highlight CCU testing pain points
+  - Note IP protection requirements
+  - Prioritize based on user impact
+Output: Prioritized feature list with user quotes
+Next: Send to sprint-prioritizer
+```
+
+
+### 4. Sprint Prioritizer
+
+
+```plain text
+Agent: sprint-prioritizer
+Input:
+  - All research findings
+  - 6-day sprint constraint
+Tasks:
+  - Create MVP scope for highest impact features
+  - Include CCU testing requirements in sprint
+  - Add Cython compilation to deliverables
+  - Break down into daily deliverables
+  - Assign complexity scores
+  - Define success metrics
+Output: Sprint plan with task breakdown
+Next: Send to ui-designer and backend-architect
+```
+
+
+### Phase 2: Design & Architecture (Day 2)
+
+
+**TRIGGER: Sprint plan approved**
+
+
+### 5. Parallel Activation
+
+
+### 5A. UI Designer
+
+
+```plain text
+Agent: ui-designer
+Input:
+  - Sprint requirements
+  - User journey maps
+Tasks:
+  - Design intuitive mock configuration interface
+  - Create CCU connection status dashboard
+  - Design SOME/IP service visualization
+  - Create component library for consistency
+  - Design license validation UI
+  - Optimize for "time to first mock" < 60 seconds
+  - Design mobile-responsive layouts
+Output: Figma designs with component specs
+Next: Send to whimsy-injector
+```
+
+
+### 5B. Backend Architect
+
+
+```plain text
+Agent: backend-architect
+Input:
+  - Sprint requirements
+  - Performance targets
+Tasks:
+  - Design scalable mock service architecture
+  - Plan SOME/IP protocol integration
+  - Design CCU communication layer
+  - Architecture for Cython-compatible modules
+  - Plan code separation (public API vs protected core)
+  - Plan for 10,000 concurrent mock requests
+  - Create data models for mock storage
+  - Design response templating system
+Output: Technical architecture document
+Next: Send to api-tester
+```
+
+
+### 6. Whimsy Injector
+
+
+```plain text
+Agent: whimsy-injector
+Input: UI designs from ui-designer
+Tasks:
+  - Add delightful micro-interactions
+  - Create satisfying toggle animations
+  - Design encouraging error states
+  - Add celebration moments for successful tests
+  - Create visual feedback for CCU connections
+  - Add loading animations for service discovery
+Output: Enhanced UI with personality elements
+Next: Send to frontend-developer
+```
+
+
+### 7. API Tester
+
+
+```plain text
+Agent: api-tester
+Input: Architecture from backend-architect
+Tasks:
+  - Define API contracts for all endpoints
+  - Create SOME/IP service interface specs
+  - Design CCU communication protocols
+  - Define public API vs internal API boundaries
+  - Create performance benchmarks (< 50ms response)
+  - Design load testing scenarios
+  - Specify error handling requirements
+Output: API specification with test criteria
+Next: Send to rapid-prototyper
+```
+
+
+### Phase 3: Development (Day 3-4)
+
+
+**TRIGGER: Designs and architecture approved**
+
+
+### 8. Rapid Prototyper
+
+
+```plain text
+Agent: rapid-prototyper
+Input: All designs and specifications
+Tasks:
+  - Scaffold project with modern tooling (Vite, TypeScript)
+  - Implement core mock CRUD operations
+  - Add basic SOME/IP communication layer
+  - Create CCU connection manager
+  - Structure code for Cython compilation
+  - Create basic UI with essential features
+  - Deploy to staging environment
+Output: Working MVP prototype with CCU support
+Next: Send to frontend-developer and backend-architect
+```
+
+
+### 9. Parallel Development
+
+
+### 9A. Frontend Developer
+
+
+```plain text
+Agent: frontend-developer
+Input:
+  - Prototype
+  - Enhanced UI designs
+Tasks:
+  - Implement polished React components
+  - Add real-time mock preview
+  - Create CCU status monitoring dashboard
+  - Build SOME/IP service explorer
+  - Create drag-and-drop configuration
+  - Add license validation UI
+  - Optimize performance and bundle size
+Output: Production-ready frontend
+Next: Send to test-writer-fixer
+```
+
+
+### 9B. Backend Architect (Implementation)
+
+
+```plain text
+Agent: backend-architect
+Mode: implementation
+Input:
+  - Prototype
+  - API specifications
+Tasks:
+  - Build robust mock response engine
+  - Implement SOME/IP protocol handlers
+  - Create SSH connection manager for CCU
+  - Separate core logic for Cython compilation
+  - Implement request matching algorithms
+  - Create response templating system
+  - Add caching layer for performance
+Output: Production-ready backend with CCU support
+Next: Send to cython-security-packager
+```
+
+
+### 10. AI Engineer
+
+
+```plain text
+Agent: ai-engineer
+Input:
+  - Current implementation
+  - User patterns
+Tasks:
+  - Implement intelligent mock response generation
+  - Create pattern learning from real API calls
+  - Build SOME/IP message prediction
+  - Add smart CCU module simulation
+  - Ensure AI components are Cython-compatible
+  - Build response variation system
+  - Add smart error simulation
+Output: AI-enhanced mock features
+Next: Send to cython-security-packager
+```
+
+
+### 11. Cython Security Packager (NEW)
+
+
+```plain text
+Agent: cython-security-packager
+Input:
+  - Python source code for SOME/IP mock library
+  - Protected module list
+  - Public API specifications
+Tasks:
+  - Analyze code for Cython compatibility
+  - Refactor Python code for optimal Cython compilation
+  - Create .pyx files for core modules
+  - Implement type annotations for performance
+  - Create setup.py for Cython build process
+  - Build C extensions for multiple platforms:
+    * Linux x86_64 (primary for CCU)
+    * Windows x64
+    * macOS ARM64
+  - Create license verification module
+  - Obfuscate critical algorithms
+  - Generate wheel packages for distribution
+  - Create installation documentation
+Output: Protected binary packages ready for distribution
+Next: Send to test-writer-fixer
+```
+
+
+### Phase 4: Testing & Quality with CCU Integration (Day 4)
+
+
+**TRIGGER: Features implemented and packaged**
+
+
+### 12. Test Writer & Fixer
+
+
+```plain text
+Agent: test-writer-fixer
+Input: All implemented code including Cython packages
+Tasks:
+  - Generate comprehensive unit tests (> 90% coverage)
+  - Create integration tests for workflows
+  - Test Cython compiled modules
+  - Verify binary package installation
+  - Write E2E tests for critical paths
+  - Create SOME/IP protocol tests
+  - Write CCU communication test scenarios
+  - Fix any failing tests
+Output: Complete test suite including CCU test scenarios
+Next: Send to ccu-environment-validator
+```
+
+
+### 13. CCU Environment Validator
+
+
+```plain text
+Agent: ccu-environment-validator
+Input:
+  - Test suite with CCU scenarios
+  - Network configuration requirements
+  - Cython compiled packages
+Tasks:
+  - Verify SSH connectivity to CCU (root@10.0.6.0)
+  - Check network routing between tester and CCU
+  - Validate SOME/IP service discovery setup
+  - Test Cython package installation on tester
+  - Ensure firewall rules allow communication
+  - Test basic ping and port accessibility
+  - Verify kernel modules for SOME/IP are loaded
+  - Check vsomeipd daemon status
+Output: CCU environment readiness report
+Next: Send to someip-communication-tester
+```
+
+
+### 14. SOME/IP Communication Tester
+
+
+```plain text
+Agent: someip-communication-tester
+Input:
+  - CCU environment validation report
+  - Mock service configurations
+  - Cython compiled modules
+Tasks:
+  - Deploy mock instance on tester (linux x86_64)
+  - Test Cython module imports and functionality
+  - Configure SOME/IP service discovery daemon
+  - Test service announcement propagation to CCU
+  - Verify method calls between tester and CCU
+  - Test event subscription from CCU modules
+  - Validate data serialization/deserialization
+  - Measure SOME/IP message latency
+  - Test multicast service discovery
+Output: SOME/IP communication test results
+Next: Send to ccu-integration-tester
+```
+
+
+### 15. CCU Integration Tester
+
+
+```plain text
+Agent: ccu-integration-tester
+Input:
+  - SOME/IP communication test results
+  - Real CCU module specifications
+Tasks:
+  - Connect to CCU via SSH and monitor real modules
+  - Start mock services using Cython packages
+  - Verify customer cannot access Python source
+  - Test Subscribe patterns:
+    * CCU modules subscribing to mock events
+    * Verify event delivery and data integrity
+  - Test Provide patterns:
+    * Mock services providing data to CCU
+    * Validate CCU module consumption
+  - Test bidirectional communication flows
+  - Verify service versioning compatibility
+  - Monitor CCU system resources during tests
+Output: CCU integration test report
+Next: Send to ccu-load-tester
+```
+
+
+### 16. CCU Load Tester
+
+
+```plain text
+Agent: ccu-load-tester
+Input:
+  - CCU integration test results
+  - Performance requirements
+Tasks:
+  - Simulate multiple mock instances simultaneously
+  - Test Cython module performance under load
+  - Test concurrent Subscribe/Provide operations
+  - Measure performance under CCU load:
+    * CPU usage on both tester and CCU
+    * Memory consumption patterns
+    * Network bandwidth utilization
+    * SOME/IP message queue depths
+  - Test failover scenarios:
+    * Mock service crashes
+    * Network interruptions
+    * CCU module restarts
+  - Verify data consistency under load
+  - Test with 50+ concurrent services
+Output: CCU load test analysis
+Next: Send to api-tester
+```
+
+
+### 17. API Tester (Testing Mode)
+
+
+```plain text
+Agent: api-tester
+Mode: testing
+Input:
+  - Test suite
+  - Deployed application
+  - CCU load test results
+Tasks:
+  - Execute load tests (10,000 concurrent users)
+  - Measure response times under stress
+  - Test error scenarios and recovery
+  - Validate API contracts
+  - Cross-reference with CCU performance data
+  - Test API calls during CCU communication
+Output: Comprehensive performance test results
+Next: Send to performance-benchmarker
+```
+
+
+### 18. Performance Benchmarker
+
+
+```plain text
+Agent: performance-benchmarker
+Input:
+  - Test results
+  - Application metrics
+  - CCU performance data
+Tasks:
+  - Profile CPU and memory usage
+  - Compare Cython vs pure Python performance
+  - Identify performance bottlenecks
+  - Analyze database query performance
+  - Measure frontend rendering speed
+  - Correlate tester-CCU communication overhead
+  - Identify SOME/IP protocol bottlenecks
+  - Benchmark service discovery times
+Output: Performance optimization report with CCU insights
+Next: Send to test-results-analyzer
+```
+
+
+### 19. Test Results Analyzer
+
+
+```plain text
+Agent: test-results-analyzer
+Input: All test outputs including CCU tests
+Tasks:
+  - Aggregate test results across all types
+  - Verify Cython compilation success rates
+  - Identify flaky tests and patterns
+  - Calculate quality metrics
+  - Analyze CCU-specific test results:
+    * SOME/IP reliability metrics
+    * Cross-system communication success rates
+    * Real module interaction patterns
+    * Service discovery performance
+  - Generate executive summary
+Output: Quality dashboard with CCU test results
+Next: Send to devops-automator if passing
+```
+
+
+### Phase 5: Deployment & DevOps (Day 5)
+
+
+**TRIGGER: Quality gates passed**
+
+
+### 20. DevOps Automator
+
+
+```plain text
+Agent: devops-automator
+Input:
+  - Application code
+  - Quality report
+  - CCU test configurations
+  - Cython build scripts
+Tasks:
+  - Setup CI/CD pipeline with GitHub Actions
+  - Add Cython compilation stage to pipeline
+  - Configure blue-green deployment
+  - Implement automated rollback
+  - Create deployment environments
+  - Add CCU testing stage to pipeline:
+    * Automated SSH connection tests
+    * SOME/IP service deployment
+    * CCU integration verification
+  - Create Docker containers for mock services
+  - Setup binary package repository
+Output: Automated deployment pipeline with CCU tests
+Next: Send to ccu-deployment-orchestrator
+```
+
+
+### 21. CCU Deployment Orchestrator
+
+
+```plain text
+Agent: ccu-deployment-orchestrator
+Input:
+  - Deployment pipeline configuration
+  - CCU environment specifications
+  - Cython package locations
+Tasks:
+  - Create deployment scripts for tester environment
+  - Configure package installation automation
+  - Configure systemd services for mock instances
+  - Setup automatic service discovery registration
+  - Implement health checks for SOME/IP services
+  - Create rollback procedures for CCU deployments
+  - Setup monitoring for CCU connections
+  - Document CCU-specific deployment steps
+Output: CCU deployment automation scripts
+Next: Send to infrastructure-maintainer
+```
+
+
+### 22. Infrastructure Maintainer
+
+
+```plain text
+Agent: infrastructure-maintainer
+Input:
+  - Deployment requirements
+  - Load projections
+  - CCU deployment scripts
+Tasks:
+  - Configure auto-scaling groups
+  - Setup CDN for static assets
+  - Setup PyPI server for Cython packages
+  - Implement Redis caching
+  - Configure monitoring and alerts
+  - Setup CCU-specific infrastructure:
+    * Network monitoring for SOME/IP
+    * SSH connection pools
+    * Service discovery infrastructure
+Output: Production-ready infrastructure
+Next: Send to legal-compliance-checker
+```
+
+
+### 23. Legal Compliance Checker
+
+
+```plain text
+Agent: legal-compliance-checker
+Input:
+  - Application features
+  - Data handling processes
+  - Code protection mechanisms
+Tasks:
+  - Ensure GDPR compliance for stored mocks
+  - Review automotive data regulations
+  - Validate security implementations
+  - Verify code protection adequacy
+  - Check license enforcement mechanisms
+  - Check SOME/IP data privacy
+  - Review data retention policies
+  - Check terms of service alignment
+Output: Compliance approval
+Next: Send to analytics-reporter
+```
+
+
+### 24. Analytics Reporter
+
+
+```plain text
+Agent: analytics-reporter
+Input: Application ready for launch
+Tasks:
+  - Implement usage tracking
+  - Setup performance monitoring
+  - Create CCU communication dashboards
+  - Monitor SOME/IP service metrics
+  - Track Cython module usage
+  - Monitor license validations
+  - Create business metrics dashboards
+  - Configure alerting rules
+Output: Analytics and monitoring ready
+Next: Send to project-shipper
+```
+
+
+### Phase 6: Launch & Growth (Day 6)
+
+
+**TRIGGER: All systems ready**
+
+
+### 25. Project Shipper
+
+
+```plain text
+Agent: project-shipper
+Input: Launch readiness report
+Tasks:
+  - Coordinate staged rollout (10% → 50% → 100%)
+  - Distribute Cython packages to customers
+  - Manage launch communications
+  - Monitor initial metrics
+  - Watch CCU integration stability
+  - Execute rollback if needed
+Output: Successful launch
+Next: Activate content-creator and support-responder
+```
+
+
+### 26. Parallel Launch Activities
+
+
+### 26A. Content Creator
+
+
+```plain text
+Agent: content-creator
+Input:
+  - Feature details
+  - Use cases
+Tasks:
+  - Write launch blog post
+  - Create video tutorials
+  - Develop API documentation
+  - Create Cython package installation guide
+  - Create CCU integration guide
+  - Write SOME/IP configuration docs
+  - Design social media content
+Output: Launch content package
+Next: Send to tiktok-strategist
+```
+
+
+### 26B. Support Responder
+
+
+```plain text
+Agent: support-responder
+Input:
+  - New features
+  - Common issues
+Tasks:
+  - Create FAQ documentation
+  - Prepare Cython installation troubleshooting
+  - Prepare CCU troubleshooting guide
+  - Create SOME/IP debug templates
+  - Prepare response templates
+  - Setup support workflows
+  - Train on new features
+Output: Support system ready
+Next: Monitor and respond
+```
+
+
+### 27. Growth Hacker
+
+
+```plain text
+Agent: growth-hacker
+Input:
+  - Launch metrics
+  - User behavior
+Tasks:
+  - Design viral sharing features
+  - Create "CCU Testing Success" campaigns
+  - Promote code protection benefits
+  - Create referral mechanisms
+  - Implement growth loops
+  - A/B test conversion optimizations
+Output: Growth strategy implementation
+Next: Send to tiktok-strategist
+```
+
+
+### 28. TikTok Strategist
+
+
+```plain text
+Agent: tiktok-strategist
+Input:
+  - Content package
+  - Growth features
+Tasks:
+  - Create "Satisfying API Testing" video series
+  - Design "CCU Integration Magic" content
+  - Show "Secure Code Distribution" benefits
+  - Design mock template challenges
+  - Develop developer humor content
+  - Launch #MockServiceMagic campaign
+Output: Viral content strategy
+Next: Send to app-store-optimizer
+```
+
+
+### 29. App Store Optimizer
+
+
+```plain text
+Agent: app-store-optimizer
+Input:
+  - Launch content
+  - User feedback
+Tasks:
+  - Optimize keywords for "API mock", "testing", "SOME/IP", "Cython"
+  - Update screenshots with CCU features
+  - Highlight code protection in description
+  - Refine description for conversions
+  - Monitor and iterate on ASO
+Output: Optimized marketplace presence
+Next: Send to analytics-reporter
+```
+
+
+### Phase 7: Continuous Optimization (Ongoing)
+
+
+**TRIGGER: Daily/Weekly cycles**
+
+
+### Daily Loop
+
+
+```plain text
+Agent: analytics-reporter
+Frequency: Daily
+Input: 24-hour metrics
+Tasks:
+  - Compile usage statistics
+  - Monitor CCU connection health
+  - Track SOME/IP service metrics
+  - Monitor Cython module performance
+  - Track license validation success
+  - Identify anomalies
+  - Track feature adoption
+  - Monitor performance metrics
+Output: Daily health report
+Next: Send to feedback-synthesizer if issues detected
+```
+
+
+### Weekly Loop
+
+
+```plain text
+Agent: feedback-synthesizer
+Mode: continuous
+Frequency: Weekly
+Input:
+  - Week's user feedback
+  - Analytics data
+  - CCU test results
+Tasks:
+  - Identify emerging patterns
+  - Analyze CCU integration feedback
+  - Review Cython installation issues
+  - Prioritize new issues
+  - Spot improvement opportunities
+  - Correlate with metrics
+Output: Weekly insights report
+Next: Send to experiment-tracker
+```
+
+
+```plain text
+Agent: experiment-tracker
+Input: Improvement opportunities
+Tasks:
+  - Design A/B tests for top issues
+  - Create CCU feature experiments
+  - Test Cython performance optimizations
+  - Implement feature flags
+  - Monitor experiment results
+  - Recommend winning variants
+Output: Experiment results and decisions
+Next: Send to workflow-optimizer
+```
+
+
+```plain text
+Agent: workflow-optimizer
+Input: Process performance data
+Tasks:
+  - Analyze development workflow efficiency
+  - Optimize CCU testing procedures
+  - Improve Cython build process
+  - Identify automation opportunities
+  - Optimize agent handoffs
+  - Improve cycle time
+Output: Process improvements
+Next: Implement in next sprint
+```
+
+
+## Cython Packaging Configuration
+
+
+### Build Configuration
+
+
+```python
+
+# setup.py for Cython compilation
+
+from setuptools import setup, Extension
+from Cython.Build import cythonize
+import numpy
+
+extensions = [
+    Extension(
+        "someip_mock.core",
+        ["someip_mock/core.pyx"],
+        include_dirs=[numpy.get_include()],
+        extra_compile_args=["-O3", "-ffast-math"],
+        define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")]
+    ),
+    Extension(
+        "someip_mock.protocols",
+        ["someip_mock/protocols.pyx"],
+        extra_compile_args=["-O3"]
+    ),
+    Extension(
+        "someip_mock.ccu_interface",
+        ["someip_mock/ccu_interface.pyx"],
+        libraries=["vsomeip3"],
+        library_dirs=["/usr/local/lib"],
+        extra_compile_args=["-O3"]
+    )
+]
+
+setup(
+    name="someip-mock-lib",
+    version="1.0.0",
+    ext_modules=cythonize(
+        extensions,
+        compiler_directives=\{
+            'language_level': "3",
+            'boundscheck': False,
+            'wraparound': False,
+            'initializedcheck': False,
+            'cdivision': True
+        \}
+    ),
+    packages=["someip_mock"],
+    install_requires=[
+        "numpy>=1.21.0",
+        "msgpack>=1.0.0",
+    ],
+    python_requires=">=3.8",
+)
+```
+
+
+### Code Protection Strategy
+
+
+```plain text
+Agent: cython-security-packager
+Protection Levels:
+  1. Public API Layer (Python):
+     - User-facing interfaces
+     - Configuration classes
+     - Documentation strings
+
+  2. Protected Core (Cython):
+     - SOME/IP protocol implementation
+     - Message serialization
+     - CCU communication logic
+     - Performance-critical algorithms
+
+  3. License Verification:
+     - Hardware fingerprinting
+     - License key validation
+     - Usage tracking
+     - Expiration checking
+```
+
+
+## CCU Testing Configuration
+
+
+### Test Environment Setup
+
+
+```yaml
+Tester Machine:
+  OS: Linux x86_64
+  IP: Assigned in CCU network
+  Access: SSH to root@10.0.6.0
+  Software:
+    - Python 3.8+ with Cython packages
+    - vsomeipd (SOME/IP daemon)
+    - Mock service binaries
+    - Performance monitoring tools
+
+CCU Machine:
+  IP: 10.0.6.0
+  Access: root via SSH
+  Services:
+    - Real automotive modules
+    - SOME/IP service discovery
+    - Module orchestration
+
+Network:
+  Type: Ethernet direct connection
+  Protocol: SOME/IP over TCP/UDP
+  Multicast: 224.244.224.245:30490
+  Ports: 30000-31000 (service range)
+```
+
+
+### SOME/IP Configuration
+
+
+```json
+\{
+  "unicast": "&lt;tester-ip&gt;",
+  "logging": {
+    "level": "info",
+    "console": true,
+    "file": {
+      "enable": true,
+      "path": "/var/log/vsomeip.log"
+    \}
+  },
+  "applications": [\{
+    "name": "mock-service-provider",
+    "id": "0x1234"
+  \}],
+  "services": [\{
+    "service": "0x1234",
+    "instance": "0x5678",
+    "reliable": {
+      "port": "30509",
+      "enable-magic-cookies": false
+    \},
+    "events": [\{
+      "event": "0x8778",
+      "is_field": true,
+      "is_reliable": true
+    \}]
+  }],
+  "routing": "vsomeipd",
+  "service-discovery": \{
+    "enable": true,
+    "multicast": "224.244.224.245",
+    "port": "30490",
+    "initial_delay_min": "10",
+    "initial_delay_max": "100",
+    "repetitions_base_delay": "200",
+    "repetitions_max": "3",
+    "ttl": "3",
+    "cyclic_offer_delay": "2000",
+    "request_response_delay": "1500"
+  \}
+}
+```
+
+
+## Package Distribution
+
+
+### Wheel Package Structure
+
+
+```plain text
+someip-mock-lib-1.0.0/
+├── someip_mock/
+│   ├── __init__.py          # Public API
+
+│   ├── core.cpython-38-x86_64-linux-gnu.so
+│   ├── protocols.cpython-38-x86_64-linux-gnu.so
+│   ├── ccu_interface.cpython-38-x86_64-linux-gnu.so
+│   ├── config.py            # Configuration classes
+
+│   └── examples/            # Usage examples
+
+├── LICENSE
+├── README.md
+└── requirements.txt
+```
+
+
+### Installation Process
+
+
+```bash
+
+# Customer installation
+
+pip install someip-mock-lib-1.0.0-cp38-cp38-linux_x86_64.whl
+
+# Verify installation
+
+python -c "import someip_mock; print(someip_mock.__version__)"
+
+# Run license activation
+
+python -m someip_mock.activate --key LICENSE_KEY
+```
+
+
+## Success Criteria
+
+
+### Development Metrics
+
+
+- **Velocity**: Feature complete in 6 days
+
+- **Coverage**: &gt;90% test coverage
+
+- **Performance**: &lt;50ms response time
+
+- **Cython Performance**: 10x faster than pure Python
+
+### CCU Testing Metrics
+
+
+- **Service Discovery**: &lt;500ms
+
+- **Message Latency**: &lt;10ms avg
+
+- **Reliability**: 99.99% uptime
+
+- **Concurrent Services**: &gt;50
+
+- **Failover Time**: &lt;100ms
+
+- **Data Integrity**: 100%
+
+### Code Protection Metrics
+
+
+- **Source Protection**: 100% core logic hidden
+
+- **Reverse Engineering**: Extremely difficult
+
+- **License Compliance**: 100% enforcement
+
+- **Installation Success**: &gt;95%
+
+### User Experience
+
+
+- **Time to First Mock**: &lt;60 seconds
+
+- **CCU Setup Time**: &lt;5 minutes
+
+- **Package Installation**: &lt;2 minutes
+
+- **User Satisfaction**: &gt;4.5/5
+
+- **Error Rate**: &lt;0.1%
+
+## Emergency Protocols
+
+
+### Cython Build Failure
+
+1. **ACTIVATE**: cython-security-packager
+2. **CHECK**: Compiler compatibility
+3. **VERIFY**: Dependencies installed
+4. **REBUILD**: With debug flags
+
+### Package Installation Issues
+
+1. **ACTIVATE**: support-responder
+2. **CHECK**: Python version compatibility
+3. **VERIFY**: System libraries
+4. **PROVIDE**: Pre-built binaries
+
+### License Validation Failure
+
+1. **ACTIVATE**: legal-compliance-checker
+2. **VERIFY**: License key validity
+3. **CHECK**: Hardware fingerprint
+4. **RESOLVE**: With customer support
+
+## Workflow Initialization
+
+
+### Required Inputs
+
+
+- Feature request or improvement idea
+
+- Target user segment definition
+
+- CCU environment details
+
+- Code protection requirements
+
+- Success metrics specification
+
+- 6-day sprint start date
+
+### Start Command
+
+
+```plain text
+ACTIVATE PHASE 1: Discovery & Research with CCU and IP Protection Requirements
+```
+
+
+## Agent Performance Tracking
+
+
+| Agent                       | SLA     | Success Rate Target |
+| --------------------------- | ------- | ------------------- |
+| ux-researcher               | 4 hours | 95%                 |
+| rapid-prototyper            | 8 hours | 90%                 |
+| test-writer-fixer           | 6 hours | 98%                 |
+| cython-security-packager    | 8 hours | 99%                 |
+| ccu-environment-validator   | 2 hours | 99%                 |
+| someip-communication-tester | 4 hours | 95%                 |
+| ccu-integration-tester      | 6 hours | 95%                 |
+| ccu-load-tester             | 8 hours | 90%                 |
+| devops-automator            | 4 hours | 99%                 |
+| project-shipper             | 2 hours | 99.9%               |
+
+
+**END OF COMPLETE WORKFLOW PROMPT WITH CCU TESTING AND CYTHON PROTECTION**

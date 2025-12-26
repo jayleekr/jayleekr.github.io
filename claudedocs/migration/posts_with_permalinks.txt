@@ -1,0 +1,8 @@
+src/content/blog/ko/2020-09-11-creating-github-blog.mdx
+src/content/blog/ko/2021-12-31-year-retrospective.mdx
+src/content/blog/ko/2021-04-15-adaptive-autosar-retrospect.mdx
+src/content/blog/en/2020-09-11-creating-github-blog.mdx
+src/content/blog/en/2021-12-31-year-retrospective.mdx
+src/content/blog/en/2021-04-15-adaptive-autosar-retrospect.mdx
+src/content/blog/DeepThinking/Retrospect/2021-12-31-retro.mdx
+src/content/blog/DeepThinking/Retrospect/2021-04-15-retro.mdx

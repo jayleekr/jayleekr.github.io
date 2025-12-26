@@ -1,0 +1,69 @@
+---
+title: "2025.07.29 여러명의 엔지니어가 각각 CC를 이용해서 공통으로 일하는 방법론"
+author: "Jay Lee"
+pubDate: "2025-07-29T07:40:00.000Z"
+lastEditedTime: "2025-07-30T12:13:00.000Z"
+categories: ["DeepThinking", "Daily"]
+tags: ["Daily","Thoughts"]
+---
+
+아이디에이션
+
+
+- 아이디어의 타겟(수요층)을 설정하고 고객입장에서 여러 Pain포인트들을 생각해본다. (No AI)
+    - ChatGPT나 NotebookLM등을 이용하여 중간에 두면 더 좋을거같음
+
+- 아이디어들을 브래인스토밍한다. (No AI)
+    - ChatGPT나 NotebookLM등을 이용하여 중간에 두면 더 좋을거같음
+
+- 괜찮은 아이디어를 Gemini 2.5 Pro에게 Research 를 돌린다.(약 15분 소요)
+
+- 결과를 가지고 Claude Opus4(가장 똑똑한놈)를 이용해 디테일하게 구체화하여 project_config.md를 만든다.
+
+- Claude Opus4를  이용해 Cowork을 하는 엔지니어 4명의 Draft Action items을 할당하고 project_config.md에 업데이트한다.
+
+- [Amazon Press Release Template](https://docs.google.com/document/d/1GjsGAlxsCGYYpXwFBjiExHGVVRq_M6C0jAbSIS08PNY/edit?tab=t.0) 으로 아이디어의 스토리 텔링을 포함한 PR자료를 만든다.
+    - 발표자료용
+
+공통 개발환경
+
+
+- 하나의 github 저장소를 Init한다.
+
+- 아이디에이션을 통해만든 project_config.md를 업데이트한다.
+
+- 저장소의 Claude Code를 이용하는데에 있어서 공통행동강령(CLAUDE.md)을 Claude Code 를 이용해서 만든다(Claude Sonnet 4)
+    - 모든 작업을 하기전 & 후에 project_config.md & workflow_\{username\}.md를 참조하고 업데이트한다.
+    - workflows 디레토리안에 workflow_\{username\}.md로 모든 로그들을 기록한다.
+    - gh 을 이용해서 모든 Action items을 Issue로 만들고 Pull request를 생성하도록 한다.
+    - 엔지니어간 Blocking 로직을 설계한다.
+
+- [https://docs.anthropic.com/en/docs/claude-code/sub-agents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) Claude Subagent 정식 문서와 [https://github.com/dl-ezo/claude-code-sub-agents](https://github.com/dl-ezo/claude-code-sub-agents) 의 이미 구현된 Cool subagent를 Claude Code에게 공부시킨다.
+
+- Claude Code 에게 project_config.md를 던져주고 학습시킨 정식문서기반 subagent template로 subagent들을 만들고, 가이드문서를 만든다.
+
+ 
+
+
+## Lesson Learnt
+
+    - 무한 병목현상이 많이생김 → 이걸 해결하는 Token
+        - 사건 1
+            - 브랜치생성→commit → github Issue 발행 → PR → gh action → 모니터링 .. 성공? Merge하는 순서로 CLAUDE.md 에 project memory로 저장해둠
+            - 하지만 이미 저장된 project에 대한 다양한 룰들이 컨텍스트윈도우 상에서 CC까지 인식되지 않으면서 자꾸 merge도 안하고.. Action monitoring도 안함
+            - 한레포에서 여러명이서할때는 겹치지않게 Submodule이 좋지않을까 ?
+        - 사건 2
+            - 여러명의 엔지니어가 같이 CC를 이용하면서 엔지니어마다 Subagent들을 이용하고있음
+            - 일하는 속도가 장난아니다보니 .. Merge속도도빠르고 그에따른 Conflict가 많이 발생함
+            - Conflict가 발생할때마다.. 이걸 해결하는 Token Cost가 장난아님..
+            - 아무래도 설계단부터 Multi user기반으로 Workspace나 api를 잘쪼개서 겹치지 않도록 해야할듯
+        - 사건 3
+            - 필자는 Subagent + Claude Code Squad 를 이용했음 → 이건 그냥 Multiuser가 하는거나 다름이 없긴함
+            - Claude Code Squad는 tmux 기반으로 worktree 를 하나의 repo기준으로 여러개를 생성함
+            - 각각의 worktree는 다른 file path를 가지고있고, Claude Code Squad에서 이를 생성하고 지우는 역할을함
+            - TODOList을 많이 뽑아두고 이걸기준으로 각각을 Claude Code Squad instance를 6개 생성하여 동시에 일을시킴…
+            - 시간대비 토큰수가 조금줄음 (?) .. 하지만
+            - 위에서 발생한 사건1,2의 병목현상이 여기서 아주 미친듯이발생함.
+            - 병목현상을 해결하는데 이용하는 토큰이 대다수;; 일을 진행을 못함
+            - 영원히 Merge Conflict만 해결하다가 100$버젯 다쓰고 200$결제하게됨… 망함
+        -

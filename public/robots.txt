@@ -1,5 +1,5 @@
 # Robots.txt for jayleekr.github.io - Optimized for SEO
-# Last updated: 2025-01-22
+# Last updated: 2025-12-26
 
 User-agent: *
 Allow: /
@@ -39,6 +39,7 @@ Allow: /
 # Specific crawling rules - Disallow development and build files
 Disallow: /test-results/
 Disallow: /playwright-report/
+# Note: /_astro/ contains bundled assets, but CSS/JS are explicitly allowed below
 Disallow: /_astro/
 Disallow: /backup/
 Disallow: /node_modules/

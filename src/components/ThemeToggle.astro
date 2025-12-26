@@ -1,205 +1,93 @@
 ---
-// ThemeToggle component for dark/light mode switching
+// Ultra-minimal theme toggle - overreacted.io style
 ---
 
-<button
-	id="theme-toggle"
-	data-testid="theme-toggle"
-	type="button"
-	class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 transition-all duration-200 hover:scale-110 hover:rotate-12 whimsy-button"
-	aria-label="Toggle between light and dark mode"
-	aria-pressed="false"
-	title="Toggle theme (current: light)"
-	role="switch"
->
-	<!-- Sun icon (visible in dark mode) -->
-	<svg 
-		id="theme-toggle-dark-icon" 
-		class="hidden w-5 h-5" 
-		fill="currentColor" 
-		viewBox="0 0 20 20" 
-		xmlns="http://www.w3.org/2000/svg"
-		aria-hidden="true"
-	>
-		<path 
-			fill-rule="evenodd" 
-			d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" 
-			clip-rule="evenodd"
-		></path>
-	</svg>
-	<!-- Moon icon (visible in light mode) -->
-	<svg 
-		id="theme-toggle-light-icon" 
-		class="w-5 h-5" 
-		fill="currentColor" 
-		viewBox="0 0 20 20" 
-		xmlns="http://www.w3.org/2000/svg"
-		aria-hidden="true"
-	>
-		<path 
-			d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-		></path>
-	</svg>
+<button id="theme-toggle" aria-label="Toggle theme" title="Toggle dark mode">
+  🌙
 </button>
 
 <script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const themeToggleBtn = document.getElementById('theme-toggle');
-		const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-		const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-		
-		// Utility function to announce changes to screen readers
-		function announceToScreenReader(message: string) {
-			const announcement = document.createElement('div');
-			announcement.setAttribute('aria-live', 'polite');
-			announcement.setAttribute('aria-atomic', 'true');
-			announcement.className = 'sr-only';
-			announcement.textContent = message;
-			document.body.appendChild(announcement);
-			
-			// Remove after announcement
-			setTimeout(() => {
-				document.body.removeChild(announcement);
-			}, 1000);
-		}
+  function initThemeToggle() {
+    const toggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
 
-		// Check if elements exist
-		if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) {
-			return;
-		}
+    if (!toggle) return;
 
-		// Get theme from localStorage or system preference
-		function getStoredTheme(): string {
-			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-				return localStorage.getItem('theme') || 'light';
-			}
-			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-		}
+    // Get stored theme or default to dark
+    function getTheme() {
+      if (typeof localStorage !== 'undefined') {
+        const stored = localStorage.getItem('theme');
+        if (stored) return stored;
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
 
-		// Set theme and update UI with accessibility attributes
-		function setTheme(theme: string) {
-			if (theme === 'dark') {
-				document.documentElement.classList.add('dark');
-				themeToggleLightIcon?.classList.add('hidden');
-				themeToggleDarkIcon?.classList.remove('hidden');
-				// Update accessibility attributes
-				themeToggleBtn?.setAttribute('aria-pressed', 'true');
-				themeToggleBtn?.setAttribute('title', 'Switch to light mode (current: dark)');
-				themeToggleBtn?.setAttribute('aria-label', 'Switch to light mode');
-			} else {
-				document.documentElement.classList.remove('dark');
-				themeToggleLightIcon?.classList.remove('hidden');
-				themeToggleDarkIcon?.classList.add('hidden');
-				// Update accessibility attributes
-				themeToggleBtn?.setAttribute('aria-pressed', 'false');
-				themeToggleBtn?.setAttribute('title', 'Switch to dark mode (current: light)');
-				themeToggleBtn?.setAttribute('aria-label', 'Switch to dark mode');
-			}
-			
-			// Store theme preference
-			if (typeof localStorage !== 'undefined') {
-				localStorage.setItem('theme', theme);
-			}
-			
-			// Announce theme change to screen readers
-			const announcement = theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled';
-			announceToScreenReader(announcement);
-		}
+    // Set theme
+    function setTheme(theme: string) {
+      if (theme === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('theme', theme);
+      }
+      // Update button emoji
+      if (toggle) {
+        toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        toggle.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`);
+      }
+    }
 
-		// Initialize theme
-		const currentTheme = getStoredTheme();
-		setTheme(currentTheme);
-		
-		// Theme celebration function
-		function createThemeSparkles(button: HTMLElement, theme: string) {
-			const rect = button.getBoundingClientRect();
-			const emoji = theme === 'dark' ? '🌙' : '☀️';
-			
-			for (let i = 0; i < 8; i++) {
-				setTimeout(() => {
-					const sparkle = document.createElement('div');
-					sparkle.textContent = emoji;
-					sparkle.style.cssText = `
-						position: fixed;
-						left: ${rect.left + rect.width/2 + (Math.random() - 0.5) * 60}px;
-						top: ${rect.top + rect.height/2 + (Math.random() - 0.5) * 60}px;
-						font-size: 16px;
-						pointer-events: none;
-						z-index: 9999;
-						animation: theme-sparkle 1.5s ease-out forwards;
-					`;
-					
-					document.body.appendChild(sparkle);
-					
-					setTimeout(() => {
-						if (sparkle.parentNode) {
-							sparkle.parentNode.removeChild(sparkle);
-						}
-					}, 1500);
-				}, i * 100);
-			}
-		}
+    // Initialize theme
+    const currentTheme = getTheme();
+    setTheme(currentTheme);
 
-		// Toggle theme on button click with celebration
-		themeToggleBtn.addEventListener('click', () => {
-			const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-			const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-			setTheme(newTheme);
-			
-			// Add delightful feedback
-			createThemeSparkles(themeToggleBtn, newTheme);
-		});
-		
-		// Support keyboard navigation (Space and Enter)
-		themeToggleBtn.addEventListener('keydown', (event) => {
-			if (event.key === ' ' || event.key === 'Enter') {
-				event.preventDefault();
-				const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-				const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-				setTheme(newTheme);
-			}
-		});
+    // Remove existing listener if any (prevent duplicates)
+    const newToggle = toggle.cloneNode(true) as HTMLElement;
+    toggle.parentNode?.replaceChild(newToggle, toggle);
 
-		// Listen for system theme changes
-		if (typeof window !== 'undefined') {
-			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-				// Only auto-switch if user hasn't manually set a preference
-				if (!localStorage.getItem('theme')) {
-					setTheme(e.matches ? 'dark' : 'light');
-				}
-			});
-		}
-	});
+    // Toggle on click
+    newToggle.addEventListener('click', () => {
+      const current = html.classList.contains('dark') ? 'dark' : 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+
+    // Listen for system theme changes
+    if (typeof window !== 'undefined') {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+  }
+
+  // Run on initial load
+  initThemeToggle();
+
+  // Re-run after ViewTransitions navigation
+  document.addEventListener('astro:page-load', initThemeToggle);
 </script>
 
 <style>
-	/* Smooth transition for theme changes */
-	:global(html) {
-		transition: background-color 0.3s ease, color 0.3s ease;
-	}
-	
-	:global(html *) {
-		transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-	}
-	
-	/* Prevent transition on page load */
-	:global(html.no-transition *) {
-		transition: none !important;
-	}
-	
-	/* Theme sparkle animation */
-	:global(@keyframes theme-sparkle) {
-		0% {
-			opacity: 0;
-			transform: scale(0) translateY(0) rotate(0deg);
-		}
-		50% {
-			opacity: 1;
-			transform: scale(1.2) translateY(-20px) rotate(180deg);
-		}
-		100% {
-			opacity: 0;
-			transform: scale(0.5) translateY(-40px) rotate(360deg);
-		}
-	}
+  button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  button:hover {
+    opacity: 0.7;
+  }
+
+  button:focus {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
 </style>

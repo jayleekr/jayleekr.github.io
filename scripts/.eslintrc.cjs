@@ -1,0 +1,9 @@
+module.exports = {
+  env: {
+    node: true,
+    es2022: true,
+  },
+  rules: {
+    'no-console': 'off',
+  },
+};
