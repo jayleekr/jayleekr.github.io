@@ -653,6 +653,11 @@ npm run build       # Build verification
 **Scripts Removed:**
 - `launch-validation.js` - Stub superseded by `.mjs` version
 
+**GitHub Actions Removed:**
+- `test.yml` - Comprehensive test suite (excessive for minimal blog)
+- `notion-sync.yml` - Local-only workflow (env file dependency)
+- **Kept**: `deploy.yml` - Essential GitHub Pages deployment
+
 **SEO Improvements:**
 - Updated `robots.txt` last modified date (2025-01-22 → 2025-12-26)
 - Added documentation for `/_astro/` crawling rule
