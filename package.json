@@ -32,7 +32,8 @@
     "audit": "bun audit",
     "audit:fix": "bun audit --fix",
     "deps:update": "bun update",
-    "deps:check": "bun outdated"
+    "deps:check": "bun outdated",
+    "notion:sync": "node scripts/notion-to-blog.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.1",
