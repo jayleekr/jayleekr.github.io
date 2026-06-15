@@ -150,7 +150,7 @@ export class NotionConverter {
       .replace(/[^a-z0-9가-힣\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim();
+      .trim() || 'untitled';
   }
 
   /**
@@ -347,16 +347,25 @@ export class NotionConverter {
    */
   buildFullContent(frontmatter, content) {
     const yaml = `---
-title: "${frontmatter.title}"
-author: "${frontmatter.author}"
+title: ${yamlString(frontmatter.title)}
+author: ${yamlString(frontmatter.author)}
 pubDate: ${frontmatter.pubDate}
-categories: [${frontmatter.categories.map(c => `"${c}"`).join(', ')}]
-tags: [${frontmatter.tags.map(t => `"${t}"`).join(', ')}]
-description: "${frontmatter.description}"
+categories: ${yamlArray(frontmatter.categories)}
+tags: ${yamlArray(frontmatter.tags)}
+description: ${yamlString(frontmatter.description)}
 ---
 
 ${content}`;
 
     return yaml;
   }
+}
+
+export function yamlString(value) {
+  return JSON.stringify(String(value ?? ''));
+}
+
+export function yamlArray(values) {
+  const items = Array.isArray(values) ? values : [];
+  return `[${items.map(yamlString).join(', ')}]`;
 }

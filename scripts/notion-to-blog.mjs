@@ -2,7 +2,7 @@
 
 import 'dotenv/config';
 import { NotionConverter } from './lib/notion-converter.mjs';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -47,10 +47,10 @@ async function syncNotionToBlog() {
     // Create feature branch
     const branchName = `notion-sync/${new Date().toISOString().split('T')[0]}`;
     try {
-      execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+      runCommand('git', ['checkout', '-b', branchName]);
     } catch (error) {
       // Branch might already exist
-      execSync(`git checkout ${branchName}`, { stdio: 'inherit' });
+      runCommand('git', ['checkout', branchName]);
     }
 
     // Process each post
@@ -75,11 +75,12 @@ async function syncNotionToBlog() {
 
         if (filepath) {
           // Commit the new post
-          execSync(`git add ${filepath}`, { stdio: 'inherit' });
-          execSync(
-            `git commit -m "feat: Add post \\"${post.frontmatter.title}\\" from Notion"`,
-            { stdio: 'inherit' }
-          );
+          runCommand('git', ['add', '--', repoRelativePath(filepath)]);
+          runCommand('git', [
+            'commit',
+            '-m',
+            `feat: Add post "${post.frontmatter.title}" from Notion`
+          ]);
 
           results.success.push({
             title: pageTitle,
@@ -134,17 +135,16 @@ async function syncNotionToBlog() {
     // Push to remote and create PR if we have commits
     if (results.success.length > 0) {
       console.log('\n📤 Pushing to remote...');
-      execSync(`git push -u origin ${branchName}`, { stdio: 'inherit' });
+      runCommand('git', ['push', '-u', 'origin', branchName]);
 
       console.log('\n🔗 Creating pull request...');
       const prTitle = `Notion sync: ${results.success.length} new post(s)`;
       const prBody = generatePRBody(results);
 
       try {
-        const prUrl = execSync(
-          `gh pr create --title "${prTitle}" --body "${prBody}"`,
-          { encoding: 'utf-8' }
-        ).trim();
+        const prUrl = runCommand('gh', ['pr', 'create', '--title', prTitle, '--body', prBody], {
+          encoding: 'utf-8'
+        }).stdout.trim();
 
         console.log(`\n✅ Pull request created: ${prUrl}`);
       } catch (error) {
@@ -190,6 +190,31 @@ async function saveSyncState(timestamp) {
   await fs.writeFile(STATE_FILE, JSON.stringify(state, null, 2));
 }
 
+function runCommand(command, args, options = {}) {
+  const result = spawnSync(command, args, {
+    stdio: options.encoding ? ['ignore', 'pipe', 'pipe'] : 'inherit',
+    encoding: options.encoding,
+    shell: false
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== 0) {
+    const stderr = result.stderr ? `: ${String(result.stderr).trim()}` : '';
+    throw new Error(`${command} ${args.join(' ')} failed with exit ${result.status}${stderr}`);
+  }
+  return result;
+}
+
+function repoRelativePath(filepath) {
+  const relative = path.relative(process.cwd(), filepath);
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) {
+    throw new Error(`Refusing to git add path outside repository: ${filepath}`);
+  }
+  return relative;
+}
+
 /**
  * Generate PR body
  */
@@ -217,4 +242,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   syncNotionToBlog().catch(console.error);
 }
 
-export { syncNotionToBlog };
+export { generatePRBody, repoRelativePath, runCommand, syncNotionToBlog };
