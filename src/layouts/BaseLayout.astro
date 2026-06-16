@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 export interface Props {
   title: string;
@@ -22,7 +22,7 @@ const { title, description, image, noIndex } = Astro.props;
       image={image}
       noIndex={noIndex}
     />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <header>

@@ -35,12 +35,12 @@
     "deps:check": "bun outdated"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.1",
-    "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.3",
     "@notionhq/client": "^5.6.0",
     "@notionhq/notion-mcp-server": "^1.8.1",
-    "astro": "^5.12.3",
+    "astro": "^6.1.10",
     "astro-i18next": "^1.0.0-beta.21",
     "dotenv": "^17.2.3",
     "i18next": "^25.3.2",
@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/tailwind": "^6.0.2",
     "@axe-core/playwright": "^4.10.2",
     "@percy/cli": "^1.31.1",
     "@percy/playwright": "^1.0.8",
